@@ -1,0 +1,14 @@
+{"at":"2026-07-18T08:41:43.817008+00:00","action":"init","section_id":null,"detail":"DenoiseOpt: Residual Scoring and Bi-Level Meta-Learning for Wavetable Wrap Crackle","version":"v01"}
+{"at":"2026-07-18T08:41:43.829909+00:00","action":"plan","section_id":null,"detail":"9 sections; source=template","version":"v01"}
+{"at":"2026-07-18T08:41:43.891602+00:00","action":"write_subsection","section_id":"abstract","detail":"1032 chars","version":"v01"}
+{"at":"2026-07-18T08:41:43.905281+00:00","action":"write_subsection","section_id":"introduction","detail":"1234 chars","version":"v01"}
+{"at":"2026-07-18T08:41:43.919330+00:00","action":"write_subsection","section_id":"related_work","detail":"1563 chars","version":"v01"}
+{"at":"2026-07-18T08:41:43.934573+00:00","action":"write_subsection","section_id":"methods","detail":"1386 chars","version":"v01"}
+{"at":"2026-07-18T08:41:43.948863+00:00","action":"write_subsection","section_id":"experiments","detail":"789 chars","version":"v01"}
+{"at":"2026-07-18T08:41:43.962983+00:00","action":"write_subsection","section_id":"results","detail":"2036 chars","version":"v01"}
+{"at":"2026-07-18T08:41:43.976985+00:00","action":"write_subsection","section_id":"discussion","detail":"1260 chars","version":"v01"}
+{"at":"2026-07-18T08:41:43.992106+00:00","action":"write_subsection","section_id":"limitations","detail":"450 chars","version":"v01"}
+{"at":"2026-07-18T08:41:44.007842+00:00","action":"write_subsection","section_id":"conclusion","detail":"582 chars","version":"v01"}
+{"at":"2026-07-18T08:41:44.025598+00:00","action":"write_subsection","section_id":"results","detail":"2034 chars","version":"v01"}
+{"at":"2026-07-18T08:41:44.038483+00:00","action":"revise","section_id":null,"detail":"revised=['results']","version":"v01"}
+{"at":"2026-07-18T08:41:44.055256+00:00","action":"export","section_id":null,"detail":"C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\artifacts\\gateway_papers\\denoiseopt-residual-scoring-and-bi-level-meta-le-ca30bf9f\\v01\\main.tex","version":"v01"}

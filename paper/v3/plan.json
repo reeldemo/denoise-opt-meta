@@ -1,0 +1,186 @@
+{
+  "title": "DenoiseOpt: Residual Scoring and Bi-Level Meta-Learning for Wavetable Wrap Crackle",
+  "user_needs": "Short technical paper. Honest about evo_explore winning over nested loss opt under residual. Cite used vs screened literature. Include equation for residual. Primary numbers: 0.824 vs 0.698 (delta +0.126). Paper version v3 via scientific workflow.",
+  "abstract_sketch": "Open wrap seams in periodic wavetable cycles inject audible crackle under cyclic playback. DenoiseOpt is a seam-local bake stack $f_\\theta$, $\\theta\\in[0,1]^{12}$, scored without paired clean labels. We replace wrap-energy quality $Q$ as the outer meta objective with a prolonged residual score $R\\in[0,1]$ (1~=~best): the engine's tiled DenoiseOpt cycle is compared to an ideal multi-period reference from the same seed with open-wrap cliffs withheld ($N{=}16$). The outer loop also nests an inner unsupervised loss fit $L=(1-\\mathcal{D})+\\lambda(1-\\mathcal{S})$. Across 1500 literature-informed trials, Meta Top~1 \\texttt{evo\\_explore\\_515} reaches residual $\\approx 0.824$ vs naive DualCosine $\\approx 0.698$ on held-out validation ($N{=}2000$)---a clear $+0.126$ margin---while keeping $\\mathcal{S}\\approx 1.0$. Nested loss-opt priors were searched but did not dominate the residual elite set; wide evolutionary mutation did.",
+  "sections": [
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 1,
+      "goal": "Concise problem–method–result–limitation summary with the key numeric headline (primary metric and baseline comparison).",
+      "claims": [
+        "State the scientific problem in one sentence.",
+        "Name the method and evaluation protocol.",
+        "Report the primary quantitative finding vs baseline."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "optional domain anchors"
+      ],
+      "data_still_needed": [
+        "baseline_comparison"
+      ],
+      "imrad_role": "abstract",
+      "target_words": 180
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 1,
+      "goal": "Motivate the problem, situate it in prior practice, state contributions as falsifiable claims, and preview the paper.",
+      "claims": [
+        "Why the phenomenon matters scientifically or practically.",
+        "Gap in existing proxies / methods.",
+        "Explicit numbered contributions."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "foundational domain refs"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "introduction",
+      "target_words": 450
+    },
+    {
+      "id": "related_work",
+      "title": "Related Work",
+      "level": 1,
+      "goal": "Organize prior art by theme; distinguish used vs screened literature; end with how this work differs.",
+      "claims": [
+        "Group citations thematically (not as a dump).",
+        "State what was screened out and why."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "used_refs",
+        "screened_refs"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "related_work",
+      "target_words": 500
+    },
+    {
+      "id": "methods",
+      "title": "Methods",
+      "level": 1,
+      "goal": "Define notation, model/operator, objective(s), and search procedure so a reader could reimplement the essentials.",
+      "claims": [
+        "Formal definition of the primary score / loss.",
+        "Algorithmic procedure (outer/inner loops if any).",
+        "Implementation constraints that affect validity."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "methodological priors"
+      ],
+      "data_still_needed": [
+        "method_definition",
+        "hyperparameters"
+      ],
+      "imrad_role": "methods",
+      "target_words": 650
+    },
+    {
+      "id": "experiments",
+      "title": "Experiments",
+      "level": 1,
+      "goal": "Describe protocol: datasets/seeds, trial budget, validation sizes, baselines, and selection rules before revealing outcomes.",
+      "claims": [
+        "Protocol is fixed before reporting winners.",
+        "Baselines and ablations are named."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [
+        "protocol",
+        "baselines"
+      ],
+      "imrad_role": "experiments",
+      "target_words": 350
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "level": 1,
+      "goal": "Present primary metrics with table(s) and figure(s); report effect sizes vs baselines; avoid overclaiming.",
+      "claims": [
+        "Primary metric ranking with uncertainty or held-out N.",
+        "Secondary metrics that check for failure modes."
+      ],
+      "required_figures": [
+        "primary_comparison"
+      ],
+      "required_tables": [
+        "benchmark_matrix"
+      ],
+      "citation_slots": [],
+      "data_still_needed": [],
+      "imrad_role": "results",
+      "target_words": 450
+    },
+    {
+      "id": "discussion",
+      "title": "Discussion",
+      "level": 1,
+      "goal": "Interpret results relative to hypotheses; reconcile surprising outcomes (e.g. which prior won); connect to related work.",
+      "claims": [
+        "What the evidence supports.",
+        "What it does not support."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "interpretive anchors"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "discussion",
+      "target_words": 400
+    },
+    {
+      "id": "limitations",
+      "title": "Limitations",
+      "level": 1,
+      "goal": "State validity threats, metric proxies, and compute budgets honestly.",
+      "claims": [
+        "At least three concrete limitations."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [],
+      "imrad_role": "limitations",
+      "target_words": 220
+    },
+    {
+      "id": "conclusion",
+      "title": "Conclusion",
+      "level": 1,
+      "goal": "Restate contributions and headline numbers; point to artifacts.",
+      "claims": [
+        "One-paragraph takeaway with primary metric."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [],
+      "imrad_role": "conclusion",
+      "target_words": 180
+    }
+  ],
+  "open_data_gaps": [
+    "baseline_comparison",
+    "baselines",
+    "hyperparameters",
+    "method_definition",
+    "protocol"
+  ],
+  "literature_count": 10,
+  "writing_mode_hint": "Write full academic paragraphs (IMRaD). Prefer precise claims tied to ingested metrics. Do not invent numbers. Mark template-mode output if no LLM is used.",
+  "created_at": "2026-07-18T08:41:43.827735+00:00",
+  "source": "template"
+}

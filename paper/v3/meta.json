@@ -1,0 +1,706 @@
+{
+  "paper_id": "denoiseopt-residual-scoring-and-bi-level-meta-le-ca30bf9f",
+  "title": "DenoiseOpt: Residual Scoring and Bi-Level Meta-Learning for Wavetable Wrap Crackle",
+  "authors": [
+    {
+      "name": "Julian M. Kleber",
+      "orcid": "https://orcid.org/0000-0001-5518-0932",
+      "email": "julian.m.kleber@gmail.com",
+      "affiliation": null
+    }
+  ],
+  "abstract_sketch": "Open wrap seams in periodic wavetable cycles inject audible crackle under cyclic playback. DenoiseOpt is a seam-local bake stack $f_\\theta$, $\\theta\\in[0,1]^{12}$, scored without paired clean labels. We replace wrap-energy quality $Q$ as the outer meta objective with a prolonged residual score $R\\in[0,1]$ (1~=~best): the engine's tiled DenoiseOpt cycle is compared to an ideal multi-period reference from the same seed with open-wrap cliffs withheld ($N{=}16$). The outer loop also nests an inner unsupervised loss fit $L=(1-\\mathcal{D})+\\lambda(1-\\mathcal{S})$. Across 1500 literature-informed trials, Meta Top~1 \\texttt{evo\\_explore\\_515} reaches residual $\\approx 0.824$ vs naive DualCosine $\\approx 0.698$ on held-out validation ($N{=}2000$)---a clear $+0.126$ margin---while keeping $\\mathcal{S}\\approx 1.0$. Nested loss-opt priors were searched but did not dominate the residual elite set; wide evolutionary mutation did.",
+  "repo_links": [
+    "https://github.com/reeldemo/reelsynth",
+    "https://github.com/reeldemo/denoise-opt-meta"
+  ],
+  "user_needs": "Short technical paper. Honest about evo_explore winning over nested loss opt under residual. Cite used vs screened literature. Include equation for residual. Primary numbers: 0.824 vs 0.698 (delta +0.126). Paper version v3 via scientific workflow.",
+  "created_at": "2026-07-18T08:41:43.815234+00:00",
+  "updated_at": "2026-07-18T08:41:44.036925+00:00",
+  "current_version": "v01",
+  "outline": [
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "related_work",
+      "title": "Related Work",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "methods",
+      "title": "Methods",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "experiments",
+      "title": "Experiments",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "discussion",
+      "title": "Discussion",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "limitations",
+      "title": "Limitations",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "conclusion",
+      "title": "Conclusion",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    }
+  ],
+  "figures": [
+    {
+      "figure_id": "fig_benchmark_matrix",
+      "path": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\artifacts\\gateway_papers\\denoiseopt-residual-scoring-and-bi-level-meta-le-ca30bf9f\\v01\\figures\\fig_benchmark_matrix.png",
+      "plot_type": "bar",
+      "caption": "Naive DualCosine vs Meta Top 1--4 under residual (primary), denoise D, and shape S.",
+      "section_id": "results",
+      "created_at": "2026-07-18T08:41:43.851601+00:00"
+    },
+    {
+      "figure_id": "fig_pareto_1500",
+      "path": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\artifacts\\gateway_papers\\denoiseopt-residual-scoring-and-bi-level-meta-le-ca30bf9f\\v01\\figures\\fig_pareto_1500.png",
+      "plot_type": "bar",
+      "caption": "Elite residual versus unsupervised-loss proxy after 1500 trials.",
+      "section_id": "results",
+      "created_at": "2026-07-18T08:41:43.866346+00:00"
+    },
+    {
+      "figure_id": "fig_prior_families",
+      "path": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\artifacts\\gateway_papers\\denoiseopt-residual-scoring-and-bi-level-meta-le-ca30bf9f\\v01\\figures\\fig_prior_families.png",
+      "plot_type": "bar",
+      "caption": "Prior families among residual elites (top-20 / top-4).",
+      "section_id": "results",
+      "created_at": "2026-07-18T08:41:43.877640+00:00"
+    }
+  ],
+  "pending_requests": [],
+  "ingested_data": {
+    "_global": {
+      "primary_metric": 0.8237,
+      "baseline_residual": 0.6981,
+      "naive_residual": 0.6981,
+      "delta_residual": 0.1256,
+      "delta": 0.1256,
+      "champion": {
+        "trial_name": "evo_explore_515",
+        "residual": 0.8237175345420837,
+        "prior": "evo_explore",
+        "shape": 1.0,
+        "loss_opt_sweeps": 0
+      },
+      "champion_name": "evo_explore_515",
+      "meta_top_band": "0.821--0.823",
+      "n_trials": 1500,
+      "trial_budget": 1500,
+      "val_n": 2000,
+      "fast_val_n": 400,
+      "refine_top_k": 12,
+      "tile_n": 16,
+      "theta_dim": 12,
+      "runtime_s": 141,
+      "inner_fit_count": 48,
+      "prior_families": [
+        "evo_explore",
+        "bilevel_loss",
+        "pbt_exploit",
+        "bayes_local",
+        "racing_mid",
+        "mo_shape",
+        "aggressive"
+      ],
+      "benchmark_matrix_5": [
+        {
+          "algo": "naive_dual_cosine",
+          "denoise": 0.5823455452919006,
+          "kind": "naive",
+          "quality": 0.7885699272155762,
+          "rank": 0,
+          "residual": 0.6981330513954163,
+          "shape": 0.9947943687438965
+        },
+        {
+          "algo": "meta_top1",
+          "denoise": 0.5688386559486389,
+          "kind": "meta",
+          "lambda": 0.47550493478775024,
+          "prior": "evo_explore",
+          "quality": 0.7844192981719971,
+          "rank": 1,
+          "residual": 0.8237175345420837,
+          "shape": 1.0,
+          "theta": [
+            0.6743488907814026,
+            0.35734763741493225,
+            0.7695394158363342,
+            0.2606349587440491,
+            0.7395051717758179,
+            0.426188200712204,
+            0.2883784770965576,
+            0.0,
+            0.47695907950401306,
+            0.6787997484207153,
+            0.4341348111629486,
+            0.4199755787849426
+          ],
+          "trial_name": "evo_explore_515"
+        },
+        {
+          "algo": "meta_top2",
+          "denoise": 0.5696368217468262,
+          "kind": "meta",
+          "lambda": 0.4575968086719513,
+          "prior": "evo_explore",
+          "quality": 0.7848184108734131,
+          "rank": 2,
+          "residual": 0.8226390480995178,
+          "shape": 1.0,
+          "theta": [
+            0.723836362361908,
+            0.4037037193775177,
+            0.7663803100585938,
+            0.22531862556934357,
+            0.7618167400360107,
+            0.4684006869792938,
+            0.11072098463773727,
+            0.0,
+            0.4321991205215454,
+            0.75609290599823,
+            0.42769724130630493,
+            0.19151493906974792
+          ],
+          "trial_name": "evo_explore_1131"
+        },
+        {
+          "algo": "meta_top3",
+          "denoise": 0.5696691870689392,
+          "kind": "meta",
+          "lambda": 0.7189072370529175,
+          "prior": "evo_explore",
+          "quality": 0.784834623336792,
+          "rank": 3,
+          "residual": 0.8225138783454895,
+          "shape": 1.0,
+          "theta": [
+            0.7332475781440735,
+            0.36527329683303833,
+            0.7884703278541565,
+            0.4478037655353546,
+            0.7797819375991821,
+            0.41356950998306274,
+            0.1352309137582779,
+            0.0,
+            0.4340991675853729,
+            0.7446949481964111,
+            0.47834646701812744,
+            0.20056532323360443
+          ],
+          "trial_name": "evo_explore_480"
+        },
+        {
+          "algo": "meta_top4",
+          "denoise": 0.5695474743843079,
+          "kind": "meta",
+          "lambda": 0.6543431282043457,
+          "prior": "evo_explore",
+          "quality": 0.7847737073898315,
+          "rank": 4,
+          "residual": 0.821272075176239,
+          "shape": 1.0,
+          "theta": [
+            0.6857696175575256,
+            0.370865136384964,
+            0.7518743872642517,
+            0.1967516541481018,
+            0.7999645471572876,
+            0.4516328275203705,
+            0.2318081557750702,
+            0.0,
+            0.4560975134372711,
+            0.7127760052680969,
+            0.4459812045097351,
+            0.4020518660545349
+          ],
+          "trial_name": "evo_explore_214"
+        }
+      ],
+      "table_rows": [
+        {
+          "algo": "naive_dual_cosine",
+          "prior": "naive",
+          "residual": 0.6981,
+          "shape": 0.9948,
+          "quality": 0.7886
+        },
+        {
+          "algo": "meta_top1",
+          "prior": "evo_explore",
+          "residual": 0.8237,
+          "shape": 1.0,
+          "quality": 0.7844
+        },
+        {
+          "algo": "meta_top2",
+          "prior": "evo_explore",
+          "residual": 0.8226,
+          "shape": 1.0,
+          "quality": 0.7848
+        },
+        {
+          "algo": "meta_top3",
+          "prior": "evo_explore",
+          "residual": 0.8225,
+          "shape": 1.0,
+          "quality": 0.7848
+        },
+        {
+          "algo": "meta_top4",
+          "prior": "evo_explore",
+          "residual": 0.8213,
+          "shape": 1.0,
+          "quality": 0.7848
+        }
+      ],
+      "residual_definition": "R = clamp(1 - residual_rms / max(ideal_rms, 1e-6), 0, 1), comparing tiled N=16 engine bake vs ideal no-cliff sibling",
+      "loss_definition": "L = (1-D) + lambda(1-S); inner coordinate descent; outer maximize R",
+      "honest_note": "All twenty Pareto-fast residual elites were evo_explore (inner sweeps = 0). Bi-level / PBT / Bayes loss-opt priors were evaluated but did not win on residual. Inner L-minimization remains part of the search design as a nested regularizer; under prolonged residual, lighter evolutionary mutations currently dominate.",
+      "literature_used": [
+        "VA / BLEP discontinuity control (Valimaki, Esqueda)",
+        "Differentiable wavetable / DDSP context (Shan et al.)",
+        "Noise2Noise label-free restoration philosophy (Lehtinen et al.)",
+        "Bayesian HPO (Snoek et al.; Bischl survey)",
+        "PBT-style exploit/mutate",
+        "irace racing (Lopez-Ibanez et al.)",
+        "MOEA/D multi-objective cues (Zhang & Li)"
+      ],
+      "literature_screened": [
+        "Medical imaging / federated / prompting surveys (off-domain)",
+        "Adam as ambient optimizer only",
+        "MAML (Finn et al.) — inspirational mechanism, not used (no task-gradient through a deep net)"
+      ],
+      "limitations": [
+        "Residual uses a procedural ideal (no-cliff sibling), not a perceptual MOS.",
+        "Bake metrics are not listening tests.",
+        "Nested loss budgets are small (48 seeds) by design for 1500-trial throughput.",
+        "Results are tied to the reported seed protocol and validation sizes."
+      ],
+      "meta_objective": "bi-level: inner minimize L=(1-D)+λ(1-S); outer maximize residual_score on prolonged ideal vs engine; soft gate S>=0.97; D/S auxiliaries",
+      "metrics": {
+        "residual": 0.8237175345420837,
+        "baseline": 0.6981330513954163,
+        "shape": 1.0
+      }
+    }
+  },
+  "subsection_paths": {
+    "abstract": "v01\\subsections\\abstract.tex",
+    "introduction": "v01\\subsections\\introduction.tex",
+    "related_work": "v01\\subsections\\related_work.tex",
+    "methods": "v01\\subsections\\methods.tex",
+    "experiments": "v01\\subsections\\experiments.tex",
+    "results": "v01\\subsections\\results.tex",
+    "discussion": "v01\\subsections\\discussion.tex",
+    "limitations": "v01\\subsections\\limitations.tex",
+    "conclusion": "v01\\subsections\\conclusion.tex"
+  },
+  "latex_engine": "xelatex",
+  "literature_refs": [
+    {
+      "cite_key": "valimaki2006va",
+      "title": "Oscillator and Filter Algorithms for Virtual Analog Synthesis",
+      "authors": [
+        "V. Valimaki",
+        "A. Huovilainen"
+      ],
+      "year": 2006,
+      "venue": "Computer Music Journal, 30(2)"
+    },
+    {
+      "cite_key": "esqueda2016aliasing",
+      "title": "Aliasing Reduction in Clipped Signals",
+      "authors": [
+        "F. Esqueda",
+        "S. Bilbao",
+        "V. Valimaki"
+      ],
+      "year": 2016,
+      "venue": "IEEE Trans. Signal Processing"
+    },
+    {
+      "cite_key": "esqueda2016blamp",
+      "title": "Rounding corners with BLAMP",
+      "authors": [
+        "F. Esqueda",
+        "V. Valimaki",
+        "S. Bilbao"
+      ],
+      "year": 2016,
+      "venue": "Proc. DAFx"
+    },
+    {
+      "cite_key": "shan2021dwt",
+      "title": "Differentiable Wavetable Synthesis",
+      "authors": [
+        "S. Shan et al."
+      ],
+      "year": 2021,
+      "venue": "arXiv:2111.10003"
+    },
+    {
+      "cite_key": "lehtinen2018n2n",
+      "title": "Noise2Noise: Learning Image Restoration without Clean Data",
+      "authors": [
+        "J. Lehtinen et al."
+      ],
+      "year": 2018,
+      "venue": "ICML"
+    },
+    {
+      "cite_key": "snoek2012bo",
+      "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+      "authors": [
+        "J. Snoek",
+        "H. Larochelle",
+        "R. P. Adams"
+      ],
+      "year": 2012,
+      "venue": "NeurIPS"
+    },
+    {
+      "cite_key": "bischl2023hpo",
+      "title": "Hyperparameter optimization: Foundations, algorithms, best practices",
+      "authors": [
+        "B. Bischl et al."
+      ],
+      "year": 2023
+    },
+    {
+      "cite_key": "lopez2016irace",
+      "title": "The irace package: Iterated racing for automatic algorithm configuration",
+      "authors": [
+        "M. Lopez-Ibanez et al."
+      ],
+      "year": 2016,
+      "venue": "Operations Research Perspectives"
+    },
+    {
+      "cite_key": "zhang2007moead",
+      "title": "MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition",
+      "authors": [
+        "Q. Zhang",
+        "H. Li"
+      ],
+      "year": 2007,
+      "venue": "IEEE Trans. Evolutionary Computation"
+    },
+    {
+      "cite_key": "finn2017maml",
+      "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+      "authors": [
+        "C. Finn",
+        "P. Abbeel",
+        "S. Levine"
+      ],
+      "year": 2017,
+      "venue": "ICML",
+      "screened": true
+    }
+  ],
+  "plan": {
+    "title": "DenoiseOpt: Residual Scoring and Bi-Level Meta-Learning for Wavetable Wrap Crackle",
+    "user_needs": "Short technical paper. Honest about evo_explore winning over nested loss opt under residual. Cite used vs screened literature. Include equation for residual. Primary numbers: 0.824 vs 0.698 (delta +0.126). Paper version v3 via scientific workflow.",
+    "abstract_sketch": "Open wrap seams in periodic wavetable cycles inject audible crackle under cyclic playback. DenoiseOpt is a seam-local bake stack $f_\\theta$, $\\theta\\in[0,1]^{12}$, scored without paired clean labels. We replace wrap-energy quality $Q$ as the outer meta objective with a prolonged residual score $R\\in[0,1]$ (1~=~best): the engine's tiled DenoiseOpt cycle is compared to an ideal multi-period reference from the same seed with open-wrap cliffs withheld ($N{=}16$). The outer loop also nests an inner unsupervised loss fit $L=(1-\\mathcal{D})+\\lambda(1-\\mathcal{S})$. Across 1500 literature-informed trials, Meta Top~1 \\texttt{evo\\_explore\\_515} reaches residual $\\approx 0.824$ vs naive DualCosine $\\approx 0.698$ on held-out validation ($N{=}2000$)---a clear $+0.126$ margin---while keeping $\\mathcal{S}\\approx 1.0$. Nested loss-opt priors were searched but did not dominate the residual elite set; wide evolutionary mutation did.",
+    "sections": [
+      {
+        "id": "abstract",
+        "title": "Abstract",
+        "level": 1,
+        "goal": "Concise problem–method–result–limitation summary with the key numeric headline (primary metric and baseline comparison).",
+        "claims": [
+          "State the scientific problem in one sentence.",
+          "Name the method and evaluation protocol.",
+          "Report the primary quantitative finding vs baseline."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "optional domain anchors"
+        ],
+        "data_still_needed": [
+          "baseline_comparison"
+        ],
+        "imrad_role": "abstract",
+        "target_words": 180
+      },
+      {
+        "id": "introduction",
+        "title": "Introduction",
+        "level": 1,
+        "goal": "Motivate the problem, situate it in prior practice, state contributions as falsifiable claims, and preview the paper.",
+        "claims": [
+          "Why the phenomenon matters scientifically or practically.",
+          "Gap in existing proxies / methods.",
+          "Explicit numbered contributions."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "foundational domain refs"
+        ],
+        "data_still_needed": [],
+        "imrad_role": "introduction",
+        "target_words": 450
+      },
+      {
+        "id": "related_work",
+        "title": "Related Work",
+        "level": 1,
+        "goal": "Organize prior art by theme; distinguish used vs screened literature; end with how this work differs.",
+        "claims": [
+          "Group citations thematically (not as a dump).",
+          "State what was screened out and why."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "used_refs",
+          "screened_refs"
+        ],
+        "data_still_needed": [],
+        "imrad_role": "related_work",
+        "target_words": 500
+      },
+      {
+        "id": "methods",
+        "title": "Methods",
+        "level": 1,
+        "goal": "Define notation, model/operator, objective(s), and search procedure so a reader could reimplement the essentials.",
+        "claims": [
+          "Formal definition of the primary score / loss.",
+          "Algorithmic procedure (outer/inner loops if any).",
+          "Implementation constraints that affect validity."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "methodological priors"
+        ],
+        "data_still_needed": [
+          "method_definition",
+          "hyperparameters"
+        ],
+        "imrad_role": "methods",
+        "target_words": 650
+      },
+      {
+        "id": "experiments",
+        "title": "Experiments",
+        "level": 1,
+        "goal": "Describe protocol: datasets/seeds, trial budget, validation sizes, baselines, and selection rules before revealing outcomes.",
+        "claims": [
+          "Protocol is fixed before reporting winners.",
+          "Baselines and ablations are named."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [],
+        "data_still_needed": [
+          "protocol",
+          "baselines"
+        ],
+        "imrad_role": "experiments",
+        "target_words": 350
+      },
+      {
+        "id": "results",
+        "title": "Results",
+        "level": 1,
+        "goal": "Present primary metrics with table(s) and figure(s); report effect sizes vs baselines; avoid overclaiming.",
+        "claims": [
+          "Primary metric ranking with uncertainty or held-out N.",
+          "Secondary metrics that check for failure modes."
+        ],
+        "required_figures": [
+          "primary_comparison"
+        ],
+        "required_tables": [
+          "benchmark_matrix"
+        ],
+        "citation_slots": [],
+        "data_still_needed": [],
+        "imrad_role": "results",
+        "target_words": 450
+      },
+      {
+        "id": "discussion",
+        "title": "Discussion",
+        "level": 1,
+        "goal": "Interpret results relative to hypotheses; reconcile surprising outcomes (e.g. which prior won); connect to related work.",
+        "claims": [
+          "What the evidence supports.",
+          "What it does not support."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "interpretive anchors"
+        ],
+        "data_still_needed": [],
+        "imrad_role": "discussion",
+        "target_words": 400
+      },
+      {
+        "id": "limitations",
+        "title": "Limitations",
+        "level": 1,
+        "goal": "State validity threats, metric proxies, and compute budgets honestly.",
+        "claims": [
+          "At least three concrete limitations."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [],
+        "data_still_needed": [],
+        "imrad_role": "limitations",
+        "target_words": 220
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 1,
+        "goal": "Restate contributions and headline numbers; point to artifacts.",
+        "claims": [
+          "One-paragraph takeaway with primary metric."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [],
+        "data_still_needed": [],
+        "imrad_role": "conclusion",
+        "target_words": 180
+      }
+    ],
+    "open_data_gaps": [
+      "baseline_comparison",
+      "baselines",
+      "hyperparameters",
+      "method_definition",
+      "protocol"
+    ],
+    "literature_count": 10,
+    "writing_mode_hint": "Write full academic paragraphs (IMRaD). Prefer precise claims tied to ingested metrics. Do not invent numbers. Mark template-mode output if no LLM is used.",
+    "created_at": "2026-07-18T08:41:43.827735+00:00",
+    "source": "template"
+  },
+  "revision_notes": [
+    {
+      "section_id": "abstract",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.019389+00:00"
+    },
+    {
+      "section_id": "introduction",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.020174+00:00"
+    },
+    {
+      "section_id": "related_work",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.020949+00:00"
+    },
+    {
+      "section_id": "methods",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.022078+00:00"
+    },
+    {
+      "section_id": "experiments",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.023010+00:00"
+    },
+    {
+      "section_id": "results",
+      "notes": [
+        "Normalized excessive blank lines.",
+        "rewrite_source=heuristic"
+      ],
+      "changed": true,
+      "at": "2026-07-18T08:41:44.034691+00:00"
+    },
+    {
+      "section_id": "discussion",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.035449+00:00"
+    },
+    {
+      "section_id": "limitations",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.036198+00:00"
+    },
+    {
+      "section_id": "conclusion",
+      "notes": [
+        "No mechanical issues found; left prose unchanged."
+      ],
+      "changed": false,
+      "at": "2026-07-18T08:41:44.036899+00:00"
+    }
+  ],
+  "writing_source": "template"
+}

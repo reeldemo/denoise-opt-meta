@@ -10,21 +10,16 @@ This repo is the companion to the synth implementation in [reeldemo/reelsynth](h
 
 **Julian M. Kleber** · [ORCID 0000-0001-5518-0932](https://orcid.org/0000-0001-5518-0932) · [julian.m.kleber@gmail.com](mailto:julian.m.kleber@gmail.com)
 
-## What changed in v2
+## What changed in v3
 
-v1 ranked trials by wrap-energy quality $Q$. That closed seams but did not ask whether prolonged cyclic playback matched the intended continuous wave.
+v3 regenerates the residual-objective paper through the Klaut Research Gateway **scientific writing workflow** (plan → write section-by-section → revise → figures → export), rather than hand-gluing a README into LaTeX.
 
-**v2** ranks by a prolonged **residual score** $\in[0,1]$ (1 = best):
+Scientific content is unchanged in substance from v2:
 
-\[
-R = \mathrm{clamp}\!\left(1 - \frac{\mathrm{rms}(y_{\mathrm{engine}}-y_{\mathrm{ideal}})}{\max(\mathrm{rms}(y_{\mathrm{ideal}}),\varepsilon)},\,0,\,1\right)
-\]
-
-- Ideal: same seed, no open-wrap cliffs (`generate_sound_ideal`), tiled 16×  
-- Engine: DenoiseOpt on the (possibly cliffed) cycle, tiled 16×  
-- Soft shape gate: $\mathcal{S}<0.97$ → rank $\times 0.45$
-
-The outer loop also nests an **inner unsupervised loss** fit $L=(1-\mathcal{D})+\lambda(1-\mathcal{S})$ on $\theta$ (and optionally $\lambda$). Seven prior families, including explicit `bilevel_loss`.
+- Prolonged residual $R\in[0,1]$ (1 = best), tiled $N{=}16$ ideal vs engine
+- Nested unsupervised loss $L=(1-\mathcal{D})+\lambda(1-\mathcal{S})$ searched inside priors
+- Killer: `evo_explore_515` residual **≈0.824** vs DualCosine **≈0.698** ($\Delta{+}0.126$)
+- Honest: top residual elites were mutate-only `evo_explore` (inner sweeps = 0)
 
 ### Killer result (1500 trials, val $N{=}2000$)
 
@@ -34,9 +29,24 @@ The outer loop also nests an **inner unsupervised loss** fit $L=(1-\mathcal{D})+
 | Meta Top 1 — `evo_explore_515` | **0.824** | +0.126 over naive |
 | Meta Top 2–4 | ≈0.821–0.823 | all `evo_explore` |
 
-Shape stays $\mathcal{S}\approx 1.0$ on the matrix. Nested loss-opt priors were searched; under residual they did not beat wide evolutionary mutation. That is reported honestly in the paper.
+---
 
-Frozen $\theta^\star$ in ReelSynth matches the champion.
+## Lit-combo 500 timing footnote
+
+Combinatorial hybrids of lit families (bayes / PBT / irace / MOEA·D / evo / N2N / bilevel / residual-primary + bake DualCosine/Classic/Soft/Ensemble*/Crossfade). Each outer trial **fits until convergence**: relative $|J_{\mathrm{prev}}-J_{\mathrm{cur}}|/\max(|J_{\mathrm{prev}}|,10^{-6}) < 10^{-4}$ for **3** consecutive coordinate sweeps (else max **16**).
+
+| Algorithm | Residual | Notes |
+|-----------|----------|-------|
+| Naive DualCosine | **0.705** | bake baseline (val 400) |
+| Lit-combo Top 1 — `pbt_exploit+residual_primary` | **0.903** | +0.198 over naive |
+
+**Measured wall clock (release, 500 outer iterations):** `500_ITER_WALL_TIME_SEC=157.990` (157989 ms). Host: AMD Ryzen 9 7950X3D / Windows / `BENCH_N=256` / prolong=16 / `val_fast=80`. Mean conv steps ≈10.5; 87.8% converged before max. Artifact: [`artifacts/denoise_opt_meta_lit_combo_500.json`](artifacts/denoise_opt_meta_lit_combo_500.json).
+
+```bash
+cargo run -p reelsynth --release --bin bench_denoise_meta -- 500
+```
+
+(Does not rewrite `paper/v3`; numbers for timing / hybrid search only.)
 
 ---
 
@@ -44,15 +54,25 @@ Frozen $\theta^\star$ in ReelSynth matches the champion.
 
 | Version | Path | PDF |
 |---------|------|-----|
-| **v2** (current) | [`paper/v2/`](paper/v2/) | [`paper/v2/main.pdf`](paper/v2/main.pdf) |
+| **v3** (current) | [`paper/v3/`](paper/v3/) | [`paper/v3/main.pdf`](paper/v3/main.pdf) |
+| v2 | [`paper/v2/`](paper/v2/) | [`paper/v2/main.pdf`](paper/v2/main.pdf) |
 | v1 (D/S quality) | [`paper/v1/`](paper/v1/) | [`paper/v1/main.pdf`](paper/v1/main.pdf) |
 
 Changelog: [`paper/CHANGELOG.md`](paper/CHANGELOG.md)
 
+Workflow audit trail in `paper/v3/`: `plan.md`, `revision_notes.md`, `subsections/`, `drafts/`.
+
 ```bash
-cd paper/v2
+cd paper/v3
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
+```
+
+Regenerate via gateway workflow (optional):
+
+```bash
+# Requires klaut-research-gateway on PYTHONPATH
+python scripts/regen_paper_v3.py
 ```
 
 ---
@@ -67,42 +87,22 @@ You need a checkout of **reelsynth** (Rust toolchain) and Python 3 with `matplot
 cd /path/to/reelsynth
 cargo run -p reelsynth --release --bin bench_denoise_meta
 # → brand/artifacts/denoise_opt_meta_1500.json
-# (~2–3 min on a typical laptop; sanity: append `-- 40`)
 ```
 
 ### 2. Render figures
 
-From reelsynth:
-
-```bash
-python brand/artifacts/render_benchmark_matrix.py
-# → brand/artifacts/fig_benchmark_matrix.png
-# → brand/artifacts/fig_pareto_1500.png
-# → brand/artifacts/fig_prior_families.png
-```
-
-Or from this repo (same script, expects JSON next to `../artifacts` or edit `ART`):
-
 ```bash
 cd /path/to/denoise-opt-meta
-python scripts/render_benchmark_matrix.py   # if ART points at artifacts/
+python scripts/render_benchmark_matrix.py
+# → artifacts/fig_benchmark_matrix.png, fig_pareto_1500.png, fig_prior_families.png
 ```
 
-Expected artifacts after a full run:
-
-| File | Role |
-|------|------|
-| `artifacts/denoise_opt_meta_1500.json` | Full trial report + matrix |
-| `artifacts/fig_benchmark_matrix.png` | Paper Fig. matrix |
-| `artifacts/fig_pareto_1500.png` | Residual vs loss elite scatter |
-| `artifacts/fig_prior_families.png` | Prior-family histogram |
-
-Copy PNGs into `paper/v2/figures/` before compiling if you regenerate them.
+Copy PNGs into `paper/v3/figures/` before compiling if you regenerate them.
 
 ### 3. Compile the PDF
 
 ```bash
-cd paper/v2
+cd paper/v3
 pdflatex -interaction=nonstopmode main.tex
 ```
 
@@ -114,9 +114,10 @@ pdflatex -interaction=nonstopmode main.tex
 paper/
   CHANGELOG.md
   v1/                 # D/S quality paper
-  v2/                 # residual + loss-opt paper (current)
+  v2/                 # residual + loss-opt (manual draft)
+  v3/                 # residual paper via scientific writing workflow (current)
 artifacts/            # JSON + figure PNGs
-scripts/              # harvest / render helpers
+scripts/              # harvest / render / regen helpers
 ```
 
 ## Related
@@ -125,6 +126,7 @@ scripts/              # harvest / render helpers
 |------|------|
 | [reeldemo/reelsynth](https://github.com/reeldemo/reelsynth) | DSP, `FROZEN_THETA`, `bench_denoise_meta` |
 | [reeldemo/denoise-opt-meta](https://github.com/reeldemo/denoise-opt-meta) | This repo |
+| [klaut-pro/klaut-research-gateway](https://github.com/klaut-pro/klaut-research-gateway) | `research_paper_*` scientific writing tools |
 
 ## License
 

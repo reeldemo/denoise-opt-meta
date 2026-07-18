@@ -1,0 +1,12 @@
+% [template-mode] Full academic paragraphs generated without LLM; claims restricted to ingested data.
+Let $f_\theta$ denote the seam-local bake operator with parameter vector $\theta\in[0,1]^{12}$. Mid-cycle copy constraints (when enabled) preserve interior timbre while concentrating edits near the wrap.
+
+The primary residual score compares an engine-baked cycle, tiled for $N=16$ periods, against an ideal multi-period reference constructed from the same seed with open-wrap cliffs withheld (R = clamp(1 - residual\_rms / max(ideal\_rms, 1e-6), 0, 1), comparing tiled N=16 engine bake vs ideal no-cliff sibling):
+\begin{equation}
+R=\mathrm{clamp}\!\left(1-\frac{\mathrm{rms}(y_{\mathrm{tiled}}-r^{\star}_{\mathrm{tiled}})}{\max(\mathrm{rms}(r^{\star}_{\mathrm{tiled}}),\varepsilon)},\,0,\,1\right).
+\end{equation}
+By construction $R\in[0,1]$ with $1$ best. Soft shape gates (when present in the implementation) down-weight candidates that damage mid-cycle shape.
+
+An unsupervised nested loss, also optimized inside eligible search priors, is specified as: L = (1-D) + lambda(1-S); inner coordinate descent; outer maximize R.
+
+Search priors are literature-informed families (evolutionary explore, racing, Bayesian / PBT-style exploit--mutate, bi-level loss opt, multi-objective cues). Outer selection always uses the residual score; wrap-energy diagnostics remain report auxiliaries.

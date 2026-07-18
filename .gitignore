@@ -33,3 +33,6 @@ Thumbs.db
 __pycache__/
 *.pyc
 .venv/
+
+# Local gateway paper-writer scratch (regen script)
+artifacts/gateway_papers/

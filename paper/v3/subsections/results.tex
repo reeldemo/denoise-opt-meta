@@ -1,0 +1,46 @@
+% [template-mode] Full academic paragraphs generated without LLM; claims restricted to ingested data.
+Table~\ref{tab:benchmark} summarizes the residual-primary matrix on validation $N=2000$. The champion \texttt{evo\_explore\_515} reaches residual $0.8237$ versus naive DualCosine $0.6981$ ($\Delta\approx 0.1256$).
+
+Meta Top~2--4 remain tightly clustered near $0.821--0.823$, indicating a stable elite band rather than a single fragile outlier.
+
+\begin{table}[htbp]
+\centering
+\caption{Primary comparison table assembled from ingested results.}
+\label{tab:benchmark}
+\begin{tabular}{lllll}
+\toprule
+algo & prior & residual & shape & quality \\
+\midrule
+naive\_dual\_cosine & naive & 0.6981 & 0.9948 & 0.7886 \\
+meta\_top1 & evo\_explore & 0.8237 & 1.0 & 0.7844 \\
+meta\_top2 & evo\_explore & 0.8226 & 1.0 & 0.7848 \\
+meta\_top3 & evo\_explore & 0.8225 & 1.0 & 0.7848 \\
+meta\_top4 & evo\_explore & 0.8213 & 1.0 & 0.7848 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{figures/fig_benchmark_matrix.png}
+  \caption{Naive DualCosine vs Meta Top 1--4 under residual (primary), denoise D, and shape S.}
+  \label{fig:fig_benchmark_matrix}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{figures/fig_pareto_1500.png}
+  \caption{Elite residual versus unsupervised-loss proxy after 1500 trials.}
+  \label{fig:fig_pareto_1500}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{figures/fig_prior_families.png}
+  \caption{Prior families among residual elites (top-20 / top-4).}
+  \label{fig:fig_prior_families}
+\end{figure}
+
+\paragraph{Honest note on nested loss optimization.}
+
+All twenty Pareto-fast residual elites were evo\_explore (inner sweeps = 0). Bi-level / PBT / Bayes loss-opt priors were evaluated but did not win on residual. Inner L-minimization remains part of the search design as a nested regularizer; under prolonged residual, lighter evolutionary mutations currently dominate.

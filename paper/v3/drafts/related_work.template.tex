@@ -1,0 +1,12 @@
+% [template-mode] Full academic paragraphs generated without LLM; claims restricted to ingested data.
+We organize prior work by mechanism rather than by chronology. Domain-specific discontinuity control and virtual-analog anti-aliasing inform the operator design\cite{valimaki2006va}\cite{esqueda2016aliasing}\cite{esqueda2016blamp}. Label-free restoration philosophies motivate unsupervised scoring\cite{shan2021dwt}\cite{lehtinen2018n2n}. Hyperparameter optimization, racing, and multi-objective evolutionary methods motivate the outer search priors\cite{snoek2012bo}\cite{bischl2023hpo}\cite{lopez2016irace}\cite{zhang2007moead}.
+
+\paragraph{Used.}
+
+Core anchors retained for citation and prior design include: VA / BLEP discontinuity control (Valimaki, Esqueda); Differentiable wavetable / DDSP context (Shan et al.); Noise2Noise label-free restoration philosophy (Lehtinen et al.); Bayesian HPO (Snoek et al.; Bischl survey); PBT-style exploit/mutate; irace racing (Lopez-Ibanez et al.); MOEA/D multi-objective cues (Zhang \& Li).
+
+\paragraph{Screened.}
+
+High-cite but off-domain or mechanism-mismatched items were screened and are not used as methodological dependencies: Medical imaging / federated / prompting surveys (off-domain); Adam as ambient optimizer only; MAML (Finn et al.) --- inspirational mechanism, not used (no task-gradient through a deep net).
+
+Relative to this literature, the present work contributes an application-specific prolonged residual objective and an honest accounting of which search priors actually win under that objective.

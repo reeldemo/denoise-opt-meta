@@ -1,0 +1,18 @@
+% [template-mode] Full academic paragraphs generated without LLM; claims restricted to ingested data.
+Scientific and engineering systems that process periodic or wrapped signals must confront discontinuities at wrap boundaries. Short technical paper. Classical remedies and related literature provide useful mechanisms \cite{valimaki2006va}\cite{esqueda2016aliasing}\cite{esqueda2016blamp}, yet practical operators still require an objective that matches the prolonged behavior the user hears or measures---not only a local proxy.
+
+This paper therefore separates \emph{seam-local} diagnostics from a \emph{prolonged} evaluation score, and uses literature-informed search to select operator parameters under that score.
+
+Contributions:
+
+\begin{enumerate}
+
+  \item Define a prolonged residual score $R\in[0,1]$ against an ideal tiled reference.
+
+  \item Nest an unsupervised loss fit inside literature-informed search priors while ranking by $R$.
+
+  \item Report held-out evidence that \texttt{evo\_explore\_515} reaches $0.8237$ versus baseline $0.6981$ ($\Delta\approx0.1256$).
+
+\end{enumerate}
+
+The remainder of the paper follows IMRaD structure: related work, methods, experiments, results, discussion, limitations, and conclusion.
