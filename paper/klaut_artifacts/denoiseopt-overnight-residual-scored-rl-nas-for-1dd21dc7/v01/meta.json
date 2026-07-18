@@ -1,0 +1,360 @@
+{
+  "paper_id": "denoiseopt-overnight-residual-scored-rl-nas-for-1dd21dc7",
+  "title": "DenoiseOpt Overnight: Residual-Scored RL/NAS for Wavetable Seam Bake Operators",
+  "authors": [
+    {
+      "name": "Julian M. Kleber",
+      "orcid": "0000-0001-5518-0932",
+      "email": "julian.m.kleber@gmail.com",
+      "affiliation": null
+    }
+  ],
+  "abstract_sketch": "Open wrap seams inject audible crackle under cyclic wavetable playback. We run a dense 1,000,000-step CUDA overnight search over RL, NAS, and literature-combo branches, scoring candidates by prolonged residual R in [0,1] (1=best) against an ideal tiled reference, and compare to a DualCosine baseline. Honest numbers only after 1M completion.",
+  "repo_links": [
+    "https://github.com/reeldemo/reelsynth",
+    "https://github.com/reeldemo/denoise-opt-meta"
+  ],
+  "user_needs": "Paper v4. Excellent Introduction and Related Work grounded in harvested+PDF-analyzed literature. Strong Discussion comparing 1M champ residual, DualCosine, lit-combo, RL/NAS branches. Author Julian M. Kleber ORCID 0000-0001-5518-0932. Do not invent numbers; wait for results_blob.",
+  "created_at": "2026-07-18T10:57:27.183607+00:00",
+  "updated_at": "2026-07-18T10:57:49.512532+00:00",
+  "current_version": "v01",
+  "outline": [
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "related_work",
+      "title": "Related Work",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "methods",
+      "title": "Methods",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "experiments",
+      "title": "Experiments",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "discussion",
+      "title": "Discussion",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "limitations",
+      "title": "Limitations",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "conclusion",
+      "title": "Conclusion",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    }
+  ],
+  "figures": [],
+  "pending_requests": [],
+  "ingested_data": {},
+  "subsection_paths": {},
+  "latex_engine": "xelatex",
+  "literature_refs": [
+    {
+      "cite_key": "elsken2019nas",
+      "title": "Neural Architecture Search: A Survey",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\elsken2019nas.pdf",
+      "abstract": "Deep Learning has enabled remarkable progress over the last years on a variety of tasks, such as image recognition, speech recognition, and machine translation. One crucial aspect for this progress are novel neural architectures. Currently employed architectures have mostly been developed manually by human experts, which is a time-consuming and error- prone process. Because of this, there is growing interest in automated neural architecture search methods. We provide an overview of existing work",
+      "pdf_path": "pdfs/elsken2019nas.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "Deep Learning has enabled remarkable progress over the last years on a variety of tasks, such as image recognition, speech recognition, and machine translation. One crucial aspect for this progress are novel neural architectures. Currently employed architectures have mostly been developed manually by human experts, which is a time-consuming and error- prone process. Because of this, there is growing interest in automated neural architecture search methods. We provide an overview of existing work in this ﬁeld of research and cate- gorize them according to three dimensions: search space, search strategy, and performance estimation strategy. Keywords: Neural Architecture Search, AutoML,…",
+        "intro_snippet": "The success of deep learning in perceptual tasks is largely due to its automation of the feature engineering process: hierarchical feature extractors are learned in an end-to-end fashion from data rather than manually designed. This success has been accompanied, however, by a rising demand for architecture engineering, where increasingly more complex neural architectures are designed manually. Neural Architecture Search (NAS), the process of automating architecture engineering, is thus a logical next step in automating machine learning. Already by now, NAS methods have outperformed manually designed architec- tures on some tasks such as image classiﬁcation (Zoph et al., 2018; Real et al., 2019), object detection (Zoph et al., 2018) or semantic segmentation (Chen et al., 2018). NAS can…",
+        "conclusion_snippet": "of the actions sampled so far, and the (undiscounted) reward is obtained only after the ﬁnal action. However, since no interaction with an environment occurs during this sequential process (no external state is observed, and there are no intermediate rewards), we ﬁnd it more intuitive to interpret the architecture sampling process as the sequential generation of a single action; this simpliﬁes the RL problem to a stateless multi-armed bandit problem. A related approach was proposed by Cai et al. (2018a), who frame NAS as a sequential decision process: in their approach the state is the current (partially trained) architecture, the reward is an estimate of the architecture’s performance,…",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "engel2020ddsp",
+      "title": "DDSP: Differentiable Digital Signal Processing",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\engel2020ddsp.pdf",
+      "abstract": "Most generative models of audio directly generate samples in one of two domains: time or frequency. While sufﬁcient to express any signal, these representations are inefﬁcient, as they do not utilize existing knowledge of how sound is generated and perceived. A third approach (vocoders/synthesizers) successfully incorpo- rates strong domain knowledge of signal processing and perception, but has been less actively researched due to limited expressivity and difﬁculty integrating with modern auto-d",
+      "pdf_path": "pdfs/engel2020ddsp.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "Most generative models of audio directly generate samples in one of two domains: time or frequency. While sufﬁcient to express any signal, these representations are inefﬁcient, as they do not utilize existing knowledge of how sound is generated and perceived. A third approach (vocoders/synthesizers) successfully incorpo- rates strong domain knowledge of signal processing and perception, but has been less actively researched due to limited expressivity and difﬁculty integrating with modern auto-differentiation-based machine learning methods. In this paper, we introduce the Differentiable Digital Signal Processing (DDSP) library, which en- ables direct integration of classic signal…",
+        "intro_snippet": "043, USA {jesseengel,hanoih,gcj,adarob}@google.com ABSTRACT Most generative models of audio directly generate samples in one of two domains: time or frequency. While sufﬁcient to express any signal, these representations are inefﬁcient, as they do not utilize existing knowledge of how sound is generated and perceived. A third approach (vocoders/synthesizers) successfully incorpo- rates strong domain knowledge of signal processing and perception, but has been less actively researched due to limited expressivity and difﬁculty integrating with modern auto-differentiation-based machine learning methods. In this paper, we introduce the Differentiable Digital Signal Processing (DDSP) library, whic",
+        "conclusion_snippet": "ndamental limitation of the technique and perturbations such as inharmonicity can also be incorporated to handle phenomena such as stiff strings (Smith, 2010). D.2 R EGULARIZATION It is worth mentioning that the modular structure of the synthesizers also makes it possible to deﬁne additional losses in terms of different synthesizer outputs and parameters. For example, we may impose an SNR loss to penalize outputs with too much noise if we know the training data consists of mostly clean data. We have not experimented too much with such engineered losses, but we believe they can make training more efﬁcient, even though such engineering methods deviates from the end-to-end training paradigm, 19",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "finn2017maml",
+      "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+      "role": "screened_relevant",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\finn2017maml.pdf",
+      "abstract": "We propose an algorithm for meta-learning that is model-agnostic, in the sense that it is com- patible with any model trained with gradient de- scent and applicable to a variety of different learning problems, including classiﬁcation, re- gression, and reinforcement learning. The goal of meta-learning is to train a model on a vari- ety of learning tasks, such that it can solve new learning tasks using only a small number of train- ing samples. In our approach, the parameters of the model are exp",
+      "pdf_path": "pdfs/finn2017maml.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "We propose an algorithm for meta-learning that is model-agnostic, in the sense that it is com- patible with any model trained with gradient de- scent and applicable to a variety of different learning problems, including classiﬁcation, re- gression, and reinforcement learning. The goal of meta-learning is to train a model on a vari- ety of learning tasks, such that it can solve new learning tasks using only a small number of train- ing samples. In our approach, the parameters of the model are explicitly trained such that a small number of gradient steps with a small amount of training data from a new task will produce good generalization performance on that task. In effect, our method…",
+        "intro_snippet": "Learning quickly is a hallmark of human intelligence, whether it involves recognizing objects from a few exam- ples or quickly learning new skills after just minutes of experience. Our artiﬁcial agents should be able to do the same, learning and adapting quickly from only a few exam- ples, and continuing to adapt as more data becomes avail- able. This kind of fast and ﬂexible learning is challenging, since the agent must integrate its prior experience with a small amount of new information, while avoiding overﬁt- ting to the new data. Furthermore, the form of prior ex- perience and new data will depend on the task. As such, for the greatest applicability, the mechanism for learning to learn (or meta-learning) should be general to the task and 1University of California, Berkeley 2OpenAI.…",
+        "conclusion_snippet": "the same experimental protocol. We report the results in Tables 3, 4, and 5. Learning an adaptable con- text vector performed well on the toy pointmass problem, but sub-par on more difﬁcult problems, likely due to a less ﬂexible meta-optimization. Table 4. 2D Pointmass, average return num. grad steps 0 1 2 3 context vector −42.42 −13.90 −5.17 −3.18 MAML (ours) −40.41 −11.68 −3.33 −3.23 Table 5. Half-cheetah forward/backward, average return num. grad steps 0 1 2 3 context vector −40.49 −44.08 −38.27 −42.50 MAML (ours) −50.69 293.19 313.48 315.65 Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks Figure 7. A random sample of qualitative results from the sinusoid regression task.",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "jaderberg2017pbt",
+      "title": "Population Based Training of Neural Networks",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\jaderberg2017pbt.pdf",
+      "abstract": "Neural networks dominate the modern machine learning landscape, but their training and success still suffer from sensitivity to empirical choices of hyperparameters such as model architecture, loss function, and optimisation algorithm. In this work we present Population Based Training (PBT) , a simple asynchronous optimisation algorithm which effectively utilises a ﬁxed computational budget to jointly optimise a population of models and their hyperparameters to maximise performance. Importantly,",
+      "pdf_path": "pdfs/jaderberg2017pbt.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "Neural networks dominate the modern machine learning landscape, but their training and success still suffer from sensitivity to empirical choices of hyperparameters such as model architecture, loss function, and optimisation algorithm. In this work we present Population Based Training (PBT) , a simple asynchronous optimisation algorithm which effectively utilises a ﬁxed computational budget to jointly optimise a population of models and their hyperparameters to maximise performance. Importantly, PBT discovers a schedule of hy- perparameter settings rather than following the generally sub-optimal strategy of trying to ﬁnd a single ﬁxed set to use for the whole course of training. With just…",
+        "intro_snippet": "Neural networks have become the workhorse non-linear function approximator in a number of machine learn- ing domains, most notably leading to signiﬁcant advances in reinforcement learning (RL) and supervised learning. However, it is often overlooked that the success of a particular neural network model depends upon the joint tuning of the model structure, the data presented, and the details of how the model is optimised. Each of these components of a learning framework is controlled by a number of parameters, hyperparam- eters, which inﬂuence the learning process and must be properly tuned to fully unlock the network perfor- mance. This essential tuning process is computationally expensive, and as neural network systems become more complicated and endowed with even more hyperparameters,…",
+        "conclusion_snippet": "We have presented Population Based Training, which represents a practical way to augment the standard training of neural network models. We have shown consistent improvements in accuracy, training time and stability across a wide range of domains by being able to optimise over weights and hyperparameters jointly. It is important to note that contrary to conventional hyperparameter optimisation techniques, PBT discovers 13 an adaptive schedule rather than a ﬁxed set of hyperparameters. We already observed signiﬁcant improve- ments on a wide range of challenging problems including state of the art models on deep reinforcement learning and hierarchical reinforcement learning, machine…",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "lehtinen2018n2n",
+      "title": "Noise2Noise: Learning Image Restoration without Clean Data",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\lehtinen2018n2n.pdf",
+      "abstract": "We apply basic statistical reasoning to signal re- construction by machine learning – learning to map corrupted observations to clean signals – with a simple and powerful conclusion: it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synth",
+      "pdf_path": "pdfs/lehtinen2018n2n.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "We apply basic statistical reasoning to signal re- construction by machine learning – learning to map corrupted observations to clean signals – with a simple and powerful conclusion: it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans – all corrupted by different processes – based on noisy data only. 1.…",
+        "intro_snippet": "Signal reconstruction from corrupted or incomplete mea- surements is an important subﬁeld of statistical data analysis. Recent advances in deep neural networks have sparked sig- niﬁcant interest in…",
+        "conclusion_snippet": ": it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans – all corrupted by different processes – based on noisy data only. 1. Introduction Signal reconstruction from corrupted or incomplete mea- surements is an important subﬁeld of statistical data analysis. Recent advances in deep neural networks have sparked sig- niﬁcant interest in avoiding the traditional,…",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "liu2019darts",
+      "title": "DARTS: Differentiable Architecture Search",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\liu2019darts.pdf",
+      "abstract": "This paper addresses the scalability challenge of architecture search by formulating the task in a differentiable manner. Unlike conventional approaches of applying evo- lution or reinforcement learning over a discrete and non-differentiable search space, our method is based on the continuous relaxation of the architecture representation, allowing efﬁcient search of the architecture using gradient descent. Extensive experiments on CIFAR-10, ImageNet, Penn Treebank and WikiText-2 show that our al",
+      "pdf_path": "pdfs/liu2019darts.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "This paper addresses the scalability challenge of architecture search by formulating the task in a differentiable manner. Unlike conventional approaches of applying evo- lution or reinforcement learning over a discrete and non-differentiable search space, our method is based on the continuous relaxation of the architecture representation, allowing efﬁcient search of the architecture using gradient descent. Extensive experiments on CIFAR-10, ImageNet, Penn Treebank and WikiText-2 show that our algorithm excels in discovering high-performance convolutional architectures for image classiﬁcation and recurrent architectures for language modeling, while being orders of magnitude faster than…",
+        "intro_snippet": ". Annals of Operations Research, 34(1):1–11, 1992. Bowen Baker, Otkrist Gupta, Nikhil Naik, and Ramesh Raskar. Designing neural network architec- tures using reinforcement learning. ICLR, 2017. Bowen Baker, Otkrist Gupta, Ramesh Raskar, and Nikhil Naik. Accelerating neural architecture search using performance prediction. ICLR Workshop, 2018. Gabriel Bender, Pieter-Jan Kindermans, Barret Zoph, Vijay Vasudevan, and Quoc Le. Understanding and simplifying one-shot architecture search. In International Conference on Machine Learning , pp. 549–558, 2018. Andrew Brock, Theodore Lim, James M Ritchie, and Nick Weston. Smash: one-shot model architecture search through hypernetworks. ICLR, 2018. Han Cai, Tianyao Chen, Weinan Zhang, Yong Yu, and Jun Wang. Efﬁcient architecture search by network…",
+        "conclusion_snippet": "eater than the 5.6× 1014 of PNAS (Liu et al., 2018a) which learns only a single type of cell. Also note that we retained the top-2 predecessors per node only at the very end, and our continuous search space before this ﬁnal discretization step is even larger. Speciﬁcally, each relaxed cell (a fully connected graph) contains 2 + 3 + 4 + 5 = 14 learnable edges, allowing (7 + 1)14≈ 4× 1012 possible conﬁgurations (+1 to include the zero op indicating a lack of connection). Again, since we are learning both normal and reduction cells, the total number of architectures covered by the continuous space before discretization is (4× 1012)2≈ 1025. 4We did not conduct extensive hyperparameter tuning. 13",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "pham2018enas",
+      "title": "Efficient Neural Architecture Search via Parameter Sharing",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\pham2018enas.pdf",
+      "abstract": "We propose Efﬁcient Neural Architecture Search (ENAS), a fast and inexpensive approach for au- tomatic model design. In ENAS, a controller dis- covers neural network architectures by searching for an optimal subgraph within a large computa- tional graph. The controller is trained with pol- icy gradient to select a subgraph that maximizes the expected reward on a validation set. Mean- while the model corresponding to the selected subgraph is trained to minimize a canonical cross entropy loss. Sha",
+      "pdf_path": "pdfs/pham2018enas.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "We propose Efﬁcient Neural Architecture Search (ENAS), a fast and inexpensive approach for au- tomatic model design. In ENAS, a controller dis- covers neural network architectures by searching for an optimal subgraph within a large computa- tional graph. The controller is trained with pol- icy gradient to select a subgraph that maximizes the expected reward on a validation set. Mean- while the model corresponding to the selected subgraph is trained to minimize a canonical cross entropy loss. Sharing parameters among child models allows ENAS to deliver strong empiri- cal performances, while using much fewer GPU- hours than existing automatic model design ap- proaches, and notably, 1000x…",
+        "intro_snippet": "Neural architecture search (NAS) has been successfully ap- plied to design model architectures for image classiﬁca- tion and language models ( Zoph & Le , 2017; Zoph et al. , 2018; Cai et al., 2018; Liu et al., 2017; 2018). In NAS, an RNN controller is trained in a loop: the controller ﬁrst samples a candidate architecture, i.e. a child model , and then trains it to convergence to measure its performance on the task of desire. The controller then uses the perfor- mance as a guiding signal to ﬁnd more promising architec- tures. This process is repeated for many iterations. De- *Equal contribution 1Google Brain 2Language Technology In- stitute, Carnegie Mellon University 3Department of Computer Sci- ence, Stanford University. Correspondence to: Hieu Pham <hy- hieu@cmu.edu>, Melody Y .…",
+        "conclusion_snippet": "NAS is an important advance that automatizes the design- ing process of neural networks. However, NAS’s com- putational expense prevents it from being widely adopted. In this paper, we presented ENAS, a novel method that speeds up NAS by more than 1000x, in terms of GPU hours. ENAS’s key contribution is the sharing of parame- ters across child models during the search for architecture s. This insight is implemented by searching for a subgraph within a larger graph that incorporates architectures in a search space. We showed that ENAS works well on both CIFAR-10 and Penn Treebank datasets. Acknowledgements The authors want to thank Jaime Carbonell, Zihang Dai, Lukasz Kaiser, Azalia…",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "shan2021diffwave",
+      "title": "DiffWave: A Versatile Diffusion Model for Audio Synthesis",
+      "role": "screened_relevant",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\shan2021diffwave.pdf",
+      "abstract": "This paper introduces WaveGrad, a conditional model for waveform generation which estimates gradients of the data density. The model is built on prior work on score matching and diffusion probabilistic models. It starts from a Gaussian white noise signal and iteratively reﬁnes the signal via a gradient-based sampler conditioned on the mel-spectrogram. WaveGrad offers a natural way to trade in- ference speed for sample quality by adjusting the number of reﬁnement steps, and bridges the gap betwee",
+      "pdf_path": "pdfs/shan2021diffwave.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "This paper introduces WaveGrad, a conditional model for waveform generation which estimates gradients of the data density. The model is built on prior work on score matching and diffusion probabilistic models. It starts from a Gaussian white noise signal and iteratively reﬁnes the signal via a gradient-based sampler conditioned on the mel-spectrogram. WaveGrad offers a natural way to trade in- ference speed for sample quality by adjusting the number of reﬁnement steps, and bridges the gap between non-autoregressive and autoregressive models in terms of audio quality. We ﬁnd that it can generate high ﬁdelity audio samples using as few as six iterations. Experiments reveal WaveGrad to…",
+        "intro_snippet": "d Norouzi, William Chan † Google Research, Brain Team {ngyuzh,heigazen,ronw,mnorouzi,williamchan}@google.com ABSTRACT This paper introduces WaveGrad, a conditional model for waveform generation which estimates gradients of the data density. The model is built on prior work on score matching and diffusion probabilistic models. It starts from a Gaussian white noise signal and iteratively reﬁnes the signal via a gradient-based sampler conditioned on the mel-spectrogram. WaveGrad offers a natural way to trade in- ference speed for sample quality by adjusting the number of reﬁnement steps, and bridges the gap between non-autoregressive and autoregressive models in terms of audio quality. We ﬁnd t",
+        "conclusion_snippet": "s allowed evaluate up to six stimuli. Test stimuli were randomly chosen and presented for each subject. Each stimulus was presented to a subject in isolation and was evaluated by one subject. The subjects were paid and native speakers of English living in United States. They were requested to use headphones in a quiet room. E S UBJECTIVE SCORES REPORTED IN THE PRIOR WORK Table E.2 shows the reported mean opinion scores of the prior work which used the same speaker. Although different papers listed here used the same female speaker, their results are not directly comparable due to differences in the training dataset, sampling rates, conditioning features, and sentences used for evaluation. 15",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "snoek2012bo",
+      "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\snoek2012bo.pdf",
+      "abstract": "PRACTICAL BAYESIAN OPTIMIZATION OF MACHINE LEARNING ALGORITHMS By Jasper Snoek, Hugo Larochelle and Ryan P. Adams University of Toronto, Universit´ e de Sherbrooke and Harvard University Machine learning algorithms frequently require careful tuning of model hyperparameters, regularization terms, and optimization pa- rameters. Unfortunately, this tuning is often a “black art” that re- quires expert experience, unwritten rules of thumb, or sometimes brute-force search. Much more appealing is the i",
+      "pdf_path": "pdfs/snoek2012bo.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "PRACTICAL BAYESIAN OPTIMIZATION OF MACHINE LEARNING ALGORITHMS By Jasper Snoek, Hugo Larochelle and Ryan P. Adams University of Toronto, Universit´ e de Sherbrooke and Harvard University Machine learning algorithms frequently require careful tuning of model hyperparameters, regularization terms, and optimization pa- rameters. Unfortunately, this tuning is often a “black art” that re- quires expert experience, unwritten rules of thumb, or sometimes brute-force search. Much more appealing is the i",
+        "intro_snippet": ". Machine learning algorithms are rarely parameter-free; whether via the properties of a regularizer, the hyperprior of a generative model, or the step size of a gradient-based optimization, learning procedures almost always require a set of high-level choices that signiﬁcantly impact generalization performance. As a practitioner, one is usually able to specify the general framework of an inductive bias much more easily than the particular weighting that it should have relative to training data. As a result, these high-level parameters are often considered a nuisance, making it desirable to develop algorithms with as few of these “knobs” as possible. Another, more ﬂexible take on this issue is to view the optimization of high-level parameters as a procedure to be automated. Speciﬁcally,…",
+        "conclusion_snippet": ". In this paper we presented methods for performing Bayesian optimiza- tion of hyperparameters associated with general machine learning algorithms. We introduced a fully Bayesian treatment for expected improvement, and algorithms for dealing with variable time regimes and parallelized experiments. Our empirical analysis demonstrates the eﬀective- ness of our approaches on three challenging recently published problems spanning diﬀerent ar- eas of machine learning. The code used will be made publicly available. The resulting Bayesian optimization ﬁnds better hyperparameters signiﬁcantly faster than the approaches used by the authors. Indeed our algorithms surpassed a human expert at…",
+        "has_pdf_text": true
+      }
+    },
+    {
+      "cite_key": "zhang2007moead",
+      "title": "MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition",
+      "role": "used",
+      "local_pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v4\\pdfs\\zhang2007moead.pdf",
+      "abstract": "In this paper we compare the performance characteristics of our selec- tion based learning algorithm for Web crawlers with the char acteristics of the reinforcement learning algorithm. The task of the cra wlers is to ﬁnd new information on the Web. The selection algorithm, cal led weblog update, modiﬁes the starting URL lists of our crawlers based on the found URLs containing new information. The reinforcement learni ng algorithm modiﬁes the URL orderings of the crawlers based on the receiv ed r",
+      "pdf_path": "pdfs/zhang2007moead.pdf",
+      "pdf_analysis": {
+        "abstract_snippet": "In this paper we compare the performance characteristics of our selec- tion based learning algorithm for Web crawlers with the char acteristics of the reinforcement learning algorithm. The task of the cra wlers is to ﬁnd new information on the Web. The selection algorithm, cal led weblog update, modiﬁes the starting URL lists of our crawlers based on the found URLs containing new information. The reinforcement learni ng algorithm modiﬁes the URL orderings of the crawlers based on the receiv ed rein- forcements for submitted documents. We performed simulati ons based on data collected from the Web. The collected portion of the Web is typical and exhibits scale-free small world (SFSW)…",
+        "intro_snippet": "The largest source of information today is the World Wide Web . The estimated number of documents nears 10 billion. Similarly, the number of documents changing on a daily basis is also enormous. The ever-increasing growt h of the Web presents a considerable challenge in ﬁnding novel information on the W eb. In addition, properties of the Web, like scale-free small wo rld (SFSW) structure [1, 12] may create additional challenges. For example the di rect consequence of the scale-free small world property is that there are numerous U RLs or sets of interlinked URLs, which have a large number of incoming links. Intellige nt web crawlers can be easily trapped at the neighborhood of such junctions as it ha s been shown previously [13, 15]. We have developed a novel artiﬁcial life (A-life)…",
+        "conclusion_snippet": "of the paper is that there may exi st some eﬃcient strategy for incremental crawlers for reducing the number o f obsolete pages without the need for any theoretical model about the change rate of pa ges. 3 Forager architecture There are two diﬀerent kinds of agents: the foragers and the r einforcing agent (RA). The ﬂeet of foragers crawl the web and send the URLs of the sele cted documents to the reinforcing agent. The RA determines which forager shou ld work for the RA and how long a forager should work. The RA sends reinforcements t o the foragers based on the received URLs. We employ a ﬂeet of foragers to study the competition among in dividual foragers. The ﬂeet of foragers allows to…",
+        "has_pdf_text": true
+      }
+    }
+  ],
+  "pdf_files": {
+    "elsken2019nas": "pdfs/elsken2019nas.pdf",
+    "engel2020ddsp": "pdfs/engel2020ddsp.pdf",
+    "finn2017maml": "pdfs/finn2017maml.pdf",
+    "jaderberg2017pbt": "pdfs/jaderberg2017pbt.pdf",
+    "lehtinen2018n2n": "pdfs/lehtinen2018n2n.pdf",
+    "liu2019darts": "pdfs/liu2019darts.pdf",
+    "pham2018enas": "pdfs/pham2018enas.pdf",
+    "shan2021diffwave": "pdfs/shan2021diffwave.pdf",
+    "snoek2012bo": "pdfs/snoek2012bo.pdf",
+    "zhang2007moead": "pdfs/zhang2007moead.pdf"
+  },
+  "pdf_analyses": {
+    "elsken2019nas": {
+      "title": "Neural Architecture Search: A Survey",
+      "abstract_snippet": "Deep Learning has enabled remarkable progress over the last years on a variety of tasks, such as image recognition, speech recognition, and machine translation. One crucial aspect for this progress are novel neural architectures. Currently employed architectures have mostly been developed manually by human experts, which is a time-consuming and error- prone process. Because of this, there is growing interest in automated neural architecture search methods. We provide an overview of existing work in this ﬁeld of research and cate- gorize them according to three dimensions: search space, search strategy, and performance estimation strategy. Keywords: Neural Architecture Search, AutoML,…",
+      "intro_snippet": "The success of deep learning in perceptual tasks is largely due to its automation of the feature engineering process: hierarchical feature extractors are learned in an end-to-end fashion from data rather than manually designed. This success has been accompanied, however, by a rising demand for architecture engineering, where increasingly more complex neural architectures are designed manually. Neural Architecture Search (NAS), the process of automating architecture engineering, is thus a logical next step in automating machine learning. Already by now, NAS methods have outperformed manually designed architec- tures on some tasks such as image classiﬁcation (Zoph et al., 2018; Real et al., 2019), object detection (Zoph et al., 2018) or semantic segmentation (Chen et al., 2018). NAS can…",
+      "conclusion_snippet": "of the actions sampled so far, and the (undiscounted) reward is obtained only after the ﬁnal action. However, since no interaction with an environment occurs during this sequential process (no external state is observed, and there are no intermediate rewards), we ﬁnd it more intuitive to interpret the architecture sampling process as the sequential generation of a single action; this simpliﬁes the RL problem to a stateless multi-armed bandit problem. A related approach was proposed by Cai et al. (2018a), who frame NAS as a sequential decision process: in their approach the state is the current (partially trained) architecture, the reward is an estimate of the architecture’s performance,…",
+      "char_count": 61294,
+      "cite_key": "elsken2019nas",
+      "role": "used",
+      "pdf_path": "pdfs/elsken2019nas.pdf",
+      "has_pdf_text": true
+    },
+    "engel2020ddsp": {
+      "title": "DDSP: Differentiable Digital Signal Processing",
+      "abstract_snippet": "Most generative models of audio directly generate samples in one of two domains: time or frequency. While sufﬁcient to express any signal, these representations are inefﬁcient, as they do not utilize existing knowledge of how sound is generated and perceived. A third approach (vocoders/synthesizers) successfully incorpo- rates strong domain knowledge of signal processing and perception, but has been less actively researched due to limited expressivity and difﬁculty integrating with modern auto-differentiation-based machine learning methods. In this paper, we introduce the Differentiable Digital Signal Processing (DDSP) library, which en- ables direct integration of classic signal…",
+      "intro_snippet": "043, USA {jesseengel,hanoih,gcj,adarob}@google.com ABSTRACT Most generative models of audio directly generate samples in one of two domains: time or frequency. While sufﬁcient to express any signal, these representations are inefﬁcient, as they do not utilize existing knowledge of how sound is generated and perceived. A third approach (vocoders/synthesizers) successfully incorpo- rates strong domain knowledge of signal processing and perception, but has been less actively researched due to limited expressivity and difﬁculty integrating with modern auto-differentiation-based machine learning methods. In this paper, we introduce the Differentiable Digital Signal Processing (DDSP) library, whic",
+      "conclusion_snippet": "ndamental limitation of the technique and perturbations such as inharmonicity can also be incorporated to handle phenomena such as stiff strings (Smith, 2010). D.2 R EGULARIZATION It is worth mentioning that the modular structure of the synthesizers also makes it possible to deﬁne additional losses in terms of different synthesizer outputs and parameters. For example, we may impose an SNR loss to penalize outputs with too much noise if we know the training data consists of mostly clean data. We have not experimented too much with such engineered losses, but we believe they can make training more efﬁcient, even though such engineering methods deviates from the end-to-end training paradigm, 19",
+      "char_count": 54655,
+      "cite_key": "engel2020ddsp",
+      "role": "used",
+      "pdf_path": "pdfs/engel2020ddsp.pdf",
+      "has_pdf_text": true
+    },
+    "finn2017maml": {
+      "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+      "abstract_snippet": "We propose an algorithm for meta-learning that is model-agnostic, in the sense that it is com- patible with any model trained with gradient de- scent and applicable to a variety of different learning problems, including classiﬁcation, re- gression, and reinforcement learning. The goal of meta-learning is to train a model on a vari- ety of learning tasks, such that it can solve new learning tasks using only a small number of train- ing samples. In our approach, the parameters of the model are explicitly trained such that a small number of gradient steps with a small amount of training data from a new task will produce good generalization performance on that task. In effect, our method…",
+      "intro_snippet": "Learning quickly is a hallmark of human intelligence, whether it involves recognizing objects from a few exam- ples or quickly learning new skills after just minutes of experience. Our artiﬁcial agents should be able to do the same, learning and adapting quickly from only a few exam- ples, and continuing to adapt as more data becomes avail- able. This kind of fast and ﬂexible learning is challenging, since the agent must integrate its prior experience with a small amount of new information, while avoiding overﬁt- ting to the new data. Furthermore, the form of prior ex- perience and new data will depend on the task. As such, for the greatest applicability, the mechanism for learning to learn (or meta-learning) should be general to the task and 1University of California, Berkeley 2OpenAI.…",
+      "conclusion_snippet": "the same experimental protocol. We report the results in Tables 3, 4, and 5. Learning an adaptable con- text vector performed well on the toy pointmass problem, but sub-par on more difﬁcult problems, likely due to a less ﬂexible meta-optimization. Table 4. 2D Pointmass, average return num. grad steps 0 1 2 3 context vector −42.42 −13.90 −5.17 −3.18 MAML (ours) −40.41 −11.68 −3.33 −3.23 Table 5. Half-cheetah forward/backward, average return num. grad steps 0 1 2 3 context vector −40.49 −44.08 −38.27 −42.50 MAML (ours) −50.69 293.19 313.48 315.65 Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks Figure 7. A random sample of qualitative results from the sinusoid regression task.",
+      "char_count": 54568,
+      "cite_key": "finn2017maml",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/finn2017maml.pdf",
+      "has_pdf_text": true
+    },
+    "jaderberg2017pbt": {
+      "title": "Population Based Training of Neural Networks",
+      "abstract_snippet": "Neural networks dominate the modern machine learning landscape, but their training and success still suffer from sensitivity to empirical choices of hyperparameters such as model architecture, loss function, and optimisation algorithm. In this work we present Population Based Training (PBT) , a simple asynchronous optimisation algorithm which effectively utilises a ﬁxed computational budget to jointly optimise a population of models and their hyperparameters to maximise performance. Importantly, PBT discovers a schedule of hy- perparameter settings rather than following the generally sub-optimal strategy of trying to ﬁnd a single ﬁxed set to use for the whole course of training. With just…",
+      "intro_snippet": "Neural networks have become the workhorse non-linear function approximator in a number of machine learn- ing domains, most notably leading to signiﬁcant advances in reinforcement learning (RL) and supervised learning. However, it is often overlooked that the success of a particular neural network model depends upon the joint tuning of the model structure, the data presented, and the details of how the model is optimised. Each of these components of a learning framework is controlled by a number of parameters, hyperparam- eters, which inﬂuence the learning process and must be properly tuned to fully unlock the network perfor- mance. This essential tuning process is computationally expensive, and as neural network systems become more complicated and endowed with even more hyperparameters,…",
+      "conclusion_snippet": "We have presented Population Based Training, which represents a practical way to augment the standard training of neural network models. We have shown consistent improvements in accuracy, training time and stability across a wide range of domains by being able to optimise over weights and hyperparameters jointly. It is important to note that contrary to conventional hyperparameter optimisation techniques, PBT discovers 13 an adaptive schedule rather than a ﬁxed set of hyperparameters. We already observed signiﬁcant improve- ments on a wide range of challenging problems including state of the art models on deep reinforcement learning and hierarchical reinforcement learning, machine…",
+      "char_count": 71070,
+      "cite_key": "jaderberg2017pbt",
+      "role": "used",
+      "pdf_path": "pdfs/jaderberg2017pbt.pdf",
+      "has_pdf_text": true
+    },
+    "lehtinen2018n2n": {
+      "title": "Noise2Noise: Learning Image Restoration without Clean Data",
+      "abstract_snippet": "We apply basic statistical reasoning to signal re- construction by machine learning – learning to map corrupted observations to clean signals – with a simple and powerful conclusion: it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans – all corrupted by different processes – based on noisy data only. 1.…",
+      "intro_snippet": "Signal reconstruction from corrupted or incomplete mea- surements is an important subﬁeld of statistical data analysis. Recent advances in deep neural networks have sparked sig- niﬁcant interest in…",
+      "conclusion_snippet": ": it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans – all corrupted by different processes – based on noisy data only. 1. Introduction Signal reconstruction from corrupted or incomplete mea- surements is an important subﬁeld of statistical data analysis. Recent advances in deep neural networks have sparked sig- niﬁcant interest in avoiding the traditional,…",
+      "char_count": 47808,
+      "cite_key": "lehtinen2018n2n",
+      "role": "used",
+      "pdf_path": "pdfs/lehtinen2018n2n.pdf",
+      "has_pdf_text": true
+    },
+    "liu2019darts": {
+      "title": "DARTS: Differentiable Architecture Search",
+      "abstract_snippet": "This paper addresses the scalability challenge of architecture search by formulating the task in a differentiable manner. Unlike conventional approaches of applying evo- lution or reinforcement learning over a discrete and non-differentiable search space, our method is based on the continuous relaxation of the architecture representation, allowing efﬁcient search of the architecture using gradient descent. Extensive experiments on CIFAR-10, ImageNet, Penn Treebank and WikiText-2 show that our algorithm excels in discovering high-performance convolutional architectures for image classiﬁcation and recurrent architectures for language modeling, while being orders of magnitude faster than…",
+      "intro_snippet": ". Annals of Operations Research, 34(1):1–11, 1992. Bowen Baker, Otkrist Gupta, Nikhil Naik, and Ramesh Raskar. Designing neural network architec- tures using reinforcement learning. ICLR, 2017. Bowen Baker, Otkrist Gupta, Ramesh Raskar, and Nikhil Naik. Accelerating neural architecture search using performance prediction. ICLR Workshop, 2018. Gabriel Bender, Pieter-Jan Kindermans, Barret Zoph, Vijay Vasudevan, and Quoc Le. Understanding and simplifying one-shot architecture search. In International Conference on Machine Learning , pp. 549–558, 2018. Andrew Brock, Theodore Lim, James M Ritchie, and Nick Weston. Smash: one-shot model architecture search through hypernetworks. ICLR, 2018. Han Cai, Tianyao Chen, Weinan Zhang, Yong Yu, and Jun Wang. Efﬁcient architecture search by network…",
+      "conclusion_snippet": "eater than the 5.6× 1014 of PNAS (Liu et al., 2018a) which learns only a single type of cell. Also note that we retained the top-2 predecessors per node only at the very end, and our continuous search space before this ﬁnal discretization step is even larger. Speciﬁcally, each relaxed cell (a fully connected graph) contains 2 + 3 + 4 + 5 = 14 learnable edges, allowing (7 + 1)14≈ 4× 1012 possible conﬁgurations (+1 to include the zero op indicating a lack of connection). Again, since we are learning both normal and reduction cells, the total number of architectures covered by the continuous space before discretization is (4× 1012)2≈ 1025. 4We did not conduct extensive hyperparameter tuning. 13",
+      "char_count": 45752,
+      "cite_key": "liu2019darts",
+      "role": "used",
+      "pdf_path": "pdfs/liu2019darts.pdf",
+      "has_pdf_text": true
+    },
+    "pham2018enas": {
+      "title": "Efficient Neural Architecture Search via Parameter Sharing",
+      "abstract_snippet": "We propose Efﬁcient Neural Architecture Search (ENAS), a fast and inexpensive approach for au- tomatic model design. In ENAS, a controller dis- covers neural network architectures by searching for an optimal subgraph within a large computa- tional graph. The controller is trained with pol- icy gradient to select a subgraph that maximizes the expected reward on a validation set. Mean- while the model corresponding to the selected subgraph is trained to minimize a canonical cross entropy loss. Sharing parameters among child models allows ENAS to deliver strong empiri- cal performances, while using much fewer GPU- hours than existing automatic model design ap- proaches, and notably, 1000x…",
+      "intro_snippet": "Neural architecture search (NAS) has been successfully ap- plied to design model architectures for image classiﬁca- tion and language models ( Zoph & Le , 2017; Zoph et al. , 2018; Cai et al., 2018; Liu et al., 2017; 2018). In NAS, an RNN controller is trained in a loop: the controller ﬁrst samples a candidate architecture, i.e. a child model , and then trains it to convergence to measure its performance on the task of desire. The controller then uses the perfor- mance as a guiding signal to ﬁnd more promising architec- tures. This process is repeated for many iterations. De- *Equal contribution 1Google Brain 2Language Technology In- stitute, Carnegie Mellon University 3Department of Computer Sci- ence, Stanford University. Correspondence to: Hieu Pham <hy- hieu@cmu.edu>, Melody Y .…",
+      "conclusion_snippet": "NAS is an important advance that automatizes the design- ing process of neural networks. However, NAS’s com- putational expense prevents it from being widely adopted. In this paper, we presented ENAS, a novel method that speeds up NAS by more than 1000x, in terms of GPU hours. ENAS’s key contribution is the sharing of parame- ters across child models during the search for architecture s. This insight is implemented by searching for a subgraph within a larger graph that incorporates architectures in a search space. We showed that ENAS works well on both CIFAR-10 and Penn Treebank datasets. Acknowledgements The authors want to thank Jaime Carbonell, Zihang Dai, Lukasz Kaiser, Azalia…",
+      "char_count": 46027,
+      "cite_key": "pham2018enas",
+      "role": "used",
+      "pdf_path": "pdfs/pham2018enas.pdf",
+      "has_pdf_text": true
+    },
+    "shan2021diffwave": {
+      "title": "DiffWave: A Versatile Diffusion Model for Audio Synthesis",
+      "abstract_snippet": "This paper introduces WaveGrad, a conditional model for waveform generation which estimates gradients of the data density. The model is built on prior work on score matching and diffusion probabilistic models. It starts from a Gaussian white noise signal and iteratively reﬁnes the signal via a gradient-based sampler conditioned on the mel-spectrogram. WaveGrad offers a natural way to trade in- ference speed for sample quality by adjusting the number of reﬁnement steps, and bridges the gap between non-autoregressive and autoregressive models in terms of audio quality. We ﬁnd that it can generate high ﬁdelity audio samples using as few as six iterations. Experiments reveal WaveGrad to…",
+      "intro_snippet": "d Norouzi, William Chan † Google Research, Brain Team {ngyuzh,heigazen,ronw,mnorouzi,williamchan}@google.com ABSTRACT This paper introduces WaveGrad, a conditional model for waveform generation which estimates gradients of the data density. The model is built on prior work on score matching and diffusion probabilistic models. It starts from a Gaussian white noise signal and iteratively reﬁnes the signal via a gradient-based sampler conditioned on the mel-spectrogram. WaveGrad offers a natural way to trade in- ference speed for sample quality by adjusting the number of reﬁnement steps, and bridges the gap between non-autoregressive and autoregressive models in terms of audio quality. We ﬁnd t",
+      "conclusion_snippet": "s allowed evaluate up to six stimuli. Test stimuli were randomly chosen and presented for each subject. Each stimulus was presented to a subject in isolation and was evaluated by one subject. The subjects were paid and native speakers of English living in United States. They were requested to use headphones in a quiet room. E S UBJECTIVE SCORES REPORTED IN THE PRIOR WORK Table E.2 shows the reported mean opinion scores of the prior work which used the same speaker. Although different papers listed here used the same female speaker, their results are not directly comparable due to differences in the training dataset, sampling rates, conditioning features, and sentences used for evaluation. 15",
+      "char_count": 49731,
+      "cite_key": "shan2021diffwave",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/shan2021diffwave.pdf",
+      "has_pdf_text": true
+    },
+    "snoek2012bo": {
+      "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+      "abstract_snippet": "PRACTICAL BAYESIAN OPTIMIZATION OF MACHINE LEARNING ALGORITHMS By Jasper Snoek, Hugo Larochelle and Ryan P. Adams University of Toronto, Universit´ e de Sherbrooke and Harvard University Machine learning algorithms frequently require careful tuning of model hyperparameters, regularization terms, and optimization pa- rameters. Unfortunately, this tuning is often a “black art” that re- quires expert experience, unwritten rules of thumb, or sometimes brute-force search. Much more appealing is the i",
+      "intro_snippet": ". Machine learning algorithms are rarely parameter-free; whether via the properties of a regularizer, the hyperprior of a generative model, or the step size of a gradient-based optimization, learning procedures almost always require a set of high-level choices that signiﬁcantly impact generalization performance. As a practitioner, one is usually able to specify the general framework of an inductive bias much more easily than the particular weighting that it should have relative to training data. As a result, these high-level parameters are often considered a nuisance, making it desirable to develop algorithms with as few of these “knobs” as possible. Another, more ﬂexible take on this issue is to view the optimization of high-level parameters as a procedure to be automated. Speciﬁcally,…",
+      "conclusion_snippet": ". In this paper we presented methods for performing Bayesian optimiza- tion of hyperparameters associated with general machine learning algorithms. We introduced a fully Bayesian treatment for expected improvement, and algorithms for dealing with variable time regimes and parallelized experiments. Our empirical analysis demonstrates the eﬀective- ness of our approaches on three challenging recently published problems spanning diﬀerent ar- eas of machine learning. The code used will be made publicly available. The resulting Bayesian optimization ﬁnds better hyperparameters signiﬁcantly faster than the approaches used by the authors. Indeed our algorithms surpassed a human expert at…",
+      "char_count": 36591,
+      "cite_key": "snoek2012bo",
+      "role": "used",
+      "pdf_path": "pdfs/snoek2012bo.pdf",
+      "has_pdf_text": true
+    },
+    "zhang2007moead": {
+      "title": "MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition",
+      "abstract_snippet": "In this paper we compare the performance characteristics of our selec- tion based learning algorithm for Web crawlers with the char acteristics of the reinforcement learning algorithm. The task of the cra wlers is to ﬁnd new information on the Web. The selection algorithm, cal led weblog update, modiﬁes the starting URL lists of our crawlers based on the found URLs containing new information. The reinforcement learni ng algorithm modiﬁes the URL orderings of the crawlers based on the receiv ed rein- forcements for submitted documents. We performed simulati ons based on data collected from the Web. The collected portion of the Web is typical and exhibits scale-free small world (SFSW)…",
+      "intro_snippet": "The largest source of information today is the World Wide Web . The estimated number of documents nears 10 billion. Similarly, the number of documents changing on a daily basis is also enormous. The ever-increasing growt h of the Web presents a considerable challenge in ﬁnding novel information on the W eb. In addition, properties of the Web, like scale-free small wo rld (SFSW) structure [1, 12] may create additional challenges. For example the di rect consequence of the scale-free small world property is that there are numerous U RLs or sets of interlinked URLs, which have a large number of incoming links. Intellige nt web crawlers can be easily trapped at the neighborhood of such junctions as it ha s been shown previously [13, 15]. We have developed a novel artiﬁcial life (A-life)…",
+      "conclusion_snippet": "of the paper is that there may exi st some eﬃcient strategy for incremental crawlers for reducing the number o f obsolete pages without the need for any theoretical model about the change rate of pa ges. 3 Forager architecture There are two diﬀerent kinds of agents: the foragers and the r einforcing agent (RA). The ﬂeet of foragers crawl the web and send the URLs of the sele cted documents to the reinforcing agent. The RA determines which forager shou ld work for the RA and how long a forager should work. The RA sends reinforcements t o the foragers based on the received URLs. We employ a ﬂeet of foragers to study the competition among in dividual foragers. The ﬂeet of foragers allows to…",
+      "char_count": 56961,
+      "cite_key": "zhang2007moead",
+      "role": "used",
+      "pdf_path": "pdfs/zhang2007moead.pdf",
+      "has_pdf_text": true
+    }
+  },
+  "plan": null,
+  "revision_notes": [],
+  "writing_source": "unknown"
+}

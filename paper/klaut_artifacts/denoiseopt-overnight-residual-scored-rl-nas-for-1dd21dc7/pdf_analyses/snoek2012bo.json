@@ -1,0 +1,11 @@
+{
+  "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+  "abstract_snippet": "PRACTICAL BAYESIAN OPTIMIZATION OF MACHINE LEARNING ALGORITHMS By Jasper Snoek, Hugo Larochelle and Ryan P. Adams University of Toronto, Universit\u00b4 e de Sherbrooke and Harvard University Machine learning algorithms frequently require careful tuning of model hyperparameters, regularization terms, and optimization pa- rameters. Unfortunately, this tuning is often a \u201cblack art\u201d that re- quires expert experience, unwritten rules of thumb, or sometimes brute-force search. Much more appealing is the i",
+  "intro_snippet": ". Machine learning algorithms are rarely parameter-free; whether via the properties of a regularizer, the hyperprior of a generative model, or the step size of a gradient-based optimization, learning procedures almost always require a set of high-level choices that signi\ufb01cantly impact generalization performance. As a practitioner, one is usually able to specify the general framework of an inductive bias much more easily than the particular weighting that it should have relative to training data. As a result, these high-level parameters are often considered a nuisance, making it desirable to develop algorithms with as few of these \u201cknobs\u201d as possible. Another, more \ufb02exible take on this issue is to view the optimization of high-level parameters as a procedure to be automated. Speci\ufb01cally,\u2026",
+  "conclusion_snippet": ". In this paper we presented methods for performing Bayesian optimiza- tion of hyperparameters associated with general machine learning algorithms. We introduced a fully Bayesian treatment for expected improvement, and algorithms for dealing with variable time regimes and parallelized experiments. Our empirical analysis demonstrates the e\ufb00ective- ness of our approaches on three challenging recently published problems spanning di\ufb00erent ar- eas of machine learning. The code used will be made publicly available. The resulting Bayesian optimization \ufb01nds better hyperparameters signi\ufb01cantly faster than the approaches used by the authors. Indeed our algorithms surpassed a human expert at\u2026",
+  "char_count": 36591,
+  "cite_key": "snoek2012bo",
+  "role": "used",
+  "pdf_path": "pdfs/snoek2012bo.pdf",
+  "has_pdf_text": true
+}
