@@ -1,0 +1,223 @@
+{
+  "title": "Hybrid Reinforcement Learning and Genetic Algorithms for Meta-Learning Audio Denoising",
+  "user_needs": "Write excellent CS/DSP Introduction and Literature Landscape.\nFrame as generic audio signal denoising; wavetable/periodic wrap crackle is motivating instance.\nHybrid RL+GA meta-learning outer loop. Numbered falsifiable contributions.\nLiterature thematic with Used vs Screened. Cite with \\cite{key} only from attached keys.\nNo invented final overnight results — note experiments ongoing.\nDo not dump JSON. Full academic paragraphs.",
+  "abstract_sketch": "Periodic discontinuities in cyclic audio frames inject broadband crackle under wrap-around playback. We treat cycle-local seam restoration as an instance of audio signal denoising and search denoising operators with a hybrid meta-learning outer loop that interleaves genetic-algorithm population updates with reinforcement-learning architecture proposals, scored by a prolonged residual objective without paired clean waveforms. Large-scale GPU experiments are ongoing; this draft establishes the problem framing and literature landscape.",
+  "sections": [
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 1,
+      "goal": "Concise problem–method–result–limitation summary with the key numeric headline (primary metric and baseline comparison).",
+      "claims": [
+        "State the scientific problem in one sentence.",
+        "Name the method and evaluation protocol.",
+        "Report the primary quantitative finding vs baseline."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "lehtinen2018 [method]: Noise2Noise: Learning Image Restoration without Clean Data",
+        "jaderberg2017 [method]: Population Based Training of Neural Networks",
+        "khadka2018 [method]: Evolution-Guided Policy Gradient in Reinforcement Learning"
+      ],
+      "data_still_needed": [
+        "baseline_comparison"
+      ],
+      "imrad_role": "abstract",
+      "target_words": 180
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 1,
+      "goal": "Motivate the problem, situate it in prior practice, state contributions as falsifiable claims, and preview the paper.",
+      "claims": [
+        "Why the phenomenon matters scientifically or practically.",
+        "Gap in existing proxies / methods.",
+        "Explicit numbered contributions."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "lehtinen2018 [used]: Noise2Noise: Learning Image Restoration without Clean Data",
+        "jaderberg2017 [used]: Population Based Training of Neural Networks",
+        "khadka2018 [used]: Evolution-Guided Policy Gradient in Reinforcement Learning",
+        "real2019 [used]: Regularized Evolution for Image Classifier Architecture Sear",
+        "pdf_analyses (36 grounded)"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "introduction",
+      "target_words": 450
+    },
+    {
+      "id": "related_work",
+      "title": "Related Work",
+      "level": 1,
+      "goal": "Organize prior art by theme; distinguish used vs screened literature; end with how this work differs.",
+      "claims": [
+        "Group citations thematically (not as a dump).",
+        "State what was screened out and why."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "lehtinen2018 [used]: Noise2Noise: Learning Image Restoration without Clean Data",
+        "jaderberg2017 [used]: Population Based Training of Neural Networks",
+        "khadka2018 [used]: Evolution-Guided Policy Gradient in Reinforcement Learning",
+        "real2019 [used]: Regularized Evolution for Image Classifier Architecture Sear",
+        "engel2020 [used]: DDSP: Differentiable Digital Signal Processing",
+        "elsken2019 [used]: Neural Architecture Search: A Survey",
+        "pham2018 [used]: Efficient Neural Architecture Search via Parameter Sharing",
+        "schulman2017 [used]: Proximal Policy Optimization Algorithms",
+        "finn2017 [screened]: Model-Agnostic Meta-Learning for Fast Adaptation of Deep Net",
+        "liu2019 [screened]: DARTS: Differentiable Architecture Search",
+        "dfossez2021 [screened]: Hybrid Spectrogram and Waveform Source Separation",
+        "kong2021 [screened]: DiffWave: A Versatile Diffusion Model for Audio Synthesis",
+        "dfossez2019 [screened]: Demucs: Deep Extractor for Music Sources with extra unlabele",
+        "pascual2017 [screened]: SEGAN: Speech Enhancement Generative Adversarial Network",
+        "theme:general → lehtinen2018, jaderberg2017, khadka2018, real2019",
+        "theme:MAML model-agnostic meta-learning → behl2019, alsaleh2024, nguyen2021, chen2025",
+        "theme:Wave-U-Net audio source separation → luo2019, jansson2017, macartney2018, nakamura2020",
+        "theme:Noise2Noise unsupervised denoising → mansour2023, qiu2021",
+        "pdf_analyses (36 grounded)"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "related_work",
+      "target_words": 500
+    },
+    {
+      "id": "methods",
+      "title": "Methods",
+      "level": 1,
+      "goal": "Define notation, model/operator, objective(s), and search procedure so a reader could reimplement the essentials.",
+      "claims": [
+        "Formal definition of the primary score / loss.",
+        "Algorithmic procedure (outer/inner loops if any).",
+        "Implementation constraints that affect validity."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "lehtinen2018 [method]: Noise2Noise: Learning Image Restoration without Clean Data",
+        "jaderberg2017 [method]: Population Based Training of Neural Networks",
+        "khadka2018 [method]: Evolution-Guided Policy Gradient in Reinforcement Learning"
+      ],
+      "data_still_needed": [
+        "method_definition",
+        "hyperparameters"
+      ],
+      "imrad_role": "methods",
+      "target_words": 650
+    },
+    {
+      "id": "experiments",
+      "title": "Experiments",
+      "level": 1,
+      "goal": "Describe protocol: datasets/seeds, trial budget, validation sizes, baselines, and selection rules before revealing outcomes.",
+      "claims": [
+        "Protocol is fixed before reporting winners.",
+        "Baselines and ablations are named."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [
+        "protocol",
+        "trial_budget",
+        "baselines"
+      ],
+      "imrad_role": "experiments",
+      "target_words": 350
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "level": 1,
+      "goal": "Present primary metrics with table(s) and figure(s); report effect sizes vs baselines; avoid overclaiming.",
+      "claims": [
+        "Primary metric ranking with uncertainty or held-out N.",
+        "Secondary metrics that check for failure modes."
+      ],
+      "required_figures": [
+        "primary_comparison"
+      ],
+      "required_tables": [
+        "benchmark_matrix"
+      ],
+      "citation_slots": [],
+      "data_still_needed": [
+        "metrics",
+        "table_rows"
+      ],
+      "imrad_role": "results",
+      "target_words": 450
+    },
+    {
+      "id": "discussion",
+      "title": "Discussion",
+      "level": 1,
+      "goal": "Interpret results relative to hypotheses; reconcile surprising outcomes (e.g. which prior won); connect to related work.",
+      "claims": [
+        "What the evidence supports.",
+        "What it does not support."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "lehtinen2018 [compare]: Noise2Noise: Learning Image Restoration without Clean Data",
+        "jaderberg2017 [compare]: Population Based Training of Neural Networks",
+        "khadka2018 [compare]: Evolution-Guided Policy Gradient in Reinforcement Learning",
+        "real2019 [compare]: Regularized Evolution for Image Classifier Architecture Sear",
+        "engel2020 [compare]: DDSP: Differentiable Digital Signal Processing",
+        "pdf_analyses (36 grounded)"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "discussion",
+      "target_words": 400
+    },
+    {
+      "id": "limitations",
+      "title": "Limitations",
+      "level": 1,
+      "goal": "State validity threats, metric proxies, and compute budgets honestly.",
+      "claims": [
+        "At least three concrete limitations."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [],
+      "imrad_role": "limitations",
+      "target_words": 220
+    },
+    {
+      "id": "conclusion",
+      "title": "Conclusion",
+      "level": 1,
+      "goal": "Restate contributions and headline numbers; point to artifacts.",
+      "claims": [
+        "One-paragraph takeaway with primary metric."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [],
+      "imrad_role": "conclusion",
+      "target_words": 180
+    }
+  ],
+  "open_data_gaps": [
+    "baseline_comparison",
+    "baselines",
+    "hyperparameters",
+    "method_definition",
+    "metrics",
+    "protocol",
+    "table_rows",
+    "trial_budget"
+  ],
+  "literature_count": 36,
+  "writing_mode_hint": "Write full academic paragraphs (IMRaD / CS–DSP). Prefer precise claims tied to ingested metrics and PDF analyses. Cite with \\cite{cite_key} only for attached refs. Distinguish used vs screened literature. Do not invent numbers or references. Mark template-mode output if no LLM is used. Screened-relevant count: 11.",
+  "created_at": "2026-07-18T17:34:42.498245+00:00",
+  "source": "template"
+}

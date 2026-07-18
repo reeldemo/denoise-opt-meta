@@ -1,11 +1,13 @@
 \section{Experiments}
+\label{sec:experiments}
 
-We establish a rigorous, pre-registration protocol to ensure reproducibility and mitigate selection bias in our hyperparameter optimization (HPO) pipeline. The experimental budget is allocated across three distinct branches: reinforcement learning (RL), neural architecture search (NAS), and their combination (combo). All trials execute on an NVIDIA GeForce RTX 3090 GPU with a maximum runtime of $168$ hours, sampling history every iteration to track convergence dynamics \cite{jaderberg2017pbt}. The primary evaluation metric is the residual reduction score $\mathcal{R}$, defined as:
-\begin{equation}
-    \mathcal{R} = \text{clamp}\left( 1 - \frac{\|r_{\text{residual}}\|_2}{\max(\|r_{\text{ideal}}\|_2, \epsilon)}, 0, 1 \right),
-\end{equation}
-where $\mathcal{R}=1$ denotes perfect restoration. This metric quantifies the efficacy of unsupervised denoising by comparing corrupted observations against clean ground truth without explicit image priors or likelihood models of corruption \cite{lehtinen2018n2n}. We benchmark our approach against DualCosine, a prolonged residual baseline operating under identical protocol constraints to ensure fair comparison.
+\textit{Placeholder --- protocol sketch only; numbers below are interim and must not be read as final.}
 
-Our methodology integrates differentiable digital signal processing (DDSP) principles with automated architecture search techniques. Unlike conventional evolutionary strategies that operate over discrete spaces \cite{elsken2019nas}, we employ continuous relaxation methods akin to DARTS to facilitate efficient gradient-based exploration of the architectural landscape \cite{liu2019darts}. This approach allows for joint optimization of model parameters and hyperparameters, addressing the sensitivity often observed in empirical choices such as loss functions and optimizer configurations. The search space encompasses diverse signal generation domains, moving beyond standard time or frequency representations to leverage domain-specific knowledge inherent in vocoder architectures \cite{engel2020ddsp}.
+\paragraph{Ongoing overnight campaign.}
+A CUDA search tagged \texttt{PPO+GA+PBT+NAS+depth+MoE} is running with a large iteration budget (order $10^{5}$).
+Early fitted champions already reach residual $\approx 0.987$ on the training/validation geometry used by the runner, against historical DualCosine baselines near $\approx 0.70$ on prior held-out matrices (v3 reported DualCosine residual $\approx 0.698$ at $N{=}2000$).
+We will replace this paragraph with the completed budget, seeds, population size, and held-out matrix when the job finishes---without interrupting the live GPU process.
 
-We screen relevant literature regarding meta-learning for fast adaptation of deep networks; however, model-agnostic approaches like MAML are deemed less directly applicable to our specific waveform restoration task and thus screened as irrelevant despite their theoretical compatibility with regression problems \cite{finn2017maml}. Conversely, efficient NAS via parameter sharing remains a critical component of our combo branch, enabling the discovery of optimal subgraphs within large computational graphs without prohibitive cost. The protocol strictly forbids conflation between prior v3 literature-combo studies and current dense 1M iteration runs, ensuring that interim results reflect genuine progress in residual reduction rather than artifacts of dataset shifting or metric recalibration. By fixing selection rules before reporting winners, we guarantee that the reported champion models represent robust solutions capable of generalizing across unseen audio segments while maintaining high fidelity to the original signal structure.
+\paragraph{Prior completed study (v3 reference).}
+A 1500-trial literature-informed CPU/GPU study selected \texttt{evo\_explore\_515} at residual $\approx 0.824$ versus DualCosine $\approx 0.698$ ($\Delta\approx +0.126$).
+That result anchors the residual-primary protocol; the overnight hybrid RL+GA run is the scale-up under test.

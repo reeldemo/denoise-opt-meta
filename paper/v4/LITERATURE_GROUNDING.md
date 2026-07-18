@@ -1,61 +1,40 @@
-# Literature grounding notes (PDF-backed)
+# Literature grounding notes (v4)
 
-Generated from OA arXiv PDFs under `paper/v4/pdfs/` with text extraction.
-Use only for claims supported by these snippets; do not invent citations.
+Generated from OA arXiv PDFs under `paper/klaut_artifacts/hybrid-reinforcement-learning-and-genetic-algori-1e29c690/pdfs/` plus classical VA/BLEP anchors from prior versions.
+Use only for claims supported by these sources; do not invent citations.
 
 ## Used (method / design anchors)
 
-### lehtinen2018n2n — Noise2Noise
-- **PDF:** `pdfs/lehtinen2018n2n.pdf`
-- **Grounding:** Label-free restoration: train from corrupted pairs without clean targets.
-- **Relevance:** Motivates unsupervised residual scoring without paired “clean” wavetable cycles.
+| cite_key | Paper | Relevance |
+|----------|-------|-----------|
+| lehtinen2018 | Noise2Noise | Label-free restoration philosophy for unsupervised residual scoring |
+| engel2020 | DDSP | Modular/differentiable DSP context for seam bake ops |
+| jaderberg2017 | PBT | Exploit–mutate population schedules |
+| real2019 | Regularized / Aging Evolution | GA/evolutionary NAS prior |
+| khadka2018 | ERL | Interleave GA population with RL policy updates |
+| schulman2017 | PPO | Clipped surrogate for discrete arch mutations |
+| pham2018 | ENAS | RL controller + sharing ancestor |
+| elsken2019 | NAS survey | Search space / strategy / evaluation taxonomy |
+| shazeer2017 | MoE | Soft gates over heterogeneous blocks |
+| stoller2018 | Wave-U-Net | Tiny U-Net cell prior |
+| luo2019 | Conv-TasNet | Time-domain / TCN-inspired cells |
+| jansson2017 | Singing U-Net | Audio U-Net lineage |
+| purwins2019 | Deep Learning for Audio | Domain survey |
+| snoek2012 | Practical BO | Local Bayesian prior family |
+| zhang2007 | MOEA/D | Multi-objective cues |
+| valimaki2006va, esqueda2016* | VA / aliasing / BLAMP | Classical discontinuity control |
 
-### engel2020ddsp — DDSP
-- **PDF:** `pdfs/engel2020ddsp.pdf`
-- **Grounding:** Differentiable DSP modules as interpretable audio synthesizer components.
-- **Relevance:** Places seam-local bake operators in the broader differentiable / modular audio DSP landscape (not end-to-end waveform nets).
+## Screened (contrast only)
 
-### jaderberg2017pbt — Population Based Training
-- **PDF:** `pdfs/jaderberg2017pbt.pdf`
-- **Grounding:** Asynchronous population that jointly optimizes models and hyperparameters; discovers schedules rather than a single fixed hyperparameter set.
-- **Relevance:** Informs lit-combo / exploit–mutate overnight branch design.
+| cite_key | Why screened |
+|----------|----------------|
+| finn2017 | MAML — no task-gradient through a deep net |
+| liu2019 | DARTS — continuous relaxation; we keep discrete ops |
+| dfossez2019 / dfossez2021 | Demucs / Hybrid Demucs — too heavy per trial |
+| kong2021 | DiffWave — generative sampling stack, not seam bake |
+| pascual2017 | SEGAN — full GAN loops screened for cost |
 
-### snoek2012bo — Practical Bayesian Optimization
-- **PDF:** `pdfs/snoek2012bo.pdf`
-- **Grounding:** Bayesian optimization for expensive ML hyperparameters.
-- **Relevance:** Literature prior family for local Bayesian search (not claimed as the overnight winner).
-
-### elsken2019nas — Neural Architecture Search survey
-- **PDF:** `pdfs/elsken2019nas.pdf`
-- **Grounding:** Taxonomy of NAS methods; search space / strategy / evaluation trade-offs.
-- **Relevance:** Frames discrete seam-op DAG + cell search as application-specific NAS.
-
-### pham2018enas — ENAS
-- **PDF:** `pdfs/pham2018enas.pdf`
-- **Grounding:** RL controller with parameter sharing for efficient NAS.
-- **Relevance:** Conceptual ancestor of RL proposing architecture edits (our overnight RL branch uses residual reward, not ImageNet controllers).
-
-### liu2019darts — DARTS
-- **PDF:** `pdfs/liu2019darts.pdf`
-- **Grounding:** Continuous relaxation of architecture search.
-- **Relevance:** Contrasted approach — we keep discrete ops + small MLP/FIR cells, scored by prolonged residual R.
-
-### zhang2007moead — MOEA/D
-- **PDF:** `pdfs/zhang2007moead.pdf`
-- **Grounding:** Decomposition-based multi-objective evolutionary algorithm.
-- **Relevance:** Informs multi-objective cues in lit-combo priors (shape vs residual).
-
-## Screened (on-topic but not methodological dependencies)
-
-### finn2017maml — MAML
-- **PDF:** `pdfs/finn2017maml.pdf`
-- **Why screened:** Inspirational bi-level / fast-adaptation framing; we do **not** backprop through a deep task network. Nested loss fit is coordinate descent on θ, outer rank by R.
-
-### shan2021diffwave — DiffWave (Kong et al.; filename legacy)
-- **PDF:** `pdfs/shan2021diffwave.pdf` (arXiv 2009.00713)
-- **Note:** This PDF is DiffWave diffusion vocoder, not Shan differentiable wavetable. Kept as audio generative context; **not** a DenoiseOpt operator dependency.
-- Cite carefully as Kong et al. DiffWave if used at all; prefer Engel DDSP for DSP lineage.
-
-## Classical audio (cited from prior paper versions; not all OA PDFs here)
-- Välimäki VA / Esqueda aliasing & BLAMP — discontinuity control lineage for wrap seams.
-- These remain domain anchors from v3; OA PDF harvest prioritized ML/NAS/meta sources for RL overnight.
+## Klaut workflow
+- Paper id: `hybrid-reinforcement-learning-and-genetic-algori-1e29c690`
+- Attach → fetch PDFs → analyze → plan → LLM draft → **author revision** (claim hygiene)
+- Ollama model: `qwen3.5:9b`

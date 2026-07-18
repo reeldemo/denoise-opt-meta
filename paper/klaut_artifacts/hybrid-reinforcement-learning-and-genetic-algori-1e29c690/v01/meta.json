@@ -1,0 +1,1453 @@
+{
+  "paper_id": "hybrid-reinforcement-learning-and-genetic-algori-1e29c690",
+  "title": "Hybrid Reinforcement Learning and Genetic Algorithms for Meta-Learning Audio Denoising",
+  "authors": [
+    {
+      "name": "Julian M. Kleber",
+      "orcid": "0000-0001-5518-0932",
+      "email": "julian.m.kleber@gmail.com",
+      "affiliation": null
+    }
+  ],
+  "abstract_sketch": "Periodic discontinuities in cyclic audio frames inject broadband crackle under wrap-around playback. We treat cycle-local seam restoration as an instance of audio signal denoising and search denoising operators with a hybrid meta-learning outer loop that interleaves genetic-algorithm population updates with reinforcement-learning architecture proposals, scored by a prolonged residual objective without paired clean waveforms. Large-scale GPU experiments are ongoing; this draft establishes the problem framing and literature landscape.",
+  "repo_links": [
+    "https://github.com/reeldemo/reelsynth",
+    "https://github.com/reeldemo/denoise-opt-meta"
+  ],
+  "user_needs": "Write excellent CS/DSP Introduction and Literature Landscape.\nFrame as generic audio signal denoising; wavetable/periodic wrap crackle is motivating instance.\nHybrid RL+GA meta-learning outer loop. Numbered falsifiable contributions.\nLiterature thematic with Used vs Screened. Cite with \\cite{key} only from attached keys.\nNo invented final overnight results — note experiments ongoing.\nDo not dump JSON. Full academic paragraphs.",
+  "created_at": "2026-07-18T17:33:35.850071+00:00",
+  "updated_at": "2026-07-18T17:36:33.148330+00:00",
+  "current_version": "v01",
+  "outline": [
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "related_work",
+      "title": "Related Work",
+      "level": 1,
+      "status": "complete",
+      "parent_id": null
+    },
+    {
+      "id": "methods",
+      "title": "Methods",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "experiments",
+      "title": "Experiments",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "discussion",
+      "title": "Discussion",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "limitations",
+      "title": "Limitations",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    },
+    {
+      "id": "conclusion",
+      "title": "Conclusion",
+      "level": 1,
+      "status": "pending",
+      "parent_id": null
+    }
+  ],
+  "figures": [],
+  "pending_requests": [],
+  "ingested_data": {
+    "_global": {
+      "status": "experiments_ongoing",
+      "note": "Do not invent final numbers. Overnight GPU RL+GA+PBT+NAS run in progress.",
+      "interim_snapshot": {
+        "algo_tag": "PPO+GA+PBT+NAS+depth+MoE",
+        "target_iters": 250000,
+        "early_champion_residual_approx": 0.987,
+        "historical_dual_cosine_baseline_approx": 0.7,
+        "prior_v3_evo_explore_residual": 0.824
+      },
+      "primary_metric": "prolonged residual R in [0,1], 1=best",
+      "problem": "periodic/seam wrap crackle as audio denoising instance"
+    }
+  },
+  "subsection_paths": {
+    "introduction": "v01\\subsections\\introduction.tex",
+    "related_work": "v01\\subsections\\related_work.tex"
+  },
+  "latex_engine": "xelatex",
+  "literature_refs": [
+    {
+      "cite_key": "lehtinen2018",
+      "title": "Noise2Noise: Learning Image Restoration without Clean Data",
+      "authors": [
+        "Jaakko Lehtinen",
+        "Jacob Munkberg",
+        "Jon Hasselgren",
+        "Samuli Laine",
+        "Tero Karras",
+        "Miika Aittala",
+        "Timo Aila"
+      ],
+      "year": 2018,
+      "role": "used",
+      "doi": "10.48550/arXiv.1803.04189",
+      "url": "https://arxiv.org/pdf/1803.04189",
+      "oa_url": "https://arxiv.org/pdf/1803.04189",
+      "pdf_url": "https://arxiv.org/pdf/1803.04189.pdf",
+      "local_pdf": "pdfs/lehtinen2018.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "jaderberg2017",
+      "title": "Population Based Training of Neural Networks",
+      "authors": [
+        "Max Jaderberg",
+        "Valentin Dalibard",
+        "Simon Osindero",
+        "Wojciech M. Czarnecki",
+        "Jeff Donahue",
+        "Ali Razavi",
+        "Oriol Vinyals",
+        "Tim Green",
+        "Iain Dunning",
+        "Karen Simonyan",
+        "Chrisantha Fernando",
+        "Koray Kavukcuoglu"
+      ],
+      "year": 2017,
+      "role": "used",
+      "doi": "10.48550/arXiv.1711.09846",
+      "url": "https://arxiv.org/pdf/1711.09846",
+      "oa_url": "https://arxiv.org/pdf/1711.09846",
+      "pdf_url": "https://arxiv.org/pdf/1711.09846.pdf",
+      "local_pdf": "pdfs/jaderberg2017.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "khadka2018",
+      "title": "Evolution-Guided Policy Gradient in Reinforcement Learning",
+      "authors": [
+        "Shauharda Khadka",
+        "Kagan Tumer"
+      ],
+      "year": 2018,
+      "role": "used",
+      "doi": "10.48550/arXiv.1805.07917",
+      "url": "https://arxiv.org/pdf/1805.07917",
+      "oa_url": "https://arxiv.org/pdf/1805.07917",
+      "pdf_url": "https://arxiv.org/pdf/1805.07917.pdf",
+      "local_pdf": "pdfs/khadka2018.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "real2019",
+      "title": "Regularized Evolution for Image Classifier Architecture Search",
+      "authors": [
+        "Esteban Real",
+        "Alok Aggarwal",
+        "Yanping Huang",
+        "Quoc V. Le"
+      ],
+      "year": 2019,
+      "role": "used",
+      "doi": "10.1609/aaai.v33i01.33014780",
+      "url": "https://arxiv.org/pdf/1802.01548",
+      "oa_url": "https://arxiv.org/pdf/1802.01548",
+      "pdf_url": "https://arxiv.org/pdf/1802.01548.pdf",
+      "local_pdf": "pdfs/real2019.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "engel2020",
+      "title": "DDSP: Differentiable Digital Signal Processing",
+      "authors": [
+        "Jesse Engel",
+        "Lamtharn Hantrakul",
+        "Chenjie Gu",
+        "Adam Roberts"
+      ],
+      "year": 2020,
+      "role": "used",
+      "doi": "10.48550/arXiv.2001.04643",
+      "url": "https://arxiv.org/pdf/2001.04643",
+      "oa_url": "https://arxiv.org/pdf/2001.04643",
+      "pdf_url": "https://arxiv.org/pdf/2001.04643.pdf",
+      "local_pdf": "pdfs/engel2020.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "elsken2019",
+      "title": "Neural Architecture Search: A Survey",
+      "authors": [
+        "Thomas Elsken",
+        "Jan Hendrik Metzen",
+        "Frank Hutter"
+      ],
+      "year": 2019,
+      "role": "used",
+      "doi": "10.48550/arXiv.1808.05377",
+      "url": "https://arxiv.org/pdf/1808.05377",
+      "oa_url": "https://arxiv.org/pdf/1808.05377",
+      "pdf_url": "https://arxiv.org/pdf/1808.05377.pdf",
+      "local_pdf": "pdfs/elsken2019.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "pham2018",
+      "title": "Efficient Neural Architecture Search via Parameter Sharing",
+      "authors": [
+        "Hieu Pham",
+        "Melody Y. Guan",
+        "Barret Zoph",
+        "Quoc V. Le",
+        "Jeff Dean"
+      ],
+      "year": 2018,
+      "role": "used",
+      "doi": "10.48550/arXiv.1802.03268",
+      "url": "https://arxiv.org/pdf/1802.03268",
+      "oa_url": "https://arxiv.org/pdf/1802.03268",
+      "pdf_url": "https://arxiv.org/pdf/1802.03268.pdf",
+      "local_pdf": "pdfs/pham2018.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "schulman2017",
+      "title": "Proximal Policy Optimization Algorithms",
+      "authors": [
+        "John Schulman",
+        "Filip Wolski",
+        "Prafulla Dhariwal",
+        "Alec Radford",
+        "Oleg Klimov"
+      ],
+      "year": 2017,
+      "role": "used",
+      "doi": "10.48550/arXiv.1707.06347",
+      "url": "https://arxiv.org/pdf/1707.06347",
+      "oa_url": "https://arxiv.org/pdf/1707.06347",
+      "pdf_url": "https://arxiv.org/pdf/1707.06347.pdf",
+      "local_pdf": "pdfs/schulman2017.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "shazeer2017",
+      "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "authors": [
+        "Noam Shazeer",
+        "Azalia Mirhoseini",
+        "Krzysztof Maziarz",
+        "Andy Davis",
+        "Quoc Le",
+        "Geoffrey Hinton",
+        "Jeff Dean"
+      ],
+      "year": 2017,
+      "role": "used",
+      "doi": "10.48550/arXiv.1701.06538",
+      "url": "https://arxiv.org/pdf/1701.06538",
+      "oa_url": "https://arxiv.org/pdf/1701.06538",
+      "pdf_url": "https://arxiv.org/pdf/1701.06538.pdf",
+      "local_pdf": "pdfs/shazeer2017.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "stoller2018",
+      "title": "Wave-U-Net: A Multi-Scale Neural Network for End-to-End Audio Source Separation",
+      "authors": [
+        "Daniel Stoller",
+        "Sebastian Ewert",
+        "Simon Dixon"
+      ],
+      "year": 2018,
+      "role": "used",
+      "doi": "10.48550/arXiv.1806.03185",
+      "url": "https://arxiv.org/pdf/1806.03185",
+      "oa_url": "https://arxiv.org/pdf/1806.03185",
+      "pdf_url": "https://arxiv.org/pdf/1806.03185.pdf",
+      "local_pdf": "pdfs/stoller2018.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "purwins2019",
+      "title": "Deep Learning for Audio Signal Processing",
+      "authors": [
+        "Hendrik Purwins",
+        "Bo Li",
+        "Tuomas Virtanen",
+        "Jan Schlüter",
+        "Shuo-Yiin Chang",
+        "Tara N. Sainath"
+      ],
+      "year": 2019,
+      "role": "used",
+      "doi": "10.48550/arXiv.1905.00078",
+      "url": "https://arxiv.org/pdf/1905.00078",
+      "oa_url": "https://arxiv.org/pdf/1905.00078",
+      "pdf_url": "https://arxiv.org/pdf/1905.00078.pdf",
+      "local_pdf": "pdfs/purwins2019.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "snoek2012",
+      "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+      "authors": [
+        "Jasper Snoek",
+        "Hugo Larochelle",
+        "Ryan P. Adams"
+      ],
+      "year": 2012,
+      "role": "used",
+      "doi": "10.48550/arXiv.1206.2944",
+      "url": "https://arxiv.org/pdf/1206.2944",
+      "oa_url": "https://arxiv.org/pdf/1206.2944",
+      "pdf_url": "https://arxiv.org/pdf/1206.2944.pdf",
+      "local_pdf": "pdfs/snoek2012.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "zhang2007",
+      "title": "MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition",
+      "authors": [
+        "Qingfu Zhang",
+        "Hui Li"
+      ],
+      "year": 2007,
+      "role": "used",
+      "doi": "10.1109/TEVC.2007.892759",
+      "source": "manual"
+    },
+    {
+      "cite_key": "santra2021",
+      "title": "Gradient Descent Effects on Differential Neural Architecture Search: A Survey",
+      "authors": [
+        "Santanu Santra",
+        "Jun-Wei Hsieh",
+        "Chi‐Fang Lin"
+      ],
+      "year": 2021,
+      "role": "used",
+      "doi": "10.1109/access.2021.3090918",
+      "venue": "IEEE Access",
+      "url": "https://openalex.org/W3176739814",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6287639/9312710/09461192.pdf",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/9312710/09461192.pdf",
+      "local_pdf": "pdfs/santra2021.pdf",
+      "source": "openalex",
+      "query": "evolutionary neural architecture search Real AmoebaNet",
+      "citation_count": 45,
+      "id": "W3176739814"
+    },
+    {
+      "cite_key": "li2015",
+      "title": "Solving multi-objective multi-stage weapon target assignment problem via adaptive NSGA-II and adaptive MOEA/D: A comparison study",
+      "authors": [
+        "Juan Li",
+        "Jie Chen",
+        "Bin Xin",
+        "LiHua Dou"
+      ],
+      "year": 2015,
+      "role": "used",
+      "doi": "10.1109/cec.2015.7257280",
+      "venue": "2015 IEEE Congress on Evolutionary Computation (CEC)",
+      "url": "https://doi.org/10.1109/cec.2015.7257280",
+      "source": "crossref",
+      "query": "multi-objective evolutionary NAS NSGA",
+      "citation_count": 37,
+      "id": "10.1109/cec.2015.7257280"
+    },
+    {
+      "cite_key": "luo2019",
+      "title": "Conv-TasNet: Surpassing Ideal Time–Frequency Magnitude Masking for Speech Separation",
+      "authors": [
+        "Yi Luo",
+        "Nima Mesgarani"
+      ],
+      "year": 2019,
+      "role": "used",
+      "doi": "10.1109/taslp.2019.2915167",
+      "venue": "IEEE/ACM Transactions on Audio Speech and Language Processing",
+      "url": "https://openalex.org/W2952218014",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6570655/8716764/08707065.pdf",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6570655/8716764/08707065.pdf",
+      "local_pdf": "pdfs/luo2019.pdf",
+      "source": "openalex",
+      "query": "Wave-U-Net audio source separation",
+      "citation_count": 2055,
+      "id": "W2952218014"
+    },
+    {
+      "cite_key": "jansson2017",
+      "title": "Singing Voice Separation With Deep U-Net Convolutional Networks.",
+      "authors": [
+        "Andreas Jansson",
+        "Eric J. Humphrey",
+        "Nicola Montecchio",
+        "Rachel Bittner",
+        "Aparna Kumar",
+        "Tillman Weyde"
+      ],
+      "year": 2017,
+      "role": "used",
+      "doi": "10.5281/zenodo.1414933",
+      "venue": "City Research Online (City University London)",
+      "url": "https://openalex.org/W2774707525",
+      "oa_url": "https://openaccess.city.ac.uk/id/eprint/19289/1/7bb8d1600fba70dd79408775cd0c37a4ff62.pdf",
+      "pdf_url": "https://openaccess.city.ac.uk/id/eprint/19289/1/7bb8d1600fba70dd79408775cd0c37a4ff62.pdf",
+      "local_pdf": "pdfs/jansson2017.pdf",
+      "source": "openalex",
+      "query": "Wave-U-Net audio source separation",
+      "citation_count": 341,
+      "id": "W2774707525"
+    },
+    {
+      "cite_key": "macartney2018",
+      "title": "Improved Speech Enhancement with the Wave-U-Net",
+      "authors": [
+        "Craig Macartney",
+        "Tillman Weyde"
+      ],
+      "year": 2018,
+      "role": "used",
+      "doi": "10.48550/arxiv.1811.11307",
+      "venue": "arXiv (Cornell University)",
+      "url": "https://openalex.org/W2902132730",
+      "oa_url": "https://arxiv.org/pdf/1811.11307",
+      "pdf_url": "https://arxiv.org/pdf/1811.11307.pdf",
+      "local_pdf": "pdfs/macartney2018.pdf",
+      "source": "openalex",
+      "query": "Wave-U-Net audio source separation",
+      "citation_count": 56,
+      "id": "W2902132730"
+    },
+    {
+      "cite_key": "nakamura2020",
+      "title": "Time-Domain Audio Source Separation Based on Wave-U-Net Combined with Discrete Wavelet Transform",
+      "authors": [
+        "Tomohiko Nakamura",
+        "Hiroshi Saruwatari"
+      ],
+      "year": 2020,
+      "role": "used",
+      "doi": "10.1109/icassp40776.2020.9053934",
+      "venue": "ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "url": "https://openalex.org/W3015724290",
+      "source": "openalex",
+      "query": "Wave-U-Net audio source separation",
+      "citation_count": 23,
+      "id": "W3015724290"
+    },
+    {
+      "cite_key": "kashyap2021",
+      "title": "Speech Denoising Without Clean Training Data: A Noise2Noise Approach",
+      "authors": [
+        "Madhav Mahesh Kashyap",
+        "Anuj Tambwekar",
+        "Krishnamoorthy Manohara",
+        "S. Natarajan"
+      ],
+      "year": 2021,
+      "role": "used",
+      "doi": "10.21437/interspeech.2021-1130",
+      "venue": "Interspeech 2021",
+      "url": "https://doi.org/10.21437/interspeech.2021-1130",
+      "source": "crossref",
+      "query": "Noise2Noise unsupervised denoising audio",
+      "citation_count": 38,
+      "id": "10.21437/interspeech.2021-1130"
+    },
+    {
+      "cite_key": "calvarons2021",
+      "title": "Improved Noise2Noise Denoising with Limited Data",
+      "authors": [
+        "Adria Font Calvarons"
+      ],
+      "year": 2021,
+      "role": "used",
+      "doi": "10.1109/cvprw53098.2021.00089",
+      "venue": "2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+      "url": "https://doi.org/10.1109/cvprw53098.2021.00089",
+      "source": "crossref",
+      "query": "Noise2Noise unsupervised denoising audio",
+      "citation_count": 33,
+      "id": "10.1109/cvprw53098.2021.00089"
+    },
+    {
+      "cite_key": "giri2019",
+      "title": "Attention Wave-U-Net for Speech Enhancement",
+      "authors": [
+        "Ritwik Giri",
+        "Umut Isik",
+        "Arvindh Krishnaswamy"
+      ],
+      "year": 2019,
+      "role": "used",
+      "doi": "10.1109/waspaa.2019.8937186",
+      "venue": "2019 IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA)",
+      "url": "https://openalex.org/W2998678989",
+      "source": "openalex",
+      "query": "attention U-Net speech enhancement",
+      "citation_count": 116,
+      "id": "W2998678989"
+    },
+    {
+      "cite_key": "zhu2021",
+      "title": "From federated learning to federated neural architecture search: a survey",
+      "authors": [
+        "Hangyu Zhu",
+        "Haoyu Zhang",
+        "Yaochu Jin"
+      ],
+      "year": 2021,
+      "role": "used",
+      "doi": "10.1007/s40747-020-00247-z",
+      "venue": "Complex & Intelligent Systems",
+      "url": "https://openalex.org/W3119381431",
+      "oa_url": "https://link.springer.com/content/pdf/10.1007/s40747-020-00247-z.pdf",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s40747-020-00247-z.pdf",
+      "local_pdf": "pdfs/zhu2021.pdf",
+      "source": "openalex",
+      "query": "reinforcement learning neural architecture search ENAS",
+      "citation_count": 178,
+      "id": "W3119381431"
+    },
+    {
+      "cite_key": "mansour2023",
+      "title": "Zero-Shot Noise2Noise: Efficient Image Denoising without any Data",
+      "authors": [
+        "Youssef Mansour",
+        "Reinhard Heckel"
+      ],
+      "year": 2023,
+      "role": "used",
+      "doi": "10.1109/cvpr52729.2023.01347",
+      "venue": "2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "url": "https://doi.org/10.1109/cvpr52729.2023.01347",
+      "source": "crossref",
+      "query": "Noise2Noise unsupervised denoising",
+      "citation_count": 157,
+      "id": "10.1109/cvpr52729.2023.01347"
+    },
+    {
+      "cite_key": "qiu2021",
+      "title": "Comparative study of deep neural networks with unsupervised <scp>Noise2Noise</scp> strategy for noise reduction of optical coherence tomography images",
+      "authors": [
+        "Bin Qiu",
+        "Shuang Zeng",
+        "Xiangxi Meng",
+        "Zhe Jiang",
+        "Yunfei You",
+        "Mufeng Geng",
+        "Ziyuan Li",
+        "Yicheng Hu",
+        "Zhiyu Huang",
+        "Chuanqing Zhou",
+        "Qiushi Ren",
+        "Yanye Lu"
+      ],
+      "year": 2021,
+      "role": "used",
+      "doi": "10.1002/jbio.202100151",
+      "venue": "Journal of Biophotonics",
+      "url": "https://openalex.org/W3188436466",
+      "source": "openalex",
+      "query": "Noise2Noise unsupervised denoising",
+      "citation_count": 31,
+      "id": "W3188436466"
+    },
+    {
+      "cite_key": "finn2017",
+      "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+      "authors": [
+        "Chelsea Finn",
+        "Pieter Abbeel",
+        "Sergey Levine"
+      ],
+      "year": 2017,
+      "role": "screened_relevant",
+      "doi": "10.48550/arXiv.1703.03400",
+      "url": "https://arxiv.org/pdf/1703.03400",
+      "oa_url": "https://arxiv.org/pdf/1703.03400",
+      "pdf_url": "https://arxiv.org/pdf/1703.03400.pdf",
+      "local_pdf": "pdfs/finn2017.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "liu2019",
+      "title": "DARTS: Differentiable Architecture Search",
+      "authors": [
+        "Hanxiao Liu",
+        "Karen Simonyan",
+        "Yiming Yang"
+      ],
+      "year": 2019,
+      "role": "screened_relevant",
+      "doi": "10.48550/arXiv.1806.09055",
+      "url": "https://arxiv.org/pdf/1806.09055",
+      "oa_url": "https://arxiv.org/pdf/1806.09055",
+      "pdf_url": "https://arxiv.org/pdf/1806.09055.pdf",
+      "local_pdf": "pdfs/liu2019.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "dfossez2021",
+      "title": "Hybrid Spectrogram and Waveform Source Separation",
+      "authors": [
+        "Alexandre Défossez"
+      ],
+      "year": 2021,
+      "role": "screened_relevant",
+      "doi": "10.48550/arXiv.2111.03600",
+      "url": "https://arxiv.org/pdf/2111.03600",
+      "oa_url": "https://arxiv.org/pdf/2111.03600",
+      "pdf_url": "https://arxiv.org/pdf/2111.03600.pdf",
+      "local_pdf": "pdfs/dfossez2021.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "kong2021",
+      "title": "DiffWave: A Versatile Diffusion Model for Audio Synthesis",
+      "authors": [
+        "Zhifeng Kong",
+        "Wei Ping",
+        "Jiaji Huang",
+        "Kexin Zhao",
+        "Bryan Catanzaro"
+      ],
+      "year": 2021,
+      "role": "screened_relevant",
+      "doi": "10.48550/arXiv.2009.00713",
+      "url": "https://arxiv.org/pdf/2009.00713",
+      "oa_url": "https://arxiv.org/pdf/2009.00713",
+      "pdf_url": "https://arxiv.org/pdf/2009.00713.pdf",
+      "local_pdf": "pdfs/kong2021.pdf",
+      "source": "manual"
+    },
+    {
+      "cite_key": "dfossez2019",
+      "title": "Demucs: Deep Extractor for Music Sources with extra unlabeled data remixed",
+      "authors": [
+        "Alexandre Défossez",
+        "Nicolas Usunier",
+        "Léon Bottou",
+        "Francis R. Bach"
+      ],
+      "year": 2019,
+      "role": "screened_relevant",
+      "doi": "10.48550/arxiv.1909.01174",
+      "venue": "arXiv (Cornell University)",
+      "url": "https://openalex.org/W2971458685",
+      "oa_url": "https://arxiv.org/pdf/1909.01174",
+      "pdf_url": "https://arxiv.org/pdf/1909.01174.pdf",
+      "local_pdf": "pdfs/dfossez2019.pdf",
+      "source": "openalex",
+      "query": "Demucs music source separation convolutional",
+      "citation_count": 58,
+      "id": "W2971458685"
+    },
+    {
+      "cite_key": "pascual2017",
+      "title": "SEGAN: Speech Enhancement Generative Adversarial Network",
+      "authors": [
+        "Santiago Pascual",
+        "Antonio Bonafonte",
+        "Joan Serrà"
+      ],
+      "year": 2017,
+      "role": "screened_relevant",
+      "doi": "10.21437/interspeech.2017-1428",
+      "venue": "Interspeech 2017",
+      "url": "https://openalex.org/W2600556233",
+      "oa_url": "https://arxiv.org/pdf/1703.09452",
+      "pdf_url": "https://arxiv.org/pdf/1703.09452.pdf",
+      "local_pdf": "pdfs/pascual2017.pdf",
+      "source": "openalex",
+      "query": "SEGAN speech enhancement generative adversarial",
+      "citation_count": 838,
+      "id": "W2600556233"
+    },
+    {
+      "cite_key": "behl2019",
+      "title": "Alpha MAML: Adaptive Model-Agnostic Meta-Learning",
+      "authors": [
+        "Harkirat Singh Behl",
+        "Atılım Güneş Baydin",
+        "Philip H. S. Torr"
+      ],
+      "year": 2019,
+      "role": "screened_relevant",
+      "doi": "10.48550/arxiv.1905.07435",
+      "venue": "arXiv (Cornell University)",
+      "url": "https://openalex.org/W2946605054",
+      "oa_url": "https://arxiv.org/pdf/1905.07435",
+      "pdf_url": "https://arxiv.org/pdf/1905.07435.pdf",
+      "local_pdf": "pdfs/behl2019.pdf",
+      "source": "openalex",
+      "query": "MAML model-agnostic meta-learning",
+      "citation_count": 54,
+      "id": "W2946605054"
+    },
+    {
+      "cite_key": "alsaleh2024",
+      "title": "Few-Shot Learning for Medical Image Segmentation Using 3D U-Net and Model-Agnostic Meta-Learning (MAML)",
+      "authors": [
+        "A. Al-Saleh",
+        "Eid Albalawi",
+        "Abdulelah Algosaibi",
+        "Salman S. Albakheet",
+        "Surbhi Bhatia"
+      ],
+      "year": 2024,
+      "role": "screened_relevant",
+      "doi": "10.3390/diagnostics14121213",
+      "venue": "Diagnostics",
+      "url": "https://openalex.org/W4399432515",
+      "oa_url": "https://www.mdpi.com/2075-4418/14/12/1213/pdf?version=1718618721",
+      "source": "openalex",
+      "query": "MAML model-agnostic meta-learning",
+      "citation_count": 35,
+      "id": "W4399432515"
+    },
+    {
+      "cite_key": "nguyen2021",
+      "title": "Robust Maml: Prioritization Task Buffer with Adaptive Learning Process for Model-Agnostic Meta-Learning",
+      "authors": [
+        "Thanh Nguyen",
+        "Tung M. Luu",
+        "Trung X. Pham",
+        "Sanzhar Rakhimkul",
+        "Chang D. Yoo"
+      ],
+      "year": 2021,
+      "role": "screened_relevant",
+      "doi": "10.1109/icassp39728.2021.9413446",
+      "venue": "ICASSP 2021 - 2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "url": "https://openalex.org/W3137432794",
+      "oa_url": "https://arxiv.org/pdf/2103.08233",
+      "source": "openalex",
+      "query": "MAML model-agnostic meta-learning",
+      "citation_count": 22,
+      "id": "W3137432794"
+    },
+    {
+      "cite_key": "chen2025",
+      "title": "MAML-KalmanNet: A Neural Network-Assisted Kalman Filter Based on Model-Agnostic Meta-Learning",
+      "authors": [
+        "Shanli Chen",
+        "Yunfei Zheng",
+        "Dongyuan Lin",
+        "Peng Cai",
+        "Yingying Xiao",
+        "Shiyuan Wang"
+      ],
+      "year": 2025,
+      "role": "screened_relevant",
+      "doi": "10.1109/tsp.2025.3540018",
+      "venue": "IEEE Transactions on Signal Processing",
+      "url": "https://openalex.org/W4407403550",
+      "source": "openalex",
+      "query": "MAML model-agnostic meta-learning",
+      "citation_count": 21,
+      "id": "W4407403550"
+    },
+    {
+      "cite_key": "alrayes2025",
+      "title": "An Adaptive Framework for Intrusion Detection in IoT Security Using MAML (Model-Agnostic Meta-Learning)",
+      "authors": [
+        "Fatma S. Alrayes",
+        "Syed Umar Amin",
+        "Nada Ali Hakami"
+      ],
+      "year": 2025,
+      "role": "screened_relevant",
+      "doi": "10.3390/s25082487",
+      "venue": "Sensors",
+      "url": "https://openalex.org/W4409455823",
+      "oa_url": "https://www.mdpi.com/1424-8220/25/8/2487/pdf?version=1744782180",
+      "source": "openalex",
+      "query": "MAML model-agnostic meta-learning",
+      "citation_count": 14,
+      "id": "W4409455823"
+    }
+  ],
+  "pdf_files": {
+    "lehtinen2018": "pdfs/lehtinen2018.pdf",
+    "jaderberg2017": "pdfs/jaderberg2017.pdf",
+    "khadka2018": "pdfs/khadka2018.pdf",
+    "real2019": "pdfs/real2019.pdf",
+    "engel2020": "pdfs/engel2020.pdf",
+    "elsken2019": "pdfs/elsken2019.pdf",
+    "pham2018": "pdfs/pham2018.pdf",
+    "schulman2017": "pdfs/schulman2017.pdf",
+    "shazeer2017": "pdfs/shazeer2017.pdf",
+    "stoller2018": "pdfs/stoller2018.pdf",
+    "purwins2019": "pdfs/purwins2019.pdf",
+    "snoek2012": "pdfs/snoek2012.pdf",
+    "santra2021": "pdfs/santra2021.pdf",
+    "luo2019": "pdfs/luo2019.pdf",
+    "jansson2017": "pdfs/jansson2017.pdf",
+    "macartney2018": "pdfs/macartney2018.pdf",
+    "zhu2021": "pdfs/zhu2021.pdf",
+    "finn2017": "pdfs/finn2017.pdf",
+    "liu2019": "pdfs/liu2019.pdf",
+    "dfossez2021": "pdfs/dfossez2021.pdf",
+    "kong2021": "pdfs/kong2021.pdf",
+    "dfossez2019": "pdfs/dfossez2019.pdf",
+    "pascual2017": "pdfs/pascual2017.pdf",
+    "behl2019": "pdfs/behl2019.pdf"
+  },
+  "pdf_analyses": {
+    "lehtinen2018": {
+      "title": "Noise2Noise: Learning Image Restoration without Clean Data",
+      "abstract_snippet": "We apply basic statistical reasoning to signal re- construction by machine learning – learning to map corrupted observations to clean signals – with a simple and powerful conclusion: it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans – all corrupted by different processes – based on noisy data only. 1.…",
+      "intro_snippet": "Signal reconstruction from corrupted or incomplete mea- surements is an important subﬁeld of statistical data analysis. Recent advances in deep neural networks have sparked sig- niﬁcant interest in…",
+      "conclusion_snippet": ": it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans – all corrupted by different processes – based on noisy data only. 1. Introduction Signal reconstruction from corrupted or incomplete mea- surements is an important subﬁeld of statistical data analysis. Recent advances in deep neural networks have sparked sig- niﬁcant interest in avoiding the traditional,…",
+      "char_count": 47808,
+      "cite_key": "lehtinen2018",
+      "role": "used",
+      "pdf_path": "pdfs/lehtinen2018.pdf",
+      "has_pdf_text": true
+    },
+    "jaderberg2017": {
+      "title": "Population Based Training of Neural Networks",
+      "abstract_snippet": "Neural networks dominate the modern machine learning landscape, but their training and success still suffer from sensitivity to empirical choices of hyperparameters such as model architecture, loss function, and optimisation algorithm. In this work we present Population Based Training (PBT) , a simple asynchronous optimisation algorithm which effectively utilises a ﬁxed computational budget to jointly optimise a population of models and their hyperparameters to maximise performance. Importantly, PBT discovers a schedule of hy- perparameter settings rather than following the generally sub-optimal strategy of trying to ﬁnd a single ﬁxed set to use for the whole course of training. With just…",
+      "intro_snippet": "Neural networks have become the workhorse non-linear function approximator in a number of machine learn- ing domains, most notably leading to signiﬁcant advances in reinforcement learning (RL) and supervised learning. However, it is often overlooked that the success of a particular neural network model depends upon the joint tuning of the model structure, the data presented, and the details of how the model is optimised. Each of these components of a learning framework is controlled by a number of parameters, hyperparam- eters, which inﬂuence the learning process and must be properly tuned to fully unlock the network perfor- mance. This essential tuning process is computationally expensive, and as neural network systems become more complicated and endowed with even more hyperparameters,…",
+      "conclusion_snippet": "We have presented Population Based Training, which represents a practical way to augment the standard training of neural network models. We have shown consistent improvements in accuracy, training time and stability across a wide range of domains by being able to optimise over weights and hyperparameters jointly. It is important to note that contrary to conventional hyperparameter optimisation techniques, PBT discovers 13 an adaptive schedule rather than a ﬁxed set of hyperparameters. We already observed signiﬁcant improve- ments on a wide range of challenging problems including state of the art models on deep reinforcement learning and hierarchical reinforcement learning, machine…",
+      "char_count": 71070,
+      "cite_key": "jaderberg2017",
+      "role": "used",
+      "pdf_path": "pdfs/jaderberg2017.pdf",
+      "has_pdf_text": true
+    },
+    "khadka2018": {
+      "title": "Evolution-Guided Policy Gradient in Reinforcement Learning",
+      "abstract_snippet": "Deep Reinforcement Learning (DRL) algorithms have been successfully applied to a range of challenging control tasks. However, these methods typically suffer from three core difﬁculties: temporal credit assignment with sparse rewards, lack of effective exploration, and brittle convergence properties that are extremely sensitive to hyperparameters. Collectively, these challenges severely limit the applicability of these approaches to real-world problems. Evolutionary Algorithms (EAs), a class of black box optimization techniques inspired by natural evolution, are well suited to address each of these three challenges. However, EAs typically suffer from high sample complexity and struggle to…",
+      "intro_snippet": "Reinforcement learning (RL) algorithms have been successfully applied in a number of challenging domains, ranging from arcade games [37, 38], board games [51] to robotic control tasks [3, 33]. A primary driving force behind the explosion of RL in these domains is its integration with powerful non- linear function approximators like deep neural networks. This partnership with deep learning, often referred to as Deep Reinforcement Learning (DRL) has enabled RL to successfully extend to tasks with high-dimensional input and action spaces. However, widespread adoption of these techniques to real-world problems is still limited by three major challenges: temporal credit assignment with long time horizons and sparse rewards, lack of diverse exploration, and brittle convergence properties.…",
+      "conclusion_snippet": "asticity is assigned a higherξ to reduce variance. Note that all steps taken during each episode is cumulative when determining the agent’s total steps (the x-axix of the comparative results shown in the paper) for a fair comparison. Synchronization Period ω This parameter controls the frequency of information ﬂow from the rlactor to the evolutionary population. A higherω generally allows more time for expansive explo- ration by the evolutionary population while a lowerω can allow for a more narrower search. The parameter controls how frequently the exploration in action space (rlactor) shares information with the exploration in the parameter space (actors in the evolutionary population). 15",
+      "char_count": 50247,
+      "cite_key": "khadka2018",
+      "role": "used",
+      "pdf_path": "pdfs/khadka2018.pdf",
+      "has_pdf_text": true
+    },
+    "real2019": {
+      "title": "Regularized Evolution for Image Classifier Architecture Search",
+      "abstract_snippet": "The effort devoted to hand-crafting neural network image classiﬁers has motivated the use of architecture search to dis- cover them automatically. Although evolutionary algorithms have been repeatedly applied to neural network topologies, the image classiﬁers thus discovered have remained inferior to human-crafted ones. Here, we evolve an image classiﬁer— AmoebaNet-A—that surpasses hand-designs for the ﬁrst time. To do this, we modify the tournament selection evolution- ary algorithm by introducing an age property to favor the younger genotypes. Matching size, AmoebaNet-A has com- parable accuracy to current state-of-the-art ImageNet models discovered with more complex architecture-search…",
+      "intro_snippet": "Until recently, most state-of-the-art image classiﬁer archi- tectures have been manually designed by human experts [20,23,24,28,45]. To speed up the process, researchers have looked into automated methods [2, 29, 32, 35, 36, 43, 47, 53]. These methods are now collectively known as architecture- search algorithms. A traditional approach isneuro-evolution of topologies [1, 33, 42]. Improved hardware now allows scaling up evolution to produce high-quality image classi- ﬁers [30, 36, 47]. Yet, the architectures produced by evolu- tionary algorithms / genetic programming have not reached the accuracy of those directly designed by human experts. Here we evolve image classiﬁers that surpass hand-designs. To do this, we make two additions to the standard evo- lutionary process. First, we…",
+      "conclusion_snippet": "This paper used an evolutionary algorithm to discover image classiﬁer architectures. Our contributions are the following: • We proposed aging evolution, a variant of tournament se- lection by which genotypes die according to their age, fa- voring the young. This improved upon standard tourna- ment selection while still allowing for efﬁciency at scale through asynchronous population updating. We open- sourced the code. 4 We also implemented simple muta- 4https://colab.research.google.com/github/ google-research/google-research/blob/master/ evolution/regularized_evolution_algorithm/ regularized_evolution.ipynb tions that permit the application of evolution to the popu- lar NASNet search…",
+      "char_count": 66966,
+      "cite_key": "real2019",
+      "role": "used",
+      "pdf_path": "pdfs/real2019.pdf",
+      "has_pdf_text": true
+    },
+    "engel2020": {
+      "title": "DDSP: Differentiable Digital Signal Processing",
+      "abstract_snippet": "Most generative models of audio directly generate samples in one of two domains: time or frequency. While sufﬁcient to express any signal, these representations are inefﬁcient, as they do not utilize existing knowledge of how sound is generated and perceived. A third approach (vocoders/synthesizers) successfully incorpo- rates strong domain knowledge of signal processing and perception, but has been less actively researched due to limited expressivity and difﬁculty integrating with modern auto-differentiation-based machine learning methods. In this paper, we introduce the Differentiable Digital Signal Processing (DDSP) library, which en- ables direct integration of classic signal…",
+      "intro_snippet": "043, USA {jesseengel,hanoih,gcj,adarob}@google.com ABSTRACT Most generative models of audio directly generate samples in one of two domains: time or frequency. While sufﬁcient to express any signal, these representations are inefﬁcient, as they do not utilize existing knowledge of how sound is generated and perceived. A third approach (vocoders/synthesizers) successfully incorpo- rates strong domain knowledge of signal processing and perception, but has been less actively researched due to limited expressivity and difﬁculty integrating with modern auto-differentiation-based machine learning methods. In this paper, we introduce the Differentiable Digital Signal Processing (DDSP) library, whic",
+      "conclusion_snippet": "ndamental limitation of the technique and perturbations such as inharmonicity can also be incorporated to handle phenomena such as stiff strings (Smith, 2010). D.2 R EGULARIZATION It is worth mentioning that the modular structure of the synthesizers also makes it possible to deﬁne additional losses in terms of different synthesizer outputs and parameters. For example, we may impose an SNR loss to penalize outputs with too much noise if we know the training data consists of mostly clean data. We have not experimented too much with such engineered losses, but we believe they can make training more efﬁcient, even though such engineering methods deviates from the end-to-end training paradigm, 19",
+      "char_count": 54655,
+      "cite_key": "engel2020",
+      "role": "used",
+      "pdf_path": "pdfs/engel2020.pdf",
+      "has_pdf_text": true
+    },
+    "elsken2019": {
+      "title": "Neural Architecture Search: A Survey",
+      "abstract_snippet": "Deep Learning has enabled remarkable progress over the last years on a variety of tasks, such as image recognition, speech recognition, and machine translation. One crucial aspect for this progress are novel neural architectures. Currently employed architectures have mostly been developed manually by human experts, which is a time-consuming and error- prone process. Because of this, there is growing interest in automated neural architecture search methods. We provide an overview of existing work in this ﬁeld of research and cate- gorize them according to three dimensions: search space, search strategy, and performance estimation strategy. Keywords: Neural Architecture Search, AutoML,…",
+      "intro_snippet": "The success of deep learning in perceptual tasks is largely due to its automation of the feature engineering process: hierarchical feature extractors are learned in an end-to-end fashion from data rather than manually designed. This success has been accompanied, however, by a rising demand for architecture engineering, where increasingly more complex neural architectures are designed manually. Neural Architecture Search (NAS), the process of automating architecture engineering, is thus a logical next step in automating machine learning. Already by now, NAS methods have outperformed manually designed architec- tures on some tasks such as image classiﬁcation (Zoph et al., 2018; Real et al., 2019), object detection (Zoph et al., 2018) or semantic segmentation (Chen et al., 2018). NAS can…",
+      "conclusion_snippet": "of the actions sampled so far, and the (undiscounted) reward is obtained only after the ﬁnal action. However, since no interaction with an environment occurs during this sequential process (no external state is observed, and there are no intermediate rewards), we ﬁnd it more intuitive to interpret the architecture sampling process as the sequential generation of a single action; this simpliﬁes the RL problem to a stateless multi-armed bandit problem. A related approach was proposed by Cai et al. (2018a), who frame NAS as a sequential decision process: in their approach the state is the current (partially trained) architecture, the reward is an estimate of the architecture’s performance,…",
+      "char_count": 61294,
+      "cite_key": "elsken2019",
+      "role": "used",
+      "pdf_path": "pdfs/elsken2019.pdf",
+      "has_pdf_text": true
+    },
+    "pham2018": {
+      "title": "Efficient Neural Architecture Search via Parameter Sharing",
+      "abstract_snippet": "We propose Efﬁcient Neural Architecture Search (ENAS), a fast and inexpensive approach for au- tomatic model design. In ENAS, a controller dis- covers neural network architectures by searching for an optimal subgraph within a large computa- tional graph. The controller is trained with pol- icy gradient to select a subgraph that maximizes the expected reward on a validation set. Mean- while the model corresponding to the selected subgraph is trained to minimize a canonical cross entropy loss. Sharing parameters among child models allows ENAS to deliver strong empiri- cal performances, while using much fewer GPU- hours than existing automatic model design ap- proaches, and notably, 1000x…",
+      "intro_snippet": "Neural architecture search (NAS) has been successfully ap- plied to design model architectures for image classiﬁca- tion and language models ( Zoph & Le , 2017; Zoph et al. , 2018; Cai et al., 2018; Liu et al., 2017; 2018). In NAS, an RNN controller is trained in a loop: the controller ﬁrst samples a candidate architecture, i.e. a child model , and then trains it to convergence to measure its performance on the task of desire. The controller then uses the perfor- mance as a guiding signal to ﬁnd more promising architec- tures. This process is repeated for many iterations. De- *Equal contribution 1Google Brain 2Language Technology In- stitute, Carnegie Mellon University 3Department of Computer Sci- ence, Stanford University. Correspondence to: Hieu Pham <hy- hieu@cmu.edu>, Melody Y .…",
+      "conclusion_snippet": "NAS is an important advance that automatizes the design- ing process of neural networks. However, NAS’s com- putational expense prevents it from being widely adopted. In this paper, we presented ENAS, a novel method that speeds up NAS by more than 1000x, in terms of GPU hours. ENAS’s key contribution is the sharing of parame- ters across child models during the search for architecture s. This insight is implemented by searching for a subgraph within a larger graph that incorporates architectures in a search space. We showed that ENAS works well on both CIFAR-10 and Penn Treebank datasets. Acknowledgements The authors want to thank Jaime Carbonell, Zihang Dai, Lukasz Kaiser, Azalia…",
+      "char_count": 46027,
+      "cite_key": "pham2018",
+      "role": "used",
+      "pdf_path": "pdfs/pham2018.pdf",
+      "has_pdf_text": true
+    },
+    "schulman2017": {
+      "title": "Proximal Policy Optimization Algorithms",
+      "abstract_snippet": "We propose a new family of policy gradient methods for reinforcement learning, which al- ternate between sampling data through interaction with the environment, and optimizing a “surrogate” objective function using stochastic gradient ascent. Whereas standard policy gra- dient methods perform one gradient update per data sample, we propose a novel objective function that enables multiple epochs of minibatch updates. The new methods, which we call proximal policy optimization (PPO), have some of the beneﬁts of trust region policy optimiza- tion (TRPO), but they are much simpler to implement, more general, and have better sample complexity (empirically). Our experiments test PPO on a…",
+      "intro_snippet": "In recent years, several diﬀerent approaches have been proposed for reinforcement learning with neural network function approximators. The leading contenders are deep Q-learning [Mni+15], “vanilla” policy gradient methods [Mni+16], and trust region / natural policy gradient methods [Sch+15b]. However, there is room for improvement in developing a method that is scalable (to large models and parallel implementations), data eﬃcient, and robust (i.e., successful on a variety of problems without hyperparameter tuning). Q-learning (with function approximation) fails on many simple problems 1 and is poorly understood, vanilla policy gradient methods have poor data eﬃency and robustness; and trust region policy optimization (TRPO) is relatively complicated, and is not compatible with…",
+      "conclusion_snippet": "We have introduced proximal policy optimization, a family of policy optimization methods that use multiple epochs of stochastic gradient ascent to perform each policy update. These methods have the stability and reliability of trust-region methods but are much simpler to implement, requiring only few lines of code change to a vanilla policy gradient implementation, applicable in more general settings (for example, when using a joint architecture for the policy and value function), and have better overall performance. 8 Acknowledgements Thanks to Rocky Duan, Peter Chen, and others at OpenAI for insightful comments. 8 References [Bel+15] M. Bellemare, Y. Naddaf, J. Veness, and M. Bowling.…",
+      "char_count": 26895,
+      "cite_key": "schulman2017",
+      "role": "used",
+      "pdf_path": "pdfs/schulman2017.pdf",
+      "has_pdf_text": true
+    },
+    "shazeer2017": {
+      "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "abstract_snippet": "The capacity of a neural network to absorb information is limited by its number of parameters. Conditional computation, where parts of the network are active on a per-example basis, has been proposed in theory as a way of dramatically increas- ing model capacity without a proportional increase in computation. In practice, however, there are signiﬁcant algorithmic and performance challenges. In this work, we address these challenges and ﬁnally realize the promise of conditional computation, achieving greater than 1000x improvements in model capacity with only minor losses in computational efﬁciency on modern GPU clusters. We in- troduce a Sparsely-Gated Mixture-of-Experts layer (MoE),…",
+      "intro_snippet": "more than two decades ago (Jacobs et al., 1991; Jordan & Jacobs, 1994), the mixture-of-experts approach has been the subject of much research. Different types of expert architectures hae been proposed such as SVMs (Collobert et al., 2002), Gaussian Processes (Tresp, 2001; Theis & Bethge, 2015; Deisenroth & Ng, 2015), Dirichlet Processes (Shahbaba & Neal, 2009), and deep networks. Other work has focused on different expert conﬁgurations such as a hierarchical structure (Yao et al., 2009), inﬁnite numbers of experts (Rasmussen & Ghahramani, 2002), and adding experts sequentially (Aljundi et al., 2016). Garmash & Monz (2016) suggest an ensemble model in the format of mixture of experts for machine translation. The gating network is trained on a pre-trained ensemble NMT model. The works…",
+      "conclusion_snippet": "to the potential to introduce sparsity, turning MoEs into a vehicle for computational computation. Our work builds on this use of MoEs as a general purpose neural network component. While Eigen et al. (2013) uses two stacked MoEs allowing for two sets of gating decisions, our convolutional application of the MoE allows for different gating decisions at each position in the text. We also realize sparse gating and demonstrate its use as a practical way to massively increase model capacity. 2 T HE STRUCTURE OF THE MIXTURE -OF-EXPERTS LAYER The Mixture-of-Experts (MoE) layer consists of a set of n “expert networks\" E1,··· ,En, and a “gating network\" G whose output is a sparse n-dimensional…",
+      "char_count": 63766,
+      "cite_key": "shazeer2017",
+      "role": "used",
+      "pdf_path": "pdfs/shazeer2017.pdf",
+      "has_pdf_text": true
+    },
+    "stoller2018": {
+      "title": "Wave-U-Net: A Multi-Scale Neural Network for End-to-End Audio Source Separation",
+      "abstract_snippet": "Models for audio source separation usually operate on the magnitude spectrum, which ignores phase information and makes separation performance dependant on hyper- parameters for the spectral front-end. Therefore, we in- vestigate end-to-end source separation in the time-domain, which allows modelling phase information and avoids ﬁxed spectral transformations. Due to high sampling rates for audio, employing a long temporal input context on the sam- ple level is difﬁcult, but required for high quality separation results because of long-range temporal correlations. In this context, we propose the Wave-U-Net, an adaptation of the U-Net to the one-dimensional time domain, which repeatedly…",
+      "intro_snippet": "Current methods for audio source separation almost exclu- sively operate on spectrogram representations of the audio signals [6, 7], as they allow for direct access to compo- nents in time and frequency. In particular, after applying a short-time Fourier transform (STFT) to the input mixture signal, the complex-valued spectrogram is split into its mag- nitude and phase components. Then only the magnitudes are input to a parametric model, which returns estimated spectrogram magnitudes for the individual sound sources. To generate corresponding audio signals, these magnitudes are combined with the mixture phase and then converted with an inverse STFT to the time domain. Optionally, the phase can be recovered for each source individually using the Grifﬁn-Lim algorithm [5]. c⃝ Daniel…",
+      "conclusion_snippet": ", these models suffer not only from incon- sistencies at such segment borders, but are also less capable of performing separation there whenever information from a temporal context is required. Larger input and output sizes alleviate the issue somewhat, but the problems at the 0 1 2 3 4 5 6 t (s) 0 2 4 6 8 10 f (KHz) 50 40 30 20 10 0 10 20 Figure 4. Power spectrogram (dB) of a vocal estimate excerpt gen- erated by a model without additional input context. Red markers show boundaries between independent segment-wise predictions. borders remain. Blending the predictions for overlapping segments [4] is an ad-hoc solution, since the average of multiple predicted audio signals might not be a…",
+      "char_count": 39032,
+      "cite_key": "stoller2018",
+      "role": "used",
+      "pdf_path": "pdfs/stoller2018.pdf",
+      "has_pdf_text": true
+    },
+    "purwins2019": {
+      "title": "Deep Learning for Audio Signal Processing",
+      "abstract_snippet": "—Given the recent surge in developments of deep learning, this article provides a review of the state-of-the-art deep learning techniques for audio signal processing. Speech, music, and environmental sound processing are considered side- by-side, in order to point out similarities and differences between the domains, highlighting general methods, problems, key refer- ences, and potential for cross-fertilization between areas. The dominant feature representations (in particular, log-mel spectra and raw waveform) and deep learning models are reviewed, including convolutional neural networks, variants of the long short-term memory architecture, as well as more audio-speciﬁc neural network…",
+      "intro_snippet": "dvertising or promotional purposes, creating new collective works, for resale or redistribution to servers or lists, or reuse of any copyrighted component of this work in other works. Appeared as: Hendrik Purwins, Bo Li, Tuomas Virtanen, Jan Schlüter, Shuo- yiin Chang, Tara Sainath. Deep Learning for Audio Signal Processing. In Journal of Selected Topics of Signal Processing , V ol. 13, No. 2, May 2019, pages 206–219. http://doi.org/10.1109/JSTSP.2019.2908700 arXiv:1905.00078v2 [cs.SD] 25 May 2019 JOURNAL OF SELECTED TOPICS OF SIGNAL PROCESSING, VOL. 13, NO. 2, MAY 2019, PP. 206–219 1 Deep Learning for Audio Signal Processing Hendrik Purwins ∗, Bo Li ∗, Tuomas Virtanen ∗, Jan Schlüter ∗, Shu",
+      "conclusion_snippet": "In this section, we look at deep learning across the dif- ferent audio domains, regarding the following aspects: fea- tures (Sec. IV-A), models (Sec. IV-B), data requirements (Sec. IV-C), computational complexity (Sec. IV-D), inter- pretability and adaptability (Sec. IV-E). For each aspect, we highlight differences and similarities between the domains, and note common challenges worthwhile to work on. A. Features Whereas MFCCs are the most common representation in traditional audio signal processing, log-mel spectrograms are the dominant feature in deep learning, followed by raw waveforms or complex spectrograms. Raw waveforms avoid hand-designed features, which should allow to better…",
+      "char_count": 91567,
+      "cite_key": "purwins2019",
+      "role": "used",
+      "pdf_path": "pdfs/purwins2019.pdf",
+      "has_pdf_text": true
+    },
+    "snoek2012": {
+      "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+      "abstract_snippet": "PRACTICAL BAYESIAN OPTIMIZATION OF MACHINE LEARNING ALGORITHMS By Jasper Snoek, Hugo Larochelle and Ryan P. Adams University of Toronto, Universit´ e de Sherbrooke and Harvard University Machine learning algorithms frequently require careful tuning of model hyperparameters, regularization terms, and optimization pa- rameters. Unfortunately, this tuning is often a “black art” that re- quires expert experience, unwritten rules of thumb, or sometimes brute-force search. Much more appealing is the i",
+      "intro_snippet": ". Machine learning algorithms are rarely parameter-free; whether via the properties of a regularizer, the hyperprior of a generative model, or the step size of a gradient-based optimization, learning procedures almost always require a set of high-level choices that signiﬁcantly impact generalization performance. As a practitioner, one is usually able to specify the general framework of an inductive bias much more easily than the particular weighting that it should have relative to training data. As a result, these high-level parameters are often considered a nuisance, making it desirable to develop algorithms with as few of these “knobs” as possible. Another, more ﬂexible take on this issue is to view the optimization of high-level parameters as a procedure to be automated. Speciﬁcally,…",
+      "conclusion_snippet": ". In this paper we presented methods for performing Bayesian optimiza- tion of hyperparameters associated with general machine learning algorithms. We introduced a fully Bayesian treatment for expected improvement, and algorithms for dealing with variable time regimes and parallelized experiments. Our empirical analysis demonstrates the eﬀective- ness of our approaches on three challenging recently published problems spanning diﬀerent ar- eas of machine learning. The code used will be made publicly available. The resulting Bayesian optimization ﬁnds better hyperparameters signiﬁcantly faster than the approaches used by the authors. Indeed our algorithms surpassed a human expert at…",
+      "char_count": 36591,
+      "cite_key": "snoek2012",
+      "role": "used",
+      "pdf_path": "pdfs/snoek2012.pdf",
+      "has_pdf_text": true
+    },
+    "zhang2007": {
+      "title": "MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "zhang2007",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "santra2021": {
+      "title": "Gradient Descent Effects on Differential Neural Architecture Search: A Survey",
+      "abstract_snippet": "Gradient Descent, an effective way to search for the local minimum of a function, can minimize training and validation loss of neural architectures and also be incited in an appropriate order to decrease the searching cost of neural architecture search. In recent trends, the neural architecture search (NAS) is enormously used to construct an automatic architecture for a speciﬁc task. Mostly well-performed neural architecture search methods have adopted reinforcement learning, evolutionary algorithms, or gradient descent algorithms to ﬁnd the best-performing candidate architecture. Among these methods, gradient descent-based architecture search approaches outperform all other methods in…",
+      "intro_snippet": "Automatic machine learning (AutoML) has become a favor- able solution for developing deep learning (DL) systems without any human efforts. An AutoML system consists of data preprocessing, feature generation, network model gen- eration, and performance evaluation. Although an AutoML system consists of several stages, the most critical stages are model generation and performance estimation. The model generation stage is either created by machine learning experts or by an automatic design process. The automated architec- ture design process is known as neural architecture search (NAS). The rapid development and demand of NAS continue to overwhelm the human experts designing architectures in many applications. Constructing an automatic architecture with different net- work topologies is…",
+      "conclusion_snippet": "NAS has become one of the main steps for Auto-ML in the current era. Automatic generation of neural architecture goes through search space, search strategy, and performance evolu- tion stages. However, the demand for automatic architectures is gradually increasing as data increases continuously at an VOLUME 9, 2021 89615 S. Santra et al.: Gradient Descent Effects on Differential Neural Architecture Search exponential scale. GD-based architecture search approaches are typically used to reduce computing costs and increase the efﬁciency of architecture searching. This survey has dis- cussed different GD-based architecture search techniques and their management approaches. We started with a…",
+      "char_count": 88166,
+      "cite_key": "santra2021",
+      "role": "used",
+      "pdf_path": "pdfs/santra2021.pdf",
+      "has_pdf_text": true
+    },
+    "li2015": {
+      "title": "Solving multi-objective multi-stage weapon target assignment problem via adaptive NSGA-II and adaptive MOEA/D: A comparison study",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "li2015",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "luo2019": {
+      "title": "Conv-TasNet: Surpassing Ideal Time–Frequency Magnitude Masking for Speech Separation",
+      "abstract_snippet": "—Single-channel, speaker-independent speech separa- tion methods have recently seen great progress. However, the ac- curacy, latency, and computational cost of such methods remain insufﬁcient. The majority of the previous methods have formulated the separation problem through the time–frequency representation of the mixed signal, which has several drawbacks, including the decoupling of the phase and magnitude of the signal, the subopti- mality of time–frequency representation for speech separation, and the long latency in calculating the spectrograms. To address these shortcomings, we propose a fully convolutional time-domain au- dio separation network (Conv-TasNet), a deep learning…",
+      "intro_snippet": "esgarani Abstract—Single-channel, speaker-independent speech separa- tion methods have recently seen great progress. However, the ac- curacy, latency, and computational cost of such methods remain insufﬁcient. The majority of the previous methods have formulated the separation problem through the time–frequency representation of the mixed signal, which has several drawbacks, including the decoupling of the phase and magnitude of the signal, the subopti- mality of time–frequency representation for speech separation, and the long latency in calculating the spectrograms. To address these shortcomings, we propose a fully convolutional time-domain au- dio separation network (Conv-TasNet), a deep ",
+      "conclusion_snippet": ", Conv-TasNet represents a signiﬁcant step to- ward the realization of speech separation algorithms and opens many future research directions that would further improve its accuracy, speed, and computational cost, which could eventu- ally make automatic speech separation a common and necessary feature of every speech processing technology designed for real- world applications. REFERENCES [1] D. Wang and J. Chen, “Supervised speech separation based on deep learn- ing: An overview,” IEEE/ACM Trans. Audio, Speech, Lang. Process. , vol. 26, no. 1, pp. 1702–1726, Oct. 2018. [2] X. Lu, Y . Tsao, S. Matsuda, and C. Hori, “Speech enhancement based on deep denoising autoencoder.” in Proc.…",
+      "char_count": 58967,
+      "cite_key": "luo2019",
+      "role": "used",
+      "pdf_path": "pdfs/luo2019.pdf",
+      "has_pdf_text": true
+    },
+    "jansson2017": {
+      "title": "Singing Voice Separation With Deep U-Net Convolutional Networks.",
+      "abstract_snippet": "The decomposition of a music audio signal into its vocal and backing track components is analogous to image-to- image translation, where a mixed spectrogram is trans- formed into its constituent sources. We propose a novel application of the U-Net architecture — initially devel- oped for medical imaging — for the task of source sep- aration, given its proven capacity for recreating the ﬁne, low-level detail required for high-quality audio reproduc- tion. Through both quantitative evaluation and subjective assessment, experiments demonstrate that the proposed al- gorithm achieves state-of-the-art performance. 1.…",
+      "intro_snippet": "The ﬁeld of Music Information Retrieval (MIR) concerns itself, among other things, with the analysis of music in its many facets, such as melody, timbre or rhythm [20]. Among those aspects, popular western commercial mu- sic (“pop” music) is arguably characterized by emphasiz- ing mainly the Melody and Accompaniment aspects; while this is certainly an oversimpliﬁcation in the context of the whole genre, we restrict the focus of this paper to the analysis of music that lends itself well to be described in terms of a main melodic line (foreground) and accompa- niment (background) [27]. Normally the melody is sung, whereas the accompaniment is performed by one or more instrumentalists; a singer delivers the lyrics, and the back- ing musicians provide harmony as well as genre and style cues…",
+      "conclusion_snippet": "AND FUTURE WORK We have explored the U-Net architecture in the context of singing voice separation, and found that it brings clear im- provements over the state-of-the-art. The beneﬁts of low- level skip connections were demonstrated by comparison to plain convolutional encoder-decoders. A factor that we feel should be investigated further is the impact of large training data: work remains to be done to correlate the effects of the size of the training dataset to the quality of source separation. We have observed some examples of poor separation on tracks where the vocals are mixed at lower-than-average volume, uncompressed, suffer from extreme application of audio effects, or otherwise…",
+      "char_count": 29216,
+      "cite_key": "jansson2017",
+      "role": "used",
+      "pdf_path": "pdfs/jansson2017.pdf",
+      "has_pdf_text": true
+    },
+    "macartney2018": {
+      "title": "Improved Speech Enhancement with the Wave-U-Net",
+      "abstract_snippet": "We study the use of the Wave-U-Net architecture for speech enhancement, a model introduced by Stoller et al for the separation of music vocals and accompaniment. This end-to-end learning method for audio source separation operates directly in the time domain, permitting the integrated modelling of phase information and being able to take large temporal contexts into account. Our experiments show that the proposed method improves several metrics, namely PESQ, CSIG, CBAK, COVL and SSNR, over the state-of-the-art with respect to the speech enhancement task on the V oice Bank corpus (VCTK) dataset. We ﬁnd that a reduced number of hidden layers is sufﬁcient for speech enhancement in comparison…",
+      "intro_snippet": "Audio source separation refers to the problem of extracting one or more target sources while sup- pressing interfering sources and noise [18]. Two related tasks are those of speech enhancement and singing voice separation, both of which involve extracting the human voice as a target source. The former involves attempting to improve speech intelligibility and quality when obscured by additive noise [7, 9, 18]; whilst the latter’s focus is on separating music vocals from accompaniment [12]. Most audio source separation methods operate not directly in the time-domain, but with time- frequency representations as input and output (front-end). Since 2017, the U-Net architecture on magnitude spectrograms has achieved new state of the art results in audio source separation for music [6] and…",
+      "conclusion_snippet": "and perspectives for future work. 2 Related work Source separation of audio has seen great improvement in recent years through deep learning models [5, 8]. These methods, as well as more traditional ones, mostly operate in the time-frequency domain, from deep recurrent architectures predicting soft masks, such as [4], to convolutional encoder-decoder architectures like that of [ 1]. Recently, the U-Net architecture on magnitude spectrograms has arXiv:1811.11307v1 [cs.SD] 27 Nov 2018 Noisy speechClean speechNoise 1D Convolution size 15Downsampling1D Convolution size 5Upsampling Crop and concatenate1D Convolution size 1 Downsamplingblock 1Upsamplingblock 1 Crop and concatenate…",
+      "char_count": 16924,
+      "cite_key": "macartney2018",
+      "role": "used",
+      "pdf_path": "pdfs/macartney2018.pdf",
+      "has_pdf_text": true
+    },
+    "nakamura2020": {
+      "title": "Time-Domain Audio Source Separation Based on Wave-U-Net Combined with Discrete Wavelet Transform",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "nakamura2020",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "kashyap2021": {
+      "title": "Speech Denoising Without Clean Training Data: A Noise2Noise Approach",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "kashyap2021",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "calvarons2021": {
+      "title": "Improved Noise2Noise Denoising with Limited Data",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "calvarons2021",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "giri2019": {
+      "title": "Attention Wave-U-Net for Speech Enhancement",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "giri2019",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "zhu2021": {
+      "title": "From federated learning to federated neural architecture search: a survey",
+      "abstract_snippet": "Federated learning is a recently proposed distributed machine learning paradigm for privacy preservation, which has found a wide range of applications where data privacy is of primary concern. Meanwhile, neural architecture search has become very popular in deep learning for automatically tuning the architecture and hyperparameters of deep neural networks. While both federated learning and neural architecture search are faced with many open challenges, searching for optimized neural architectures in the federated learning framework is particularly demanding. This survey paper starts with a brief…",
+      "intro_snippet": "to federated learning, including both horizontal, vertical, and hybrid federated learning. Then neural architecture search approaches based on reinforcement learning, evolutionary algorithms and gradient-based are presented. This is followed by a description of federated neural architecture search that has recently been proposed, which is categorized into online and ofﬂine implementations, and single- and multi-objective search approaches. Finally, remaining open research questions are outlined and promising research topics are suggested. Keywords Federated learning · Deep learning · Privacy preservation · Neural architecture search · Reinforcement learning · Evolutionary algorithm · Real-time optimization Introduction Deep neural networks (DNNs) have made great success in the ﬁelds of…",
+      "conclusion_snippet": "In this survey paper, a brief overview of federated learning and NAS is provided, and a combination of both tech- niques, i.e., federated NAS is introduced. Given several remaining challenges in both federated learning and NAS, federated NAS becomes extremely challenging since many techniques developed in centralized NAS are no longer suited for federated NAS, and NAS will be subject to more con- straints introduced by the federated learning environment. Two approaches to federated NAS are discussed, one is ofﬂine optimization and the other is online optimization. It is noted that ofﬂine evolutionary NAS methods are not applicable for many real-world scenarios, mainly because the ofﬂine…",
+      "char_count": 90648,
+      "cite_key": "zhu2021",
+      "role": "used",
+      "pdf_path": "pdfs/zhu2021.pdf",
+      "has_pdf_text": true
+    },
+    "mansour2023": {
+      "title": "Zero-Shot Noise2Noise: Efficient Image Denoising without any Data",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "mansour2023",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "qiu2021": {
+      "title": "Comparative study of deep neural networks with unsupervised <scp>Noise2Noise</scp> strategy for noise reduction of optical coherence tomography images",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "qiu2021",
+      "role": "used",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "finn2017": {
+      "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+      "abstract_snippet": "We propose an algorithm for meta-learning that is model-agnostic, in the sense that it is com- patible with any model trained with gradient de- scent and applicable to a variety of different learning problems, including classiﬁcation, re- gression, and reinforcement learning. The goal of meta-learning is to train a model on a vari- ety of learning tasks, such that it can solve new learning tasks using only a small number of train- ing samples. In our approach, the parameters of the model are explicitly trained such that a small number of gradient steps with a small amount of training data from a new task will produce good generalization performance on that task. In effect, our method…",
+      "intro_snippet": "Learning quickly is a hallmark of human intelligence, whether it involves recognizing objects from a few exam- ples or quickly learning new skills after just minutes of experience. Our artiﬁcial agents should be able to do the same, learning and adapting quickly from only a few exam- ples, and continuing to adapt as more data becomes avail- able. This kind of fast and ﬂexible learning is challenging, since the agent must integrate its prior experience with a small amount of new information, while avoiding overﬁt- ting to the new data. Furthermore, the form of prior ex- perience and new data will depend on the task. As such, for the greatest applicability, the mechanism for learning to learn (or meta-learning) should be general to the task and 1University of California, Berkeley 2OpenAI.…",
+      "conclusion_snippet": "the same experimental protocol. We report the results in Tables 3, 4, and 5. Learning an adaptable con- text vector performed well on the toy pointmass problem, but sub-par on more difﬁcult problems, likely due to a less ﬂexible meta-optimization. Table 4. 2D Pointmass, average return num. grad steps 0 1 2 3 context vector −42.42 −13.90 −5.17 −3.18 MAML (ours) −40.41 −11.68 −3.33 −3.23 Table 5. Half-cheetah forward/backward, average return num. grad steps 0 1 2 3 context vector −40.49 −44.08 −38.27 −42.50 MAML (ours) −50.69 293.19 313.48 315.65 Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks Figure 7. A random sample of qualitative results from the sinusoid regression task.",
+      "char_count": 54568,
+      "cite_key": "finn2017",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/finn2017.pdf",
+      "has_pdf_text": true
+    },
+    "liu2019": {
+      "title": "DARTS: Differentiable Architecture Search",
+      "abstract_snippet": "This paper addresses the scalability challenge of architecture search by formulating the task in a differentiable manner. Unlike conventional approaches of applying evo- lution or reinforcement learning over a discrete and non-differentiable search space, our method is based on the continuous relaxation of the architecture representation, allowing efﬁcient search of the architecture using gradient descent. Extensive experiments on CIFAR-10, ImageNet, Penn Treebank and WikiText-2 show that our algorithm excels in discovering high-performance convolutional architectures for image classiﬁcation and recurrent architectures for language modeling, while being orders of magnitude faster than…",
+      "intro_snippet": ". Annals of Operations Research, 34(1):1–11, 1992. Bowen Baker, Otkrist Gupta, Nikhil Naik, and Ramesh Raskar. Designing neural network architec- tures using reinforcement learning. ICLR, 2017. Bowen Baker, Otkrist Gupta, Ramesh Raskar, and Nikhil Naik. Accelerating neural architecture search using performance prediction. ICLR Workshop, 2018. Gabriel Bender, Pieter-Jan Kindermans, Barret Zoph, Vijay Vasudevan, and Quoc Le. Understanding and simplifying one-shot architecture search. In International Conference on Machine Learning , pp. 549–558, 2018. Andrew Brock, Theodore Lim, James M Ritchie, and Nick Weston. Smash: one-shot model architecture search through hypernetworks. ICLR, 2018. Han Cai, Tianyao Chen, Weinan Zhang, Yong Yu, and Jun Wang. Efﬁcient architecture search by network…",
+      "conclusion_snippet": "eater than the 5.6× 1014 of PNAS (Liu et al., 2018a) which learns only a single type of cell. Also note that we retained the top-2 predecessors per node only at the very end, and our continuous search space before this ﬁnal discretization step is even larger. Speciﬁcally, each relaxed cell (a fully connected graph) contains 2 + 3 + 4 + 5 = 14 learnable edges, allowing (7 + 1)14≈ 4× 1012 possible conﬁgurations (+1 to include the zero op indicating a lack of connection). Again, since we are learning both normal and reduction cells, the total number of architectures covered by the continuous space before discretization is (4× 1012)2≈ 1025. 4We did not conduct extensive hyperparameter tuning. 13",
+      "char_count": 45752,
+      "cite_key": "liu2019",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/liu2019.pdf",
+      "has_pdf_text": true
+    },
+    "dfossez2021": {
+      "title": "Hybrid Spectrogram and Waveform Source Separation",
+      "abstract_snippet": "Source separation models either work on the spectrogram or waveform domain. In this work, we show how to perform end-to-end hybrid source separation, letting the model decide which domain is best suited for each source, and even combining both. The proposed hybrid version of the Demucs architecture (Défossez et al., 2019) won the Music Demixing Challenge 2021 organized by Sony. This architecture also comes with additional improvements, such as compressed residual branches, local attention or singular value regularization. Overall, a 1.4 dB improvement of the Signal-To-Distortion (SDR) was observed across all sources as measured on the MusDB HQ dataset (Raﬁi et al., 2019), an improvement…",
+      "intro_snippet": "Work on music source separation has recently focused on the task of separating 4 well deﬁned instruments in a supervised manner: drums, bass, vocals and other accompaniments. Recent evaluation campaigns (Stöter et al., 2018) have focused on this setting, relying on the standard MusDB benchmark (Raﬁi et al., 2017). In 2021, Sony organized the Music Demixing Challenge (MDX) (Mitsufuji et al., 2021), an online competition where separation models are evaluated on a completely new and hidden test set composed of 27 tracks. The challenge featured a number of baselines to start from, which could be divided into two categories: spectrogram or waveform based methods. The former consists in models that are fed with the input spectrogram, either represented by its amplitude, such as Open-Unmix…",
+      "conclusion_snippet": "We introduced a number of architectural changes to the Demucs architecture that greatly improved the quality of source separation for music. On the MusDB HQ benchark, the gain is around 1.4 dB. Those changes include compressed residual branches with local attention and chunked biLSTM, and most importantly, a novel hybrid spectrogram/temporal domain U-Net structure, with parallel temporal and spectrogram branches, that merge into a common core. Those changes allowed to achieve the ﬁrst rank at the 2021 Sony Music DemiXing challenge, and translated into strong improvements of the overall quality and absence of bleeding between sources as measured by human evaluations. For all its gain, one…",
+      "char_count": 40934,
+      "cite_key": "dfossez2021",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/dfossez2021.pdf",
+      "has_pdf_text": true
+    },
+    "kong2021": {
+      "title": "DiffWave: A Versatile Diffusion Model for Audio Synthesis",
+      "abstract_snippet": "This paper introduces WaveGrad, a conditional model for waveform generation which estimates gradients of the data density. The model is built on prior work on score matching and diffusion probabilistic models. It starts from a Gaussian white noise signal and iteratively reﬁnes the signal via a gradient-based sampler conditioned on the mel-spectrogram. WaveGrad offers a natural way to trade in- ference speed for sample quality by adjusting the number of reﬁnement steps, and bridges the gap between non-autoregressive and autoregressive models in terms of audio quality. We ﬁnd that it can generate high ﬁdelity audio samples using as few as six iterations. Experiments reveal WaveGrad to…",
+      "intro_snippet": "d Norouzi, William Chan † Google Research, Brain Team {ngyuzh,heigazen,ronw,mnorouzi,williamchan}@google.com ABSTRACT This paper introduces WaveGrad, a conditional model for waveform generation which estimates gradients of the data density. The model is built on prior work on score matching and diffusion probabilistic models. It starts from a Gaussian white noise signal and iteratively reﬁnes the signal via a gradient-based sampler conditioned on the mel-spectrogram. WaveGrad offers a natural way to trade in- ference speed for sample quality by adjusting the number of reﬁnement steps, and bridges the gap between non-autoregressive and autoregressive models in terms of audio quality. We ﬁnd t",
+      "conclusion_snippet": "s allowed evaluate up to six stimuli. Test stimuli were randomly chosen and presented for each subject. Each stimulus was presented to a subject in isolation and was evaluated by one subject. The subjects were paid and native speakers of English living in United States. They were requested to use headphones in a quiet room. E S UBJECTIVE SCORES REPORTED IN THE PRIOR WORK Table E.2 shows the reported mean opinion scores of the prior work which used the same speaker. Although different papers listed here used the same female speaker, their results are not directly comparable due to differences in the training dataset, sampling rates, conditioning features, and sentences used for evaluation. 15",
+      "char_count": 49731,
+      "cite_key": "kong2021",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/kong2021.pdf",
+      "has_pdf_text": true
+    },
+    "dfossez2019": {
+      "title": "Demucs: Deep Extractor for Music Sources with extra unlabeled data remixed",
+      "abstract_snippet": "We study the problem of source separation for music using deep learning with four known sources: drums, bass, vocals and other accompaniments. State-of-the-art approaches predict soft masks over mixture spectrograms while methods working on the waveform are lagging behind as measured on the standard MusDB [ 22] benchmark. Our contribution is two fold. (i) We introduce a simple convolutional and recurrent model that outperforms the state-of-the-art model on waveforms, that is, Wave-U-Net [28], by 1.6 points of SDR (signal to distortion ratio). (ii) We propose a new scheme to leverage unlabeled music. We train a ﬁrst model to extract parts with at least one source silent in unlabeled…",
+      "intro_snippet": "Cherry ﬁrst noticed the “cocktail party effect” [5]: how the human brain is able to separate a single conversation out of a surrounding noise from a room full of people chatting. Bregman later tried to understand how the brain was able to analyse a complex auditory signal and segment it into higher level streams. His framework for auditory scene analysis [4] spawned its computational counterpart, trying to reproduce or model accomplishment of the brains with algorithmic means [36]. When producing music, recordings of individual instruments called stems are arranged together and mastered into the ﬁnal song. The goal of source separation is then to recover those individual stems from the mixed signal. Unlike the cocktail problem, there is not a single source of interest to differentiate…",
+      "conclusion_snippet": "We presented Demucs, a simple architecture inspired by previous work in source separation from the waveform and audio synthesis that reduces the gap between spectrogram and waveform based methods from 2.2 points of median SDR to 0.5 points when trained only on the standard MusDB dataset. We have also demonstrated how to leverage 2,000 unlabeled mp3s by ﬁrst training a classiﬁer to detect excerpt with at least one source silent and then remixing it with an isolated source from the training set. To our knowledge, this is the ﬁrst semi-supervised approach to source separation that does not rely on adversarial losses. Finally, training our model with remixed unlabeled data as well as 100…",
+      "char_count": 41191,
+      "cite_key": "dfossez2019",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/dfossez2019.pdf",
+      "has_pdf_text": true
+    },
+    "pascual2017": {
+      "title": "SEGAN: Speech Enhancement Generative Adversarial Network",
+      "abstract_snippet": "Current speech enhancement techniques operate on the spectral domain and/or exploit some higher-level feature. The majority of them tackle a limited number of noise conditions and rely on ﬁrst-order statistics. To circumvent these issues, deep networks are being increasingly used, thanks to their ability to learn com- plex functions from large example sets. In this work, we pro- pose the use of generative adversarial networks for speech en- hancement. In contrast to current techniques, we operate at the waveform level, training the model end-to-end, and incorpo- rate 28 speakers and 40 different noise conditions into the same model, such that model parameters are shared across them. We…",
+      "intro_snippet": "Speech enhancement tries to improve the intelligibility and quality of speech contaminated by additive noise [1]. Its main applications are related to improving the quality of mobile com- munications in noisy environments. However, we also ﬁnd im- portant applications related to hearing aids and cochlear im- plants, where enhancing the signal before ampliﬁcation can signiﬁcantly reduce discomfort and increase intelligibility [2]. Speech enhancement has also been successfully applied as a preprocessing stage in speech recognition and speaker identiﬁ- cation systems [3, 4, 5]. Classic speech enhancement methods are spectral subtrac- tion [6], Wiener ﬁltering [7], statistical model-based meth- ods [8], and subspace algorithms [9, 10]. Neural networks have been also applied to speech…",
+      "conclusion_snippet": "(Sec. 6). 2. Generative Adversarial Networks GANs [19] are generative models that learn to map samples z from some prior distributionZ to samples x from another dis- tributionX , which is the one of the training examples (e.g., im- ages, audio, etc.). The component within the GAN structure that performs the mapping is called the generator (G), and its main task is to learn an effective mapping that can imitate the real data distribution to generate novel samples related to those of the training set. Importantly, G does so not by memorizing input-output pairs, but by mapping the data distribution charac- teristics to the manifold deﬁned in our priorZ. The way in which G learns to do the…",
+      "char_count": 28789,
+      "cite_key": "pascual2017",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/pascual2017.pdf",
+      "has_pdf_text": true
+    },
+    "behl2019": {
+      "title": "Alpha MAML: Adaptive Model-Agnostic Meta-Learning",
+      "abstract_snippet": "Model-agnostic meta-learning (MAML) is a meta-learning technique to train a model on a multitude of learning tasks in a way that primes the model for few-shot learning of new tasks. The MAML algorithm performs well on few-shot learning problems in classiﬁcation, regression, and ﬁne-tuning of policy gradients in reinforcement learning, but comes with the need for costly hyperparameter tuning for training stability. We address this shortcoming by introducing an extension to MAML, called Alpha MAML, to incorporate an online hyperparameter adaptation scheme that eliminates the need to tune meta-learning and learning rates. Our results with the Omniglot database demonstrate a substantial…",
+      "intro_snippet": "Meta-learning—or “learning to learn”—concerns machine learning models that can improve their learning quality by altering aspects of the learning process such as the model architecture, optimization rules, initialization, or learning hyperparameters (Thrun and Pratt, 2012; Schmidhuber, 1987; Hochreiter et al., 2001). An important application of meta-learning is in few-shot learning problems (Vinyals et al., 2016; Behl et al., 2018), where one is concerned with developing methods able to learn new concepts from one or only a few instances (Lake et al., 2015). In this paper we focus on the state-of-the-art model-agnostic meta-learning (MAML) (Finn et al., 2017) method, which is a conceptually simple and general algorithm that has been shown to outperform existing approaches in tasks…",
+      "conclusion_snippet": "Meta-learning is an important and currently relevant approach with potential impact in solving hard problems in computer vision and reinforcement learning. The training instability of meta-learning algorithms as a function of hyperparameter choices is a known shortcoming and currently an active area of research. We have proposed an extension of the state-of-the-art MAML algorithm (Finn et al., 2017) based on the application of the hypergradient descent 6 Alpha MAML: Adaptive Model-Agnostic Meta-Learning technique (Baydin et al., 2018) to make MAML training more robust to hyperparameter choices. References Antreas Antoniou, Harrison Edwards, and Amos Storkey. How to train your MAML. In…",
+      "char_count": 22361,
+      "cite_key": "behl2019",
+      "role": "screened_relevant",
+      "pdf_path": "pdfs/behl2019.pdf",
+      "has_pdf_text": true
+    },
+    "alsaleh2024": {
+      "title": "Few-Shot Learning for Medical Image Segmentation Using 3D U-Net and Model-Agnostic Meta-Learning (MAML)",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "alsaleh2024",
+      "role": "screened_relevant",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "nguyen2021": {
+      "title": "Robust Maml: Prioritization Task Buffer with Adaptive Learning Process for Model-Agnostic Meta-Learning",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "nguyen2021",
+      "role": "screened_relevant",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "chen2025": {
+      "title": "MAML-KalmanNet: A Neural Network-Assisted Kalman Filter Based on Model-Agnostic Meta-Learning",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "chen2025",
+      "role": "screened_relevant",
+      "pdf_path": null,
+      "has_pdf_text": false
+    },
+    "alrayes2025": {
+      "title": "An Adaptive Framework for Intrusion Detection in IoT Security Using MAML (Model-Agnostic Meta-Learning)",
+      "abstract_snippet": "",
+      "intro_snippet": "",
+      "conclusion_snippet": "",
+      "char_count": 0,
+      "cite_key": "alrayes2025",
+      "role": "screened_relevant",
+      "pdf_path": null,
+      "has_pdf_text": false
+    }
+  },
+  "plan": {
+    "title": "Hybrid Reinforcement Learning and Genetic Algorithms for Meta-Learning Audio Denoising",
+    "user_needs": "Write excellent CS/DSP Introduction and Literature Landscape.\nFrame as generic audio signal denoising; wavetable/periodic wrap crackle is motivating instance.\nHybrid RL+GA meta-learning outer loop. Numbered falsifiable contributions.\nLiterature thematic with Used vs Screened. Cite with \\cite{key} only from attached keys.\nNo invented final overnight results — note experiments ongoing.\nDo not dump JSON. Full academic paragraphs.",
+    "abstract_sketch": "Periodic discontinuities in cyclic audio frames inject broadband crackle under wrap-around playback. We treat cycle-local seam restoration as an instance of audio signal denoising and search denoising operators with a hybrid meta-learning outer loop that interleaves genetic-algorithm population updates with reinforcement-learning architecture proposals, scored by a prolonged residual objective without paired clean waveforms. Large-scale GPU experiments are ongoing; this draft establishes the problem framing and literature landscape.",
+    "sections": [
+      {
+        "id": "abstract",
+        "title": "Abstract",
+        "level": 1,
+        "goal": "Concise problem–method–result–limitation summary with the key numeric headline (primary metric and baseline comparison).",
+        "claims": [
+          "State the scientific problem in one sentence.",
+          "Name the method and evaluation protocol.",
+          "Report the primary quantitative finding vs baseline."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "lehtinen2018 [method]: Noise2Noise: Learning Image Restoration without Clean Data",
+          "jaderberg2017 [method]: Population Based Training of Neural Networks",
+          "khadka2018 [method]: Evolution-Guided Policy Gradient in Reinforcement Learning"
+        ],
+        "data_still_needed": [
+          "baseline_comparison"
+        ],
+        "imrad_role": "abstract",
+        "target_words": 180
+      },
+      {
+        "id": "introduction",
+        "title": "Introduction",
+        "level": 1,
+        "goal": "Motivate the problem, situate it in prior practice, state contributions as falsifiable claims, and preview the paper.",
+        "claims": [
+          "Why the phenomenon matters scientifically or practically.",
+          "Gap in existing proxies / methods.",
+          "Explicit numbered contributions."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "lehtinen2018 [used]: Noise2Noise: Learning Image Restoration without Clean Data",
+          "jaderberg2017 [used]: Population Based Training of Neural Networks",
+          "khadka2018 [used]: Evolution-Guided Policy Gradient in Reinforcement Learning",
+          "real2019 [used]: Regularized Evolution for Image Classifier Architecture Sear",
+          "pdf_analyses (36 grounded)"
+        ],
+        "data_still_needed": [],
+        "imrad_role": "introduction",
+        "target_words": 450
+      },
+      {
+        "id": "related_work",
+        "title": "Related Work",
+        "level": 1,
+        "goal": "Organize prior art by theme; distinguish used vs screened literature; end with how this work differs.",
+        "claims": [
+          "Group citations thematically (not as a dump).",
+          "State what was screened out and why."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "lehtinen2018 [used]: Noise2Noise: Learning Image Restoration without Clean Data",
+          "jaderberg2017 [used]: Population Based Training of Neural Networks",
+          "khadka2018 [used]: Evolution-Guided Policy Gradient in Reinforcement Learning",
+          "real2019 [used]: Regularized Evolution for Image Classifier Architecture Sear",
+          "engel2020 [used]: DDSP: Differentiable Digital Signal Processing",
+          "elsken2019 [used]: Neural Architecture Search: A Survey",
+          "pham2018 [used]: Efficient Neural Architecture Search via Parameter Sharing",
+          "schulman2017 [used]: Proximal Policy Optimization Algorithms",
+          "finn2017 [screened]: Model-Agnostic Meta-Learning for Fast Adaptation of Deep Net",
+          "liu2019 [screened]: DARTS: Differentiable Architecture Search",
+          "dfossez2021 [screened]: Hybrid Spectrogram and Waveform Source Separation",
+          "kong2021 [screened]: DiffWave: A Versatile Diffusion Model for Audio Synthesis",
+          "dfossez2019 [screened]: Demucs: Deep Extractor for Music Sources with extra unlabele",
+          "pascual2017 [screened]: SEGAN: Speech Enhancement Generative Adversarial Network",
+          "theme:general → lehtinen2018, jaderberg2017, khadka2018, real2019",
+          "theme:MAML model-agnostic meta-learning → behl2019, alsaleh2024, nguyen2021, chen2025",
+          "theme:Wave-U-Net audio source separation → luo2019, jansson2017, macartney2018, nakamura2020",
+          "theme:Noise2Noise unsupervised denoising → mansour2023, qiu2021",
+          "pdf_analyses (36 grounded)"
+        ],
+        "data_still_needed": [],
+        "imrad_role": "related_work",
+        "target_words": 500
+      },
+      {
+        "id": "methods",
+        "title": "Methods",
+        "level": 1,
+        "goal": "Define notation, model/operator, objective(s), and search procedure so a reader could reimplement the essentials.",
+        "claims": [
+          "Formal definition of the primary score / loss.",
+          "Algorithmic procedure (outer/inner loops if any).",
+          "Implementation constraints that affect validity."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "lehtinen2018 [method]: Noise2Noise: Learning Image Restoration without Clean Data",
+          "jaderberg2017 [method]: Population Based Training of Neural Networks",
+          "khadka2018 [method]: Evolution-Guided Policy Gradient in Reinforcement Learning"
+        ],
+        "data_still_needed": [
+          "method_definition",
+          "hyperparameters"
+        ],
+        "imrad_role": "methods",
+        "target_words": 650
+      },
+      {
+        "id": "experiments",
+        "title": "Experiments",
+        "level": 1,
+        "goal": "Describe protocol: datasets/seeds, trial budget, validation sizes, baselines, and selection rules before revealing outcomes.",
+        "claims": [
+          "Protocol is fixed before reporting winners.",
+          "Baselines and ablations are named."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [],
+        "data_still_needed": [
+          "protocol",
+          "trial_budget",
+          "baselines"
+        ],
+        "imrad_role": "experiments",
+        "target_words": 350
+      },
+      {
+        "id": "results",
+        "title": "Results",
+        "level": 1,
+        "goal": "Present primary metrics with table(s) and figure(s); report effect sizes vs baselines; avoid overclaiming.",
+        "claims": [
+          "Primary metric ranking with uncertainty or held-out N.",
+          "Secondary metrics that check for failure modes."
+        ],
+        "required_figures": [
+          "primary_comparison"
+        ],
+        "required_tables": [
+          "benchmark_matrix"
+        ],
+        "citation_slots": [],
+        "data_still_needed": [
+          "metrics",
+          "table_rows"
+        ],
+        "imrad_role": "results",
+        "target_words": 450
+      },
+      {
+        "id": "discussion",
+        "title": "Discussion",
+        "level": 1,
+        "goal": "Interpret results relative to hypotheses; reconcile surprising outcomes (e.g. which prior won); connect to related work.",
+        "claims": [
+          "What the evidence supports.",
+          "What it does not support."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [
+          "lehtinen2018 [compare]: Noise2Noise: Learning Image Restoration without Clean Data",
+          "jaderberg2017 [compare]: Population Based Training of Neural Networks",
+          "khadka2018 [compare]: Evolution-Guided Policy Gradient in Reinforcement Learning",
+          "real2019 [compare]: Regularized Evolution for Image Classifier Architecture Sear",
+          "engel2020 [compare]: DDSP: Differentiable Digital Signal Processing",
+          "pdf_analyses (36 grounded)"
+        ],
+        "data_still_needed": [],
+        "imrad_role": "discussion",
+        "target_words": 400
+      },
+      {
+        "id": "limitations",
+        "title": "Limitations",
+        "level": 1,
+        "goal": "State validity threats, metric proxies, and compute budgets honestly.",
+        "claims": [
+          "At least three concrete limitations."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [],
+        "data_still_needed": [],
+        "imrad_role": "limitations",
+        "target_words": 220
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 1,
+        "goal": "Restate contributions and headline numbers; point to artifacts.",
+        "claims": [
+          "One-paragraph takeaway with primary metric."
+        ],
+        "required_figures": [],
+        "required_tables": [],
+        "citation_slots": [],
+        "data_still_needed": [],
+        "imrad_role": "conclusion",
+        "target_words": 180
+      }
+    ],
+    "open_data_gaps": [
+      "baseline_comparison",
+      "baselines",
+      "hyperparameters",
+      "method_definition",
+      "metrics",
+      "protocol",
+      "table_rows",
+      "trial_budget"
+    ],
+    "literature_count": 36,
+    "writing_mode_hint": "Write full academic paragraphs (IMRaD / CS–DSP). Prefer precise claims tied to ingested metrics and PDF analyses. Cite with \\cite{cite_key} only for attached refs. Distinguish used vs screened literature. Do not invent numbers or references. Mark template-mode output if no LLM is used. Screened-relevant count: 11.",
+    "created_at": "2026-07-18T17:34:42.498245+00:00",
+    "source": "template"
+  },
+  "revision_notes": [],
+  "writing_source": "llm"
+}

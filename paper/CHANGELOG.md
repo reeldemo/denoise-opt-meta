@@ -2,9 +2,17 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
+| **v4** | 2026-07-18 | Generic RL+GA meta-learning title; full Introduction + Literature landscape (used vs screened); Results deferred while overnight GPU run continues |
 | **v3** | 2026-07-18 | Regenerated via Klaut scientific writing workflow (plan→write→revise→export); same residual science as v2, fuller IMRaD prose + workflow audit trail |
 | **v2** | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | **v1** | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
+
+## v4 notes
+
+- Primary title: *Hybrid Reinforcement Learning and Genetic Algorithms for Meta-Learning Audio Denoising* (see `v4/TITLES.md`).
+- Klaut: attach curated harvest → fetch/analyze OA PDFs → plan/write with Ollama `qwen3.5:9b` → author revision for claim hygiene (no invented final overnight numbers).
+- Full Introduction + Literature landscape with explicit Used vs Screened; Methods/Results placeholders.
+- Overnight GPU job left running (`PPO+GA+PBT+NAS+depth+MoE`).
 
 ## v3 notes
 

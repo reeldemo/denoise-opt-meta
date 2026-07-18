@@ -1,0 +1,11 @@
+{
+  "title": "Noise2Noise: Learning Image Restoration without Clean Data",
+  "abstract_snippet": "We apply basic statistical reasoning to signal re- construction by machine learning \u2013 learning to map corrupted observations to clean signals \u2013 with a simple and powerful conclusion: it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans \u2013 all corrupted by different processes \u2013 based on noisy data only. 1.\u2026",
+  "intro_snippet": "Signal reconstruction from corrupted or incomplete mea- surements is an important sub\ufb01eld of statistical data analysis. Recent advances in deep neural networks have sparked sig- ni\ufb01cant interest in\u2026",
+  "conclusion_snippet": ": it is possi- ble to learn to restore images by only looking at corrupted examples, at performance at and some- times exceeding training using clean data, without explicit image priors or likelihood models of the corruption. In practice, we show that a single model learns photographic noise removal, denois- ing synthetic Monte Carlo images, and reconstruc- tion of undersampled MRI scans \u2013 all corrupted by different processes \u2013 based on noisy data only. 1. Introduction Signal reconstruction from corrupted or incomplete mea- surements is an important sub\ufb01eld of statistical data analysis. Recent advances in deep neural networks have sparked sig- ni\ufb01cant interest in avoiding the traditional,\u2026",
+  "char_count": 47808,
+  "cite_key": "lehtinen2018",
+  "role": "used",
+  "pdf_path": "pdfs/lehtinen2018.pdf",
+  "has_pdf_text": true
+}
