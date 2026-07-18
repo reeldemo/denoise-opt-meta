@@ -1,0 +1,33 @@
+﻿{
+    "updated_at":  "2026-07-18T11:06:15.3589370Z",
+    "uncapped_confirmed":  true,
+    "max_hours":  168,
+    "not_20h_abort":  true,
+    "iter":  10000,
+    "target":  1000000,
+    "champ":  0.9777166545391083,
+    "baseline":  0.8203155994415283,
+    "delta":  0.1574010550975800,
+    "eta_h":  29.06,
+    "klaut_paper_id":  "denoiseopt-overnight-residual-scored-rl-nas-for-1dd21dc7",
+    "klaut_commit":  "115162b",
+    "ollama_model":  "qwen3.5:9b",
+    "literature_count":  90,
+    "pdf_with_text":  30,
+    "sections_drafted":  [
+                             "introduction",
+                             "related_work",
+                             "methods",
+                             "experiments"
+                         ],
+    "pending":  [
+                    "abstract",
+                    "results",
+                    "discussion",
+                    "limitations",
+                    "conclusion",
+                    "revise",
+                    "export"
+                ],
+    "note":  "Results/Discussion/export deferred until iters==1000000"
+}

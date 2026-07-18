@@ -1,0 +1,11 @@
+{
+  "title": "Automated Machine Learning: From Principles to Practices",
+  "abstract_snippet": "111 Automated Machine Learning: From Principles to Practices ZHENQIAN SHEN, Tsinghua University, China YONGQI ZHANG, 4Paradigm Inc., China LANNING WEI, Institute of Computing Technology, Chinese Academy of Sciences, China HUAN ZHAO, 4Paradigm Inc, China QUANMING YAO\u2217, Tsinghua University, China Machine learning (ML) methods have been developing rapidly, but configuring and selecting proper methods to achieve a desired performance is increasingly difficult and tedious. To address this challenge, ",
+  "intro_snippet": "The past decades have witnessed the rapid development of machine learning techniques, evolving from Support Vector Machine (SVM) [9, 30] that is designed for handling basic classification task, to Convolutional Neural Network (CNN) [ 54, 75] that can well handle image data in computer vision tasks, to Large Language Model (LLM) [105, 136] that possesses remarkable ability of general- purpose language generation. This evolution reflects a profound development marked by increasing complexity and capability within the domain of machine learning. However, as these techniques are applied in practical settings, the need for meticulous calibration of learning configurations, including \u2217Corresponding Author. Authors\u2019 addresses: Zhenqian Shen, Tsinghua University, 1 Th\u00f8rv\u00e4ld Circle, Hekla,\u2026",
+  "conclusion_snippet": "Automated machine learning (AutoML) targets at substituting what human do in the machine learning process. Its primary objective is the automated determination of optimal learning configu- rations tailored to a given machine learning task. In this survey, we provide a systematic review of AutoML, from principles to practices. We first generate the formal definition of AutoML from that of machine learning. Then we formulate the AutoML problem as a bi-level optimization problem, propose the general learning strategy, and provide theoretical interpretation of AutoML. Based on above principles, we present an exposition on AutoML practices. We categorize existing AutoML approaches based on\u2026",
+  "char_count": 120000,
+  "cite_key": "shen2018",
+  "role": "used",
+  "pdf_path": "pdfs/shen2018.pdf",
+  "has_pdf_text": true
+}

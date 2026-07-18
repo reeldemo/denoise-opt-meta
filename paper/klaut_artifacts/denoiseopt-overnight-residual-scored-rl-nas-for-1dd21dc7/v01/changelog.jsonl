@@ -2,3 +2,12 @@
 {"at":"2026-07-18T10:57:27.195333+00:00","action":"attach_literature","section_id":null,"detail":"refs=10 merge=True","version":"v01"}
 {"at":"2026-07-18T10:57:44.777996+00:00","action":"fetch_pdfs","section_id":null,"detail":"fetched=10 skipped=0","version":"v01"}
 {"at":"2026-07-18T10:57:49.514631+00:00","action":"analyze_pdfs","section_id":null,"detail":"analyzed=10 with_text=10","version":"v01"}
+{"at":"2026-07-18T11:00:40.370854+00:00","action":"plan","section_id":null,"detail":"9 sections; source=llm","version":"v01"}
+{"at":"2026-07-18T11:01:09.191689+00:00","action":"attach_literature","section_id":null,"detail":"refs=90 merge=True","version":"v01"}
+{"at":"2026-07-18T11:02:44.104020+00:00","action":"fetch_pdfs","section_id":null,"detail":"fetched=30 skipped=25","version":"v01"}
+{"at":"2026-07-18T11:03:21.589675+00:00","action":"analyze_pdfs","section_id":null,"detail":"analyzed=90 with_text=30","version":"v01"}
+{"at":"2026-07-18T11:04:47.516299+00:00","action":"plan","section_id":null,"detail":"9 sections; source=llm","version":"v01"}
+{"at":"2026-07-18T11:05:00.795798+00:00","action":"write_subsection","section_id":"introduction","detail":"3434 chars","version":"v01"}
+{"at":"2026-07-18T11:05:16.777688+00:00","action":"write_subsection","section_id":"related_work","detail":"4296 chars","version":"v01"}
+{"at":"2026-07-18T11:05:36.082136+00:00","action":"write_subsection","section_id":"methods","detail":"4548 chars","version":"v01"}
+{"at":"2026-07-18T11:05:49.337781+00:00","action":"write_subsection","section_id":"experiments","detail":"3039 chars","version":"v01"}

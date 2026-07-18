@@ -1,0 +1,206 @@
+{
+  "title": "DenoiseOpt Overnight: Residual-Scored RL/NAS for Wavetable Seam Bake Operators",
+  "user_needs": "DenoiseOpt paper v4 (CS/DSP). Follow PAPER_WRITING_QUALITY.md. Excellent Introduction: wavetable wrap crackle phenomenon, prolonged residual vs seam-local proxies, landscape of VA/BLEP, unsupervised restoration, HPO/PBT, NAS/RL. Related Work thematic with used vs screened; ground paraphrases on PDF analyses. Discussion will compare final 1M champ R vs DualCosine and RL/NAS/combo branches — NUMERIC SLOTS ONLY until final ingest. Author Julian M. Kleber ORCID 0000-0001-5518-0932. Repos reelsynth + denoise-opt-meta. Honest numbers only.",
+  "abstract_sketch": "Open wrap seams inject audible crackle under cyclic wavetable playback. We run a dense 1,000,000-step CUDA overnight search over RL, NAS, and literature-combo branches, scoring candidates by prolonged residual R in [0,1] (1=best) against an ideal tiled reference, and compare to a DualCosine baseline. Honest numbers only after 1M completion.",
+  "sections": [
+    {
+      "id": "abstract",
+      "title": "Abstract",
+      "level": 1,
+      "goal": "Concise problem–method–result–limitation summary with the key numeric headline (primary metric and baseline comparison).",
+      "claims": [
+        "State the scientific problem in one sentence.",
+        "Name the method and evaluation protocol.",
+        "Report the primary quantitative finding vs baseline."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "elsken2019nas",
+        "engel2020ddsp",
+        "jaderberg2017pbt"
+      ],
+      "data_still_needed": [
+        "primary_metric",
+        "baseline_comparison"
+      ],
+      "imrad_role": "abstract",
+      "target_words": 180
+    },
+    {
+      "id": "introduction",
+      "title": "Introduction",
+      "level": 1,
+      "goal": "Motivate the problem, situate it in prior practice, state contributions as falsifiable claims, and preview the paper.",
+      "claims": [
+        "Why the phenomenon matters scientifically or practically.",
+        "Gap in existing proxies / methods.",
+        "Explicit numbered contributions."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "elsken2019nas",
+        "engel2020ddsp",
+        "jaderberg2017pbt",
+        "lehtinen2018n2n"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "introduction",
+      "target_words": 450
+    },
+    {
+      "id": "related_work",
+      "title": "Related Work",
+      "level": 1,
+      "goal": "Organize prior art by theme; distinguish used vs screened literature; end with how this work differs.",
+      "claims": [
+        "Group citations thematically (not as a dump).",
+        "State what was screened out and why."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "elsken2019nas",
+        "engel2020ddsp",
+        "jaderberg2017pbt",
+        "lehtinen2018n2n",
+        "finn2017maml"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "related_work",
+      "target_words": 500
+    },
+    {
+      "id": "methods",
+      "title": "Methods",
+      "level": 1,
+      "goal": "Define notation, model/operator, objective(s), and search procedure so a reader could reimplement the essentials.",
+      "claims": [
+        "Formal definition of the primary score / loss.",
+        "Algorithmic procedure (outer/inner loops if any).",
+        "Implementation constraints that affect validity."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "elsken2019nas",
+        "engel2020ddsp",
+        "jaderberg2017pbt"
+      ],
+      "data_still_needed": [
+        "method_definition",
+        "hyperparameters"
+      ],
+      "imrad_role": "methods",
+      "target_words": 650
+    },
+    {
+      "id": "experiments",
+      "title": "Experiments",
+      "level": 1,
+      "goal": "Describe protocol: datasets/seeds, trial budget, validation sizes, baselines, and selection rules before revealing outcomes.",
+      "claims": [
+        "Protocol is fixed before reporting winners.",
+        "Baselines and ablations are named."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [
+        "trial_budget",
+        "baselines"
+      ],
+      "imrad_role": "experiments",
+      "target_words": 350
+    },
+    {
+      "id": "results",
+      "title": "Results",
+      "level": 1,
+      "goal": "Present primary metrics with table(s) and figure(s); report effect sizes vs baselines; avoid overclaiming.",
+      "claims": [
+        "Primary metric ranking with uncertainty or held-out N.",
+        "Secondary metrics that check for failure modes."
+      ],
+      "required_figures": [
+        "primary_comparison"
+      ],
+      "required_tables": [
+        "benchmark_matrix"
+      ],
+      "citation_slots": [],
+      "data_still_needed": [
+        "metrics",
+        "table_rows"
+      ],
+      "imrad_role": "results",
+      "target_words": 450
+    },
+    {
+      "id": "discussion",
+      "title": "Discussion",
+      "level": 1,
+      "goal": "Interpret results relative to hypotheses; reconcile surprising outcomes (e.g. which prior won); connect to related work.",
+      "claims": [
+        "What the evidence supports.",
+        "What it does not support."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [
+        "elsken2019nas",
+        "engel2020ddsp",
+        "jaderberg2017pbt",
+        "lehtinen2018n2n"
+      ],
+      "data_still_needed": [],
+      "imrad_role": "discussion",
+      "target_words": 400
+    },
+    {
+      "id": "limitations",
+      "title": "Limitations",
+      "level": 1,
+      "goal": "State validity threats, metric proxies, and compute budgets honestly.",
+      "claims": [
+        "At least three concrete limitations."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [],
+      "imrad_role": "limitations",
+      "target_words": 220
+    },
+    {
+      "id": "conclusion",
+      "title": "Conclusion",
+      "level": 1,
+      "goal": "Restate contributions and headline numbers; point to artifacts.",
+      "claims": [
+        "One-paragraph takeaway with primary metric."
+      ],
+      "required_figures": [],
+      "required_tables": [],
+      "citation_slots": [],
+      "data_still_needed": [],
+      "imrad_role": "conclusion",
+      "target_words": 180
+    }
+  ],
+  "open_data_gaps": [
+    "baseline_comparison",
+    "baselines",
+    "hyperparameters",
+    "method_definition",
+    "metrics",
+    "primary_metric",
+    "table_rows",
+    "trial_budget"
+  ],
+  "literature_count": 90,
+  "writing_mode_hint": "Write full academic paragraphs (IMRaD / CS–DSP). Prefer precise claims tied to ingested metrics and PDF analyses. Cite with \\cite{cite_key} only for attached refs. Distinguish used vs screened literature. Do not invent numbers or references. Mark template-mode output if no LLM is used.",
+  "created_at": "2026-07-18T11:04:47.512627+00:00",
+  "source": "llm"
+}

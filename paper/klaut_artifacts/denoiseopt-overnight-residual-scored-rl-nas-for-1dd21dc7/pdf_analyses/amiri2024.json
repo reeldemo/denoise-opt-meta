@@ -1,0 +1,11 @@
+{
+  "title": "Hippopotamus optimization algorithm: a novel nature-inspired optimization algorithm",
+  "abstract_snippet": "1 Vol.:(0123456789)Scientific Reports | (2024) 14:5032 | https://doi.org/10.1038/s41598-024-54910-3 www.nature.com/scientificreports Hippopotamus optimization algorithm: a novel nature\u2011inspired optimization algorithm Mohammad Hussein Amiri 1, Nastaran Mehrabi Hashjin 1*, Mohsen Montazeri 1, Seyedali Mirjalili 2,4 & Nima Khodadadi 3 The novelty of this article lies in introducing a novel stochastic technique named the Hippopotamus Optimization (HO) algorithm. The HO is conceived by drawing inspir",
+  "intro_snippet": ", it should be noted that optimization algorithms are not confined to a singular discipline or specialized research area. This is primarily because numerous real-world problems possess intricate\u2026",
+  "conclusion_snippet": "and future works\u201d section provides conclusions based on the article\u2019s findings. Literature review As mentioned in the introduction, it should be noted that optimization algorithms are not confined to a singular discipline or specialized research area. This is primarily because numerous real-world problems possess intricate attributes, including nonlinearity, non-differentiability, discontinuity, and non-convexity. Given these complexi- ties and uncertainties, stochastic optimization algorithms demonstrate enhanced versatility and a heightened capacity to address such challenges effectively. Consequently, they exhibit a more remarkable ability to accom- modate and navigate the intricacies\u2026",
+  "char_count": 120000,
+  "cite_key": "amiri2024",
+  "role": "used",
+  "pdf_path": "pdfs/amiri2024.pdf",
+  "has_pdf_text": true
+}
