@@ -1,7 +1,7 @@
 ﻿{
   "updated_at": "2026-07-18T17:45:00Z",
   "paper_version": "v4",
-  "title_primary": "Hybrid Reinforcement Learning and Genetic Algorithms for Meta-Learning Audio Denoising",
+  "title_primary": "Unsupervised Learning for Audio Denoising via Hybrid Reinforcement Learning and Genetic Algorithms",
   "klaut_paper_id": "hybrid-reinforcement-learning-and-genetic-algori-1e29c690",
   "ollama_model": "qwen3.5:9b",
   "literature_count": 36,
