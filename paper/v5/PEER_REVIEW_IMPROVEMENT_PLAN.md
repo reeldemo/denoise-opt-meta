@@ -11,9 +11,18 @@
 **Tech Stack:** Python/PyTorch benches in `reelsynth/scripts/`; Rust `sound_bench` + `export_sound_bench_tiles`; paper TeX in `denoise-opt-meta/paper/v5/` mirrored to `reelsynth/docs/papers/denoise_opt/v5/`.
 
 **Canonical plan path:** `denoise-opt-meta/paper/v5/PEER_REVIEW_IMPROVEMENT_PLAN.md`  
-**Mirror:** `reelsynth/docs/papers/denoise_opt/v5/PEER_REVIEW_IMPROVEMENT_PLAN.md`  
+**Mirror (local only for this workstream):** `reelsynth/docs/papers/denoise_opt/v5/PEER_REVIEW_IMPROVEMENT_PLAN.md`  
 **Critique date:** 19 July 2026  
 **Source critique:** peer-review paste (Strengths / Weaknesses / Suggestions) on DenoiseOpt v5 manuscript
+
+## Workstream git policy (locked)
+
+- **Commit and push only** `denoise-opt-meta` for plan / paper / meta artifacts.
+- **Do not** commit or push `reelsynth` for this workstream unless the user explicitly asks.
+- Local edits under `reelsynth` (benches/scripts) are allowed; leave them uncommitted by default.
+- Prefer putting plan/paper artifacts in `denoise-opt-meta`.
+
+---
 
 ## Global Constraints
 
@@ -536,7 +545,7 @@ Sharper Related Work vs Noise2Noise audio restorers; soften residual overclaim; 
 - [ ] Wavetable-native realism: ReelSynth-exported (primary) + OA instrument/WT (secondary); no LibriSpeech/MUSDB.
 - [ ] Theory cleaned (props theater deleted; Lemma 1 deleted; formal $R$ kept; no-guarantee sentence).
 - [ ] OA-only cites; no PESQ-on-sine; no MUSHRA; no em-dash slop.
-- [ ] Plan mirrored under `reelsynth/docs/papers/denoise_opt/v5/`.
+- [ ] Canonical plan lives under `denoise-opt-meta/paper/v5/` (reelsynth mirror optional/local-only unless user asks to commit).
 
 ---
 
@@ -555,8 +564,8 @@ Sharper Related Work vs Noise2Noise audio restorers; soften residual overclaim; 
 
 Plan complete and saved to:
 
-- `denoise-opt-meta/paper/v5/PEER_REVIEW_IMPROVEMENT_PLAN.md`
-- `reelsynth/docs/papers/denoise_opt/v5/PEER_REVIEW_IMPROVEMENT_PLAN.md` (mirror)
+- `denoise-opt-meta/paper/v5/PEER_REVIEW_IMPROVEMENT_PLAN.md` (**canonical; commit/push here only**)
+- `reelsynth/docs/papers/denoise_opt/v5/PEER_REVIEW_IMPROVEMENT_PLAN.md` (optional local mirror; **do not commit** unless user asks)
 
 **Grill-locked (19 Jul 2026):** Lemma 1 DELETE; N2N full stress test (primary corrupt→corrupt); real samples BOTH (ReelSynth primary, OA secondary); venue DAFx/AES/arXiv DSP; grill frame = what is weak.
 
