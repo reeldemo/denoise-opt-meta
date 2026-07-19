@@ -90,7 +90,8 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
 \begin{table*}[t]
   \centering
   \caption{SOTA comparison on 20 generative waveforms (10 families $\times$ 2 seeds, batch 64).
-  $R$/SNR/SDR/wrap-jump are multifamily mean$\pm$std. Columns marked * use the canonical freeze (seed \texttt{20260719}) for ms/batch and $\Delta R$ vs DualCosine.
+  $R$/SNR/SDR/wrap-jump are multifamily mean$\pm$std. Columns marked * use the canonical freeze (seed \texttt{20260719}) for ms/batch and $\Delta R$ vs DualCosine where available.
+  Modern baselines (N2N/seq/poly) use disjoint train seeds (\texttt{424242}/\texttt{424243}); poly is classical (no train).
   Primary metric $R$ (1~=~best). No PESQ/STOI/MUSHRA.}
   \label{tab:sota-main}
   \setlength{\tabcolsep}{2.2pt}
@@ -99,7 +100,12 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
     Method & $R$ (20-wave) & SNR (dB) & SDR (dB) & wrap-jump & ms* & params & $\Delta R$* \\
     \midrule
     neural favorite & $0.977\pm0.010$ & $35.0\pm3.2$ & $35.1\pm3.2$ & $0.90\pm0.14$ & 2.44 & 37\,489 & ${+}0.166$ \\
+    N2N corrupt$\to$corrupt & $0.970\pm0.021$ & $33.9\pm4.1$ & $34.0\pm4.1$ & $0.90\pm0.15$ & -- & 53\,506 & ${+}0.167$ \\
+    seq CNN1D & $0.969\pm0.016$ & $32.2\pm3.5$ & $32.4\pm3.5$ & $0.92\pm0.15$ & -- & 3\,242 & ${+}0.162$ \\
+    N2N sibling-sup. & $0.969\pm0.022$ & $33.7\pm4.3$ & $33.8\pm4.3$ & $0.91\pm0.15$ & -- & 53\,506 & ${+}0.168$ \\
+    poly seam ($d{=}3$) & $0.966\pm0.008$ & $31.2\pm2.1$ & $31.3\pm2.1$ & $0.91\pm0.15$ & 1.47 & 0 & ${+}0.148$ \\
     identity & $0.965\pm0.008$ & $30.9\pm1.9$ & $31.0\pm1.9$ & $0.91\pm0.15$ & 0.00 & 0 & ${+}0.147$ \\
+    seq LSTM & $0.956\pm0.037$ & $32.2\pm5.8$ & $32.3\pm5.8$ & $0.86\pm0.15$ & -- & 75\,746 & ${+}0.170$ \\
     \texttt{seam\_fir3} & $0.955\pm0.005$ & $28.1\pm1.2$ & $28.1\pm1.2$ & $0.46\pm0.08$ & 0.59 & 0 & ${+}0.136$ \\
     MLP-on-$R$ & $0.932\pm0.006$ & $24.6\pm0.9$ & $24.6\pm0.9$ & $0.64\pm0.07$ & 2.76 & 8\,604 & ${+}0.113$ \\
     CNN/U-Net-on-$R$ & $0.886\pm0.012$ & $19.5\pm0.9$ & $19.5\pm0.9$ & $0.48\pm0.06$ & 5.01 & 11\,752 & ${+}0.069$ \\
@@ -131,7 +137,8 @@ Identity $R$ barely moves (all $0.9715$ $\to$ top-10\% $0.9667$) because residua
 DualCosine collapses on hard cliffs ($0.819$ $\to$ $0.657$), while the meta favorite holds ($R\approx 0.9915$).
 Favorite wrap-jump on the top-10\% subset stays $\approx 1.83$ (vs identity $2.09$).
 The claim is tiled residual repair, not endpoint-zeroing.
-Optional edge RMSE (seam indices only) drops from identity $0.095$ to favorite $0.021$ on that hard subset.
+\textbf{Edge RMSE} is the locked required seam-local secondary (EVAL\_PROTOCOL): on the top-10\% subset it drops from identity $0.095$ to favorite $0.021$ (DualCosine $0.990$).
+Click energy remains an optional diagnostic.
 
 \begin{table*}[t]
   \centering
@@ -157,6 +164,27 @@ Optional edge RMSE (seam indices only) drops from identity $0.095$ to favorite $
   {\footnotesize $n$: all $4096$, top25 $1024$, top10 $410$.}
 \end{table*}
 
+\begin{table}[t]
+  \centering
+  \caption{Required seam-local secondary on top-10\% wrap-jump tiles ($n{=}410$): edge RMSE (lower better). Frozen in \texttt{cliff\_strata.json}.}
+  \label{tab:cliff-edge-rmse}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+    Method & top10 edge RMSE \\
+    \midrule
+    seq LSTM & 0.011 \\
+    N2N sibling-sup. & 0.018 \\
+    neural favorite & 0.021 \\
+    N2N corrupt$\to$corrupt & 0.021 \\
+    seq CNN1D & 0.035 \\
+    identity & 0.095 \\
+    \texttt{seam\_fir3} & 0.164 \\
+    DualCosine & 0.990 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 \subsection{N2N and seq baselines}
 \label{sec:n2n-baselines}
 
@@ -171,31 +199,53 @@ Classical DualCosine / \texttt{seam\_fir3} remain in Table~\ref{tab:cliff-strata
 \subsection{Wavetable-native transfer}
 \label{sec:real-wt}
 
-RQ: does the wrap protocol transfer beyond synthetic sine cliffs?
-Table~\ref{tab:real-wt} scores ReelSynth-style factory periods (primary realism, $n{=}24$) and OA additive-harmonic instrument cycles (secondary, $n{=}20$) after close-seam idealization and the same open-wrap cliff.
-On factory periods the favorite ($R\approx 0.954$) trails identity / \texttt{seam\_fir3} slightly and beats DualCosine.
-On OA instrument cycles the favorite ($R\approx 0.988$) leads DualCosine ($0.944$) and identity ($0.962$).
+RQ: does the wrap protocol transfer beyond synthetic sine cliffs onto \emph{true} exports and third-party OA cycles?
+Table~\ref{tab:real-wt} scores ReelSynth-exported factory periods (primary realism, $n{=}25$; byte-true factory frames resampled to $L{=}256$) and Adventure Kid Waveforms (AKWF) CC0 single-cycle WAVs (secondary, $n{=}24$) after close-seam idealization and the same open-wrap cliff.
+v6 procedural stand-ins are demoted to tertiary smoke and no longer carry the primary realism claim.
+On exported factory periods the favorite ($R\approx 0.911$) trails identity / \texttt{seam\_fir3} / poly (domain shift) while still beating DualCosine ($0.883$).
+On AKWF OA cycles the favorite ($R\approx 0.970$) matches identity and beats DualCosine ($0.936$).
 LibriSpeech/MUSDB are not used.
 
 \begin{table}[t]
   \centering
-  \caption{Wavetable-native wrap protocol. Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Mean prolonged $R$.}
+  \caption{Wavetable-native wrap protocol (Phase F1). Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Mean prolonged $R$. Primary = ReelSynth export; secondary = AKWF CC0 files.}
   \label{tab:real-wt}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
     \toprule
-    Method & Factory ($n{=}24$) & OA instrument ($n{=}20$) \\
+    Method & Export ($n{=}25$) & AKWF OA ($n{=}24$) \\
     \midrule
-    seq LSTM & 0.778 & 0.991 \\
-    N2N sibling-sup. & 0.866 & 0.990 \\
-    N2N corrupt$\to$corrupt & 0.838 & 0.990 \\
-    neural favorite & 0.954 & 0.988 \\
-    \texttt{seam\_fir3} & 0.962 & 0.968 \\
-    identity & 0.959 & 0.962 \\
-    DualCosine & 0.943 & 0.944 \\
+    endpoint-pin (mean) & 0.939 & 0.978 \\
+    \texttt{seam\_fir3} & 0.971 & 0.975 \\
+    poly seam ($d{=}3$) & 0.967 & 0.970 \\
+    identity & 0.967 & 0.969 \\
+    neural favorite & 0.911 & 0.970 \\
+    DualCosine & 0.883 & 0.936 \\
+    N2N corrupt$\to$corrupt & 0.869 & 0.974 \\
+    seq CNN1D & 0.839 & 0.962 \\
+    seq LSTM & 0.769 & 0.948 \\
     \bottomrule
   \end{tabular}
 \end{table}
+
+\subsection{Polynomial baseline and jump-aware control}
+\label{sec:poly-jump}
+
+RQ: does a cheap classical poly fitter close the S7 residual, and does endpoint pinning show the wrap-jump vs $R$ tradeoff?
+A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R\approx 0.972$ ($\approx$ identity) with wrap-jump essentially unchanged (\texttt{poly\_baseline.json}).
+SSM seq models are deferred; the LSTM remains the supervised seq ceiling.
+An endpoint-pin control (\texttt{jump\_control.json}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$; hard $0.822$).
+Methods that zero wrap-jump are not the same objective as prolonged $R$; we do not claim wrap-jump SOTA for the favorite.
+
+\subsection{Transfer conditions}
+\label{sec:transfer}
+
+RQ: when does hybrid search win vs identity / DualCosine / supervised nets?
+Per-cycle $\Delta R$ on export, AKWF, Rust \texttt{sound\_bench}, and sine{+}cliff holdout (\texttt{transfer\_failures.json}):
+favorite win-rate vs DualCosine is high on sine cliffs ($1.00$) and AKWF ($0.88$), and moderate on export ($0.64$) / Rust ($0.75$);
+win-rate vs identity is high only on sine cliffs ($0.92$) and collapses on export ($0.24$) / Rust ($0.20$).
+Search value is therefore: hard cliffs, OA tracks where DualCosine collapses, and compact bake graphs without engine$\to$ideal labels at search time.
+Identity/FIR wins on mild seams and OOD factory geometry (honest domain shift, not buried).
 
 \subsection{Ablations and compute}
 \label{sec:ablation-compute}

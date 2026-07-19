@@ -2,7 +2,7 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v6** | 2026-07-19 | Current: peer-review response (hard-cliff strata, N2N/seq baselines, wavetable-native realism, theory honesty) |
+| **v6** | 2026-07-19 | Current: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
 | v5 | 2026-07-19 | Archived pre–peer-review-revision snapshot (restored from `3f409b2`) |
 | v4 | 2026-07-18 | Superseded archive |
 | v3 | 2026-07-18 | Regenerated via Klaut scientific writing workflow (plan→write→revise→export); same residual science as v2, fuller IMRaD prose + workflow audit trail |
@@ -10,6 +10,15 @@
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
 ## v6 notes (current)
+
+### Weakness elimination F1–F5 (19 July 2026)
+- F1: primary realism = true ReelSynth-exported factory periods ($n{=}25$); secondary = AKWF CC0 WAVs ($n{=}24$); procedural demoted.
+- F3: edge RMSE locked as required seam-local secondary; endpoint-pin jump control; `tab:cliff-edge-rmse`.
+- F2: polynomial seam fitter published (`poly_baseline.json`); SSM deferred (LSTM ceiling).
+- F4: `transfer_failures.json` + Discussion win-condition narrative (export/Rust identity lead admitted).
+- F5: N2N/seq/poly promoted into `tab:sota-main`; abstract/limitations sync; PDF rebuild (15 pp).
+- Artifacts: `real_wt_matrix.json`, `poly_baseline.json`, `jump_control.json`, `transfer_failures.json`, updated `sota_matrix.json`.
+- Flag: `paper/v6/WEAKNESS_ELIMINATION_COMPLETE.flag`.
 
 ### Peer-review response (19 July 2026)
 - Phase A: cliff strata (top 10%/25% wrap-jump); identity-$R$ honesty; edge RMSE / click energy; `tab:cliff-strata`.
