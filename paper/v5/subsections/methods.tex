@@ -51,11 +51,43 @@ With tiling length $N$,
 R=\mathrm{clamp}\!\left(1-\frac{\mathrm{rms}(y_{\mathrm{tiled}}-r^{\star}_{\mathrm{tiled}})}{\max(\mathrm{rms}(r^{\star}_{\mathrm{tiled}}),\varepsilon)},\,0,\,1\right),
 \end{equation}
 where $\mathrm{rms}(z)=\sqrt{\frac{1}{|z|}\sum_i z_i^2}$ and $\varepsilon>0$ avoids division by zero.
-By construction $R\in[0,1]$, $R{=}1$ when $y_{\mathrm{tiled}}=r^{\star}_{\mathrm{tiled}}$, and (when pre-clamp scores lie in $(0,1)$) $R$ is strictly decreasing in residual RMS for fixed ideal RMS.
-Optional soft shape gates (when enabled) multiply $R$ by factors that down-weight mid-cycle damage relative to seam-local error.
-We do not claim convergence guarantees for the hybrid GA{+}PPO{+}PBT outer loop, nor a general wrap-closure theorem for arbitrary bake cells.
-Empirical gains are reported under the frozen protocol.
-Outer-loop cost scales as population size $\times$ proposals per iteration $\times$ fit steps $\times$ batch forward cost (order $10^{3}$--$10^{4}$ arch evaluations at the reported $5$k gate). We report measured budgets, not a convexity claim.
+Optional soft shape gates (when enabled) multiply $R$ by factors that down-weight mid-cycle damage relative to seam-local error. The propositions below concern the ungated score in~\eqref{eq:R}.
+
+\begin{proposition}[Range]
+\label{prop:r-range}
+For any finite $y,r^{\star}$ and $\varepsilon>0$, the score in~\eqref{eq:R} satisfies $R\in[0,1]$.
+\end{proposition}
+\begin{proof}
+The ratio of nonnegative RMS terms is nonnegative, so $1-\mathrm{rms}(\cdot)/\max(\cdot,\varepsilon)\le 1$.
+The outer $\mathrm{clamp}(\cdot,0,1)$ forces the lower bound $0$.
+\end{proof}
+
+\begin{proposition}[Perfect match]
+\label{prop:perfect}
+If $y_{\mathrm{tiled}}=r^{\star}_{\mathrm{tiled}}$, then the pre-clamp identity equals $1$, hence $R=1$.
+\end{proposition}
+\begin{proof}
+$\mathrm{rms}(0)=0$, so $1-0/\max(\mathrm{rms}(r^{\star}_{\mathrm{tiled}}),\varepsilon)=1$, and clamp leaves $1$.
+\end{proof}
+
+\begin{proposition}[Monotone RMS]
+\label{prop:monotone}
+Fix $r^{\star}_{\mathrm{tiled}}$. If $\mathrm{rms}(y_{\mathrm{tiled}}-r^{\star}_{\mathrm{tiled}})<\mathrm{rms}(y'_{\mathrm{tiled}}-r^{\star}_{\mathrm{tiled}})$ and both pre-clamp scores lie in $(0,1)$, then the pre-clamp score of $y$ is strictly larger than that of $y'$.
+\end{proposition}
+\begin{proof}
+The map $e\mapsto 1-e/d$ with fixed $d=\max(\mathrm{rms}(r^{\star}_{\mathrm{tiled}}),\varepsilon)>0$ is strictly decreasing in the error RMS $e$.
+\end{proof}
+
+\begin{lemma}[Wrap closure, sufficient sketch]
+\label{lem:wrap}
+Suppose the only difference between engine and ideal is an endpoint cliff, and a bake zeros the endpoint jump while changing mid-cycle samples by at most $\varepsilon_{\mathrm{mid}}$ in RMS.
+Then $R$ is nondecreasing relative to the untreated engine whenever the mid-cycle penalty is dominated by the seam error reduction under~\eqref{eq:R}.
+\end{lemma}
+\begin{proof}[Sketch]
+This is a conditional accounting argument under the stated assumptions.
+It does not assert that every DualCosine-style fade improves $R$ on every draw.
+Empirical support appears in the classical and favorite benches of Section~\ref{sec:results}.
+\end{proof}
 
 \begin{remark}[Noise2Noise motivation]
 \label{rem:n2n}

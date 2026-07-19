@@ -1,7 +1,7 @@
 # Method pseudocode
 
-Algorithms used in DenoiseOpt hybrid meta-learning. Notation matches paper v5 /
-`reelsynth` overnight GPU search. LaTeX Algorithms in `paper/v5/subsections/methods.tex`
+Algorithms used in DenoiseOpt hybrid meta-learning. Notation matches paper v6 /
+`reelsynth` overnight GPU search. LaTeX Algorithms in `paper/v6/subsections/methods.tex`
 mirror this file.
 
 ## Prolonged residual score

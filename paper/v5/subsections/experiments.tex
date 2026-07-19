@@ -2,12 +2,10 @@
 \label{sec:experiments}
 
 \paragraph{Protocol freeze.}
-Evaluation follows \texttt{paper/v5/EVAL\_PROTOCOL.md} (v1, extended for peer-review strata).
-Primary metric: prolonged $R$. Secondary: SNR, SDR, wrap-jump, and seam-local edge RMSE on tiled audio.
+Evaluation follows \texttt{paper/v5/EVAL\_PROTOCOL.md} (v1).
+Primary metric: prolonged $R$. Secondary: SNR, SDR, and wrap-jump on tiled audio.
 Holdout seed \texttt{20260719}. Search seed \texttt{1902771841}.
 We report the $5$k-gate freeze plus frozen holdout. We make no unfinished-budget claims. PESQ/STOI stay out of scope on non-speech cycles.
-LibriSpeech and MUSDB are not used.
-Venue positioning: DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD), not general speech-enhancement leaderboards.
 
 \subsection{Dataset}
 \label{sec:dataset}
@@ -47,12 +45,4 @@ Figures in Section~\ref{sec:results} regenerate from \texttt{history.jsonl} near
 High-$R$ fitted cells ($R\ge 0.98$) are timed on CUDA (batch 64, prolonged residual).
 Ten non-learnable bake denoisers share the frozen canonical holdout against the neural favorite (Table~\ref{tab:canonical-methods}).
 Fixed-arch MLP-on-$R$ and CNN/U-Net-lite-on-$R$ baselines (no outer NAS) are trained on $1{-}R$ with the same generator and scored in the SOTA matrix.
-Phase~B adds a primary corrupt$\to$corrupt Noise2Noise seam CNN (train seed \texttt{424242}, disjoint from holdout), a secondary sibling-supervised ceiling on the same architecture, and lightweight LSTM / depthwise 1D-CNN seq restorers (train seed \texttt{424243}).
-No overnight champion weights initialize those baselines.
 Family-conditional hardness uses the separate Rust procedural $100{,}000$-cycle bench reported in Results.
-
-\paragraph{Cliff strata and wavetable-native realism.}
-A $4{,}096$-tile holdout draw (seed \texttt{20260719}) is stratified by engine wrap-jump percentiles (top 25\% / top 10\%; cutoffs frozen in \texttt{cliff\_strata.json}).
-Hard-cliff is the operative regime for claims about DualCosine collapse vs favorite retention.
-Wavetable-native transfer (Phase~C) scores ReelSynth-style factory periods (primary realism) and OA additive-harmonic instrument one-shots (secondary) under the same close-seam$\to$open-wrap protocol.
-Speech/music LibriSpeech/MUSDB corpora remain off.

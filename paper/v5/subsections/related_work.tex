@@ -20,13 +20,9 @@ Noise2Noise shows that restoration mappings can be learned from corrupted observ
 Speech Noise2Noise denoisers apply the same idea to waveforms without clean paired audio~\cite{kashyap2021n2n}.
 Mixture invariant training ranks unsupervised separation systems without stem labels~\cite{wisdom2020}.
 That philosophy motivates ranking denoise candidates without paired studio-clean wavetable cycles.
-Earlier drafts of this work cited Noise2Noise only as ranking philosophy and omitted a same-domain learned control.
-We now train a true corrupt$\to$corrupt N2N-style seam restorer on the same $L{=}256$ \texttt{make\_batch} geometry (primary baseline), plus a sibling-supervised ceiling and lightweight LSTM / 1D-CNN seq models (Section~\ref{sec:results}).
-Prior speech N2N restorers operate on broadband noisy speech.
-We operate on periodic seam cliffs with procedural siblings.
-We \textbf{use} this family as conceptual justification for unsupervised residual ranking and as an explicit learned contrast to DenoiseOpt meta-search.
-Full Demucs / DiffWave stacks are screened: domain mismatch (full-band speech/music denoisers vs short periodic seams), compute, and OA/eval protocol mismatch.
-We do not retrain image Noise2Noise CNNs.
+The residual compares an engine-baked tiling to a procedural ideal that withholds open-wrap cliffs.
+We \textbf{use} this family as conceptual justification for unsupervised residual ranking.
+We do not retrain a Noise2Noise CNN on images.
 
 \subsection{Waveform denoising and separation cells}
 Deep learning for audio surveys the move from hand-designed features to learned time/frequency models~\cite{purwins2019}.

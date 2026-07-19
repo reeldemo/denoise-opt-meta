@@ -2,13 +2,14 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v5** | 2026-07-19 | Peer-review response: hard-cliff strata, N2N/seq baselines, wavetable-native realism, theory honesty |
-| v4 | 2026-07-18 | Superseded archive; same science as v5 at promotion time |
+| **v6** | 2026-07-19 | Current: peer-review response (hard-cliff strata, N2N/seq baselines, wavetable-native realism, theory honesty) |
+| v5 | 2026-07-19 | Archived pre–peer-review-revision snapshot (restored from `3f409b2`) |
+| v4 | 2026-07-18 | Superseded archive |
 | v3 | 2026-07-18 | Regenerated via Klaut scientific writing workflow (plan→write→revise→export); same residual science as v2, fuller IMRaD prose + workflow audit trail |
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
-## v5 notes
+## v6 notes (current)
 
 ### Peer-review response (19 July 2026)
 - Phase A: cliff strata (top 10%/25% wrap-jump); identity-$R$ honesty; edge RMSE / click energy; `tab:cliff-strata`.
@@ -17,10 +18,11 @@
 - Phase D: deleted Lemma 1 and trivial Props; kept formal $R$; explicit no wrap-closure / no search-convergence guarantees.
 - Phase E: abstract/discussion/related work/venue positioning (DAFx/AES/arXiv DSP); PDF rebuild.
 - Artifacts: `figures/cliff_strata.json`, `n2n_baseline.json`, `seq_baseline.json`, `real_wt_matrix.json`.
-- Flag: `paper/v5/PEER_REVIEW_COMPLETE.flag`.
+- Flag: `paper/v6/PEER_REVIEW_COMPLETE.flag`.
+- Sources: `paper/v6/`.
 
-### Prior v5 notes
-- Primary title: *Unsupervised Deep Audio Denoising Algorithms via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning* (see `v5/TITLES.md`).
+### Baseline manuscript notes (carried into v6)
+- Primary title: *Unsupervised Wavetable Seam Artifact Repair via Hybrid GA–PPO Meta-Search* (see `v6/TITLES.md`).
 - Results: top-5 distinct bake architectures from the CUDA inference-bench leaderboard snapshot (§Top-5 architectures).
 - Tooling/AI disclosure section; OA PDF harvest + non-OA flags (`artifacts/literature_oa/`).
 - Method pseudocode: `docs/PSEUDOCODE.md`.
@@ -29,9 +31,15 @@
 - Family-conditional hardness + Outlook for follow-up pub.
 - Overnight GPU hybrid continues; final overnight tables after 5k+ clean gate.
 
+## v5 notes (archived pre–peer-review revision)
+
+- Restored from commit `3f409b2` (parent of `f6dfbdf`, immediately before Phases A–E landed).
+- Snapshot includes checklist/manuscript-review work and the peer-review *plan* docs, but **not** the A–E manuscript/artifact changes (no `cliff_strata` / N2N tables / Lemma deletion in tex).
+- Sources: `paper/v5/`. Current canonical paper is `paper/v6/`.
+
 ## v4 notes (superseded)
 
-- Archived snapshot under `paper/v4/`; current sources live in `paper/v5/`.
+- Archived snapshot under `paper/v4/`.
 
 ## v3 notes
 

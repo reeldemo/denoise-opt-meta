@@ -1,37 +1,54 @@
-# Peer-review improvement plan progress
+# Manuscript checklist plan progress
 
-**Plan:** `PEER_REVIEW_IMPROVEMENT_PLAN.md`  
-**Updated:** 19 July 2026  
-**Flag:** `PEER_REVIEW_COMPLETE.flag` set when phases A–E done.
+**Plan:** `MANUSCRIPT_CHECKLIST_IMPLEMENTATION_PLAN.md`  
+**Review fix plan:** `MANUSCRIPT_REVIEW_FIX_PLAN.md`  
+**Updated:** 19 July 2026 (P4 B&W shape markers on overnight line plots; MUSHRA ignored)
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| **A Metric honesty** | **DONE** | `cliff_strata.json` (4096 tiles, seed 20260719). Top10%: id $R$ 0.9667, DualCosine 0.6574, favorite 0.9915. Edge RMSE + click energy defined. Table `tab:cliff-strata`. |
-| **D Theory cleanup** | **DONE** | Lemma 1 + Props 1–3 deleted. Formal $R$ kept. Explicit no wrap-closure / no search-convergence sentence. |
-| **B N2N + seq** | **DONE** | Primary corrupt→corrupt $R\approx0.9917$; sibling-sup $R\approx0.9933$; LSTM $R\approx0.9952$; CNN1D $R\approx0.9864`. Train seeds disjoint from holdout. |
-| **C Realism** | **DONE** | ReelSynth factory $n{=}24$ + OA instrument $n{=}20$ under wrap protocol. `SAMPLE_LICENSES.md`. No LibriSpeech/MUSDB. |
-| **E Writing** | **DONE** | Abstract/discussion/related work/venue (DAFx/AES/arXiv). PDF rebuilt (14 pp). |
+| **0 Triage & protocol** | **DONE** | `EVAL_PROTOCOL.md` checked in. Grep clean on tex for open/pending/OA badges. PDF rebuild after edits. Venue = arXiv twocolumn. Narrow-claim freeze adopted. |
+| **1 Claims hygiene** | **DONE** | Narrow title, rewritten abstract, Independent Researcher, intro/conclusion sync, keywords. |
+| **2 Methods/Algs/Props** | **DONE** | Methods rewrite, Algorithms 1–8, propositions, hyperparam table, expanded `docs/PSEUDOCODE.md`. Arch diagram (`fig:denoiseopt-arch`) added. |
+| **3 Eval expansion** | **DONE** | `bench_sota_matrix.py` + Rust tile export + isolated short ablations. |
+| **4 Results artifacts** | **DONE** | `tab:sota-main`, dual-view `tab:ablation`, `tab:compute` with VRAM replay, `tab:rust-bench`. |
+| **5 Ethics** | **DONE** | Broader impact, reproducibility, CoI none. PESQ/STOI omit + MUSHRA not run. |
+| **6 Release gate** | **DONE** | PDF rebuild, mirror, deferred closeout. |
+| **7 Manuscript review fix** | **DONE** | Triage REAL/PARTIAL/OCR_FALSE; P1–P4 applied; `REVIEW_FIX_COMPLETE.flag`. |
+| **P4 shape markers** | **DONE** | Overnight/results line plots: Okabe-Ito colors + distinct markers (circle/square/triangle/diamond/inverted triangle). MUSHRA ignored (not run; not in scope). |
 
-## Headline peer-review numbers
+## Review fix triage (19 July 2026)
+
+| Bucket | Count |
+|--------|------:|
+| REAL | 18 |
+| PARTIAL | 9 |
+| OCR_FALSE | 28 |
+
+Key REAL fixes: §6-style abstract (no em dash); semicolon keywords; seed `\texttt{20260719}` / `\texttt{1902771841}`; Table 1 runner defaults; funding / CRediT / data availability; Acknowledgments; symbol table; Results RQ transitions; Outlook as subsection; competing interests subsection.
+
+## Headline measured numbers
 
 | Item | Value |
 |------|-------|
-| Hard-cliff top10% favorite $R$ | 0.9915 |
-| Hard-cliff top10% DualCosine $R$ | 0.6574 |
-| Hard-cliff top10% identity $R$ | 0.9667 |
-| N2N corrupt→corrupt (primary) | $R\approx0.9917$ |
-| N2N sibling-supervised | $R\approx0.9933$ |
-| Seq LSTM ceiling | $R\approx0.9952$ |
-| Factory favorite / DualCosine | 0.954 / 0.943 |
-| OA instrument favorite / DualCosine | 0.988 / 0.944 |
+| Favorite vs DualCosine (canonical) | $R$ 0.9911 vs 0.8249, $\Delta R{+}0.166$, SNR 41.3 dB |
+| Favorite multifamily (20-wave Python) | $R$ $0.977\pm0.010$, mean $\Delta R{+}0.162$, Wilcoxon $p{\approx}8.9{\times}10^{-5}$ |
+| MLP-on-$R$ / CNN-on-$R$ (20-wave) | $R$ $0.932\pm0.006$ / $0.886\pm0.012$ |
+| Overnight freeze | $\approx$7.92 h, $\approx$6922 arch evals, champ $R$ 0.99093 |
+| Peak VRAM (nvidia-smi replay) | $\approx$3.29 GiB (30-it search probe) / $\approx$3.17 GiB (champion FitCell) |
+| Isolated 150-it champs (seed 1902771841) | full 0.98113, GA 0.98062, GA+PPO 0.98007, PPO 0.97932 |
+| Rust 20-tile favorite vs DualCosine | mean $\Delta R{+}0.063$, $p{\approx}0.009$ (trails identity) |
 
-## Cross-phase checklist
+## Deferred closed (19 July 2026)
 
-- [x] Narrow claim freeze intact
-- [x] Cliff strata 10%/25% published
-- [x] Identity-$R$ explained; hard-cliff operative
-- [x] Primary corrupt→corrupt N2N + sibling + seq
-- [x] ReelSynth + OA realism; no LibriSpeech/MUSDB
-- [x] Theory cleaned (props/lemma deleted; $R$ kept)
-- [x] OA cites; no PESQ-on-sine; no MUSHRA; no em-dash slop
-- [x] Canonical artifacts under `denoise-opt-meta/paper/v5/`
+| Item | Resolution |
+|------|------------|
+| PESQ/STOI/MUSHRA | Explicit deferral in Limitations + ethics. Domain mismatch on non-speech. **MUSHRA ignored** (not run; no listening study). No invented PESQ. |
+| P4 B&W shape markers | Regenerated overnight line plots via `scripts/plot_overnight_history.py` (`--max-iter 5000`, x-axis cap). Okabe-Ito + markers. Captions updated. MUSHRA ignored. |
+| Isolated GA/PPO/GA+PPO/full | Measured 150-it re-runs (`isolated_ablations.json`). Dual-column `tab:ablation`. |
+| Overnight peak VRAM | `nvidia-smi` during champion replay + 30-it search probe. Filled `tab:compute`. |
+| Rust sound_bench ≥20 tiles | `export_sound_bench_tiles` + `tab:rust-bench`. Residual: Python generative matrix remains primary. |
+
+## Slop audit (post-deferred)
+
+Prose pass on `main.tex` + `subsections/*.tex`: removed em-dash/semicolon prose chains, “rather than” / stacked “y, not x” contrasts, and related throat-clearing. Algorithm `\State` semicolons kept (pseudocode). Findings fixed: **22**.
+Review-rewrite integration kept clarity without reintroducing em dashes or contrast slop.
