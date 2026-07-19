@@ -75,6 +75,4 @@ scripts/              # render / harvest / regen
 | [reeldemo/denoise-opt-meta](https://github.com/reeldemo/denoise-opt-meta) | This repo |
 | Klaut research gateway | `research_paper_*` + `arxiv-twocolumn` template |
 
-## License
-
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). Pseudocode: [docs/PSEUDOCODE.md](docs/PSEUDOCODE.md). OA reference flags: [artifacts/literature_oa/REFERENCES_OA.md](artifacts/literature_oa/REFERENCES_OA.md).

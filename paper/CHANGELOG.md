@@ -10,9 +10,11 @@
 ## v4 notes
 
 - Primary title: *Unsupervised Audio Denoising via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning* (see `v4/TITLES.md`).
-- Klaut: attach curated harvest → fetch/analyze OA PDFs → plan/write with Ollama `qwen3.5:9b` → author revision for claim hygiene (no invented final overnight numbers).
-- Results/Discussion: family-conditional hardness (nonlinear/combo/overlay hard; harmonic/am_fm easier) from 100k + lit-combo stress; Outlook sketches a follow-up paper on family-/cliff-conditional meta-learning toward $R>0.999$.
-- Overnight GPU job continues (`PPO+GA+PBT+NAS+depth+MoE` + plateau deepen-adapt).
+- Tooling/AI disclosure section; OA PDF harvest + non-OA flags (`artifacts/literature_oa/`).
+- Method pseudocode: `docs/PSEUDOCODE.md`.
+- Inference bench: favorite = fastest in near-max-$R$ band ($R\approx0.991$, $\approx3.15$\,ms/batch).
+- Family-conditional hardness + Outlook for follow-up pub.
+- Overnight GPU hybrid continues; final overnight tables after 5k+ clean gate.
 
 ## v3 notes
 
