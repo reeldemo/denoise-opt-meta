@@ -1,7 +1,7 @@
 {
   "policy": "OA-only",
-  "n_bib_cites": 39,
-  "n_bib_oa_pdfs": 39,
+  "n_bib_cites": 38,
+  "n_bib_oa_pdfs": 38,
   "n_failures": 0,
   "failures": [],
   "dropped_non_oa": [
@@ -10,8 +10,8 @@
       "reason": "Computer Music Journal paywall",
       "replaced_by": [
         "stilson1996",
-        "valimaki2010dpw",
-        "nam2009polyblep"
+        "nam2009polyblep",
+        "esqueda2016blamp"
       ]
     },
     {
@@ -19,7 +19,8 @@
       "reason": "IEEE TSP paywall",
       "replaced_by": [
         "esqueda2016blamp",
-        "valimaki2010dpw"
+        "stilson1996",
+        "nam2009polyblep"
       ]
     },
     {
@@ -28,6 +29,15 @@
       "replaced_by": [
         "hansen2016cmaes",
         "snoek2012"
+      ]
+    },
+    {
+      "old_key": "valimaki2010dpw",
+      "reason": "IEEE TASLP author-hosted PDF (not strict OA)",
+      "replaced_by": [
+        "stilson1996",
+        "nam2009polyblep",
+        "esqueda2016blamp"
       ]
     }
   ],
@@ -54,18 +64,6 @@
       "oa": true,
       "pdf_path": "artifacts\\literature_oa\\pdfs\\esqueda2016blamp.pdf",
       "borderline": null,
-      "arxiv": null
-    },
-    {
-      "cite_key": "valimaki2010dpw",
-      "title": "Alias-Suppressed Oscillators Based on Differentiated Polynomial Waveforms",
-      "role": "used",
-      "oa_pdf_url": "https://mac.kaist.ac.kr/pubs/ValimakiNamSmithAbel-taslp2010.pdf",
-      "local_name": "valimaki2010dpw.pdf",
-      "status": "downloaded",
-      "oa": true,
-      "pdf_path": "artifacts\\literature_oa\\pdfs\\valimaki2010dpw.pdf",
-      "borderline": "Author-hosted PDF of IEEE article",
       "arxiv": null
     },
     {
