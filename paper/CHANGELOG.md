@@ -9,7 +9,8 @@
 
 ## v4 notes
 
-- Primary title: *An Unsupervised Deep Audio Denoising Algorithm via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning* (see `v4/TITLES.md`).
+- Primary title: *Unsupervised Deep Audio Denoising Algorithms via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning* (see `v4/TITLES.md`).
+- Results: top-5 distinct bake architectures from the CUDA inference-bench leaderboard snapshot (§Top-5 architectures).
 - Tooling/AI disclosure section; OA PDF harvest + non-OA flags (`artifacts/literature_oa/`).
 - Method pseudocode: `docs/PSEUDOCODE.md`.
 - Inference bench: favorite = fastest in near-max-$R$ band ($R\approx0.991$, $\approx3.15$\,ms/batch).

@@ -14,7 +14,7 @@ Companion to the synth implementation: [reeldemo/reelsynth](https://github.com/r
 
 ## Current paper (v4)
 
-**Title:** *An Unsupervised Deep Audio Denoising Algorithm via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning*
+**Title:** *Unsupervised Deep Audio Denoising Algorithms via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning*
 
 | | |
 |--|--|
