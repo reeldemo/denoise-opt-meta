@@ -35,7 +35,7 @@ Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning}
 \twocolumn[{%
   \maketitle
   \begin{center}\footnotesize
-    Code:
+    Code (ReelSynth engine + DenoiseOpt meta-search):
     \url{https://github.com/reeldemo/reelsynth},
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
@@ -46,7 +46,9 @@ Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning}
     seam-local operators (DualCosine crossfade, polish, FIR blends, optional tiny residual cells)
     are baked into the period, then judged by a prolonged residual $R\in[0,1]$ against an ideal
     multi-period tiling that withholds the open-wrap cliff (1~=~best).
-    An outer hybrid meta-search interleaves GA tournament updates with PPO architecture proposals,
+    We call the residual-scored hybrid search \textbf{DenoiseOpt}.
+    An outer hybrid meta-search interleaves GA tournament updates with proximal policy
+    optimization (PPO) architecture proposals,
     optional PBT exploit--mutate schedules, and MoE soft gates over heterogeneous bake cells.
     Candidates need not be paired with studio-clean waveforms for every trial.
     This draft fixes the problem statement and a used-versus-screened literature map grounded on
@@ -55,7 +57,7 @@ Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning}
     A CUDA campaign (\texttt{PPO+GA+PBT+NAS}) is still running; quantitative tables wait until the
     declared budget finishes.
   \end{abstract}
-  \keywords{unsupervised learning $\cdot$ audio denoising $\cdot$ neural architecture search $\cdot$ reinforcement learning $\cdot$ genetic algorithms $\cdot$ wavetable synthesis $\cdot$ meta-learning}
+  \keywords{unsupervised learning $\cdot$ audio denoising $\cdot$ DenoiseOpt $\cdot$ neural architecture search $\cdot$ reinforcement learning $\cdot$ genetic algorithms $\cdot$ wavetable synthesis $\cdot$ wrap discontinuity $\cdot$ meta-learning}
   \vspace{0.6em}
 }]
 
