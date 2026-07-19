@@ -1,145 +1,143 @@
 {
   "device": "cuda",
   "batch": 64,
+  "canonical_eval_seed": 20260719,
   "results": [
     {
       "name": "identity",
       "kind": "non_ai",
-      "residual": 0.9735056161880493,
-      "ms_per_batch": 0.37121499990462326,
-      "ms_per_sample": 0.005800234373509738,
-      "n_params": 0
+      "residual": 0.9717606902122498,
+      "ms_per_batch": 0.3068925001571188,
+      "ms_per_sample": 0.004795195314954981,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.9726044297218323,
+      "R_std_multiseed": 0.0020547732409553756
     },
     {
       "name": "classic_quadratic",
       "kind": "non_ai",
-      "residual": 0.839565634727478,
-      "ms_per_batch": 1.5375009999843314,
-      "ms_per_sample": 0.02402345312475518,
-      "n_params": 0
+      "residual": 0.8448915481567383,
+      "ms_per_batch": 1.594815000134986,
+      "ms_per_sample": 0.024918984377109155,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.8452812194824219,
+      "R_std_multiseed": 0.01168853945918661
     },
     {
       "name": "cosine_fade",
       "kind": "non_ai",
-      "residual": 0.8197969198226929,
-      "ms_per_batch": 1.503143000009004,
-      "ms_per_sample": 0.023486609375140688,
-      "n_params": 0
+      "residual": 0.8248767852783203,
+      "ms_per_batch": 1.5945499999361346,
+      "ms_per_sample": 0.024914843749002102,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.8257672667503357,
+      "R_std_multiseed": 0.01365821849148019
     },
     {
       "name": "dual_cosine",
       "kind": "non_ai",
-      "residual": 0.8197969198226929,
-      "ms_per_batch": 1.1898070000461303,
-      "ms_per_sample": 0.018590734375720785,
-      "n_params": 0
+      "residual": 0.8248767852783203,
+      "ms_per_batch": 1.34570000009262,
+      "ms_per_sample": 0.021026562501447188,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.8257672667503357,
+      "R_std_multiseed": 0.01365821849148019
     },
     {
       "name": "soft_wide_fade",
       "kind": "non_ai",
-      "residual": 0.722964882850647,
-      "ms_per_batch": 2.528959000046598,
-      "ms_per_sample": 0.03951498437572809,
-      "n_params": 0
+      "residual": 0.7431874871253967,
+      "ms_per_batch": 2.6351900000008754,
+      "ms_per_sample": 0.04117484375001368,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.7377992153167725,
+      "R_std_multiseed": 0.017122827775705556
     },
     {
       "name": "detrend",
       "kind": "non_ai",
-      "residual": 0.37032192945480347,
-      "ms_per_batch": 0.35954300008597784,
-      "ms_per_sample": 0.005617859376343404,
-      "n_params": 0
+      "residual": 0.40794822573661804,
+      "ms_per_batch": 0.3601849999540718,
+      "ms_per_sample": 0.005627890624282372,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.40910319685935975,
+      "R_std_multiseed": 0.03863159324370911
     },
     {
       "name": "crossfade",
       "kind": "non_ai",
-      "residual": 0.8143625259399414,
-      "ms_per_batch": 1.425835999980336,
-      "ms_per_sample": 0.02227868749969275,
-      "n_params": 0
+      "residual": 0.8115774989128113,
+      "ms_per_batch": 1.5049024998006644,
+      "ms_per_sample": 0.02351410155938538,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.8129824757575989,
+      "R_std_multiseed": 0.01449366907989955
     },
     {
       "name": "hann_blend",
       "kind": "non_ai",
-      "residual": 0.7992575168609619,
-      "ms_per_batch": 0.57403400001931,
-      "ms_per_sample": 0.00896928125030172,
-      "n_params": 0
+      "residual": 0.8047966957092285,
+      "ms_per_batch": 0.541657500070869,
+      "ms_per_sample": 0.008463398438607328,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.805998432636261,
+      "R_std_multiseed": 0.015557421071392363
     },
     {
       "name": "seam_fir3",
       "kind": "non_ai",
-      "residual": 0.963111937046051,
-      "ms_per_batch": 0.5970509999315254,
-      "ms_per_sample": 0.009328921873930085,
-      "n_params": 0
+      "residual": 0.9610013961791992,
+      "ms_per_batch": 0.6682749997708015,
+      "ms_per_sample": 0.010441796871418774,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.9615767121315002,
+      "R_std_multiseed": 0.001923152028896591
     },
     {
       "name": "ensemble_detrend_dc_fir",
       "kind": "non_ai",
-      "residual": 0.3659016489982605,
-      "ms_per_batch": 1.6461990000971127,
-      "ms_per_sample": 0.025721859376517386,
-      "n_params": 0
+      "residual": 0.4023715853691101,
+      "ms_per_batch": 1.5616724998835707,
+      "ms_per_sample": 0.024401132810680792,
+      "n_params": 0,
+      "eval_seed": 20260719,
+      "R_mean_multiseed": 0.402651846408844,
+      "R_std_multiseed": 0.03867818063339462
     },
     {
       "name": "neural_favorite_meta",
       "kind": "ai",
-      "residual": 0.9906557202339172,
-      "residual_saved": 0.9909982681274414,
-      "ms_per_batch": 2.4675409999326803,
-      "ms_per_sample": 0.03855532812394813,
+      "residual": 0.9910600185394287,
+      "ms_per_batch": 2.5635774996771943,
+      "ms_per_sample": 0.04005589843245616,
       "n_params": 37489,
-      "tag": "champion_iter_000235_fitted"
+      "eval_seed": 20260719,
+      "tag": "champion_iter_000235_fitted",
+      "path": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\reelsynth\\brand\\artifacts\\models\\gpu-rl-arch-20260719T061909Z\\fitted\\champion_iter_000235_fitted.pt",
+      "residual_saved": 0.9909982681274414,
+      "R_mean_multiseed": 0.9912270665168762,
+      "R_std_multiseed": 0.0001868340524399009
     }
   ],
   "summary": {
-    "best_classical": {
-      "name": "seam_fir3",
-      "kind": "non_ai",
-      "residual": 0.963111937046051,
-      "ms_per_batch": 0.5970509999315254,
-      "ms_per_sample": 0.009328921873930085,
-      "n_params": 0
-    },
-    "best_classical_incl_identity": {
-      "name": "identity",
-      "kind": "non_ai",
-      "residual": 0.9735056161880493,
-      "ms_per_batch": 0.37121499990462326,
-      "ms_per_sample": 0.005800234373509738,
-      "n_params": 0
-    },
-    "identity_noop": {
-      "name": "identity",
-      "kind": "non_ai",
-      "residual": 0.9735056161880493,
-      "ms_per_batch": 0.37121499990462326,
-      "ms_per_sample": 0.005800234373509738,
-      "n_params": 0
-    },
-    "dual_cosine": {
-      "name": "dual_cosine",
-      "kind": "non_ai",
-      "residual": 0.8197969198226929,
-      "ms_per_batch": 1.1898070000461303,
-      "ms_per_sample": 0.018590734375720785,
-      "n_params": 0
-    },
-    "ai_favorite": {
-      "name": "neural_favorite_meta",
-      "kind": "ai",
-      "residual": 0.9906557202339172,
-      "residual_saved": 0.9909982681274414,
-      "ms_per_batch": 2.4675409999326803,
-      "ms_per_sample": 0.03855532812394813,
-      "n_params": 37489,
-      "tag": "champion_iter_000235_fitted"
-    },
-    "delta_R_ai_minus_best_classical": 0.02754378318786621,
-    "delta_R_ai_minus_dual_cosine": 0.17085880041122437,
-    "delta_R_ai_minus_identity": 0.01715010404586792,
-    "latency_ratio_ai_over_best_classical_score": 4.132881445999885,
-    "latency_ratio_ai_over_dual_cosine": 2.0739002206551236
-  }
+    "best_classical": "seam_fir3",
+    "best_classical_R": 0.9610013961791992,
+    "dual_cosine_R": 0.8248767852783203,
+    "ai_favorite_R": 0.9910600185394287,
+    "delta_R_ai_minus_best_classical": 0.030058622360229492,
+    "delta_R_ai_minus_dual_cosine": 0.1661832332611084,
+    "ai_ms_per_batch": 2.5635774996771943,
+    "best_classical_ms_per_batch": 0.6682749997708015,
+    "dual_cosine_ms_per_batch": 1.34570000009262
+  },
+  "source": "canonical_eval_dataset"
 }
