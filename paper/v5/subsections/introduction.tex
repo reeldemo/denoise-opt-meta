@@ -48,8 +48,8 @@ We do not claim general speech or music enhancement SOTA.
 \begin{enumerate}
   \item \textbf{Problem framing.} Cast wavetable wrap discontinuity as cycle-local seam restoration under prolonged tiled evaluation, separating seam-local diagnostics from residual $R$.
   \item \textbf{Hybrid DenoiseOpt outer loop.} Specify RL+GA(+PBT) search over discrete operator graphs and continuous bake parameters, with named branches (GA crossover, PPO mutation, PBT exploit, MoE soft gates).
-  \item \textbf{Formal residual protocol.} Define ideal-tile siblings, $R$ with range/perfect-match/monotone properties, and reimplementable Algorithms~\ref{alg:residual}--\ref{alg:hybrid}.
-  \item \textbf{Open evaluation path.} Release companion code for the synthesizer engine and meta search, with frozen $5$k-gate figures and matched classical-vs-favorite benches.
+  \item \textbf{Formal residual protocol.} Define ideal-tile siblings, prolonged residual $R$, and reimplementable Algorithms~\ref{alg:residual}--\ref{alg:hybrid}. No wrap-closure or search-convergence guarantees.
+  \item \textbf{Open evaluation path.} Release companion code for the synthesizer engine and meta search, with frozen $5$k-gate figures, hard-cliff strata, N2N/seq baselines, and wavetable-native transfer benches.
 \end{enumerate}
 
 Section~\ref{sec:related_work} organizes related work by mechanism.

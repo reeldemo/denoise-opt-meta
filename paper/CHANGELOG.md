@@ -2,7 +2,7 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v5** | 2026-07-19 | Current paper; content promoted from v4 (5k-gate residual tables, classical vs AI bench, OA bibliography) |
+| **v5** | 2026-07-19 | Peer-review response: hard-cliff strata, N2N/seq baselines, wavetable-native realism, theory honesty |
 | v4 | 2026-07-18 | Superseded archive; same science as v5 at promotion time |
 | v3 | 2026-07-18 | Regenerated via Klaut scientific writing workflow (plan→write→revise→export); same residual science as v2, fuller IMRaD prose + workflow audit trail |
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
@@ -10,6 +10,16 @@
 
 ## v5 notes
 
+### Peer-review response (19 July 2026)
+- Phase A: cliff strata (top 10%/25% wrap-jump); identity-$R$ honesty; edge RMSE / click energy; `tab:cliff-strata`.
+- Phase B: primary corrupt→corrupt N2N + sibling-supervised ceiling + LSTM/1D-CNN (no holdout leakage).
+- Phase C: ReelSynth-style factory + OA instrument wrap protocol; `SAMPLE_LICENSES.md`; no LibriSpeech/MUSDB.
+- Phase D: deleted Lemma 1 and trivial Props; kept formal $R$; explicit no wrap-closure / no search-convergence guarantees.
+- Phase E: abstract/discussion/related work/venue positioning (DAFx/AES/arXiv DSP); PDF rebuild.
+- Artifacts: `figures/cliff_strata.json`, `n2n_baseline.json`, `seq_baseline.json`, `real_wt_matrix.json`.
+- Flag: `paper/v5/PEER_REVIEW_COMPLETE.flag`.
+
+### Prior v5 notes
 - Primary title: *Unsupervised Deep Audio Denoising Algorithms via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning* (see `v5/TITLES.md`).
 - Results: top-5 distinct bake architectures from the CUDA inference-bench leaderboard snapshot (§Top-5 architectures).
 - Tooling/AI disclosure section; OA PDF harvest + non-OA flags (`artifacts/literature_oa/`).

@@ -6,10 +6,24 @@ Across the $100{,}000$-cycle procedural bench and lit-combo family stress tests,
 The same generator families repeatedly dominate the residual budget: \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, and \texttt{extreme\_overlay} show the weakest denoise / residual scores, while \texttt{harmonic\_fft} and \texttt{am\_fm} are comparatively easy.
 \texttt{open\_wrap\_bias} can look strong on wrap-energy proxies yet still lag on prolonged residual. Cliff reduction and ideal-matched tiling are related objectives with different rankings.
 
+\paragraph{Identity $R$ and hard-cliff honesty.}
+Canonical identity $R\approx 0.97$ looks ``easy'' only if one treats $R$ as a perceptual wrap score.
+Under~\eqref{eq:R}, small residual RMS relative to ideal RMS yields high $R$ even when $|x_0-x_{L-1}|$ is large.
+Hard-cliff strata make the operative regime explicit: DualCosine drops to $R\approx 0.657$ on the top-10\% wrap-jump tiles while the favorite stays near $0.9915$.
+Favorite wrap-jump barely moves toward zero on that subset.
+We claim tiled residual repair, not endpoint closure.
+
+\paragraph{N2N stress test.}
+The primary corrupt$\to$corrupt N2N control matches the meta favorite on the sine{+}cliff holdout.
+Sibling-supervised N2N and the LSTM ceiling sit slightly above.
+That is expected for oracle-label training and does not invalidate the hybrid search story: DenoiseOpt discovers compact bake graphs without requiring engine$\to$ideal supervision at search time, and transfers under the frozen bake protocol.
+On ReelSynth-style factory periods the searched favorite outperforms the N2N/seq nets trained only on sine cliffs, which is an honest transfer gap for the learned baselines.
+
 \paragraph{Implication for this paper.}
 Mean $R$ (and mean DualCosine gaps) therefore compress a structured difficulty map.
-Reporting only the overnight mean on synthetic sine cliffs understates how much of the remaining $\sim$1\% sits in a few hard families.
-That structure is a first-class empirical claim of the present work.
+Reporting only the overnight mean on synthetic sine cliffs understates how much of the remaining $\sim$1\% sits in a few hard families, and how DualCosine fails when wrap-jump is large.
+Hard-cliff strata and wavetable-native transfer are first-class empirical claims of the present work.
+The contribution is aimed at DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD), not general speech-enhancement leaderboards.
 
 \paragraph{Hybrid search vs.\ plateau.}
 Overnight traces at the $5$k gate show early high champions then long plateaus near $R\approx 0.99$.
