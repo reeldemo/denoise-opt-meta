@@ -13,6 +13,7 @@
 - Tooling/AI disclosure section; OA PDF harvest + non-OA flags (`artifacts/literature_oa/`).
 - Method pseudocode: `docs/PSEUDOCODE.md`.
 - Inference bench: favorite = fastest in near-max-$R$ band ($R\approx0.991$, $\approx3.15$\,ms/batch).
+- Classical vs AI bench (same $R$ protocol): DualCosine $R\approx0.820$; best active classical `seam_fir3` $R\approx0.963$; neural favorite $R\approx0.991$ at $\approx2.47$\,ms/batch ($\Delta R{+}0.028$ / $\approx4.1\times$ latency vs `seam_fir3`). Artifacts: `artifacts/classical_vs_ai_bench/`, figures `fig_classical_vs_ai_*.png`.
 - Family-conditional hardness + Outlook for follow-up pub.
 - Overnight GPU hybrid continues; final overnight tables after 5k+ clean gate.
 
