@@ -1,8 +1,10 @@
 # DenoiseOpt meta-learning
 
-Public artifacts and versioned papers for **DenoiseOpt** — literature-informed meta-learning for label-free wavetable wrap crackle reduction.
+Public artifacts and versioned papers for **DenoiseOpt** — unsupervised audio / wavetable wrap denoising with hybrid RL + genetic-algorithm meta-learning.
 
-This repo is the companion to the synth implementation in [reeldemo/reelsynth](https://github.com/reeldemo/reelsynth). Code that *runs* the search lives there; the JSON, figures, and PDFs that *document* the search live here.
+Companion to the synth implementation: [reeldemo/reelsynth](https://github.com/reeldemo/reelsynth).
+
+**Release gate:** see [GO_CRITERIA.md](GO_CRITERIA.md) (≥5k clean GPU iterations + documented repro).
 
 ---
 
@@ -10,100 +12,47 @@ This repo is the companion to the synth implementation in [reeldemo/reelsynth](h
 
 **Julian M. Kleber** · [ORCID 0000-0001-5518-0932](https://orcid.org/0000-0001-5518-0932) · [julian.m.kleber@gmail.com](mailto:julian.m.kleber@gmail.com)
 
-## What changed in v3
+## Current paper (v4)
 
-v3 regenerates the residual-objective paper through the Klaut Research Gateway **scientific writing workflow** (plan → write section-by-section → revise → figures → export), rather than hand-gluing a README into LaTeX.
+**Title:** *Unsupervised Audio Denoising via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning*
 
-Scientific content is unchanged in substance from v2:
+| | |
+|--|--|
+| PDF | [`paper/v4/main.pdf`](paper/v4/main.pdf) |
+| Sources | [`paper/v4/`](paper/v4/) |
+| Changelog | [`paper/CHANGELOG.md`](paper/CHANGELOG.md) |
 
-- Prolonged residual $R\in[0,1]$ (1 = best), tiled $N{=}16$ ideal vs engine
-- Nested unsupervised loss $L=(1-\mathcal{D})+\lambda(1-\mathcal{S})$ searched inside priors
-- Killer: `evo_explore_515` residual **≈0.824** vs DualCosine **≈0.698** ($\Delta{+}0.126$)
-- Honest: top residual elites were mutate-only `evo_explore` (inner sweeps = 0)
+Build:
 
-### Killer result (1500 trials, val $N{=}2000$)
-
-| Algorithm | Residual | Notes |
-|-----------|----------|-------|
-| Naive DualCosine | **0.698** | hand baseline |
-| Meta Top 1 — `evo_explore_515` | **0.824** | +0.126 over naive |
-| Meta Top 2–4 | ≈0.821–0.823 | all `evo_explore` |
-
----
-
-## Lit-combo 500 timing footnote
-
-Combinatorial hybrids of lit families (bayes / PBT / irace / MOEA·D / evo / N2N / bilevel / residual-primary + bake DualCosine/Classic/Soft/Ensemble*/Crossfade). Each outer trial **fits until convergence**: relative $|J_{\mathrm{prev}}-J_{\mathrm{cur}}|/\max(|J_{\mathrm{prev}}|,10^{-6}) < 10^{-4}$ for **3** consecutive coordinate sweeps (else max **16**).
-
-| Algorithm | Residual | Notes |
-|-----------|----------|-------|
-| Naive DualCosine | **0.705** | bake baseline (val 400) |
-| Lit-combo Top 1 — `pbt_exploit+residual_primary` | **0.903** | +0.198 over naive |
-
-**Measured wall clock (release, 500 outer iterations):** `500_ITER_WALL_TIME_SEC=157.990` (157989 ms). Host: AMD Ryzen 9 7950X3D / Windows / `BENCH_N=256` / prolong=16 / `val_fast=80`. Mean conv steps ≈10.5; 87.8% converged before max. Artifact: [`artifacts/denoise_opt_meta_lit_combo_500.json`](artifacts/denoise_opt_meta_lit_combo_500.json).
-
-```bash
-cargo run -p reelsynth --release --bin bench_denoise_meta -- 500
-```
-
-(Does not rewrite `paper/v3`; numbers for timing / hybrid search only.)
-
----
-
-## Paper versions
-
-| Version | Path | PDF |
-|---------|------|-----|
-| **v3** (current) | [`paper/v3/`](paper/v3/) | [`paper/v3/main.pdf`](paper/v3/main.pdf) |
-| v2 | [`paper/v2/`](paper/v2/) | [`paper/v2/main.pdf`](paper/v2/main.pdf) |
-| v1 (D/S quality) | [`paper/v1/`](paper/v1/) | [`paper/v1/main.pdf`](paper/v1/main.pdf) |
-
-Changelog: [`paper/CHANGELOG.md`](paper/CHANGELOG.md)
-
-Workflow audit trail in `paper/v3/`: `plan.md`, `revision_notes.md`, `subsections/`, `drafts/`.
-
-```bash
-cd paper/v3
+```powershell
+cd paper\v4
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
 ```
 
-Regenerate via gateway workflow (optional):
+### Headline empirical claims (ready now)
 
-```bash
-# Requires klaut-research-gateway on PYTHONPATH
-python scripts/regen_paper_v3.py
-```
+- Prolonged residual $R\in[0,1]$ (1 = best) vs DualCosine baseline.
+- Lit-combo / residual meta: e.g. `pbt_exploit+residual_primary` **R≈0.903** vs DualCosine **≈0.705** (500-iter timing run).
+- **Family hardness:** `nonlinear` / `combo` / `extreme_overlay` / `triple_mix` repeatedly worst; follow-up paper sketched in Outlook (family-/cliff-conditional meta-learning).
+- Overnight GPU hybrid (PPO+GA+PBT+NAS+depth+MoE) interim champ **R≈0.991** — final overnight tables after the 5k+ clean gate.
+
+Older versions: [`paper/v3/`](paper/v3/), [`paper/v2/`](paper/v2/), [`paper/v1/`](paper/v1/).
 
 ---
 
-## Reproduce the plots in the paper
+## Reproduce plots
 
-You need a checkout of **reelsynth** (Rust toolchain) and Python 3 with `matplotlib` + `numpy`.
-
-### 1. Run the meta search (writes the JSON the plots read)
-
-```bash
-cd /path/to/reelsynth
-cargo run -p reelsynth --release --bin bench_denoise_meta
-# → brand/artifacts/denoise_opt_meta_1500.json
+```powershell
+cd path\to\denoise-opt-meta
+python scripts\render_benchmark_matrix.py
 ```
 
-### 2. Render figures
+Needs committed JSON under `artifacts/`. Optional reelsynth re-search:
 
-```bash
-cd /path/to/denoise-opt-meta
-python scripts/render_benchmark_matrix.py
-# → artifacts/fig_benchmark_matrix.png, fig_pareto_1500.png, fig_prior_families.png
-```
-
-Copy PNGs into `paper/v3/figures/` before compiling if you regenerate them.
-
-### 3. Compile the PDF
-
-```bash
-cd paper/v3
-pdflatex -interaction=nonstopmode main.tex
+```powershell
+cd path\to\reelsynth
+cargo run -p reelsynth --release --bin bench_denoise_meta -- 1500
 ```
 
 ---
@@ -111,22 +60,20 @@ pdflatex -interaction=nonstopmode main.tex
 ## Layout
 
 ```
-paper/
-  CHANGELOG.md
-  v1/                 # D/S quality paper
-  v2/                 # residual + loss-opt (manual draft)
-  v3/                 # residual paper via scientific writing workflow (current)
-artifacts/            # JSON + figure PNGs
-scripts/              # harvest / render / regen helpers
+GO_CRITERIA.md        # release gate
+paper/v4/             # current arXiv twocolumn paper
+paper/v1..v3/         # prior versions
+artifacts/              # JSON + figure PNGs
+scripts/              # render / harvest / regen
 ```
 
 ## Related
 
 | Repo | Role |
 |------|------|
-| [reeldemo/reelsynth](https://github.com/reeldemo/reelsynth) | DSP, `FROZEN_THETA`, `bench_denoise_meta` |
+| [reeldemo/reelsynth](https://github.com/reeldemo/reelsynth) | DSP, overnight GPU search, `bench_denoise_meta` |
 | [reeldemo/denoise-opt-meta](https://github.com/reeldemo/denoise-opt-meta) | This repo |
-| [klaut-pro/klaut-research-gateway](https://github.com/klaut-pro/klaut-research-gateway) | `research_paper_*` scientific writing tools |
+| Klaut research gateway | `research_paper_*` + `arxiv-twocolumn` template |
 
 ## License
 
