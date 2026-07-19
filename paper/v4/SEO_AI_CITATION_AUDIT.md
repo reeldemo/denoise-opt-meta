@@ -76,7 +76,7 @@ LLMs and answer engines prefer **stable named entities** they can cite as atomic
 ### Atomic facts LLMs can already quote (keep / harden)
 
 1. \(R\in[0,1]\), \(1=\)best, prolonged tiled residual vs no-cliff ideal.  
-2. v3: `evo_explore_515` \(R\approx 0.824\) vs DualCosine \(\approx 0.698\) (\(\Delta\approx +0.126\)).  
+2. Lit-combo CPU study (separate protocol): `evo_explore_515` \(R\approx 0.824\) vs DualCosine \(\approx 0.698\) (\(\Delta\approx +0.126\)).  
 3. Interim favorite: `champion_iter_000235`, \(R\approx 0.991\), \(\approx 37\)k params, \(\approx 3.15\) ms/batch.  
 4. Classical vs AI: DualCosine \(R\approx 0.820\); seam_fir3 \(R\approx 0.963\); neural favorite \(\Delta R\approx +0.171\) vs DualCosine.  
 5. Family hardness: `nonlinear` / `combo` weakest on 100k-cycle bench.
@@ -241,3 +241,7 @@ ReelSynth brand voice (`BRAND.md`): precise, technical, no hype, verb-forward; i
 ## Optional P0 micro-edits applied?
 
 **Yes (this change set):** P0.1 keywords (`DenoiseOpt`, `wrap discontinuity`); P0.2 abstract naming sentence; P0.3 PPO expansion; P0.4 code blurb (`ReelSynth engine + DenoiseOpt meta-search`). No body-section rewrite.
+
+## P1 status (5k gate, 2026-07-19)
+- Abstract now includes frozen matched-bench claim: favorite \(R\approx 0.991\) vs DualCosine \(R\approx 0.820\), plus overnight 5k-gate champion \(R\approx 0.9909\) vs DualCosine \(\approx 0.8166\).
+- Bibliography is **OA-only** (39 entries, 39 PDFs downloaded).

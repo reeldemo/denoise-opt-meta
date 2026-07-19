@@ -1,71 +1,17 @@
 {
-  "run_dir": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\reelsynth\\brand\\artifacts\\models\\gpu-rl-arch-20260718T175603Z",
-  "n_points": 1424,
-  "final_iter": 1424,
-  "final_champ": 0.9904539585113525,
-  "baseline_dual_cosine": 0.8363933563232422,
-  "delta_vs_baseline": 0.15406060218811035,
-  "n_champ_updates": 24,
+  "run_dir": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\reelsynth\\brand\\artifacts\\models\\gpu-rl-arch-20260719T083019Z",
+  "n_points": 5849,
+  "final_iter": 5844,
+  "final_champ": 0.9909298121929169,
+  "baseline_dual_cosine": 0.816584944725037,
+  "delta_vs_baseline": 0.17434486746787992,
+  "n_champ_updates": 1,
   "champ_events_tail": [
     {
-      "iter": 159,
-      "champ": 0.9857264161109924,
-      "branch": "combo",
-      "arch_id": "iter_000159"
-    },
-    {
-      "iter": 163,
-      "champ": 0.9870091080665588,
-      "branch": "ga",
-      "arch_id": "iter_000163"
-    },
-    {
-      "iter": 460,
-      "champ": 0.9874227046966553,
-      "branch": "ppo",
-      "arch_id": "iter_000460"
-    },
-    {
-      "iter": 478,
-      "champ": 0.9888235628604889,
-      "branch": "ga",
-      "arch_id": "iter_000478"
-    },
-    {
-      "iter": 492,
-      "champ": 0.9891124069690704,
-      "branch": "pbt",
-      "arch_id": "iter_000492"
-    },
-    {
-      "iter": 493,
-      "champ": 0.9898146986961365,
-      "branch": "ga",
-      "arch_id": "iter_000493"
-    },
-    {
-      "iter": 709,
-      "champ": 0.9898582696914673,
-      "branch": "combo",
-      "arch_id": "iter_000709"
-    },
-    {
-      "iter": 750,
-      "champ": 0.9900145530700684,
-      "branch": "ppo",
-      "arch_id": "iter_000750"
-    },
-    {
-      "iter": 762,
-      "champ": 0.9902288317680359,
-      "branch": "pbt",
-      "arch_id": "iter_000762"
-    },
-    {
-      "iter": 795,
-      "champ": 0.9904539585113525,
-      "branch": "ppo",
-      "arch_id": "iter_000795"
+      "iter": 1,
+      "champ": 0.9909298121929169,
+      "branch": "nas",
+      "arch_id": "iter_000001"
     }
   ],
   "figures": [

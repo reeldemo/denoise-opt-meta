@@ -1,28 +1,27 @@
 ﻿{
-  "updated_at": "2026-07-18T17:45:00Z",
-  "paper_version": "v4",
-  "title_primary": "Unsupervised Deep Audio Denoising Algorithms via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning",
-  "klaut_paper_id": "hybrid-reinforcement-learning-and-genetic-algori-1e29c690",
-  "ollama_model": "qwen3.5:9b",
-  "literature_count": 36,
-  "sections_complete": [
-    "introduction",
-    "related_work",
-    "limitations",
-    "conclusion"
-  ],
-  "sections_placeholder": [
-    "methods",
-    "experiments",
-    "results",
-    "discussion"
-  ],
-  "overnight": {
-    "do_not_stop": true,
-    "algo_tag": "PPO+GA+PBT+NAS+depth+MoE",
-    "target_iters": 250000,
-    "early_champion_residual_approx": 0.987,
-    "note": "Interim only; final tables deferred"
-  },
-  "note": "Intro + Literature landscape shipped; Results deferred until overnight budget completes"
+    "overnight":  {
+                      "algo_tag":  "PPO+GA+PBT+NAS+depth+MoE",
+                      "frozen_iters":  5850,
+                      "champion_residual":  0.99092981219291687,
+                      "note":  "5k clean gate frozen for figures/tables. Declared long-horizon mean-R deferred.",
+                      "dual_cosine_baseline":  0.81658494472503662,
+                      "do_not_stop":  true,
+                      "gate_5k_passed":  true
+                  },
+    "literature_count_bib":  39,
+    "sections_complete":  [
+                              "introduction",
+                              "related_work",
+                              "methods",
+                              "experiments",
+                              "results",
+                              "discussion",
+                              "tooling",
+                              "limitations",
+                              "conclusion"
+                          ],
+    "title_primary":  "Unsupervised Deep Audio Denoising Algorithms via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning",
+    "oa_only":  true,
+    "oa_pdfs_downloaded":  39,
+    "updated_at":  "2026-07-19T15:00:56.2284599Z"
 }

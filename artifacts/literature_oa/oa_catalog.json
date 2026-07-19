@@ -1,0 +1,61 @@
+{
+  "policy": "OA-only bibliography. Every cite_key must have a downloadable legal OA PDF.",
+  "dropped_non_oa": [
+    {
+      "old_key": "valimaki2006va",
+      "reason": "Computer Music Journal paywall",
+      "replaced_by": ["stilson1996", "valimaki2010dpw", "nam2009polyblep"]
+    },
+    {
+      "old_key": "esqueda2016aliasing",
+      "reason": "IEEE TSP paywall",
+      "replaced_by": ["esqueda2016blamp", "valimaki2010dpw"]
+    },
+    {
+      "old_key": "zhang2007",
+      "reason": "IEEE TEC paywall",
+      "replaced_by": ["hansen2016cmaes", "snoek2012"]
+    }
+  ],
+  "entries": [
+    {"cite_key": "stilson1996", "title": "Alias-Free Digital Synthesis of Classic Analog Waveforms", "year": 1996, "oa_pdf_url": "https://ccrma.stanford.edu/~stilti/papers/blit.pdf", "local_name": "stilson1996_blit.pdf", "venue": "ICMC / CCRMA", "role": "used", "note": "Author/CCRMA hosted OA PDF"},
+    {"cite_key": "esqueda2016blamp", "title": "Rounding Corners with BLAMP", "year": 2016, "oa_pdf_url": "https://www.dafx.de/paper-archive/2016/dafxpapers/18-DAFx-16_paper_33-PN.pdf", "local_name": "esqueda2016blamp.pdf", "venue": "DAFx", "role": "used"},
+    {"cite_key": "valimaki2010dpw", "title": "Alias-Suppressed Oscillators Based on Differentiated Polynomial Waveforms", "year": 2010, "oa_pdf_url": "https://mac.kaist.ac.kr/pubs/ValimakiNamSmithAbel-taslp2010.pdf", "local_name": "valimaki2010dpw.pdf", "venue": "IEEE TASLP author PDF", "role": "used", "borderline": "Author-hosted PDF of IEEE article"},
+    {"cite_key": "nam2009polyblep", "title": "Efficient Antialiasing Oscillator Algorithms Using Low-Order Fractional Delay Filters", "year": 2009, "oa_pdf_url": "https://ccrma.stanford.edu/~juhan/pubs/jnam-dafx09.pdf", "local_name": "nam2009polyblep.pdf", "venue": "DAFx / CCRMA", "role": "used"},
+    {"cite_key": "lehtinen2018", "title": "Noise2Noise: Learning Image Restoration without Clean Data", "year": 2018, "oa_pdf_url": "https://arxiv.org/pdf/1803.04189.pdf", "local_name": "1803.04189.pdf", "arxiv": "1803.04189", "role": "used"},
+    {"cite_key": "kashyap2021n2n", "title": "Speech Denoising Without Clean Training Data: A Noise2Noise Approach", "year": 2021, "oa_pdf_url": "https://www.isca-archive.org/interspeech_2021/kashyap21_interspeech.pdf", "local_name": "kashyap21_interspeech.pdf", "venue": "INTERSPEECH ISCA", "role": "used"},
+    {"cite_key": "engel2020", "title": "DDSP: Differentiable Digital Signal Processing", "year": 2020, "oa_pdf_url": "https://arxiv.org/pdf/2001.04643.pdf", "local_name": "2001.04643.pdf", "arxiv": "2001.04643", "role": "used"},
+    {"cite_key": "purwins2019", "title": "Deep Learning for Audio Signal Processing", "year": 2019, "oa_pdf_url": "https://arxiv.org/pdf/1905.00078.pdf", "local_name": "1905.00078.pdf", "arxiv": "1905.00078", "role": "used"},
+    {"cite_key": "stoller2018", "title": "Wave-U-Net: A Multi-Scale Neural Network for End-to-End Audio Source Separation", "year": 2018, "oa_pdf_url": "https://arxiv.org/pdf/1806.03185.pdf", "local_name": "1806.03185.pdf", "arxiv": "1806.03185", "role": "used"},
+    {"cite_key": "macartney2018", "title": "Improved Speech Enhancement with the Wave-U-Net", "year": 2018, "oa_pdf_url": "https://arxiv.org/pdf/1811.11307.pdf", "local_name": "1811.11307.pdf", "arxiv": "1811.11307", "role": "used"},
+    {"cite_key": "jansson2017", "title": "Singing Voice Separation with Deep U-Net Convolutional Networks", "year": 2017, "oa_pdf_url": "https://openaccess.city.ac.uk/id/eprint/19289/1/7bb8d1600fba70dd79408775cd0c37a4ff62.pdf", "local_name": "jansson2017_unet.pdf", "venue": "ISMIR / City OA", "role": "used"},
+    {"cite_key": "luo2019", "title": "Conv-TasNet: Surpassing Ideal Time-Frequency Magnitude Masking for Speech Separation", "year": 2019, "oa_pdf_url": "https://arxiv.org/pdf/1809.07454.pdf", "local_name": "1809.07454.pdf", "arxiv": "1809.07454", "role": "used"},
+    {"cite_key": "luo2020dprnn", "title": "Dual-Path RNN: Efficient Long Sequence Modeling for Time-Domain Speech Separation", "year": 2020, "oa_pdf_url": "https://arxiv.org/pdf/1910.06379.pdf", "local_name": "1910.06379.pdf", "arxiv": "1910.06379", "role": "used"},
+    {"cite_key": "ronneberger2015", "title": "U-Net: Convolutional Networks for Biomedical Image Segmentation", "year": 2015, "oa_pdf_url": "https://arxiv.org/pdf/1505.04597.pdf", "local_name": "1505.04597.pdf", "arxiv": "1505.04597", "role": "used"},
+    {"cite_key": "he2016resnet", "title": "Deep Residual Learning for Image Recognition", "year": 2016, "oa_pdf_url": "https://arxiv.org/pdf/1512.03385.pdf", "local_name": "1512.03385.pdf", "arxiv": "1512.03385", "role": "used"},
+    {"cite_key": "vaswani2017", "title": "Attention Is All You Need", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1706.03762.pdf", "local_name": "1706.03762.pdf", "arxiv": "1706.03762", "role": "used"},
+    {"cite_key": "elsken2019", "title": "Neural Architecture Search: A Survey", "year": 2019, "oa_pdf_url": "https://arxiv.org/pdf/1808.05377.pdf", "local_name": "1808.05377.pdf", "arxiv": "1808.05377", "role": "used"},
+    {"cite_key": "zoph2017nas", "title": "Neural Architecture Search with Reinforcement Learning", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1611.01578.pdf", "local_name": "1611.01578.pdf", "arxiv": "1611.01578", "role": "used"},
+    {"cite_key": "pham2018", "title": "Efficient Neural Architecture Search via Parameter Sharing", "year": 2018, "oa_pdf_url": "https://arxiv.org/pdf/1802.03268.pdf", "local_name": "1802.03268.pdf", "arxiv": "1802.03268", "role": "used"},
+    {"cite_key": "schulman2017", "title": "Proximal Policy Optimization Algorithms", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1707.06347.pdf", "local_name": "1707.06347.pdf", "arxiv": "1707.06347", "role": "used"},
+    {"cite_key": "real2017large", "title": "Large-Scale Evolution of Image Classifiers", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1703.01041.pdf", "local_name": "1703.01041.pdf", "arxiv": "1703.01041", "role": "used"},
+    {"cite_key": "real2019", "title": "Regularized Evolution for Image Classifier Architecture Search", "year": 2019, "oa_pdf_url": "https://arxiv.org/pdf/1802.01548.pdf", "local_name": "1802.01548.pdf", "arxiv": "1802.01548", "role": "used"},
+    {"cite_key": "jaderberg2017", "title": "Population Based Training of Neural Networks", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1711.09846.pdf", "local_name": "1711.09846.pdf", "arxiv": "1711.09846", "role": "used"},
+    {"cite_key": "khadka2018", "title": "Evolution-Guided Policy Gradient in Reinforcement Learning", "year": 2018, "oa_pdf_url": "https://arxiv.org/pdf/1805.07917.pdf", "local_name": "1805.07917.pdf", "arxiv": "1805.07917", "role": "used"},
+    {"cite_key": "hansen2016cmaes", "title": "The CMA Evolution Strategy: A Tutorial", "year": 2016, "oa_pdf_url": "https://arxiv.org/pdf/1604.00772.pdf", "local_name": "1604.00772.pdf", "arxiv": "1604.00772", "role": "used"},
+    {"cite_key": "shazeer2017", "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1701.06538.pdf", "local_name": "1701.06538.pdf", "arxiv": "1701.06538", "role": "used"},
+    {"cite_key": "snoek2012", "title": "Practical Bayesian Optimization of Machine Learning Algorithms", "year": 2012, "oa_pdf_url": "https://arxiv.org/pdf/1206.2944.pdf", "local_name": "1206.2944.pdf", "arxiv": "1206.2944", "role": "used"},
+    {"cite_key": "tan2019mnasnet", "title": "MnasNet: Platform-Aware Neural Architecture Search for Mobile", "year": 2019, "oa_pdf_url": "https://arxiv.org/pdf/1807.11626.pdf", "local_name": "1807.11626.pdf", "arxiv": "1807.11626", "role": "used"},
+    {"cite_key": "finn2017", "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1703.03400.pdf", "local_name": "1703.03400.pdf", "arxiv": "1703.03400", "role": "screened"},
+    {"cite_key": "liu2019", "title": "DARTS: Differentiable Architecture Search", "year": 2019, "oa_pdf_url": "https://arxiv.org/pdf/1806.09055.pdf", "local_name": "1806.09055.pdf", "arxiv": "1806.09055", "role": "screened"},
+    {"cite_key": "dfossez2019", "title": "Demucs: Deep Extractor for Music Sources", "year": 2019, "oa_pdf_url": "https://arxiv.org/pdf/1911.13254.pdf", "local_name": "1911.13254.pdf", "arxiv": "1911.13254", "role": "screened"},
+    {"cite_key": "dfossez2020", "title": "Real Time Speech Enhancement in the Waveform Domain", "year": 2020, "oa_pdf_url": "https://arxiv.org/pdf/2006.12847.pdf", "local_name": "2006.12847.pdf", "arxiv": "2006.12847", "role": "screened"},
+    {"cite_key": "dfossez2021", "title": "Hybrid Spectrogram and Waveform Source Separation", "year": 2021, "oa_pdf_url": "https://arxiv.org/pdf/2111.03600.pdf", "local_name": "2111.03600.pdf", "arxiv": "2111.03600", "role": "screened"},
+    {"cite_key": "kong2021", "title": "DiffWave: A Versatile Diffusion Model for Audio Synthesis", "year": 2021, "oa_pdf_url": "https://arxiv.org/pdf/2009.00713.pdf", "local_name": "2009.00713.pdf", "arxiv": "2009.00713", "role": "screened"},
+    {"cite_key": "pascual2017", "title": "SEGAN: Speech Enhancement Generative Adversarial Network", "year": 2017, "oa_pdf_url": "https://arxiv.org/pdf/1703.09452.pdf", "local_name": "1703.09452.pdf", "arxiv": "1703.09452", "role": "screened"},
+    {"cite_key": "liu2018pnas", "title": "Progressive Neural Architecture Search", "year": 2018, "oa_pdf_url": "https://arxiv.org/pdf/1712.00559.pdf", "local_name": "1712.00559.pdf", "arxiv": "1712.00559", "role": "used"},
+    {"cite_key": "wisdom2020", "title": "Unsupervised Sound Separation Using Mixture Invariant Training", "year": 2020, "oa_pdf_url": "https://arxiv.org/pdf/2006.12701.pdf", "local_name": "2006.12701.pdf", "arxiv": "2006.12701", "role": "used"},
+    {"cite_key": "subakan2021", "title": "Attention Is All You Need In Speech Separation", "year": 2021, "oa_pdf_url": "https://arxiv.org/pdf/2010.13154.pdf", "local_name": "2010.13154.pdf", "arxiv": "2010.13154", "role": "used"},
+    {"cite_key": "gong2021ast", "title": "AST: Audio Spectrogram Transformer", "year": 2021, "oa_pdf_url": "https://arxiv.org/pdf/2104.01778.pdf", "local_name": "2104.01778.pdf", "arxiv": "2104.01778", "role": "used"}
+  ]
+}
