@@ -9,7 +9,7 @@
 
 ## v4 notes
 
-- Primary title: *Unsupervised Audio Denoising via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning* (see `v4/TITLES.md`).
+- Primary title: *An Unsupervised Deep Audio Denoising Algorithm via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning* (see `v4/TITLES.md`).
 - Tooling/AI disclosure section; OA PDF harvest + non-OA flags (`artifacts/literature_oa/`).
 - Method pseudocode: `docs/PSEUDOCODE.md`.
 - Inference bench: favorite = fastest in near-max-$R$ band ($R\approx0.991$, $\approx3.15$\,ms/batch).
