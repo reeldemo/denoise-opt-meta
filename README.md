@@ -12,20 +12,20 @@ Companion to the synth implementation: [reeldemo/reelsynth](https://github.com/r
 
 **Julian M. Kleber** · [ORCID 0000-0001-5518-0932](https://orcid.org/0000-0001-5518-0932) · [julian.m.kleber@gmail.com](mailto:julian.m.kleber@gmail.com)
 
-## Current paper (v4)
+## Current paper (v5)
 
 **Title:** *Unsupervised Deep Audio Denoising Algorithms via Hybrid Reinforcement Learning and Genetic Algorithm Meta-Learning*
 
 | | |
 |--|--|
-| PDF | [`paper/v4/main.pdf`](paper/v4/main.pdf) |
-| Sources | [`paper/v4/`](paper/v4/) |
+| PDF | [`paper/v5/main.pdf`](paper/v5/main.pdf) |
+| Sources | [`paper/v5/`](paper/v5/) |
 | Changelog | [`paper/CHANGELOG.md`](paper/CHANGELOG.md) |
 
 Build:
 
 ```powershell
-cd paper\v4
+cd paper\v5
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
 ```
@@ -37,7 +37,7 @@ pdflatex -interaction=nonstopmode main.tex
 - **Family hardness:** `nonlinear` / `combo` / `extreme_overlay` / `triple_mix` repeatedly worst; follow-up paper sketched in Outlook (family-/cliff-conditional meta-learning).
 - Overnight GPU hybrid (PPO+GA+PBT+NAS+depth+MoE) interim champ **R≈0.991** — final overnight tables after the 5k+ clean gate.
 
-Older versions: [`paper/v3/`](paper/v3/), [`paper/v2/`](paper/v2/), [`paper/v1/`](paper/v1/).
+Older versions: [`paper/v4/`](paper/v4/) (superseded), [`paper/v3/`](paper/v3/), [`paper/v2/`](paper/v2/), [`paper/v1/`](paper/v1/).
 
 ---
 
@@ -61,8 +61,8 @@ cargo run -p reelsynth --release --bin bench_denoise_meta -- 1500
 
 ```
 GO_CRITERIA.md        # release gate
-paper/v4/             # current arXiv twocolumn paper
-paper/v1..v3/         # prior versions
+paper/v5/             # current arXiv twocolumn paper
+paper/v1..v4/         # prior versions (v4 superseded archive)
 artifacts/              # JSON + figure PNGs
 scripts/              # render / harvest / regen
 ```

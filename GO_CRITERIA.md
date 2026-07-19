@@ -6,7 +6,7 @@ We ship when **all** of the following hold:
 
 1. **Clean overnight segment ≥ 5 000 iterations** on the hybrid GPU search (`PPO+GA+PBT+NAS+depth+MoE`) with no process crash (NaN hardened; plateau adapt may fire).
 2. **Documented repro commands** below complete without interruption on a fresh shell.
-3. **Paper v4 PDF** rebuilds from sources and matches the title / ORCID / clickable links.
+3. **Paper v5 PDF** rebuilds from sources and matches the title / ORCID / clickable links.
 
 Until then: keep the detached GPU job running; do not claim final overnight mean-$R$ as finished science.
 
@@ -26,7 +26,7 @@ Get-Content brand\artifacts\overnight_gpu_rl_arch_latest.json | ConvertFrom-Json
 ### A. Paper PDF (denoise-opt-meta)
 
 ```powershell
-cd path\to\denoise-opt-meta\paper\v4
+cd path\to\denoise-opt-meta\paper\v5
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
 # → main.pdf
@@ -71,6 +71,6 @@ Do **not** start a second GPU job if one is already writing `overnight_gpu_rl_ar
 ## After 5k
 
 1. Snapshot `history.jsonl` + `overnight_gpu_rl_arch_latest.json` into `denoise-opt-meta/artifacts/`.
-2. Regenerate overnight figures into `paper/v4/figures/`.
+2. Regenerate overnight figures into `paper/v5/figures/`.
 3. Fill Results tables with frozen numbers; recompile PDF.
 4. Tag repos / open PRs as needed.
