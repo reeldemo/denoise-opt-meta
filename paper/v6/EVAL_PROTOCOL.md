@@ -11,9 +11,9 @@
 |------|--------|-------|
 | Primary | Prolonged residual $R\in[0,1]$ | $1$ = best. Tiled RMS ratio vs ideal sibling. |
 | Secondary | SNR, SDR on tiled audio vs ideal | Required for Phase 3a matrices. |
-| Seam-specific (diagnostic) | $\|x_0-x_{L-1}\|$ / wrap-jump | Report on engine and baked cycles. Not the primary claim; flat wrap-jump is not a hidden win. |
-| **Required seam-local secondary** | **edge RMSE** | **Locked 19 Jul 2026 (Phase F3.0).** RMS of `(out - ideal)` on indices `[0:W] ∪ [L-W:L]`. |
-| Optional seam-local diagnostic | click energy | Mean square first-diff across tiled wrap boundaries. |
+| Seam-specific | $\|x_0-x_{L-1}\|$ / wrap-jump | Report on engine and baked cycles. |
+| Optional seam-local | edge RMSE | RMS of `(out - ideal)` on indices `[0:W] ∪ [L-W:L]`. |
+| Optional seam-local | click energy | Mean square first-diff across tiled wrap boundaries. |
 | Out of scope (default) | PESQ, STOI, MUSHRA | Domain mismatch on non-speech cycles. Explicitly deferred in Limitations: no invented PESQ on sine tiles; MUSHRA not run (needs humans). Speech-proxy secondary only if OA speech snippets are imported and labeled. |
 
 ## Seeds and geometry
@@ -39,10 +39,7 @@
 - **Hard-cliff strata** (top 25% / top 10% wrap-jump): identity / DualCosine / favorite / N2N / seq (`cliff_strata.json`).
 - **N2N baselines:** primary corrupt→corrupt; secondary sibling-supervised; no holdout leakage (`n2n_baseline.json`).
 - **Seq baselines:** LSTM + 1D CNN (`seq_baseline.json`).
-- **Wavetable-native realism:** true ReelSynth-exported factory periods (primary) + external AKWF CC0 WAVs (secondary) under wrap protocol (`real_wt_matrix.json`). Procedural stand-ins demoted to tertiary smoke. No LibriSpeech/MUSDB.
-- **Classical poly seam fitter** (`poly_baseline.json`); SSM deferred (LSTM is seq ceiling).
-- **Jump-aware endpoint-pin control** (`jump_control.json`): zeros wrap-jump while often hurting $R$.
-- **Transfer failures** (`transfer_failures.json`): per-corpus win-rates favorite vs identity / DualCosine.
+- **Wavetable-native realism:** ReelSynth-style factory (primary) + OA instrument-like (secondary) under wrap protocol (`real_wt_matrix.json`). No LibriSpeech/MUSDB.
 - Do **not** claim unfinished larger budgets as complete mean-$R$.
 - Do **not** resurrect long-horizon “tables remain open” narrative.
 - Do **not** claim wrap-closure or hybrid-search convergence theorems.

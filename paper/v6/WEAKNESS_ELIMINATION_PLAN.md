@@ -35,9 +35,9 @@
 4. **Transfer gaps** (factory favorite trails identity/FIR; Rust favorite trails identity; N2N ≈ favorite on sine cliffs) are reported honestly but not yet turned into a crisp “what fails / when search still wins” story with actionable follow-up benches.
 5. **Main SOTA table** (`tab:sota-main`) still omits N2N/seq rows (they live in cliff/N2N subsections only).
 
-**Counts (critique IDs below):** **CLOSED 9+7 residual** · **PARTIAL 0** · **STILL OPEN 0** · **REJECT 3** (plus REJECT splits noted in table).
+**Counts (critique IDs below):** **CLOSED 9** · **PARTIAL 5** · **STILL OPEN 2** · **REJECT 3** (plus REJECT splits noted in table).
 
-**Status:** Residual phases **F1–F5 DONE** (`WEAKNESS_ELIMINATION_COMPLETE.flag`, 19 Jul 2026).
+**Recommended first residual phase:** **Phase F1 — True wavetable-native corpus** (highest remaining credibility gap vs the original “synthetic-only” weakness).
 
 ---
 

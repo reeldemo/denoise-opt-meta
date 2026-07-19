@@ -2,14 +2,15 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v6** | 2026-07-19 | Current: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
+| **v7** | 2026-07-19 | Current: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
+| v6 | 2026-07-19 | Archived peer-review A–E complete snapshot (restored from `83f4b48`, pre–weakness-elim) |
 | v5 | 2026-07-19 | Archived pre–peer-review-revision snapshot (restored from `3f409b2`) |
 | v4 | 2026-07-18 | Superseded archive |
 | v3 | 2026-07-18 | Regenerated via Klaut scientific writing workflow (plan→write→revise→export); same residual science as v2, fuller IMRaD prose + workflow audit trail |
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
-## v6 notes (current)
+## v7 notes (current)
 
 ### Weakness elimination F1–F5 (19 July 2026)
 - F1: primary realism = true ReelSynth-exported factory periods ($n{=}25$); secondary = AKWF CC0 WAVs ($n{=}24$); procedural demoted.
@@ -18,20 +19,20 @@
 - F4: `transfer_failures.json` + Discussion win-condition narrative (export/Rust identity lead admitted).
 - F5: N2N/seq/poly promoted into `tab:sota-main`; abstract/limitations sync; PDF rebuild (15 pp).
 - Artifacts: `real_wt_matrix.json`, `poly_baseline.json`, `jump_control.json`, `transfer_failures.json`, updated `sota_matrix.json`.
-- Flag: `paper/v6/WEAKNESS_ELIMINATION_COMPLETE.flag`.
+- Flag: `paper/v7/WEAKNESS_ELIMINATION_COMPLETE.flag`.
+- Sources: `paper/v7/`.
 
-### Peer-review response (19 July 2026)
+### Peer-review response (carried into v7 from A–E)
 - Phase A: cliff strata (top 10%/25% wrap-jump); identity-$R$ honesty; edge RMSE / click energy; `tab:cliff-strata`.
 - Phase B: primary corrupt→corrupt N2N + sibling-supervised ceiling + LSTM/1D-CNN (no holdout leakage).
 - Phase C: ReelSynth-style factory + OA instrument wrap protocol; `SAMPLE_LICENSES.md`; no LibriSpeech/MUSDB.
 - Phase D: deleted Lemma 1 and trivial Props; kept formal $R$; explicit no wrap-closure / no search-convergence guarantees.
 - Phase E: abstract/discussion/related work/venue positioning (DAFx/AES/arXiv DSP); PDF rebuild.
 - Artifacts: `figures/cliff_strata.json`, `n2n_baseline.json`, `seq_baseline.json`, `real_wt_matrix.json`.
-- Flag: `paper/v6/PEER_REVIEW_COMPLETE.flag`.
-- Sources: `paper/v6/`.
+- Flag: `paper/v7/PEER_REVIEW_COMPLETE.flag`.
 
-### Baseline manuscript notes (carried into v6)
-- Primary title: *Unsupervised Wavetable Seam Artifact Repair via Hybrid GA–PPO Meta-Search* (see `v6/TITLES.md`).
+### Baseline manuscript notes (carried into v7)
+- Primary title: *Unsupervised Wavetable Seam Artifact Repair via Hybrid GA–PPO Meta-Search* (see `v7/TITLES.md`).
 - Results: top-5 distinct bake architectures from the CUDA inference-bench leaderboard snapshot (§Top-5 architectures).
 - Tooling/AI disclosure section; OA PDF harvest + non-OA flags (`artifacts/literature_oa/`).
 - Method pseudocode: `docs/PSEUDOCODE.md`.
@@ -40,11 +41,17 @@
 - Family-conditional hardness + Outlook for follow-up pub.
 - Overnight GPU hybrid continues; final overnight tables after 5k+ clean gate.
 
+## v6 notes (archived peer-review A–E / pre–weakness-elim)
+
+- Restored from commit `83f4b48` (parent of `b4cef83`, immediately before F1–F5 weakness-elimination landed).
+- Snapshot includes peer-review Phases A–E complete manuscript/artifacts and the weakness-elimination *plan*, but **not** the F1–F5 manuscript/artifact changes (no `poly_baseline` / `jump_control` / `transfer_failures` / `tab:cliff-edge-rmse` / unified SOTA promotion in tex).
+- Sources: `paper/v6/`. Current canonical paper is `paper/v7/`.
+
 ## v5 notes (archived pre–peer-review revision)
 
 - Restored from commit `3f409b2` (parent of `f6dfbdf`, immediately before Phases A–E landed).
 - Snapshot includes checklist/manuscript-review work and the peer-review *plan* docs, but **not** the A–E manuscript/artifact changes (no `cliff_strata` / N2N tables / Lemma deletion in tex).
-- Sources: `paper/v5/`. Current canonical paper is `paper/v6/`.
+- Sources: `paper/v5/`.
 
 ## v4 notes (superseded)
 

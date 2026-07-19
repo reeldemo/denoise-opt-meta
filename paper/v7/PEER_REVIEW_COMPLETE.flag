@@ -1,0 +1,18 @@
+PEER_REVIEW_COMPLETE
+date: 2026-07-19
+phases: A,D,B,C,E
+plan: PEER_REVIEW_IMPROVEMENT_PLAN.md
+pdf: main.pdf
+artifacts:
+  - figures/cliff_strata.json
+  - figures/n2n_baseline.json
+  - figures/seq_baseline.json
+  - figures/real_wt_matrix.json
+  - SAMPLE_LICENSES.md
+  - EVAL_PROTOCOL.md
+headline:
+  top10_favorite_R: 0.9915
+  top10_dual_cosine_R: 0.6574
+  n2n_corrupt_corrupt_R: 0.9917
+  n2n_sibling_supervised_R: 0.9933
+  seq_lstm_R: 0.9952

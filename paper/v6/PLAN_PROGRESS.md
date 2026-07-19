@@ -1,47 +1,37 @@
-# Peer-review + weakness-elimination progress
+# Peer-review improvement plan progress
 
-**Plans:** `PEER_REVIEW_IMPROVEMENT_PLAN.md` (A–E) · `WEAKNESS_ELIMINATION_PLAN.md` (F1–F5)  
+**Plan:** `PEER_REVIEW_IMPROVEMENT_PLAN.md`  
 **Updated:** 19 July 2026  
-**Flags:** `PEER_REVIEW_COMPLETE.flag` · `WEAKNESS_ELIMINATION_COMPLETE.flag`
-
-## Phases A–E (peer review) — DONE
+**Flag:** `PEER_REVIEW_COMPLETE.flag` set when phases A–E done.
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| **A Metric honesty** | **DONE** | Hard-cliff strata + identity-$R$ prose |
-| **D Theory cleanup** | **DONE** | Lemma/Props deleted |
-| **B N2N + seq** | **DONE** | Corrupt→corrupt + sibling + LSTM/CNN |
-| **C Realism (interim)** | **DONE** | Procedural stand-ins (superseded by F1) |
-| **E Writing** | **DONE** | Venue DAFx/AES/arXiv |
+| **A Metric honesty** | **DONE** | `cliff_strata.json` (4096 tiles, seed 20260719). Top10%: id $R$ 0.9667, DualCosine 0.6574, favorite 0.9915. Edge RMSE + click energy defined. Table `tab:cliff-strata`. |
+| **D Theory cleanup** | **DONE** | Lemma 1 + Props 1–3 deleted. Formal $R$ kept. Explicit no wrap-closure / no search-convergence sentence. |
+| **B N2N + seq** | **DONE** | Primary corrupt→corrupt $R\approx0.9917$; sibling-sup $R\approx0.9933$; LSTM $R\approx0.9952$; CNN1D $R\approx0.9864`. Train seeds disjoint from holdout. |
+| **C Realism** | **DONE** | ReelSynth factory $n{=}24$ + OA instrument $n{=}20$ under wrap protocol. `SAMPLE_LICENSES.md`. No LibriSpeech/MUSDB. |
+| **E Writing** | **DONE** | Abstract/discussion/related work/venue (DAFx/AES/arXiv). PDF rebuilt (14 pp). |
 
-## Residual phases F1–F5 — DONE
-
-| Phase | Status | Notes |
-|-------|--------|-------|
-| **F1 True corpus** | **DONE** | ReelSynth export $n{=}25$ primary; AKWF CC0 $n{=}24$ secondary; procedural demoted |
-| **F3 Seam metrics** | **DONE** | Edge RMSE locked; `tab:cliff-edge-rmse`; endpoint-pin jump control |
-| **F2 Poly (+SSM)** | **DONE** | `poly_baseline.json` $R\approx0.972$; SSM explicitly deferred |
-| **F4 Transfer** | **DONE** | `transfer_failures.json` + Discussion win conditions |
-| **F5 Unify** | **DONE** | N2N/seq/poly in `tab:sota-main`; abstract/limitations sync; PDF |
-
-## Headline residual numbers (F1–F5)
+## Headline peer-review numbers
 
 | Item | Value |
 |------|-------|
-| Export favorite / identity / DualCosine $R$ | 0.911 / 0.967 / 0.883 |
-| AKWF favorite / identity / DualCosine $R$ | 0.970 / 0.969 / 0.937 |
-| Poly seam $d{=}3$ canonical $R$ | 0.972 |
-| Endpoint-pin hard jump / $R$ | 0.0 / 0.822 |
-| Export win-rate fav vs id / vs DC | 0.24 / 0.64 |
-| Sine-cliff win-rate fav vs id / vs DC | 0.92 / 1.00 |
-| SSM | deferred (LSTM ceiling) |
+| Hard-cliff top10% favorite $R$ | 0.9915 |
+| Hard-cliff top10% DualCosine $R$ | 0.6574 |
+| Hard-cliff top10% identity $R$ | 0.9667 |
+| N2N corrupt→corrupt (primary) | $R\approx0.9917$ |
+| N2N sibling-supervised | $R\approx0.9933$ |
+| Seq LSTM ceiling | $R\approx0.9952$ |
+| Factory favorite / DualCosine | 0.954 / 0.943 |
+| OA instrument favorite / DualCosine | 0.988 / 0.944 |
 
-## Gates G1–G7
+## Cross-phase checklist
 
-- [x] G1 CLOSED IDs remain closed
-- [x] G2 W1/S1: true export + OA files
-- [x] G3 W8/X2: edge RMSE locked + jump control
-- [x] G4 S7: poly published; SSM deferred
-- [x] G5 X1/X4: transfer JSON + narrative
-- [x] G6 REJECT items stay rejected
-- [x] G7 artifacts + flag + denoise-opt-meta commit/push
+- [x] Narrow claim freeze intact
+- [x] Cliff strata 10%/25% published
+- [x] Identity-$R$ explained; hard-cliff operative
+- [x] Primary corrupt→corrupt N2N + sibling + seq
+- [x] ReelSynth + OA realism; no LibriSpeech/MUSDB
+- [x] Theory cleaned (props/lemma deleted; $R$ kept)
+- [x] OA cites; no PESQ-on-sine; no MUSHRA; no em-dash slop
+- [x] Canonical artifacts under `denoise-opt-meta/paper/v6/`

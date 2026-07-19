@@ -13,23 +13,16 @@ Hard-cliff strata make the operative regime explicit: DualCosine drops to $R\app
 Favorite wrap-jump barely moves toward zero on that subset.
 We claim tiled residual repair, not endpoint closure.
 
-\paragraph{N2N stress test and transfer conditions.}
-On the sine{+}cliff holdout, corrupt$\to$corrupt N2N matches the meta favorite within $\approx 10^{-3}$.
+\paragraph{N2N stress test.}
+The primary corrupt$\to$corrupt N2N control matches the meta favorite on the sine{+}cliff holdout.
 Sibling-supervised N2N and the LSTM ceiling sit slightly above.
-That is expected for oracle-label training on the same generator and does not invalidate the hybrid search story:
-DenoiseOpt discovers compact bake graphs without engine$\to$ideal supervision at search time, and the hard-cliff DualCosine collapse contrast remains.
-Win conditions (\texttt{transfer\_failures.json}): favorite beats DualCosine on sine cliffs and most AKWF / Rust tiles; identity/FIR lead on exported factory geometry (domain shift, not buried).
-On true ReelSynth exports the searched favorite trails identity; we report that gap rather than claim universal factory superiority.
-
-\paragraph{Wrap-jump vs edge RMSE.}
-Primary claim remains prolonged $R$. Wrap-jump is diagnostic only.
-Edge RMSE is the locked seam-local secondary: favorite reduces it on hard cliffs even when wrap-jump stays flat.
-Endpoint-pin zeros wrap-jump while hurting $R$, confirming the objectives differ.
+That is expected for oracle-label training and does not invalidate the hybrid search story: DenoiseOpt discovers compact bake graphs without requiring engine$\to$ideal supervision at search time, and transfers under the frozen bake protocol.
+On ReelSynth-style factory periods the searched favorite outperforms the N2N/seq nets trained only on sine cliffs, which is an honest transfer gap for the learned baselines.
 
 \paragraph{Implication for this paper.}
 Mean $R$ (and mean DualCosine gaps) therefore compress a structured difficulty map.
 Reporting only the overnight mean on synthetic sine cliffs understates how much of the remaining $\sim$1\% sits in a few hard families, and how DualCosine fails when wrap-jump is large.
-Hard-cliff strata and wavetable-native transfer (true exports + AKWF) are first-class empirical claims of the present work.
+Hard-cliff strata and wavetable-native transfer are first-class empirical claims of the present work.
 The contribution is aimed at DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD), not general speech-enhancement leaderboards.
 
 \paragraph{Hybrid search vs.\ plateau.}

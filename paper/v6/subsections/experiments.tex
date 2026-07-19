@@ -3,7 +3,7 @@
 
 \paragraph{Protocol freeze.}
 Evaluation follows \texttt{paper/v6/EVAL\_PROTOCOL.md} (v1, extended for peer-review strata).
-Primary metric: prolonged $R$. Secondary: SNR, SDR, wrap-jump (diagnostic), and required seam-local edge RMSE on tiled audio.
+Primary metric: prolonged $R$. Secondary: SNR, SDR, wrap-jump, and seam-local edge RMSE on tiled audio.
 Holdout seed \texttt{20260719}. Search seed \texttt{1902771841}.
 We report the $5$k-gate freeze plus frozen holdout. We make no unfinished-budget claims. PESQ/STOI stay out of scope on non-speech cycles.
 LibriSpeech and MUSDB are not used.
@@ -54,7 +54,5 @@ Family-conditional hardness uses the separate Rust procedural $100{,}000$-cycle 
 \paragraph{Cliff strata and wavetable-native realism.}
 A $4{,}096$-tile holdout draw (seed \texttt{20260719}) is stratified by engine wrap-jump percentiles (top 25\% / top 10\%; cutoffs frozen in \texttt{cliff\_strata.json}).
 Hard-cliff is the operative regime for claims about DualCosine collapse vs favorite retention.
-Edge RMSE is the locked required seam-local secondary; click energy is optional.
-Wavetable-native transfer (Phase~F1) scores true ReelSynth-exported factory periods (primary) and external AKWF CC0 WAVs (secondary) under the same close-seam$\to$open-wrap protocol.
-Procedural stand-ins are tertiary smoke only.
+Wavetable-native transfer (Phase~C) scores ReelSynth-style factory periods (primary realism) and OA additive-harmonic instrument one-shots (secondary) under the same close-seam$\to$open-wrap protocol.
 Speech/music LibriSpeech/MUSDB corpora remain off.
