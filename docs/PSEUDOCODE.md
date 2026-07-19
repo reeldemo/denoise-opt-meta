@@ -1,7 +1,8 @@
 # Method pseudocode
 
-Algorithms used in DenoiseOpt hybrid meta-learning. Notation matches paper v4 /
-`reelsynth` overnight GPU search.
+Algorithms used in DenoiseOpt hybrid meta-learning. Notation matches paper v5 /
+`reelsynth` overnight GPU search. LaTeX Algorithms in `paper/v5/subsections/methods.tex`
+mirror this file.
 
 ## Prolonged residual score
 
@@ -18,8 +19,17 @@ function ResidualScore(ideal_cycle, engine_cycle, periods=16):
 
 ```
 function DualCosine(engine_cycle):
-    fade ends of the cycle with raised-cosine windows
+    fade ends of the cycle with raised-cosine windows of width SEAM_W
     return ResidualScore(ideal_sibling, faded_cycle)
+```
+
+## MoE soft gating
+
+```
+function MoEMix(cycle, experts, gate_logits):
+    w ← softmax(gate_logits)
+    y ← Σ_k w[k] · experts[k](cycle)
+    return y
 ```
 
 ## Seam-cell forward (bake denoise)
@@ -32,6 +42,7 @@ function ApplyOps(cycle, cell, ops):
         if op is fade/pull/polish/pin: x ← SeamLocalEdit(x, op)
         if op is cycle_net / mlp_seam: x ← WriteSeam(x, cell(PackSeam(x)))
         if op uses composed blocks: x ← cell.forward_cycle(x)  # U-Net/attn/…
+        if op is moe_mix: x ← MoEMix(x, cell.experts, cell.gate_logits)
     return x
 ```
 
@@ -55,6 +66,41 @@ function FitCell(cfg, steps, batch):
         else: patience ← 0
         prev ← R
     return cell, R
+```
+
+## GA tournament step
+
+```
+function GATournamentStep(pop, k=3, p_c=0.7, p_m=0.3):
+    sample k genomes; parents ← top-2 by R
+    child ← Crossover(parents) with prob p_c else clone elite
+    Mutate(child) with rate p_m   # ops, depth, cell type, θ box
+    FitCell(child); insert into pop (replace worst if full)
+    return pop
+```
+
+## PPO architecture update
+
+```
+function PPOArchUpdate(policy, clip_ε=0.2):
+    a ← sample mutate action from actor (edit ops / hparams)
+    FitCell(proposed cfg); ρ ← R − DualCosineBaseline
+    Â ← advantage from critic
+    r ← π(a)/π_old(a)
+    update actor with clipped surrogate min(rÂ, clip(r,1−ε,1+ε)Â)
+    return policy
+```
+
+## PBT exploit–mutate
+
+```
+function PBTExploitMutate(pop, quantile=1/3, σ=0.2):
+    rank pop by R
+    for each bottom member:
+        copy hparams from a top-quantile elite
+        multiply hparams by (1 + σ·noise)
+        brief refit; write back
+    return pop
 ```
 
 ## Outer hybrid loop (PPO + GA + PBT + NAS)
