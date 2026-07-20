@@ -18,7 +18,8 @@ Each cycle has length $L{=}256$.
 A two-harmonic sine is drawn with frequency $\sim\mathcal{U}(1,4)$ and phase $\sim\mathcal{U}(0,2\pi)$.
 An open-wrap seam cliff of amplitude $\pm\mathcal{U}(0.08,0.43)$ is applied over $\texttt{SEAM\_W}{=}8$ samples at both ends.
 Seam-boosted Gaussian noise (scale $0.02$ at the ends, $0.15\times$ in the mid-cycle) is added to form the engine input.
-The ideal withholds the cliff and is used only for residual scoring.
+The ideal withholds the cliff and is used only as the scoring target $r^{\star}$ (never as a method output).
+No-bake leaves the cracked engine unchanged and scores that unrepaired $x$ against the same $r^{\star}$.
 Prolonged residual $R$ tiles each cycle $N{=}16$ times before the RMS ratio.
 The holdout seed is \texttt{20260719} (distinct from the hybrid search seed \texttt{1902771841}).
 The search campaign draws fresh i.i.d.\ batches from this generator and does not train on the frozen holdout tensors.
@@ -28,7 +29,9 @@ There is no supervised clean/noisy training split of studio audio.
 Beyond the single sine{+}cliff holdout, Phase~3a scores methods on \textbf{20} generative draws: ten family variants (\texttt{sine\_cliff}, \texttt{harmonic\_fft}, \texttt{am\_fm}, \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, \texttt{extreme\_overlay}, \texttt{open\_wrap\_bias}, \texttt{soft\_noise}, \texttt{wide\_seam}) $\times$ two seeds (\texttt{20260719} and \texttt{20260720}), batch 64 each.
 These Python generative variants stress harmonic / AM--FM / nonlinear / overlay / open-wrap behavior of \texttt{make\_batch} and remain the primary SOTA matrix.
 Separately, \texttt{export\_sound\_bench\_tiles} exports \textbf{20} Rust \texttt{sound\_bench} engine/ideal pairs (10 families $\times$ 2 seeds, $L{=}256$, byte-aligned with \texttt{generate\_sound} / \texttt{generate\_sound\_ideal}) scored under the same residual geometry as a secondary transfer block (Table~\ref{tab:rust-bench}).
-Every method sees the same tensors per waveform. DualCosine is the paired baseline for $\Delta R$ and Wilcoxon tests.
+Every method sees the same tensors per waveform.
+\textbf{Primary classical comparison} is absolute prolonged $R$ against the non-AI board (no-bake, DualCosine, \texttt{seam\_fir3}, poly, fades, VA residuals; Section~\ref{sec:classical-board}).
+DualCosine is the paired baseline for search-reward $\Delta R$ and one Wilcoxon contrast; it is not the sole non-AI reference.
 
 \paragraph{Dataset metrics.}
 A metrics draw of $4{,}096$ cycles under the holdout seed yields mean ideal RMS $0.721\pm0.016$, mean engine residual RMS $0.021\pm0.013$, and mean absolute wrap jump $|x_0-x_{L-1}|$ of $0.913\pm0.634$.

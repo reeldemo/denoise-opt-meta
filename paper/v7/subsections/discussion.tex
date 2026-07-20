@@ -7,11 +7,12 @@ The same generator families repeatedly dominate the residual budget: \texttt{non
 \texttt{open\_wrap\_bias} can look strong on wrap-energy proxies yet still lag on prolonged residual. Cliff reduction and ideal-matched tiling are related objectives with different rankings.
 
 \paragraph{No-bake $R$ and hard-cliff honesty.}
-Canonical no-bake $R\approx 0.97$ looks ``easy'' only if one treats $R$ as a perceptual wrap score.
+Canonical no-bake $R\approx 0.97$ looks ``easy'' only if one treats $R$ as a perceptual wrap score or confuses no-bake with the ideal sibling.
+No-bake is the unrepaired engine scored against $r^{\star}$; the ideal withholds the cliff and is never a method output.
 Under~\eqref{eq:R}, small residual RMS relative to ideal RMS yields high $R$ even when $|x_0-x_{L-1}|$ is large.
 Hard-cliff strata make the operative regime explicit: DualCosine drops to $R\approx 0.657$ on the top-10\% wrap-jump tiles while the favorite stays near $0.9915$.
 Favorite wrap-jump barely moves toward zero on that subset.
-We claim tiled residual repair, not endpoint closure.
+We claim tiled residual repair toward $r^{\star}$, not endpoint closure.
 
 \paragraph{N2N stress test and transfer conditions.}
 On the sine{+}cliff holdout, corrupt$\to$corrupt N2N matches the meta favorite within $\approx 10^{-3}$.
@@ -19,7 +20,7 @@ Sibling-supervised N2N and the LSTM ceiling sit slightly above.
 That is expected for oracle-label training on the same generator and does not invalidate the hybrid search story:
 DenoiseOpt discovers compact bake graphs without engine$\to$ideal supervision at search time, and the hard-cliff DualCosine collapse contrast remains.
 Win conditions (\texttt{transfer\_failures.json}): favorite beats DualCosine on sine cliffs and most AKWF / Rust tiles; no-bake/FIR lead on exported factory geometry (domain shift, not buried).
-On true ReelSynth exports the searched favorite trails no-bake; we report that gap rather than claim universal factory superiority.
+On true ReelSynth exports the searched favorite trails no-bake and FIR; we report that gap rather than claim universal factory superiority.
 
 \paragraph{Wrap-jump vs edge RMSE.}
 Primary claim remains prolonged $R$. Wrap-jump is diagnostic only.
@@ -41,5 +42,6 @@ A natural next paper is family-conditional and cliff-conditional meta-learning: 
 At the reported $5$k-gate search freeze, GA and PBT lead branch-best residuals, with PPO close behind and NAS trailing on this seed (Table~\ref{tab:ablation}).
 These per-branch readings are snapshots from a single hybrid run, not causally isolated single-branch experiments.
 Isolated short-budget re-runs (150 iterations, same search seed) confirm relative ordering under a fixed compute cap (Table~\ref{tab:ablation}).
-The multi-family SOTA matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws. Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
-On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake. That transfer gap matches the narrow Python training geometry.
+The multi-family SOTA matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws, and ahead of no-bake / FIR on absolute $R$ on that same generator.
+Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
+On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake / FIR. That transfer gap matches the narrow Python training geometry.

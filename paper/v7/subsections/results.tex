@@ -48,15 +48,17 @@ and skipping near-duplicate copies of the same topology signature.
 \end{table}
 
 \paragraph{Classical vs favorite (canonical holdout).}
-Table~\ref{tab:canonical-methods} scores the classical bake set plus DualCosine and the neural favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}).
+Table~\ref{tab:canonical-methods} scores the classical (non-AI) bake set---including no-bake, DualCosine, and \texttt{seam\_fir3}---plus the neural favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}).
+Every row uses the same ideal sibling $r^{\star}$; higher $R$ means closer to that sibling.
 DualCosine reaches $R\approx 0.825$ ($\approx 1.35$\,ms/batch), near the search-monitor DualCosine $\approx 0.817$ on live draws from the same generator.
-The best \emph{active} classical method is seam-local 3-tap FIR (\texttt{seam\_fir3}) at $R\approx 0.961$ / $\approx 0.67$\,ms/batch ($0.962\pm0.002$ over five seeds).
-No-bake (passthrough) scores $R\approx 0.972$ and is a ceiling only.
-The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) at $\approx 2.56$\,ms/batch ($\approx 37$k params): $\Delta R \approx {+}0.030$ vs \texttt{seam\_fir3} and $\Delta R \approx {+}0.166$ vs DualCosine.
+The best \emph{active} classical repair is seam-local 3-tap FIR (\texttt{seam\_fir3}) at $R\approx 0.961$ / $\approx 0.67$\,ms/batch ($0.962\pm0.002$ over five seeds).
+No-bake (passthrough; unrepaired engine vs $r^{\star}$) scores $R\approx 0.972$ and is a do-nothing reference, not the ideal.
+The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) at $\approx 2.56$\,ms/batch ($\approx 37$k params):
+$\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{seam\_fir3}, and $\Delta R \approx {+}0.166$ vs DualCosine.
 
 \begin{table}[t]
   \centering
-  \caption{Method scores on the canonical sine{+}cliff holdout (batch 64, seed \texttt{20260719}, $L{=}256$, $N{=}16$). Mean$\pm$std over five consecutive seeds. No-bake is a passthrough ceiling. Primary metric is prolonged $R$ (1~=~best).}
+  \caption{Method scores on the canonical sine{+}cliff holdout (batch 64, seed \texttt{20260719}, $L{=}256$, $N{=}16$). Mean$\pm$std over five consecutive seeds. Every method is scored vs the same ideal sibling $r^{\star}$. No-bake $=$ unrepaired engine (not $r^{\star}$). Rank by absolute $R$ against the classical board; DualCosine is one classical row, not the sole comparator. Primary metric is prolonged $R$ (1~=~best).}
   \label{tab:canonical-methods}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrrr@{}}
@@ -81,18 +83,20 @@ The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) 
 \subsection{SOTA matrix (multi-family + secondary metrics)}
 \label{sec:sota-main}
 
-RQ: does the meta favorite beat DualCosine and fixed MLP/CNN baselines across twenty generative families?
+RQ: does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades) and fixed MLP/CNN baselines across twenty generative families?
 Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}), with canonical-holdout SNR/SDR/wrap-jump for the same method set from \texttt{sota\_matrix.json}.
 PESQ/STOI/MUSHRA are omitted for non-speech cycles (Limitations).
+Primary reading is absolute $R$ rank vs classical rows (no-bake $0.965$, poly $0.966$, \texttt{seam\_fir3} $0.955$, DualCosine $0.814$).
 Fixed MLP-on-$R$ and CNN/U-Net-lite-on-$R$ (no outer NAS) sit between DualCosine and the meta favorite.
-Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20 waveforms: $W{=}0$, $p{\approx}8.9{\times}10^{-5}$, mean $\Delta R{=}{+}0.162$ (bootstrap 95\% CI $[0.155,0.170]$).
+Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20 waveforms: $W{=}0$, $p{\approx}8.9{\times}10^{-5}$, mean $\Delta R{=}{+}0.162$ (bootstrap 95\% CI $[0.155,0.170]$); vs no-bake the multifamily mean gap is smaller ($\approx{+}0.012$) but still favors the searched bake on this generator.
 
 \begin{table*}[t]
   \centering
   \caption{SOTA comparison on 20 generative waveforms (10 families $\times$ 2 seeds, batch 64).
-  $R$/SNR/SDR/wrap-jump are multifamily mean$\pm$std. Columns marked * use the canonical freeze (seed \texttt{20260719}) for ms/batch and $\Delta R$ vs DualCosine where available.
+  $R$/SNR/SDR/wrap-jump are multifamily mean$\pm$std. Rank by absolute $R$ vs the classical non-AI board (no-bake, poly, FIR, DualCosine, \ldots).
+  Column $\Delta R$* is vs DualCosine only (search-reward alignment; canonical freeze seed \texttt{20260719}); ms* likewise.
   Modern baselines (N2N/seq/poly) use disjoint train seeds (\texttt{424242}/\texttt{424243}); poly is classical (no train).
-  Primary metric $R$ (1~=~best). No PESQ/STOI/MUSHRA.}
+  Primary metric $R$ (1~=~best; closer to ideal sibling). No PESQ/STOI/MUSHRA.}
   \label{tab:sota-main}
   \setlength{\tabcolsep}{2.2pt}
   \begin{tabular}{@{}lrrrrrrr@{}}
@@ -297,12 +301,12 @@ None matches the favorite on prolonged $R$.
 \subsection{Transfer conditions}
 \label{sec:transfer}
 
-RQ: when does hybrid search win vs no-bake / DualCosine / supervised nets?
+RQ: when does hybrid search win vs the classical non-AI board (no-bake / FIR / DualCosine) and supervised nets?
 Per-cycle $\Delta R$ on export, AKWF, Rust \texttt{sound\_bench}, and sine{+}cliff holdout (\texttt{transfer\_failures.json}):
 favorite win-rate vs DualCosine is high on sine cliffs ($1.00$) and AKWF ($0.88$), and moderate on export ($0.64$) / Rust ($0.75$);
 win-rate vs no-bake is high only on sine cliffs ($0.92$) and collapses on export ($0.24$) / Rust ($0.20$).
 Search value is therefore: hard cliffs, OA tracks where DualCosine collapses, and compact bake graphs without engine$\to$ideal labels at search time.
-No-bake/FIR wins on mild seams and OOD factory geometry (honest domain shift, not buried).
+No-bake/FIR win on mild seams and OOD factory geometry (honest domain shift, not buried).
 
 \subsection{Ablations and compute}
 \label{sec:ablation-compute}
@@ -357,8 +361,8 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
 \subsection{Meta-learning approach comparison ($5$k matched budget)}
 \label{sec:meta-approaches-results}
 
-RQ: under a matched $5{,}000$-evaluation budget with LSTM in the searchable bake vocabulary, how do random search, CMA-ES, REINFORCE, aging evolution, and TPE compare to the hybrid (+LSTM) arm?
-Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs DualCosine, wall hours, and whether the champion graph used an LSTM block.
+RQ: under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do random search, CMA-ES, REINFORCE, aging evolution, and TPE compare to the hybrid (+LSTM/xLSTM) arm?
+Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs DualCosine, wall hours, and whether the champion graph used an LSTM or xLSTM block.
 Figure~\ref{fig:meta-approach-compare} shows champion-$R$ learning curves (x-axis capped at $5{,}000$).
 Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
 
@@ -367,21 +371,21 @@ Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
-  \caption{Matched $5$k-budget meta-learning comparison: champion residual $R$ versus outer iteration (x-axis capped at $5{,}000$), including hybrid{+}LSTM. Accessibility: Okabe-Ito colors with distinct markers for grayscale print; DualCosine as a dashed gray baseline.}
+  \caption{Matched $5$k-budget meta-learning comparison: champion residual $R$ versus outer iteration (x-axis capped at $5{,}000$), including hybrid{+}LSTM/xLSTM. Placeholder until the fresh LSTM{+}xLSTM suite finishes; DualCosine dashed as search-reward reference only---rank methods on absolute $R$ vs the classical board in Table~\ref{tab:canonical-methods}. Accessibility: Okabe-Ito colors with distinct markers for grayscale print.}
   \label{fig:meta-approach-compare}
 \end{figure}
 
 \subsection{Rust \texttt{sound\_bench} transfer (20 tiles)}
 \label{sec:rust-bench}
 
-RQ: does the Python-trained favorite transfer to Rust \texttt{sound\_bench} tiles against DualCosine?
-Table~\ref{tab:rust-bench} scores the same classical set and the Python-trained neural favorite on 20 Rust-exported tiles (10 families $\times$ 2 seeds).
+RQ: does the Python-trained favorite transfer to Rust \texttt{sound\_bench} tiles against the classical non-AI board?
+Table~\ref{tab:rust-bench} scores no-bake, \texttt{seam\_fir3}, DualCosine, other classical rows, and the Python-trained neural favorite on 20 Rust-exported tiles (10 families $\times$ 2 seeds).
 This closes the prior gap where multi-family tables used only Python generative stand-ins.
-Honest transfer note: the favorite was searched on Python \texttt{make\_batch} sine{+}cliff geometry. On Rust families it still beats DualCosine (mean $\Delta R{+}0.063$, Wilcoxon $p{\approx}0.009$) but trails no-bake and \texttt{seam\_fir3}. The primary SOTA claim remains the Python multi-family matrix.
+Honest transfer note: the favorite was searched on Python \texttt{make\_batch} sine{+}cliff geometry. On Rust families it still beats DualCosine (mean $\Delta R{+}0.063$, Wilcoxon $p{\approx}0.009$) but trails no-bake and \texttt{seam\_fir3} on absolute $R$. The primary SOTA claim remains the Python multi-family matrix.
 
 \begin{table}[t]
   \centering
-  \caption{Secondary transfer on 20 Rust \texttt{sound\_bench} tiles (byte-aligned export). Mean$\pm$std prolonged $R$. Favorite vs DualCosine: mean $\Delta R{+}0.063$, $p{\approx}0.009$.}
+  \caption{Secondary transfer on 20 Rust \texttt{sound\_bench} tiles (byte-aligned export). Mean$\pm$std prolonged $R$ vs the same ideal sibling. Rank by absolute $R$ against classical non-AI rows; $\Delta R$ column is vs DualCosine only. Favorite beats DualCosine (mean $\Delta R{+}0.063$, $p{\approx}0.009$) but trails no-bake / FIR.}
   \label{tab:rust-bench}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}

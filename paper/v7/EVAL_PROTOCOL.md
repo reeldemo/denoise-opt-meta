@@ -20,10 +20,18 @@
 
 | Manuscript | Meaning | Legacy JSON key |
 |------------|---------|-----------------|
-| **No-bake (passthrough)** | Unrepaired cracked engine; $f(x)=x$; no seam op | `identity` |
-| DualCosine | Raised-cosine end fades | `dual_cosine` |
+| **Ideal sibling** $r^{\star}$ | Cliff withheld; scoring target only | `ideal` |
+| **No-bake (passthrough)** | Unrepaired cracked engine; score vs $r^{\star}$ | `identity` |
+| DualCosine | Raised-cosine end fades; also search reward ref. | `dual_cosine` |
+| Classical board | no-bake, DualCosine, FIR, poly, fades, VA residuals | various |
 
 See also `NOMENCLATURE.md`.
+
+## Comparison policy
+
+- **Primary:** absolute prolonged $R$ of every method vs the same ideal sibling $r^{\star}$.
+- **Classical board (required):** always report learned/searched methods against non-AI rows (no-bake, DualCosine, `seam_fir3`, poly, fades, VA), not DualCosine alone.
+- **$\Delta R$ vs DualCosine:** search-reward convenience column only; do not treat it as the sole classical comparison.
 
 ## Seeds and geometry
 

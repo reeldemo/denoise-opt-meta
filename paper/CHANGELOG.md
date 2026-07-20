@@ -12,6 +12,11 @@
 
 ## v7 notes (current)
 
+### Ideal sibling vs no-bake + classical board (20 July 2026)
+- Clarified: ideal sibling $r^{\star}$ is the scoring target (cliff withheld); no-bake is unrepaired engine scored against $r^{\star}$.
+- Reporting policy: always rank AI/favorite on absolute $R$ vs the full classical non-AI board (no-bake, FIR, DualCosine, poly, fades, VA); DualCosine $\Delta R$ is search-reward only.
+- Abstract / Methods / Experiments / Results / Discussion / EVAL\_PROTOCOL / NOMENCLATURE updated; PDF rebuilt.
+
 ### Nomenclature: identity → no-bake (20 July 2026)
 - Renamed the unrepaired-engine control from **identity** to **No-bake (passthrough)** in manuscript prose/tables.
 - Defined in Methods (`sec:no-bake`): $f(x)=x$; not a residual skip; legacy JSON key remains `identity`.

@@ -45,6 +45,11 @@ This sibling relationship is what makes unsupervised ranking possible without pa
 \subsection{Residual score $R$}
 \label{sec:residual-score}
 
+\textbf{Every} method---no-bake, DualCosine, FIR, poly, VA residuals, neural favorite---is scored the same way:
+apply an operator $\Theta$ to the cracked engine period $x$ to obtain $y=\Theta(x)$, then compare the tiled $y$ to the \emph{same} ideal sibling $r^{\star}$ under~\eqref{eq:R}.
+The ideal sibling is the scoring target (open-wrap cliff withheld).
+It is \emph{not} a method output and it is \emph{not} the no-bake baseline.
+
 With tiling length $N$,
 \begin{equation}
 \label{eq:R}
@@ -52,6 +57,7 @@ R=\mathrm{clamp}\!\left(1-\frac{\mathrm{rms}(y_{\mathrm{tiled}}-r^{\star}_{\math
 \end{equation}
 where $\mathrm{rms}(z)=\sqrt{\frac{1}{|z|}\sum_i z_i^2}$ and $\varepsilon>0$ avoids division by zero.
 By construction $R\in[0,1]$, $R{=}1$ when $y_{\mathrm{tiled}}=r^{\star}_{\mathrm{tiled}}$, and (when pre-clamp scores lie in $(0,1)$) $R$ is strictly decreasing in residual RMS for fixed ideal RMS.
+A method ``beats'' another iff its $R$ is higher on the same $(x,r^{\star})$ draw---equivalently, iff its bake is closer to the ideal sibling.
 Optional soft shape gates (when enabled) multiply $R$ by factors that down-weight mid-cycle damage relative to seam-local error.
 We do not claim convergence guarantees for the hybrid GA{+}PPO{+}PBT outer loop, nor a general wrap-closure theorem for arbitrary bake cells.
 Empirical gains are reported under the frozen protocol.
@@ -89,10 +95,18 @@ They are scored and illustrated in Section~\ref{sec:va-seam-baselines}.
 
 \paragraph{No-bake (passthrough) control.}
 \label{sec:no-bake}
-The \textbf{no-bake} baseline is the unrepaired cracked engine: $\Theta_{\mathrm{no\text{-}bake}}(x)=x$.
-Prolonged $R$ is computed against the ideal sibling with \emph{no} seam operator, fade, FIR, or neural cell applied.
-It is \emph{not} a residual-network skip connection, not a learned identity map, and not a repair method---only a reference ceiling on mild cliffs (residual mass $\ll$ ideal RMS under~\eqref{eq:R}).
+The \textbf{no-bake} baseline is the unrepaired cracked engine: $\Theta_{\mathrm{no\text{-}bake}}(x)=x$, then $R=\mathrm{ResidualScore}(r^{\star},x,N)$.
+It is the engine period \emph{as stored}, scored against the ideal sibling.
+It is \emph{not} the ideal sibling itself, not a residual-network skip, not a learned identity map, and not a repair method.
+On mild cliffs residual mass $\ll$ ideal RMS under~\eqref{eq:R}, so no-bake $R$ can sit near $0.97$ while the wrap click remains audible---a reference floor/ceiling for ``do nothing,'' not a perceptual wrap score.
 Released JSON artifacts may still use the legacy key \texttt{identity} for this control; manuscript tables and prose use \emph{no-bake}.
+
+\paragraph{Classical (non-AI) comparison board.}
+\label{sec:classical-board}
+Learned / searched methods are always ranked against the full classical board on absolute $R$ (same $r^{\star}$):
+no-bake, DualCosine / cosine fade, \texttt{seam\_fir3}, classic quadratic, hann/crossfade/soft fades, detrend/ensemble, poly seam, and cycle-local BLIT/BLEP / PolyBLEP / BLAMP where scored.
+DualCosine is additionally the \emph{search-time reward reference} ($R-R_{\mathrm{DualCosine}}$ in PPO) because it is a cheap classical bake already in the operator vocabulary---not because it is the only classical comparator of interest.
+When we write $\Delta R$ without a qualifier in search-freeze tables, it means vs DualCosine; prose and SOTA rankings lead with absolute $R$ vs the classical board (esp.\ no-bake and \texttt{seam\_fir3}).
 
 \begin{algorithm}[t]
 \caption{DualCosine baseline}
