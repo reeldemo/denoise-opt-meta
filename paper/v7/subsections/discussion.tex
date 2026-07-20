@@ -44,7 +44,7 @@ A natural next paper is family-conditional and cliff-conditional meta-learning: 
 At the reported $5$k-gate search freeze, GA and PBT lead branch-best residuals, with PPO close behind and NAS trailing on this seed (Table~\ref{tab:ablation}).
 These per-branch readings are snapshots from a single hybrid run, not causally isolated single-branch experiments.
 Isolated short-budget re-runs (150 iterations, same search seed) confirm relative ordering under a fixed compute cap (Table~\ref{tab:ablation}).
-The matched $5$k outer-loop comparison (Table~\ref{tab:meta-approaches}, Figure~\ref{fig:meta-approach-compare}) places random search, CMA-ES, REINFORCE, aging evolution, and TPE beside the hybrid (+LSTM) arm under a shared seed and bake vocabulary that includes searchable LSTM blocks.
+The matched $5$k outer-loop comparison (Table~\ref{tab:meta-approaches}, Figure~\ref{fig:meta-approach-compare}) places Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS beside \textbf{Ours (hybrid GA--PPO)} under a shared seed and bake vocabulary that includes searchable LSTM/xLSTM blocks.
 The multi-family SOTA matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws, and ahead of no-bake / FIR on absolute $R$ on that same generator.
 Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
 On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake / FIR. That transfer gap matches the narrow Python training geometry.

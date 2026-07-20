@@ -362,7 +362,7 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
 \subsection{Meta-learning approach comparison ($5$k matched budget)}
 \label{sec:meta-approaches-results}
 
-RQ: under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do random search, CMA-ES, REINFORCE, aging evolution, and TPE compare to the hybrid (+LSTM/xLSTM) arm?
+RQ: under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to \textbf{Ours (hybrid GA--PPO)}?
 Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs DualCosine, wall hours, and whether the champion graph used an LSTM or xLSTM block.
 Figure~\ref{fig:meta-approach-compare} shows champion-$R$ learning curves (x-axis capped at $5{,}000$).
 Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).

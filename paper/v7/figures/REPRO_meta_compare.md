@@ -4,7 +4,7 @@
 - Git SHA: `c54a662ac95d3d861591fa071f6ecb406e0907e3`
 - Seed: `1902771841`
 - Iters: `5000` per approach
-- Approaches: random, cmaes, reinforce, aging_evo, tpe, hybrid_lstm
+- Approaches (code → manuscript): random→Random NAS, cmaes→Cont. CMA-ES, reinforce→Arch REINFORCE, aging_evo→Aging evolution, tpe→TPE Bayes NAS, hybrid_lstm→Ours (hybrid GA–PPO)
 - Vocab: LSTM + xLSTM in `BLOCKS`
 - Reward modes (hybrid/REINFORCE/PBT): abs_r, vs_dualcosine, vs_nobake, neglog_gap
 - Device: `NVIDIA GeForce RTX 3090` / torch `2.6.0+cu124`

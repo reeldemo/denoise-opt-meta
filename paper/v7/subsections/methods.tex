@@ -255,15 +255,16 @@ The matched $5$k meta-approach comparison (Section~\ref{sec:meta-compare}) is th
 \subsection{Meta-learning approach comparison}
 \label{sec:meta-compare}
 
-Beyond the hybrid outer loop, we compare five additional outer-loop families under a matched $5{,}000$-evaluation budget, shared search seed \texttt{1902771841}, and the same FitCell / prolonged-$R$ protocol (LSTM included in the searchable bake vocabulary):
+Beyond the hybrid outer loop, we compare five additional outer-loop families under a matched $5{,}000$-evaluation budget, shared search seed \texttt{1902771841}, and the same FitCell / prolonged-$R$ protocol (LSTM and xLSTM included in the searchable bake vocabulary).
+Table and figure legends use the short names below (artifact folders keep stable code keys; see \texttt{NOMENCLATURE.md}):
 \begin{itemize}
-  \item \textbf{Random search:} independent uniform draws over arch graphs and fit hyperparameters (control).
-  \item \textbf{CMA-ES:} diagonal covariance-matrix adaptation over a continuous encoding of depth, width, cell kind, block logits, and fit hyperparameters~\cite{hansen2016cmaes}.
-  \item \textbf{REINFORCE:} vanilla policy gradient over discrete architecture edit actions (no clipped surrogate; contrast to PPO~\cite{schulman2017,zoph2017nas}).
-  \item \textbf{Aging evolution:} regularized evolution with oldest-member replacement after tournament parent selection~\cite{real2017large,real2019}, distinct from the hybrid's non-aging tournament GA branch.
-  \item \textbf{TPE:} lightweight tree-structured Parzen estimator over discrete arch categoricals in the spirit of practical Bayesian optimization~\cite{snoek2012}.
+  \item \textbf{Random NAS} (\texttt{random}): independent uniform draws over bake graphs and fit hyperparameters (control).
+  \item \textbf{Cont.\ CMA-ES} (\texttt{cmaes}): diagonal covariance-matrix adaptation over a continuous encoding of depth, width, cell kind, block logits, and fit hyperparameters~\cite{hansen2016cmaes}.
+  \item \textbf{Arch REINFORCE} (\texttt{reinforce}): vanilla policy gradient over discrete architecture-edit actions (no clipped surrogate; contrast to PPO~\cite{schulman2017,zoph2017nas}).
+  \item \textbf{Aging evolution} (\texttt{aging\_evo}): regularized evolution with oldest-member replacement after tournament parent selection~\cite{real2017large,real2019}, distinct from the hybrid's non-aging tournament GA branch.
+  \item \textbf{TPE Bayes NAS} (\texttt{tpe}): lightweight tree-structured Parzen estimator over discrete bake categoricals in the spirit of practical Bayesian optimization~\cite{snoek2012}.
 \end{itemize}
-We also re-run the hybrid loop for $5{,}000$ evaluations with LSTM in the block vocabulary (\texttt{hybrid\_lstm}) as an ``ours (+LSTM)'' arm for fair comparison.
+We also run \textbf{Ours (hybrid GA--PPO)} (\texttt{hybrid\_lstm}): the multi-branch hybrid loop for $5{,}000$ evaluations with LSTM/xLSTM in the block vocabulary and online reward-mode / fit--PPO hyperparameter co-tuning, as the proposed matched-budget arm.
 Results appear in Table~\ref{tab:meta-approaches} and Figure~\ref{fig:meta-approach-compare}.
 
 \begin{remark}[Trial complexity]
