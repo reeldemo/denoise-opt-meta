@@ -16,6 +16,15 @@
 | Optional seam-local diagnostic | click energy | Mean square first-diff across tiled wrap boundaries. |
 | Out of scope (default) | PESQ, STOI, MUSHRA | Domain mismatch on non-speech cycles. Explicitly deferred in Limitations: no invented PESQ on sine tiles; MUSHRA not run (needs humans). Speech-proxy secondary only if OA speech snippets are imported and labeled. |
 
+## Baseline names
+
+| Manuscript | Meaning | Legacy JSON key |
+|------------|---------|-----------------|
+| **No-bake (passthrough)** | Unrepaired cracked engine; $f(x)=x$; no seam op | `identity` |
+| DualCosine | Raised-cosine end fades | `dual_cosine` |
+
+See also `NOMENCLATURE.md`.
+
 ## Seeds and geometry
 
 | Item | Value |
@@ -36,13 +45,13 @@
 
 - Frozen **canonical sine+cliff holdout** method scores (`method_scores.json`).
 - Live overnight campaign at the **5k clean-iteration gate** (`results_blob_5k.json`): champion $R$ vs DualCosine on the runner geometry.
-- **Hard-cliff strata** (top 25% / top 10% wrap-jump): identity / DualCosine / favorite / N2N / seq (`cliff_strata.json`).
+- **Hard-cliff strata** (top 25% / top 10% wrap-jump): no-bake / DualCosine / favorite / N2N / seq (`cliff_strata.json`).
 - **N2N baselines:** primary corrupt→corrupt; secondary sibling-supervised; no holdout leakage (`n2n_baseline.json`).
 - **Seq baselines:** LSTM + 1D CNN (`seq_baseline.json`).
 - **Wavetable-native realism:** true ReelSynth-exported factory periods (primary) + external AKWF CC0 WAVs (secondary) under wrap protocol (`real_wt_matrix.json`). Procedural stand-ins demoted to tertiary smoke. No LibriSpeech/MUSDB.
 - **Classical poly seam fitter** (`poly_baseline.json`); SSM deferred (LSTM is seq ceiling).
 - **Jump-aware endpoint-pin control** (`jump_control.json`): zeros wrap-jump while often hurting $R$.
-- **Transfer failures** (`transfer_failures.json`): per-corpus win-rates favorite vs identity / DualCosine.
+- **Transfer failures** (`transfer_failures.json`): per-corpus win-rates favorite vs no-bake / DualCosine.
 - Do **not** claim unfinished larger budgets as complete mean-$R$.
 - Do **not** resurrect long-horizon “tables remain open” narrative.
 - Do **not** claim wrap-closure or hybrid-search convergence theorems.

@@ -51,12 +51,12 @@ and skipping near-duplicate copies of the same topology signature.
 Table~\ref{tab:canonical-methods} scores the classical bake set plus DualCosine and the neural favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}).
 DualCosine reaches $R\approx 0.825$ ($\approx 1.35$\,ms/batch), near the search-monitor DualCosine $\approx 0.817$ on live draws from the same generator.
 The best \emph{active} classical method is seam-local 3-tap FIR (\texttt{seam\_fir3}) at $R\approx 0.961$ / $\approx 0.67$\,ms/batch ($0.962\pm0.002$ over five seeds).
-Identity (no-op) scores $R\approx 0.972$ and is a ceiling only.
+No-bake (passthrough) scores $R\approx 0.972$ and is a ceiling only.
 The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) at $\approx 2.56$\,ms/batch ($\approx 37$k params): $\Delta R \approx {+}0.030$ vs \texttt{seam\_fir3} and $\Delta R \approx {+}0.166$ vs DualCosine.
 
 \begin{table}[t]
   \centering
-  \caption{Method scores on the canonical sine{+}cliff holdout (batch 64, seed \texttt{20260719}, $L{=}256$, $N{=}16$). Mean$\pm$std over five consecutive seeds. Identity is a no-op ceiling. Primary metric is prolonged $R$ (1~=~best).}
+  \caption{Method scores on the canonical sine{+}cliff holdout (batch 64, seed \texttt{20260719}, $L{=}256$, $N{=}16$). Mean$\pm$std over five consecutive seeds. No-bake is a passthrough ceiling. Primary metric is prolonged $R$ (1~=~best).}
   \label{tab:canonical-methods}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrrr@{}}
@@ -64,7 +64,7 @@ The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) 
     Method & $R$ & $R$ (5-seed) & ms/batch \\
     \midrule
     neural favorite & 0.9911 & $0.9912\pm0.0002$ & 2.56 \\
-    identity (no-op) & 0.9718 & $0.9726\pm0.0021$ & 0.31 \\
+    no-bake (passthrough) & 0.9718 & $0.9726\pm0.0021$ & 0.31 \\
     \texttt{seam\_fir3} & 0.9610 & $0.9616\pm0.0019$ & 0.67 \\
     classic quadratic & 0.8449 & $0.8453\pm0.0117$ & 1.59 \\
     DualCosine & 0.8249 & $0.8258\pm0.0137$ & 1.35 \\
@@ -104,7 +104,7 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
     seq CNN1D & $0.969\pm0.016$ & $32.2\pm3.5$ & $32.4\pm3.5$ & $0.92\pm0.15$ & -- & 3\,242 & ${+}0.162$ \\
     N2N sibling-sup. & $0.969\pm0.022$ & $33.7\pm4.3$ & $33.8\pm4.3$ & $0.91\pm0.15$ & -- & 53\,506 & ${+}0.168$ \\
     poly seam ($d{=}3$) & $0.966\pm0.008$ & $31.2\pm2.1$ & $31.3\pm2.1$ & $0.91\pm0.15$ & 1.47 & 0 & ${+}0.148$ \\
-    identity & $0.965\pm0.008$ & $30.9\pm1.9$ & $31.0\pm1.9$ & $0.91\pm0.15$ & 0.00 & 0 & ${+}0.147$ \\
+    no-bake & $0.965\pm0.008$ & $30.9\pm1.9$ & $31.0\pm1.9$ & $0.91\pm0.15$ & 0.00 & 0 & ${+}0.147$ \\
     seq LSTM & $0.956\pm0.037$ & $32.2\pm5.8$ & $32.3\pm5.8$ & $0.86\pm0.15$ & -- & 75\,746 & ${+}0.170$ \\
     \texttt{seam\_fir3} & $0.955\pm0.005$ & $28.1\pm1.2$ & $28.1\pm1.2$ & $0.46\pm0.08$ & 0.59 & 0 & ${+}0.136$ \\
     MLP-on-$R$ & $0.932\pm0.006$ & $24.6\pm0.9$ & $24.6\pm0.9$ & $0.64\pm0.07$ & 2.76 & 8\,604 & ${+}0.113$ \\
@@ -131,13 +131,13 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
 \subsection{Hard-cliff strata}
 \label{sec:cliff-strata}
 
-RQ: does high identity $R$ hide DualCosine failure on large wrap jumps?
+RQ: does high no-bake $R$ hide DualCosine failure on large wrap jumps?
 Table~\ref{tab:cliff-strata} stratifies a $4{,}096$-tile holdout draw (seed \texttt{20260719}) by engine wrap-jump percentiles (p75$\approx 1.387$, p90$\approx 1.832$; frozen in \texttt{cliff\_strata.json}).
-Identity $R$ barely moves (all $0.9715$ $\to$ top-10\% $0.9667$) because residual mass remains small relative to ideal RMS under~\eqref{eq:R}.
+No-bake $R$ barely moves (all $0.9715$ $\to$ top-10\% $0.9667$) because residual mass remains small relative to ideal RMS under~\eqref{eq:R}.
 DualCosine collapses on hard cliffs ($0.819$ $\to$ $0.657$), while the meta favorite holds ($R\approx 0.9915$).
-Favorite wrap-jump on the top-10\% subset stays $\approx 1.83$ (vs identity $2.09$).
+Favorite wrap-jump on the top-10\% subset stays $\approx 1.83$ (vs no-bake $2.09$).
 The claim is tiled residual repair, not endpoint-zeroing.
-\textbf{Edge RMSE} is the locked required seam-local secondary (EVAL\_PROTOCOL): on the top-10\% subset it drops from identity $0.095$ to favorite $0.021$ (DualCosine $0.990$).
+\textbf{Edge RMSE} is the locked required seam-local secondary (EVAL\_PROTOCOL): on the top-10\% subset it drops from no-bake $0.095$ to favorite $0.021$ (DualCosine $0.990$).
 Click energy remains an optional diagnostic.
 
 \begin{table*}[t]
@@ -156,7 +156,7 @@ Click energy remains an optional diagnostic.
     N2N corrupt$\to$corrupt & 0.9922 & 0.870 & 0.9924 & 1.647 & 0.9922 & 1.821 \\
     neural favorite & 0.9911 & 0.869 & 0.9915 & 1.645 & 0.9915 & 1.825 \\
     seq CNN1D & 0.9863 & 0.881 & 0.9869 & 1.684 & 0.9867 & 1.871 \\
-    identity & 0.9715 & 0.913 & 0.9713 & 1.797 & 0.9667 & 2.094 \\
+    no-bake & 0.9715 & 0.913 & 0.9713 & 1.797 & 0.9667 & 2.094 \\
     \texttt{seam\_fir3} & 0.9611 & 0.456 & 0.9461 & 0.893 & 0.9429 & 1.034 \\
     DualCosine & 0.8193 & 0.335 & 0.6864 & 0.290 & 0.6574 & 0.335 \\
     \bottomrule
@@ -178,7 +178,7 @@ Click energy remains an optional diagnostic.
     neural favorite & 0.021 \\
     N2N corrupt$\to$corrupt & 0.021 \\
     seq CNN1D & 0.035 \\
-    identity & 0.095 \\
+    no-bake & 0.095 \\
     \texttt{seam\_fir3} & 0.164 \\
     DualCosine & 0.990 \\
     \bottomrule
@@ -202,8 +202,8 @@ Classical DualCosine / \texttt{seam\_fir3} remain in Table~\ref{tab:cliff-strata
 RQ: does the wrap protocol transfer beyond synthetic sine cliffs onto \emph{true} exports and third-party OA cycles?
 Table~\ref{tab:real-wt} scores ReelSynth-exported factory periods (primary realism, $n{=}25$; byte-true factory frames resampled to $L{=}256$) and Adventure Kid Waveforms (AKWF) CC0 single-cycle WAVs (secondary, $n{=}24$) after close-seam idealization and the same open-wrap cliff.
 Procedural stand-ins are demoted to tertiary smoke and no longer carry the primary realism claim.
-On exported factory periods the favorite ($R\approx 0.911$) trails identity / \texttt{seam\_fir3} / poly (domain shift) while still beating DualCosine ($0.883$).
-On AKWF OA cycles the favorite ($R\approx 0.970$) matches identity and beats DualCosine ($0.936$).
+On exported factory periods the favorite ($R\approx 0.911$) trails no-bake / \texttt{seam\_fir3} / poly (domain shift) while still beating DualCosine ($0.883$).
+On AKWF OA cycles the favorite ($R\approx 0.970$) matches no-bake and beats DualCosine ($0.936$).
 LibriSpeech/MUSDB are not used.
 
 \begin{table}[t]
@@ -218,7 +218,7 @@ LibriSpeech/MUSDB are not used.
     endpoint-pin (mean) & 0.939 & 0.978 \\
     \texttt{seam\_fir3} & 0.971 & 0.975 \\
     poly seam ($d{=}3$) & 0.967 & 0.970 \\
-    identity & 0.967 & 0.969 \\
+    no-bake & 0.967 & 0.969 \\
     neural favorite & 0.911 & 0.970 \\
     DualCosine & 0.883 & 0.936 \\
     N2N corrupt$\to$corrupt & 0.869 & 0.974 \\
@@ -232,7 +232,7 @@ LibriSpeech/MUSDB are not used.
 \label{sec:poly-jump}
 
 RQ: does a cheap classical poly fitter close the S7 residual, and does endpoint pinning show the wrap-jump vs $R$ tradeoff?
-A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R\approx 0.972$ ($\approx$ identity) with wrap-jump essentially unchanged (\texttt{poly\_baseline.json}).
+A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R\approx 0.972$ ($\approx$ no-bake) with wrap-jump essentially unchanged (\texttt{poly\_baseline.json}).
 SSM seq models are deferred; the LSTM remains the supervised seq ceiling.
 An endpoint-pin control (\texttt{jump\_control.json}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$; hard $0.822$).
 Methods that zero wrap-jump are not the same objective as prolonged $R$; we do not claim wrap-jump SOTA for the favorite.
@@ -249,16 +249,16 @@ It subtracts a band-limited step residual (here a raised-cosine BLEP-family lobe
 \textbf{PolyBLEP} (Nam et al.) is a cheap polynomial surrogate of that step residual with fractional-delay support near phase wrap.
 It edits only a few samples on each side of the discontinuity.
 \textbf{BLAMP} (Esqueda et al.) corrects a slope or corner jump (discontinuity in the first derivative), which matters for triangles, rectification, and hard clipping.
-On a pure value cliff the slope jump is small, so BLAMP is nearly an identity map.
+On a pure value cliff the slope jump is small, so BLAMP is nearly a no-bake passthrough.
 \textbf{DualCosine} (our classical bake baseline) fades both ends of the stored period with raised-cosine windows.
 It does not insert a BLEP-style residual. It trades wrap energy for a wide end-fade distortion that prolonged $R$ penalizes on hard cliffs.
 
 \paragraph{Scores.}
 Table~\ref{tab:va-seam-blep} reports batch means from \texttt{va\_seam\_blep.json} (seed \texttt{20260719}, batch 64).
 Implementation: \texttt{reelsynth/scripts/baselines/va\_seam\_blep.py} (PolyBLEP matches \texttt{osc::va::poly\_blep}; BLIT/BLEP uses a raised-cosine step residual; BLAMP applies a polyBLAMP lobe to the wrap slope jump).
-PolyBLEP reaches mean $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine) but trails identity / \texttt{seam\_fir3} / the meta favorite.
+PolyBLEP reaches mean $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine) but trails no-bake / \texttt{seam\_fir3} / the meta favorite.
 BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping mean $R$ to $0.868$ and collapsing on hard cliffs ($R\approx 0.712$).
-BLAMP is near-identity on this value-cliff geometry (mean $R\approx 0.972$).
+BLAMP is near-no-bake on this value-cliff geometry (mean $R\approx 0.972$).
 On the annotated severe tile in Figure~\ref{fig:va-seam-techniques}, tile $R$ is lower still (PolyBLEP $\approx 0.869$, BLIT/BLEP $\approx 0.703$, DualCosine $\approx 0.603$, BLAMP $\approx$ engine), which matches the hard-cliff strata.
 Honest reading: these classical tools are now scored, not only cited.
 They beat DualCosine on mean $R$ in places.
@@ -267,7 +267,7 @@ None matches the favorite on prolonged $R$.
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/fig_va_seam_techniques.png}
-  \caption{Classical VA seam techniques on one cracked sine{+}cliff tile (seed~\texttt{20260719}, tile~46, $|wrap|{=}2.283$, $L{=}256$, three tiled periods). Yellow band marks the first seam neighborhood. Panel tile $R$ (1~=~best): (a)~ideal (unscored sibling). (b)~cracked engine $R{=}0.9503$. (c)~BLIT/BLEP step residual $R{=}0.7026$. (d)~PolyBLEP fractional-delay residual $R{=}0.8685$. (e)~BLAMP slope/corner residual $R{=}0.9504$ (near identity on value cliffs). (f)~DualCosine end fade $R{=}0.6029$. Colorblind-safe hues with distinct linestyles for B\&W print. Batch means appear in Table~\ref{tab:va-seam-blep}. Accessibility: six-panel comparison of ideal, cracked, BLIT/BLEP, PolyBLEP, BLAMP, and DualCosine.}
+  \caption{Classical VA seam techniques on one cracked sine{+}cliff tile (seed~\texttt{20260719}, tile~46, $|wrap|{=}2.283$, $L{=}256$, three tiled periods). Yellow band marks the first seam neighborhood. Panel tile $R$ (1~=~best): (a)~ideal (unscored sibling). (b)~cracked engine $R{=}0.9503$. (c)~BLIT/BLEP step residual $R{=}0.7026$. (d)~PolyBLEP fractional-delay residual $R{=}0.8685$. (e)~BLAMP slope/corner residual $R{=}0.9504$ (near no-bake on value cliffs). (f)~DualCosine end fade $R{=}0.6029$. Colorblind-safe hues with distinct linestyles for B\&W print. Batch means appear in Table~\ref{tab:va-seam-blep}. Accessibility: six-panel comparison of ideal, cracked, BLIT/BLEP, PolyBLEP, BLAMP, and DualCosine.}
   \label{fig:va-seam-techniques}
 \end{figure*}
 
@@ -284,7 +284,7 @@ None matches the favorite on prolonged $R$.
     Method & $R$ & SNR & SDR & jump & edge & top10 $R$ & multi $R$ \\
     \midrule
     BLAMP & 0.9718 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9667 & 0.965 \\
-    identity & 0.9718 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9667 & 0.965 \\
+    no-bake & 0.9718 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9667 & 0.965 \\
     \texttt{seam\_fir3} & 0.9610 & 29.6 & 29.6 & 0.438 & 0.112 & 0.9429 & 0.955 \\
     PolyBLEP & 0.9288 & 25.9 & 25.8 & 0.102 & 0.205 & 0.8641 & 0.924 \\
     BLIT/BLEP & 0.8680 & 20.4 & 20.3 & 0.004 & 0.365 & 0.7116 & 0.860 \\
@@ -297,12 +297,12 @@ None matches the favorite on prolonged $R$.
 \subsection{Transfer conditions}
 \label{sec:transfer}
 
-RQ: when does hybrid search win vs identity / DualCosine / supervised nets?
+RQ: when does hybrid search win vs no-bake / DualCosine / supervised nets?
 Per-cycle $\Delta R$ on export, AKWF, Rust \texttt{sound\_bench}, and sine{+}cliff holdout (\texttt{transfer\_failures.json}):
 favorite win-rate vs DualCosine is high on sine cliffs ($1.00$) and AKWF ($0.88$), and moderate on export ($0.64$) / Rust ($0.75$);
-win-rate vs identity is high only on sine cliffs ($0.92$) and collapses on export ($0.24$) / Rust ($0.20$).
+win-rate vs no-bake is high only on sine cliffs ($0.92$) and collapses on export ($0.24$) / Rust ($0.20$).
 Search value is therefore: hard cliffs, OA tracks where DualCosine collapses, and compact bake graphs without engine$\to$ideal labels at search time.
-Identity/FIR wins on mild seams and OOD factory geometry (honest domain shift, not buried).
+No-bake/FIR wins on mild seams and OOD factory geometry (honest domain shift, not buried).
 
 \subsection{Ablations and compute}
 \label{sec:ablation-compute}
@@ -354,13 +354,30 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
   {\footnotesize Peak memory: max \texttt{nvidia-smi} \texttt{memory.used} during a 30-iter full-branch search probe ($\approx 3.29$\,GiB) and champion forward{+}FitCell replay ($\approx 3.17$\,GiB). The multi-hour search process itself left no memory log. Idle GPU occupancy was already $\approx 3.0$\,GiB from other sessions.}
 \end{table}
 
+\subsection{Meta-learning approach comparison ($5$k matched budget)}
+\label{sec:meta-approaches-results}
+
+RQ: under a matched $5{,}000$-evaluation budget with LSTM in the searchable bake vocabulary, how do random search, CMA-ES, REINFORCE, aging evolution, and TPE compare to the hybrid (+LSTM) arm?
+Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs DualCosine, wall hours, and whether the champion graph used an LSTM block.
+Figure~\ref{fig:meta-approach-compare} shows champion-$R$ learning curves (x-axis capped at $5{,}000$).
+Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
+
+\input{figures/meta_approaches_table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
+  \caption{Matched $5$k-budget meta-learning comparison: champion residual $R$ versus outer iteration (x-axis capped at $5{,}000$), including hybrid{+}LSTM. Accessibility: Okabe-Ito colors with distinct markers for grayscale print; DualCosine as a dashed gray baseline.}
+  \label{fig:meta-approach-compare}
+\end{figure}
+
 \subsection{Rust \texttt{sound\_bench} transfer (20 tiles)}
 \label{sec:rust-bench}
 
 RQ: does the Python-trained favorite transfer to Rust \texttt{sound\_bench} tiles against DualCosine?
 Table~\ref{tab:rust-bench} scores the same classical set and the Python-trained neural favorite on 20 Rust-exported tiles (10 families $\times$ 2 seeds).
 This closes the prior gap where multi-family tables used only Python generative stand-ins.
-Honest transfer note: the favorite was searched on Python \texttt{make\_batch} sine{+}cliff geometry. On Rust families it still beats DualCosine (mean $\Delta R{+}0.063$, Wilcoxon $p{\approx}0.009$) but trails identity and \texttt{seam\_fir3}. The primary SOTA claim remains the Python multi-family matrix.
+Honest transfer note: the favorite was searched on Python \texttt{make\_batch} sine{+}cliff geometry. On Rust families it still beats DualCosine (mean $\Delta R{+}0.063$, Wilcoxon $p{\approx}0.009$) but trails no-bake and \texttt{seam\_fir3}. The primary SOTA claim remains the Python multi-family matrix.
 
 \begin{table}[t]
   \centering
@@ -371,7 +388,7 @@ Honest transfer note: the favorite was searched on Python \texttt{make\_batch} s
     \toprule
     Method & $R$ (20 Rust tiles) & $\Delta R$ vs DualCosine \\
     \midrule
-    identity & $0.928\pm0.084$ & ${+}0.166$ \\
+    no-bake & $0.928\pm0.084$ & ${+}0.166$ \\
     \texttt{seam\_fir3} & $0.896\pm0.077$ & ${+}0.134$ \\
     neural favorite & $0.825\pm0.121$ & ${+}0.063$ \\
     classic quadratic & $0.788\pm0.110$ & ${+}0.026$ \\

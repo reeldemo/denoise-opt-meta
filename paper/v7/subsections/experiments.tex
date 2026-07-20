@@ -32,9 +32,9 @@ Every method sees the same tensors per waveform. DualCosine is the paired baseli
 
 \paragraph{Dataset metrics.}
 A metrics draw of $4{,}096$ cycles under the holdout seed yields mean ideal RMS $0.721\pm0.016$, mean engine residual RMS $0.021\pm0.013$, and mean absolute wrap jump $|x_0-x_{L-1}|$ of $0.913\pm0.634$.
-Identity (no bake) on that draw scores mean $R\approx0.971$.
+No-bake (passthrough) on that draw scores mean $R\approx0.971$.
 Method tables use a matched score batch of $64$ cycles from the same seed (tensors under \texttt{brand/artifacts/canonical\_eval\_dataset/}), five consecutive seeds for mean$\pm$std on the classical table, and the 20-waveform matrix for SOTA secondary metrics.
-Figure~\ref{fig:dataset-distributions} summarizes the $4{,}096$-cycle metrics draw: ideal RMS clusters near $0.72$, wrap jumps span nearly three orders of magnitude (median $\approx 0.83$), and identity $R$ is high on easy tiles but falls below $0.91$ on the hardest decile of wrap jumps.
+Figure~\ref{fig:dataset-distributions} summarizes the $4{,}096$-cycle metrics draw: ideal RMS clusters near $0.72$, wrap jumps span nearly three orders of magnitude (median $\approx 0.83$), and no-bake $R$ is high on easy tiles but falls below $0.91$ on the hardest decile of wrap jumps.
 Figure~\ref{fig:intro-sine} is the documented sine-wrap edge case: a high-$|wrap|$ holdout tile where cliff modulation is visible, scored with DualCosine and the top neural favorite under the same residual $R$ (tile $R\approx0.9917$, favorite batch mean $R\approx0.991$).
 
 \begin{figure}[t]
@@ -44,9 +44,9 @@ Figure~\ref{fig:intro-sine} is the documented sine-wrap edge case: a high-$|wrap
     Top left: ideal RMS per cycle.
     Top right: engine residual RMS before any bake.
     Bottom left: wrap jump magnitude $|x_0-x_{L-1}|$ (cliff hardness proxy).
-    Bottom right: identity prolonged $R$ (no bake).
+    Bottom right: no-bake prolonged $R$ (passthrough, $x\mapsto x$).
     Dashed and dotted vertical lines mark mean and median.
-    Hard-cliff reporting (Section~\ref{sec:results}) uses the top 10\% wrap-jump stratum where identity $R$ drops.}
+    Hard-cliff reporting (Section~\ref{sec:results}) uses the top 10\% wrap-jump stratum where no-bake $R$ drops.}
   \label{fig:dataset-distributions}
 \end{figure}
 

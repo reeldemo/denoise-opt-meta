@@ -2,6 +2,8 @@
 
 arXiv-style double-column preprint for the DenoiseOpt residual-scored hybrid RL+GA meta-search on wavetable seam restoration.
 
+**Baseline naming:** the unrepaired-engine control is **No-bake (passthrough)** ($x\mapsto x$). Legacy JSON key `identity` still appears in frozen artifacts — see [`NOMENCLATURE.md`](NOMENCLATURE.md).
+
 ## Revision plan (checklist)
 
 See [`MANUSCRIPT_CHECKLIST_IMPLEMENTATION_PLAN.md`](MANUSCRIPT_CHECKLIST_IMPLEMENTATION_PLAN.md) for the Phase 0–6 plan against the Manuscript Checklist Review (triage of REAL vs FALSE FAIL, ambitious SOTA/Methods extension, narrow claims).

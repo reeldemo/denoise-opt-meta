@@ -6,8 +6,8 @@ Across the $100{,}000$-cycle procedural bench and lit-combo family stress tests,
 The same generator families repeatedly dominate the residual budget: \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, and \texttt{extreme\_overlay} show the weakest denoise / residual scores, while \texttt{harmonic\_fft} and \texttt{am\_fm} are comparatively easy.
 \texttt{open\_wrap\_bias} can look strong on wrap-energy proxies yet still lag on prolonged residual. Cliff reduction and ideal-matched tiling are related objectives with different rankings.
 
-\paragraph{Identity $R$ and hard-cliff honesty.}
-Canonical identity $R\approx 0.97$ looks ``easy'' only if one treats $R$ as a perceptual wrap score.
+\paragraph{No-bake $R$ and hard-cliff honesty.}
+Canonical no-bake $R\approx 0.97$ looks ``easy'' only if one treats $R$ as a perceptual wrap score.
 Under~\eqref{eq:R}, small residual RMS relative to ideal RMS yields high $R$ even when $|x_0-x_{L-1}|$ is large.
 Hard-cliff strata make the operative regime explicit: DualCosine drops to $R\approx 0.657$ on the top-10\% wrap-jump tiles while the favorite stays near $0.9915$.
 Favorite wrap-jump barely moves toward zero on that subset.
@@ -18,8 +18,8 @@ On the sine{+}cliff holdout, corrupt$\to$corrupt N2N matches the meta favorite w
 Sibling-supervised N2N and the LSTM ceiling sit slightly above.
 That is expected for oracle-label training on the same generator and does not invalidate the hybrid search story:
 DenoiseOpt discovers compact bake graphs without engine$\to$ideal supervision at search time, and the hard-cliff DualCosine collapse contrast remains.
-Win conditions (\texttt{transfer\_failures.json}): favorite beats DualCosine on sine cliffs and most AKWF / Rust tiles; identity/FIR lead on exported factory geometry (domain shift, not buried).
-On true ReelSynth exports the searched favorite trails identity; we report that gap rather than claim universal factory superiority.
+Win conditions (\texttt{transfer\_failures.json}): favorite beats DualCosine on sine cliffs and most AKWF / Rust tiles; no-bake/FIR lead on exported factory geometry (domain shift, not buried).
+On true ReelSynth exports the searched favorite trails no-bake; we report that gap rather than claim universal factory superiority.
 
 \paragraph{Wrap-jump vs edge RMSE.}
 Primary claim remains prolonged $R$. Wrap-jump is diagnostic only.
@@ -42,4 +42,4 @@ At the reported $5$k-gate search freeze, GA and PBT lead branch-best residuals, 
 These per-branch readings are snapshots from a single hybrid run, not causally isolated single-branch experiments.
 Isolated short-budget re-runs (150 iterations, same search seed) confirm relative ordering under a fixed compute cap (Table~\ref{tab:ablation}).
 The multi-family SOTA matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws. Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
-On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails identity. That transfer gap matches the narrow Python training geometry.
+On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake. That transfer gap matches the narrow Python training geometry.

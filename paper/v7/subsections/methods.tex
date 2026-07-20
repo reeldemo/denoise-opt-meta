@@ -76,7 +76,7 @@ The remark is a design philosophy for procedural siblings.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Bake operator and DualCosine baseline}
+\subsection{Bake operator and baselines}
 \label{sec:bake}
 
 A \textbf{bake cell} $\Theta(\cdot;\theta)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual cells (MLP/FIR/U-Net-lite/attention-lite) and optional MoE soft gates over experts.
@@ -87,6 +87,13 @@ BLAMP corrects a \emph{slope}/corner jump.
 DualCosine fades endpoints without a BLEP residual.
 They are scored and illustrated in Section~\ref{sec:va-seam-baselines}.
 
+\paragraph{No-bake (passthrough) control.}
+\label{sec:no-bake}
+The \textbf{no-bake} baseline is the unrepaired cracked engine: $\Theta_{\mathrm{no\text{-}bake}}(x)=x$.
+Prolonged $R$ is computed against the ideal sibling with \emph{no} seam operator, fade, FIR, or neural cell applied.
+It is \emph{not} a residual-network skip connection, not a learned identity map, and not a repair method---only a reference ceiling on mild cliffs (residual mass $\ll$ ideal RMS under~\eqref{eq:R}).
+Released JSON artifacts may still use the legacy key \texttt{identity} for this control; manuscript tables and prose use \emph{no-bake}.
+
 \begin{algorithm}[t]
 \caption{DualCosine baseline}
 \label{alg:dualcosine}
@@ -94,6 +101,15 @@ They are scored and illustrated in Section~\ref{sec:va-seam-baselines}.
 \Require Engine cycle $x$
 \State Fade both ends of $x$ with raised-cosine windows of width $W$
 \State \Return $\mathrm{ResidualScore}(r^{\star},\,x_{\mathrm{faded}},\,N)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+\caption{No-bake (passthrough) control}
+\label{alg:no-bake}
+\begin{algorithmic}[1]
+\Require Engine cycle $x$ (open-wrap cliff present)
+\State \Return $\mathrm{ResidualScore}(r^{\star},\,x,\,N)$ \Comment{no operator: $x\mapsto x$}
 \end{algorithmic}
 \end{algorithm}
 
@@ -111,8 +127,9 @@ They are scored and illustrated in Section~\ref{sec:va-seam-baselines}.
 \subsection{Search space}
 \label{sec:search-space}
 
-Each genome encodes: ordered op list (fade, polish, FIR, pin, residual write), depth (number of composed blocks), residual cell type (none, MLP, FIR, U-Net-lite, attn-lite), optional MoE expert count $K\in\{2,3,4\}$, and continuous $\theta$ in box bounds used by the CUDA search runner (fade widths, FIR taps, residual scales).
-The live tag is \texttt{PPO+GA+PBT+NAS+depth+MoE}.
+Each genome encodes: ordered op list (fade, polish, FIR, pin, residual write), depth (number of composed blocks), residual cell type (none, MLP, FIR, U-Net-lite, attn-lite, LSTM-lite), optional MoE expert count $K\in\{2,3,4\}$, and continuous $\theta$ in box bounds used by the CUDA search runner (fade widths, FIR taps, residual scales).
+The searchable bake vocabulary includes a width-capped 1--2 layer LSTM block over the seam window or full cycle (distinct from the fixed supervised seq-LSTM SOTA baseline).
+The live hybrid tag is \texttt{PPO+GA+PBT+NAS+depth+MoE} with LSTM enabled in the block graph.
 
 \subsection{Training / fit inner loop}
 \label{sec:fit}
@@ -210,6 +227,20 @@ Reward for PPO is $R$ minus the DualCosine baseline on the same batch.
 \end{algorithmic}
 \end{algorithm}
 
+\subsection{Meta-learning approach comparison}
+\label{sec:meta-compare}
+
+Beyond the hybrid outer loop, we compare five additional outer-loop families under a matched $5{,}000$-evaluation budget, shared search seed \texttt{1902771841}, and the same FitCell / prolonged-$R$ protocol (LSTM included in the searchable bake vocabulary):
+\begin{itemize}
+  \item \textbf{Random search:} independent uniform draws over arch graphs and fit hyperparameters (control).
+  \item \textbf{CMA-ES:} diagonal covariance-matrix adaptation over a continuous encoding of depth, width, cell kind, block logits, and fit hyperparameters~\cite{hansen2016cmaes}.
+  \item \textbf{REINFORCE:} vanilla policy gradient over discrete architecture edit actions (no clipped surrogate; contrast to PPO~\cite{schulman2017,zoph2017nas}).
+  \item \textbf{Aging evolution:} regularized evolution with oldest-member replacement after tournament parent selection~\cite{real2017large,real2019}, distinct from the hybrid's non-aging tournament GA branch.
+  \item \textbf{TPE:} lightweight tree-structured Parzen estimator over discrete arch categoricals in the spirit of practical Bayesian optimization~\cite{snoek2012}.
+\end{itemize}
+We also re-run the hybrid loop for $5{,}000$ evaluations with LSTM in the block vocabulary (\texttt{hybrid\_lstm}) as an ``ours (+LSTM)'' arm for fair comparison.
+Results appear in Table~\ref{tab:meta-approaches} and Figure~\ref{fig:meta-approach-compare}.
+
 \begin{remark}[Trial complexity]
 \label{rem:complexity}
 Per outer iteration the dominant cost is $O(T_{\mathrm{fit}}\cdot C_{\mathrm{fwd}})$ for fit steps times one forward bake.
@@ -227,7 +258,7 @@ Canonical companion pseudocode lives in \texttt{docs/PSEUDOCODE.md} (mirrored Al
 \begin{table}[t]
   \centering
   \small
-  \caption{Hybrid search hyperparameters (RTX~3090 runner defaults from \texttt{overnight\_gpu\_rl\_arch.py} / \texttt{denoise\_meta\_evo.py}).}
+  \caption{Hybrid search hyperparameters (RTX~3090 DenoiseOpt CUDA search runner / \texttt{denoise\_meta\_evo.py} defaults).}
   \label{tab:hyperparams}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lp{0.48\columnwidth}@{}}

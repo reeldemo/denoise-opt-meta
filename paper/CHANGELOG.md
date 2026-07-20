@@ -12,6 +12,11 @@
 
 ## v7 notes (current)
 
+### Nomenclature: identity → no-bake (20 July 2026)
+- Renamed the unrepaired-engine control from **identity** to **No-bake (passthrough)** in manuscript prose/tables.
+- Defined in Methods (`sec:no-bake`): $f(x)=x$; not a residual skip; legacy JSON key remains `identity`.
+- See `paper/v7/NOMENCLATURE.md`.
+
 ### Classical VA seam techniques figure (20 July 2026)
 - Added `fig_va_seam_techniques.png` (ideal / cracked / BLIT/BLEP / PolyBLEP / BLAMP / DualCosine on tile 46, seed `20260719`).
 - Expanded Section `sec:va-seam-baselines` with plain-language operator roles + tile $R$ caption.

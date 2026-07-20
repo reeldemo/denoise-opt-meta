@@ -63,13 +63,13 @@ Hybrid GA--PPO Meta-Search}
     On a frozen canonical sine{+}cliff holdout (seed~\texttt{20260719}), the compact meta-favorite
     achieves $R\approx 0.991$ versus DualCosine $R\approx 0.825$ ($\Delta R={+}0.166$).
     Hard-cliff strata (top 10\% wrap-jump, $n{=}410$) keep favorite $R\approx 0.9915$ while DualCosine
-    falls to $R\approx 0.657$; identity $R$ stays high ($\approx 0.967$) because residual mass is small
-    relative to ideal RMS.
+    falls to $R\approx 0.657$; no-bake $R$ stays high ($\approx 0.967$) because residual mass is small
+    relative to ideal RMS (unrepaired engine / passthrough, $x\mapsto x$).
     A same-generator corrupt$\to$corrupt Noise2Noise control reaches $R\approx 0.992$; a supervised
     LSTM sibling ceiling reaches $R\approx 0.995$.
     Wavetable-native transfer uses true ReelSynth-exported factory periods ($n{=}25$) and external
     AKWF CC0 single-cycle WAVs ($n{=}24$) under the same wrap protocol (no LibriSpeech/MUSDB).
-    On exports the favorite trails identity (domain shift); on AKWF it matches identity and beats DualCosine.
+    On exports the favorite trails no-bake (domain shift); on AKWF it matches no-bake and beats DualCosine.
     Scope is strictly cycle-local wavetable seam restoration aimed at DSP / synthesis venues
     (DAFx / AES / arXiv cs.SD).
   \end{abstract}
