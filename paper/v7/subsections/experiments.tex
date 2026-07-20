@@ -46,7 +46,7 @@ Figures in Section~\ref{sec:results} regenerate from \texttt{history.jsonl} near
 \paragraph{Inference, classical, and learned baselines.}
 High-$R$ fitted cells ($R\ge 0.98$) are timed on CUDA (batch 64, prolonged residual).
 Ten non-learnable bake denoisers share the frozen canonical holdout against the neural favorite (Table~\ref{tab:canonical-methods}).
-Cycle-local BLIT/BLEP, PolyBLEP, and BLAMP seam repairs are scored on the same holdout / cliff / multi-family protocol (Table~\ref{tab:va-seam-blep}; \texttt{va\_seam\_blep.json}).
+Cycle-local BLIT/BLEP, PolyBLEP, and BLAMP seam repairs are scored on the same holdout / cliff / multi-family protocol (Table~\ref{tab:va-seam-blep}; \texttt{va\_seam\_blep.json}) and illustrated on the intro high-wrap tile (Figure~\ref{fig:va-seam-techniques}).
 Fixed-arch MLP-on-$R$ and CNN/U-Net-lite-on-$R$ baselines (no outer NAS) are trained on $1{-}R$ with the same generator and scored in the SOTA matrix.
 Phase~B adds a primary corrupt$\to$corrupt Noise2Noise seam CNN (train seed \texttt{424242}, disjoint from holdout), a secondary sibling-supervised ceiling on the same architecture, and lightweight LSTM / depthwise 1D-CNN seq restorers (train seed \texttt{424243}).
 No search-champion weights initialize those baselines.

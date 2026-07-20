@@ -81,7 +81,11 @@ The remark is a design philosophy for procedural siblings.
 
 A \textbf{bake cell} $\Theta(\cdot;\theta)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual cells (MLP/FIR/U-Net-lite/attention-lite) and optional MoE soft gates over experts.
 Bake parameters $\theta$ live in a bounded box. Architecture strings are discrete graphs over those ops.
-Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile (same interface as DualCosine / FIR; not a full oscillator rewrite). They are scored in Section~\ref{sec:va-seam-baselines}.
+Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile (same interface as DualCosine / FIR; not a full oscillator rewrite).
+Plain-language roles: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap.
+BLAMP corrects a \emph{slope}/corner jump.
+DualCosine fades endpoints without a BLEP residual.
+They are scored and illustrated in Section~\ref{sec:va-seam-baselines}.
 
 \begin{algorithm}[t]
 \caption{DualCosine baseline}

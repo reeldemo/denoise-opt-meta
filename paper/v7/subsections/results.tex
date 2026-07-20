@@ -241,18 +241,41 @@ Methods that zero wrap-jump are not the same objective as prolonged $R$; we do n
 \label{sec:va-seam-baselines}
 
 RQ: do the cited VA antialias tools~\cite{stilson1996,nam2009polyblep,esqueda2016blamp} beat DualCosine on prolonged $R$ when applied as cycle-local seam residuals?
-Table~\ref{tab:va-seam-blep} scores three bake approximations on the frozen holdout (seed \texttt{20260719}, batch 64), with hard-cliff and 20-wave means from \texttt{va\_seam\_blep.json}.
+
+\paragraph{What each operator changes.}
+Figure~\ref{fig:va-seam-techniques} shows the family on one high-wrap sine{+}cliff tile (same seed and tile as Figure~\ref{fig:intro-sine}).
+\textbf{BLIT/BLEP} (Stilson/Smith lineage) treats the wrap as a value step.
+It subtracts a band-limited step residual (here a raised-cosine BLEP-family lobe scaled by the measured wrap jump) so the tiled click spectrum is softened near the seam.
+\textbf{PolyBLEP} (Nam et al.) is a cheap polynomial surrogate of that step residual with fractional-delay support near phase wrap.
+It edits only a few samples on each side of the discontinuity.
+\textbf{BLAMP} (Esqueda et al.) corrects a slope or corner jump (discontinuity in the first derivative), which matters for triangles, rectification, and hard clipping.
+On a pure value cliff the slope jump is small, so BLAMP is nearly an identity map.
+\textbf{DualCosine} (our classical bake baseline) fades both ends of the stored period with raised-cosine windows.
+It does not insert a BLEP-style residual. It trades wrap energy for a wide end-fade distortion that prolonged $R$ penalizes on hard cliffs.
+
+\paragraph{Scores.}
+Table~\ref{tab:va-seam-blep} reports batch means from \texttt{va\_seam\_blep.json} (seed \texttt{20260719}, batch 64).
 Implementation: \texttt{reelsynth/scripts/baselines/va\_seam\_blep.py} (PolyBLEP matches \texttt{osc::va::poly\_blep}; BLIT/BLEP uses a raised-cosine step residual; BLAMP applies a polyBLAMP lobe to the wrap slope jump).
-PolyBLEP reaches $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine) but trails identity / \texttt{seam\_fir3} / the meta favorite.
-BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping $R$ to $0.868$ and collapsing on hard cliffs ($R\approx 0.712$).
-BLAMP is near-identity on this value-cliff geometry ($R\approx 0.972$), as expected for a slope/corner operator.
-Honest reading: these classical tools are now scored, not only cited; they do not dominate DualCosine on every secondary, and none matches the favorite on prolonged $R$.
+PolyBLEP reaches mean $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine) but trails identity / \texttt{seam\_fir3} / the meta favorite.
+BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping mean $R$ to $0.868$ and collapsing on hard cliffs ($R\approx 0.712$).
+BLAMP is near-identity on this value-cliff geometry (mean $R\approx 0.972$).
+On the annotated severe tile in Figure~\ref{fig:va-seam-techniques}, tile $R$ is lower still (PolyBLEP $\approx 0.869$, BLIT/BLEP $\approx 0.703$, DualCosine $\approx 0.603$, BLAMP $\approx$ engine), which matches the hard-cliff strata.
+Honest reading: these classical tools are now scored, not only cited.
+They beat DualCosine on mean $R$ in places.
+None matches the favorite on prolonged $R$.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig_va_seam_techniques.png}
+  \caption{Classical VA seam techniques on one cracked sine{+}cliff tile (seed~\texttt{20260719}, tile~46, $|wrap|{=}2.283$, $L{=}256$, three tiled periods). Yellow band marks the first seam neighborhood. Panel tile $R$ (1~=~best): (a)~ideal (unscored sibling). (b)~cracked engine $R{=}0.9503$. (c)~BLIT/BLEP step residual $R{=}0.7026$. (d)~PolyBLEP fractional-delay residual $R{=}0.8685$. (e)~BLAMP slope/corner residual $R{=}0.9504$ (near identity on value cliffs). (f)~DualCosine end fade $R{=}0.6029$. Colorblind-safe hues with distinct linestyles for B\&W print. Batch means appear in Table~\ref{tab:va-seam-blep}. Accessibility: six-panel comparison of ideal, cracked, BLIT/BLEP, PolyBLEP, BLAMP, and DualCosine.}
+  \label{fig:va-seam-techniques}
+\end{figure*}
 
 \begin{table*}[t]
   \centering
   \caption{Classical VA seam repairs on the residual protocol (seed \texttt{20260719}).
-  Canonical holdout: $R$, SNR/SDR, wrap-jump, edge RMSE, ms/batch.
-  Cliff top-10\%: $R$ and edge RMSE ($n{=}410$).
+  Canonical holdout: $R$, SNR/SDR, wrap-jump, edge RMSE.
+  Cliff top-10\%: $R$ ($n{=}410$).
   Multi: mean $R$ over 20 generative waveforms.}
   \label{tab:va-seam-blep}
   \setlength{\tabcolsep}{2.5pt}

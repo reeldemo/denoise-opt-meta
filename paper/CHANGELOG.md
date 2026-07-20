@@ -12,6 +12,11 @@
 
 ## v7 notes (current)
 
+### Classical VA seam techniques figure (20 July 2026)
+- Added `fig_va_seam_techniques.png` (ideal / cracked / BLIT/BLEP / PolyBLEP / BLAMP / DualCosine on tile 46, seed `20260719`).
+- Expanded Section `sec:va-seam-baselines` with plain-language operator roles + tile $R$ caption.
+- Meta: `figures/fig_va_seam_techniques.json`. Plot script lives in reelsynth (`scripts/plot_va_seam_techniques.py`).
+
 ### Weakness elimination F1–F5 (19 July 2026)
 - F1: primary realism = true ReelSynth-exported factory periods ($n{=}25$); secondary = AKWF CC0 WAVs ($n{=}24$); procedural demoted.
 - F3: edge RMSE locked as required seam-local secondary; endpoint-pin jump control; `tab:cliff-edge-rmse`.
