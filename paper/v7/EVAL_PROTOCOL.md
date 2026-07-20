@@ -30,6 +30,7 @@ See also `NOMENCLATURE.md`.
 ## Comparison policy
 
 - **Objective / reward:** maximize prolonged $R$ toward the ideal sibling (best $R{=}1$). Closer to $r^{\star}$ $\Rightarrow$ larger $R$ $\Rightarrow$ better.
+- **Near-ceiling regime:** no-bake often $\approx 0.97$; useful gains are $10^{-3}$--$10^{-2}$ absolute. Reward shaping and search HPs are co-tuned with architecture.
 - **Primary reporting:** absolute $R$ of every method vs the same $r^{\star}$.
 - **Classical board (required):** always report learned/searched methods against non-AI rows (no-bake, DualCosine, `seam_fir3`, poly, fades, VA), not DualCosine alone.
 - **$\Delta R$ vs DualCosine:** optional reporting gap vs one classical bake; PPO may center advantages as $R-R_{\mathrm{DualCosine}}$, but DualCosine is not the reward target.

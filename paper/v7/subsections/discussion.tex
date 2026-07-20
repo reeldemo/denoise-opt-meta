@@ -10,6 +10,7 @@ The same generator families repeatedly dominate the residual budget: \texttt{non
 Canonical no-bake $R\approx 0.97$ looks ``easy'' only if one treats $R$ as a perceptual wrap score or confuses no-bake with the ideal sibling.
 No-bake is the unrepaired engine scored against $r^{\star}$; the ideal withholds the cliff and is never a method output.
 Under~\eqref{eq:R}, small residual RMS relative to ideal RMS yields high $R$ even when $|x_0-x_{L-1}|$ is large.
+That same near-ceiling regime is why tiny $\Delta R$ still matters operationally: climbing $0.97\to 0.991$ is most of the remaining residual budget, yet raw score differences are small enough that reward shaping and outer-loop hyperparameters must be tuned with the architecture (Section~\ref{sec:reward-shaping}).
 Hard-cliff strata make the operative regime explicit: DualCosine drops to $R\approx 0.657$ on the top-10\% wrap-jump tiles while the favorite stays near $0.9915$.
 Favorite wrap-jump barely moves toward zero on that subset.
 We claim tiled residual repair toward $r^{\star}$, not endpoint closure.
@@ -35,13 +36,15 @@ The contribution is aimed at DSP / synthesis artifact repair (DAFx / AES / arXiv
 
 \paragraph{Hybrid search vs.\ plateau.}
 Search traces at the $5$k gate show early high champions then long plateaus near $R\approx 0.99$.
+That plateau is expected under near-ceiling $R$: further gains are small in absolute units and sensitive to reward shaping, entropy/clip, mutation rates, and plateau-triggered branch reweighting.
 Plateau adaptation (deeper cells, denser MoE graphs, higher GA/PBT weight) is the operational response inside one campaign. It does not by itself rebalance family-conditional risk.
-A natural next paper is family-conditional and cliff-conditional meta-learning: train or select denoisers per family, or condition the outer loop on measured wrap statistics, and publish per-family residual curves beside the scalar champion.
+A natural next paper is family-conditional and cliff-conditional meta-learning: train or select denoisers per family, or condition the outer loop on measured wrap statistics, and publish per-family residual curves beside the scalar champion---together with ablations of reward shaping under the same compressed-$R$ regime.
 
 \paragraph{Hybrid branches.}
 At the reported $5$k-gate search freeze, GA and PBT lead branch-best residuals, with PPO close behind and NAS trailing on this seed (Table~\ref{tab:ablation}).
 These per-branch readings are snapshots from a single hybrid run, not causally isolated single-branch experiments.
 Isolated short-budget re-runs (150 iterations, same search seed) confirm relative ordering under a fixed compute cap (Table~\ref{tab:ablation}).
+The matched $5$k outer-loop comparison (Table~\ref{tab:meta-approaches}, Figure~\ref{fig:meta-approach-compare}) places random search, CMA-ES, REINFORCE, aging evolution, and TPE beside the hybrid (+LSTM) arm under a shared seed and bake vocabulary that includes searchable LSTM blocks.
 The multi-family SOTA matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws, and ahead of no-bake / FIR on absolute $R$ on that same generator.
 Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
 On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake / FIR. That transfer gap matches the narrow Python training geometry.

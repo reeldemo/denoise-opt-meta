@@ -179,8 +179,16 @@ The live hybrid tag is \texttt{PPO+GA+PBT+NAS+depth+MoE} with LSTM enabled in th
 
 Each iteration rotates among branches: PPO, GA, PBT, NAS, and combo.
 Selection and FitCell are always by absolute residual $R$ (maximize toward the ideal sibling; loss $1-R$).
-For PPO credit assignment only, the scalar advantage signal is centered as $\rho = R - R_{\mathrm{DualCosine}}$ on the same batch (constant shift; does not redefine the objective).
-The reward is larger when $R$ is closer to the best possible value ($R{\to}1$), not when DualCosine is matched.
+The reward is larger when $R$ is closer to the best possible value ($R{\to}1$).
+
+\paragraph{Near-ceiling $R$ and why reward / search HPs matter.}
+\label{sec:reward-shaping}
+On the sine{+}cliff generator, no-bake already sits near $R\approx 0.97$, and strong classical / searched bakes live in a narrow band toward $1$ (often $0.99$--$0.991$).
+Absolute gaps of order $10^{-3}$--$10^{-2}$ are scientifically real (closer to $r^{\star}$) but tiny as raw PPO/GA signals: without shaping, advantages collapse and hyperparameters (clip, entropy, mutation rate, population size, fit steps, learning rate) dominate whether the outer loop can climb the last percent.
+We therefore treat \textbf{reward shaping and search hyperparameters as first-class tunables} alongside bake architecture---not as fixed afterthoughts.
+In the present hybrid, PPO uses a centered advantage $\rho = R - R_{\mathrm{DualCosine}}$ so early credit assignment is not stuck near a $0.97$ floor; DualCosine centering is one shaping choice, not the objective.
+PBT mutates fit / PPO hyperparameters in-population; plateau adaptation retunes branch mix and depth/MoE bias when champions stall.
+The matched $5$k meta-approach comparison (Section~\ref{sec:meta-compare}) further asks which outer-loop family best exploits this compressed residual regime under a shared FitCell budget.
 
 \begin{algorithm}[t]
 \caption{GA tournament step}
@@ -269,12 +277,13 @@ Bake-width caps (tiny residual cells) keep $C_{\mathrm{fwd}}$ far below full-ban
 \label{sec:hyperparams}
 
 Table~\ref{tab:hyperparams} lists the CUDA search defaults used for the $5$k-gate freeze reported in Results.
+Under the near-ceiling residual regime (Section~\ref{sec:reward-shaping}), these outer-loop and fit hyperparameters are co-tuned with architecture; PBT and plateau adaptation continue to mutate several of them online.
 Canonical companion pseudocode lives in \texttt{docs/PSEUDOCODE.md} (mirrored Algorithms~\ref{alg:residual}--\ref{alg:hybrid}).
 
 \begin{table}[t]
   \centering
   \small
-  \caption{Hybrid search hyperparameters (RTX~3090 DenoiseOpt CUDA search runner / \texttt{denoise\_meta\_evo.py} defaults).}
+  \caption{Hybrid search hyperparameters (RTX~3090 DenoiseOpt CUDA search runner / \texttt{denoise\_meta\_evo.py} defaults). Co-tuned with reward shaping under near-ceiling $R$ (Section~\ref{sec:reward-shaping}).}
   \label{tab:hyperparams}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lp{0.48\columnwidth}@{}}

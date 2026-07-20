@@ -12,6 +12,10 @@
 
 ## v7 notes (current)
 
+### Near-ceiling R and reward/HP tuning (20 July 2026)
+- Methods/Discussion: no-bake $\approx 0.97$ compresses absolute $\Delta R$; reward shaping and search hyperparameters are first-class tunables with architecture (sec:reward-shaping).
+- DualCosine centering framed as one shaping choice under that regime, not the objective.
+
 ### Objective vs DualCosine centering (20 July 2026)
 - Clarified: reward/objective is maximize prolonged $R$ toward the ideal sibling (best $R{=}1$); DualCosine is not the reward.
 - PPO uses $\rho{=}R-R_{\mathrm{DualCosine}}$ only as constant advantage centering; selection/FitCell use absolute $R$.
