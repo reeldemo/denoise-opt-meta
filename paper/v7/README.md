@@ -26,10 +26,10 @@ PDFs land in `artifacts/literature_oa/pdfs/`. Inventory: `artifacts/literature_o
 
 ## Figures
 
-Regenerate overnight plots from the live history (one command):
+Regenerate search learning curves and dataset distribution plots (one command):
 
 ```powershell
-powershell -File paper/v7/regen_overnight_figures.ps1
+powershell -File paper/v7/regen_search_figures.ps1
 ```
 
 ## Style
