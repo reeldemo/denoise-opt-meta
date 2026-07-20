@@ -28,17 +28,17 @@ Endpoint-pin zeros wrap-jump while hurting $R$, confirming the objectives differ
 
 \paragraph{Implication for this paper.}
 Mean $R$ (and mean DualCosine gaps) therefore compress a structured difficulty map.
-Reporting only the overnight mean on synthetic sine cliffs understates how much of the remaining $\sim$1\% sits in a few hard families, and how DualCosine fails when wrap-jump is large.
+Reporting only the search-campaign mean on synthetic sine cliffs understates how much of the remaining $\sim$1\% sits in a few hard families, and how DualCosine fails when wrap-jump is large.
 Hard-cliff strata and wavetable-native transfer (true exports + AKWF) are first-class empirical claims of the present work.
 The contribution is aimed at DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD), not general speech-enhancement leaderboards.
 
 \paragraph{Hybrid search vs.\ plateau.}
-Overnight traces at the $5$k gate show early high champions then long plateaus near $R\approx 0.99$.
+Search traces at the $5$k gate show early high champions then long plateaus near $R\approx 0.99$.
 Plateau adaptation (deeper cells, denser MoE graphs, higher GA/PBT weight) is the operational response inside one campaign. It does not by itself rebalance family-conditional risk.
 A natural next paper is family-conditional and cliff-conditional meta-learning: train or select denoisers per family, or condition the outer loop on measured wrap statistics, and publish per-family residual curves beside the scalar champion.
 
 \paragraph{Hybrid branches.}
-At the reported overnight freeze, GA and PBT lead branch-best residuals, with PPO close behind and NAS trailing on this seed (Table~\ref{tab:ablation}).
+At the reported $5$k-gate search freeze, GA and PBT lead branch-best residuals, with PPO close behind and NAS trailing on this seed (Table~\ref{tab:ablation}).
 These per-branch readings are snapshots from a single hybrid run, not causally isolated single-branch experiments.
 Isolated short-budget re-runs (150 iterations, same search seed) confirm relative ordering under a fixed compute cap (Table~\ref{tab:ablation}).
 The multi-family SOTA matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws. Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.

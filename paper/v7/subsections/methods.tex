@@ -81,6 +81,7 @@ The remark is a design philosophy for procedural siblings.
 
 A \textbf{bake cell} $\Theta(\cdot;\theta)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual cells (MLP/FIR/U-Net-lite/attention-lite) and optional MoE soft gates over experts.
 Bake parameters $\theta$ live in a bounded box. Architecture strings are discrete graphs over those ops.
+Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile (same interface as DualCosine / FIR; not a full oscillator rewrite). They are scored in Section~\ref{sec:va-seam-baselines}.
 
 \begin{algorithm}[t]
 \caption{DualCosine baseline}
@@ -106,7 +107,7 @@ Bake parameters $\theta$ live in a bounded box. Architecture strings are discret
 \subsection{Search space}
 \label{sec:search-space}
 
-Each genome encodes: ordered op list (fade, polish, FIR, pin, residual write), depth (number of composed blocks), residual cell type (none, MLP, FIR, U-Net-lite, attn-lite), optional MoE expert count $K\in\{2,3,4\}$, and continuous $\theta$ in box bounds used by the overnight runner (fade widths, FIR taps, residual scales).
+Each genome encodes: ordered op list (fade, polish, FIR, pin, residual write), depth (number of composed blocks), residual cell type (none, MLP, FIR, U-Net-lite, attn-lite), optional MoE expert count $K\in\{2,3,4\}$, and continuous $\theta$ in box bounds used by the CUDA search runner (fade widths, FIR taps, residual scales).
 The live tag is \texttt{PPO+GA+PBT+NAS+depth+MoE}.
 
 \subsection{Training / fit inner loop}
@@ -216,13 +217,13 @@ Bake-width caps (tiny residual cells) keep $C_{\mathrm{fwd}}$ far below full-ban
 \subsection{Hyperparameters}
 \label{sec:hyperparams}
 
-Table~\ref{tab:hyperparams} lists the overnight CUDA defaults used for the $5$k-gate freeze reported in Results.
+Table~\ref{tab:hyperparams} lists the CUDA search defaults used for the $5$k-gate freeze reported in Results.
 Canonical companion pseudocode lives in \texttt{docs/PSEUDOCODE.md} (mirrored Algorithms~\ref{alg:residual}--\ref{alg:hybrid}).
 
 \begin{table}[t]
   \centering
   \small
-  \caption{Overnight hybrid search hyperparameters (RTX~3090 runner defaults from \texttt{overnight\_gpu\_rl\_arch.py} / \texttt{denoise\_meta\_evo.py}).}
+  \caption{Hybrid search hyperparameters (RTX~3090 runner defaults from \texttt{overnight\_gpu\_rl\_arch.py} / \texttt{denoise\_meta\_evo.py}).}
   \label{tab:hyperparams}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lp{0.48\columnwidth}@{}}

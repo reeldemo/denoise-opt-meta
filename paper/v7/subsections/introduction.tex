@@ -23,7 +23,7 @@ Panels (e)--(f) plot the modulation residual and a seam zoom so the favorite's c
 
 Classical virtual-analog practice already supplies seam-local tools.
 Alias-free BLIT/BLEP-style synthesis~\cite{stilson1996}, PolyBLEP / fractional-delay antialiasing~\cite{nam2009polyblep}, and BLAMP corner corrections~\cite{esqueda2016blamp} reduce wrap and geometric discontinuity energy in-band.
-Those operators act locally.
+Those operators act locally; we score cycle-local bake approximations of them beside DualCosine (Section~\ref{sec:va-seam-baselines}).
 They leave open which bake parameters and which residual cell, if any, minimize prolonged tiled error against a no-cliff ideal.
 Label-free restoration work such as Noise2Noise shows that useful reconstructors can be ranked without paired clean targets when the evaluation geometry is explicit~\cite{lehtinen2018}.
 Speech-domain Noise2Noise denoisers extend that idea to audio waveforms~\cite{kashyap2021n2n}.
@@ -39,7 +39,7 @@ Each candidate is scored by prolonged residual $R\in[0,1]$ (1~=~best) between en
 Paired studio-clean wavetables are not required for every trial.
 Differentiable DSP modules~\cite{engel2020} place DualCosine / FIR / MLP seam ops in an interpretable stack.
 Bayesian HPO~\cite{snoek2012} informs prior families that compete under the same $R$.
-A CUDA overnight campaign (PPO+GA+PBT+NAS, depth and MoE biases) has passed a $5{,}000$-iteration clean gate with champion $R\approx 0.9909$ versus DualCosine $\approx 0.8166$ on the runner geometry.
+A CUDA hybrid search campaign (PPO+GA+PBT+NAS, depth and MoE biases) has passed a $5{,}000$-iteration clean gate with champion $R\approx 0.9909$ versus DualCosine $\approx 0.8166$ on the runner geometry.
 The frozen canonical holdout and inference benches in Section~\ref{sec:results} are the measured evaluation matrices for this report.
 We do not claim general speech or music enhancement SOTA.
 

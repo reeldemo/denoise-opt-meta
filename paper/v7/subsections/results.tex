@@ -7,9 +7,9 @@ On the fitted DenoiseOpt $100{,}000$-cycle bench, denoise score $D$ is lowest fo
 Lit-combo champion family stress (prolonged residual) similarly ranks \texttt{open\_wrap\_bias} ($R\approx 0.83$) and \texttt{extreme\_overlay} / \texttt{combo} ($R\approx 0.88$--$0.89$) below \texttt{harmonic\_fft} ($R\approx 0.95$).
 Hard sounds recur.
 
-\paragraph{Overnight hybrid ($5$k-gate freeze).}
-RQ: what champion $R$ does the hybrid overnight search reach at the clean $5$k-iteration gate?
-At the reported overnight freeze ($\approx 6{,}922$ clean iterations, $\approx 7.9$\,h on RTX~3090) the champion residual is $R\approx 0.99093$ with DualCosine $\approx 0.81658$ on the overnight runner ($\Delta R\approx{+}0.174$).
+\paragraph{Hybrid search ($5$k-gate freeze).}
+RQ: what champion $R$ does the hybrid search campaign reach at the clean $5$k-iteration gate?
+At the reported $5$k-gate search freeze ($\approx 6{,}922$ clean iterations, $\approx 7.9$\,h on RTX~3090) the champion residual is $R\approx 0.99093$ with DualCosine $\approx 0.81658$ on the CUDA search runner ($\Delta R\approx{+}0.174$).
 Monitoring plots below are regenerated from that freeze.
 Declared larger budgets continue. This paper reports the gate freeze only.
 
@@ -30,7 +30,7 @@ and skipping near-duplicate copies of the same topology signature.
 
 \begin{table}[t]
   \centering
-  \caption{Top-5 distinct fitted architectures on the CUDA inference bench (batch 64, prolonged $R$, seed geometry matching overnight). Favorite is latency-best inside the near-max-$R$ band ($R\ge R_{\max}-5\cdot10^{-4}$).}
+  \caption{Top-5 distinct fitted architectures on the CUDA inference bench (batch 64, prolonged $R$, seed geometry matching the search campaign). Favorite is latency-best inside the near-max-$R$ band ($R\ge R_{\max}-5\cdot10^{-4}$).}
   \label{tab:top5}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrrrr@{}}
@@ -49,7 +49,7 @@ and skipping near-duplicate copies of the same topology signature.
 
 \paragraph{Classical vs favorite (canonical holdout).}
 Table~\ref{tab:canonical-methods} scores the classical bake set plus DualCosine and the neural favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}).
-DualCosine reaches $R\approx 0.825$ ($\approx 1.35$\,ms/batch), near the overnight monitor DualCosine $\approx 0.817$ on live draws from the same generator.
+DualCosine reaches $R\approx 0.825$ ($\approx 1.35$\,ms/batch), near the search-monitor DualCosine $\approx 0.817$ on live draws from the same generator.
 The best \emph{active} classical method is seam-local 3-tap FIR (\texttt{seam\_fir3}) at $R\approx 0.961$ / $\approx 0.67$\,ms/batch ($0.962\pm0.002$ over five seeds).
 Identity (no-op) scores $R\approx 0.972$ and is a ceiling only.
 The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) at $\approx 2.56$\,ms/batch ($\approx 37$k params): $\Delta R \approx {+}0.030$ vs \texttt{seam\_fir3} and $\Delta R \approx {+}0.166$ vs DualCosine.
@@ -237,6 +237,40 @@ SSM seq models are deferred; the LSTM remains the supervised seq ceiling.
 An endpoint-pin control (\texttt{jump\_control.json}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$; hard $0.822$).
 Methods that zero wrap-jump are not the same objective as prolonged $R$; we do not claim wrap-jump SOTA for the favorite.
 
+\subsection{Classical VA seam repairs (BLIT/BLEP, PolyBLEP, BLAMP)}
+\label{sec:va-seam-baselines}
+
+RQ: do the cited VA antialias tools~\cite{stilson1996,nam2009polyblep,esqueda2016blamp} beat DualCosine on prolonged $R$ when applied as cycle-local seam residuals?
+Table~\ref{tab:va-seam-blep} scores three bake approximations on the frozen holdout (seed \texttt{20260719}, batch 64), with hard-cliff and 20-wave means from \texttt{va\_seam\_blep.json}.
+Implementation: \texttt{reelsynth/scripts/baselines/va\_seam\_blep.py} (PolyBLEP matches \texttt{osc::va::poly\_blep}; BLIT/BLEP uses a raised-cosine step residual; BLAMP applies a polyBLAMP lobe to the wrap slope jump).
+PolyBLEP reaches $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine) but trails identity / \texttt{seam\_fir3} / the meta favorite.
+BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping $R$ to $0.868$ and collapsing on hard cliffs ($R\approx 0.712$).
+BLAMP is near-identity on this value-cliff geometry ($R\approx 0.972$), as expected for a slope/corner operator.
+Honest reading: these classical tools are now scored, not only cited; they do not dominate DualCosine on every secondary, and none matches the favorite on prolonged $R$.
+
+\begin{table*}[t]
+  \centering
+  \caption{Classical VA seam repairs on the residual protocol (seed \texttt{20260719}).
+  Canonical holdout: $R$, SNR/SDR, wrap-jump, edge RMSE, ms/batch.
+  Cliff top-10\%: $R$ and edge RMSE ($n{=}410$).
+  Multi: mean $R$ over 20 generative waveforms.}
+  \label{tab:va-seam-blep}
+  \setlength{\tabcolsep}{2.5pt}
+  \begin{tabular}{@{}lrrrrrrr@{}}
+    \toprule
+    Method & $R$ & SNR & SDR & jump & edge & top10 $R$ & multi $R$ \\
+    \midrule
+    BLAMP & 0.9718 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9667 & 0.965 \\
+    identity & 0.9718 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9667 & 0.965 \\
+    \texttt{seam\_fir3} & 0.9610 & 29.6 & 29.6 & 0.438 & 0.112 & 0.9429 & 0.955 \\
+    PolyBLEP & 0.9288 & 25.9 & 25.8 & 0.102 & 0.205 & 0.8641 & 0.924 \\
+    BLIT/BLEP & 0.8680 & 20.4 & 20.3 & 0.004 & 0.365 & 0.7116 & 0.860 \\
+    DualCosine & 0.8249 & 18.0 & 17.8 & 0.292 & 0.506 & 0.6574 & 0.814 \\
+    \bottomrule
+  \end{tabular}\\[0.3em]
+  {\footnotesize Latency (canonical, CUDA): PolyBLEP $\approx 1.43$\,ms/batch; DualCosine $\approx 1.06$; BLIT/BLEP $\approx 123$; BLAMP $\approx 54$. Frozen in \texttt{va\_seam\_blep.json}.}
+\end{table*}
+
 \subsection{Transfer conditions}
 \label{sec:transfer}
 
@@ -250,19 +284,19 @@ Identity/FIR wins on mild seams and OOD factory geometry (honest domain shift, n
 \subsection{Ablations and compute}
 \label{sec:ablation-compute}
 
-RQ: how do overnight branch-best freezes compare to short isolated GA/PPO budgets, and what compute was used?
-Table~\ref{tab:ablation} reports two views. Overnight \emph{branch-best freezes} at the $5$k gate come from one hybrid history. Isolated short-budget re-runs (GA-only, PPO-only, GA{+}PPO, full) use 150 iters on the same search seed with plateau adapt off.
+RQ: how do search branch-best freezes compare to short isolated GA/PPO budgets, and what compute was used?
+Table~\ref{tab:ablation} reports two views. Search \emph{branch-best freezes} at the $5$k gate come from one hybrid history. Isolated short-budget re-runs (GA-only, PPO-only, GA{+}PPO, full) use 150 iters on the same search seed with plateau adapt off.
 Short-budget champions sit below the multi-hour freeze by construction. They are labeled as such.
-Table~\ref{tab:compute} summarizes the overnight compute budget. Peak VRAM is from an \texttt{nvidia-smi} poll during a short full-branch search replay (30 iters) plus a champion forward{+}FitCell replay. Overnight \texttt{history.jsonl} did not log memory.
+Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM is from an \texttt{nvidia-smi} poll during a short full-branch search replay (30 iters) plus a champion forward{+}FitCell replay. The campaign \texttt{history.jsonl} did not log memory.
 
 \begin{table}[t]
   \centering
-  \caption{Ablations. Left block: overnight branch-best freeze (run \texttt{gpu-rl-arch-20260719T083019Z}, final iter $\approx 6{,}922$). Right block: isolated short-budget re-runs (150 iters, seed \texttt{1902771841}, plateau adapt off). $R$ is prolonged residual on the runner geometry.}
+  \caption{Ablations. Left block: search branch-best freeze (run \texttt{gpu-rl-arch-20260719T083019Z}, final iter $\approx 6{,}922$). Right block: isolated short-budget re-runs (150 iters, seed \texttt{1902771841}, plateau adapt off). $R$ is prolonged residual on the runner geometry.}
   \label{tab:ablation}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
     \toprule
-    Config & Overnight freeze $R$ & Isolated 150-it $R$ \\
+    Config & Search freeze $R$ & Isolated 150-it $R$ \\
     \midrule
     Full hybrid & 0.99093 & 0.98113 \\
     GA-only & 0.99016 & 0.98062 \\
@@ -278,7 +312,7 @@ Table~\ref{tab:compute} summarizes the overnight compute budget. Peak VRAM is fr
 
 \begin{table}[t]
   \centering
-  \caption{Compute budget for the reported overnight freeze (RTX~3090, PyTorch $2.6$+cu124, search seed \texttt{1902771841}). Arch evaluations $\approx$ clean iterations.}
+  \caption{Compute budget for the reported $5$k-gate search freeze (RTX~3090, PyTorch $2.6$+cu124, search seed \texttt{1902771841}). Arch evaluations $\approx$ clean iterations.}
   \label{tab:compute}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lr@{}}
@@ -294,7 +328,7 @@ Table~\ref{tab:compute} summarizes the overnight compute budget. Peak VRAM is fr
     Peak VRAM (nvidia-smi replay) & $\approx 3.29$\,GiB \\
     \bottomrule
   \end{tabular}\\[0.4em]
-  {\footnotesize Peak memory: max \texttt{nvidia-smi} \texttt{memory.used} during a 30-iter full-branch search probe ($\approx 3.29$\,GiB) and champion forward{+}FitCell replay ($\approx 3.17$\,GiB). The multi-hour overnight process itself left no memory log. Idle GPU occupancy was already $\approx 3.0$\,GiB from other sessions.}
+  {\footnotesize Peak memory: max \texttt{nvidia-smi} \texttt{memory.used} during a 30-iter full-branch search probe ($\approx 3.29$\,GiB) and champion forward{+}FitCell replay ($\approx 3.17$\,GiB). The multi-hour search process itself left no memory log. Idle GPU occupancy was already $\approx 3.0$\,GiB from other sessions.}
 \end{table}
 
 \subsection{Rust \texttt{sound\_bench} transfer (20 tiles)}
@@ -354,22 +388,22 @@ Honest transfer note: the favorite was searched on Python \texttt{make\_batch} s
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/champ_residual_vs_iter.png}
-  \caption{Overnight $5$k-gate freeze: champion residual $R$ versus clean search iteration (x-axis capped at $5{,}000$), with DualCosine baseline on the runner geometry (RTX~3090). Accessibility: black line with circle markers; DualCosine as a dashed gray baseline.}
+  \caption{$5$k-gate search freeze: champion residual $R$ versus clean search iteration (x-axis capped at $5{,}000$), with DualCosine baseline on the runner geometry (RTX~3090). Accessibility: black line with circle markers; DualCosine as a dashed gray baseline.}
   \label{fig:champ-residual}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/branch_bests_vs_iter.png}
-  \caption{Overnight $5$k-gate freeze: per-branch best residual trajectories (PPO/RL, GA, PBT, NAS, combo) versus iteration (x-axis capped at $5{,}000$). Accessibility: colorblind-safe colors plus distinct markers (circle, square, triangle, diamond, inverted triangle) for grayscale print.}
+  \caption{$5$k-gate search freeze: per-branch best residual trajectories (PPO/RL, GA, PBT, NAS, combo) versus iteration (x-axis capped at $5{,}000$). Accessibility: colorblind-safe colors plus distinct markers (circle, square, triangle, diamond, inverted triangle) for grayscale print.}
   \label{fig:branch-bests}
 \end{figure}
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/overnight_panel.png}
-  \caption{Full-width overnight monitoring panel at the $5$k-gate freeze (first $5{,}000$ iterations): champion $R$ (top) and branch-best trajectories (bottom). Markers and Okabe-Ito colors match Figure~\ref{fig:branch-bests}. Source: \texttt{history.jsonl}.}
-  \label{fig:overnight-panel}
+  \includegraphics[width=\textwidth]{figures/search_panel.png}
+  \caption{Full-width search monitoring panel at the $5$k-gate freeze (first $5{,}000$ iterations): champion $R$ (top) and branch-best trajectories (bottom). Markers and Okabe-Ito colors match Figure~\ref{fig:branch-bests}. Source: \texttt{history.jsonl}.}
+  \label{fig:search-panel}
 \end{figure*}
 
 \begin{figure}[t]
