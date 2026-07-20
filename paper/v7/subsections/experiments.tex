@@ -31,7 +31,8 @@ These Python generative variants stress harmonic / AM--FM / nonlinear / overlay 
 Separately, \texttt{export\_sound\_bench\_tiles} exports \textbf{20} Rust \texttt{sound\_bench} engine/ideal pairs (10 families $\times$ 2 seeds, $L{=}256$, byte-aligned with \texttt{generate\_sound} / \texttt{generate\_sound\_ideal}) scored under the same residual geometry as a secondary transfer block (Table~\ref{tab:rust-bench}).
 Every method sees the same tensors per waveform.
 \textbf{Primary classical comparison} is absolute prolonged $R$ against the non-AI board (no-bake, DualCosine, \texttt{seam\_fir3}, poly, fades, VA residuals; Section~\ref{sec:classical-board}).
-DualCosine is the paired baseline for search-reward $\Delta R$ and one Wilcoxon contrast; it is not the sole non-AI reference.
+The search objective is maximize $R$ toward the ideal sibling (best $R{=}1$).
+DualCosine is one classical comparator and a PPO centering constant; it is not the reward target.
 
 \paragraph{Dataset metrics.}
 A metrics draw of $4{,}096$ cycles under the holdout seed yields mean ideal RMS $0.721\pm0.016$, mean engine residual RMS $0.021\pm0.013$, and mean absolute wrap jump $|x_0-x_{L-1}|$ of $0.913\pm0.634$.

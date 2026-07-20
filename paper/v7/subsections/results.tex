@@ -94,7 +94,8 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
   \centering
   \caption{SOTA comparison on 20 generative waveforms (10 families $\times$ 2 seeds, batch 64).
   $R$/SNR/SDR/wrap-jump are multifamily mean$\pm$std. Rank by absolute $R$ vs the classical non-AI board (no-bake, poly, FIR, DualCosine, \ldots).
-  Column $\Delta R$* is vs DualCosine only (search-reward alignment; canonical freeze seed \texttt{20260719}); ms* likewise.
+  Column $\Delta R$* is vs DualCosine only (one classical gap for reporting; canonical freeze seed \texttt{20260719}); ms* likewise.
+  The search objective is maximize absolute $R$ toward the ideal sibling, not DualCosine matching.
   Modern baselines (N2N/seq/poly) use disjoint train seeds (\texttt{424242}/\texttt{424243}); poly is classical (no train).
   Primary metric $R$ (1~=~best; closer to ideal sibling). No PESQ/STOI/MUSHRA.}
   \label{tab:sota-main}
@@ -371,7 +372,7 @@ Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
-  \caption{Matched $5$k-budget meta-learning comparison: champion residual $R$ versus outer iteration (x-axis capped at $5{,}000$), including hybrid{+}LSTM/xLSTM. Placeholder until the fresh LSTM{+}xLSTM suite finishes; DualCosine dashed as search-reward reference only---rank methods on absolute $R$ vs the classical board in Table~\ref{tab:canonical-methods}. Accessibility: Okabe-Ito colors with distinct markers for grayscale print.}
+  \caption{Matched $5$k-budget meta-learning comparison: champion residual $R$ versus outer iteration (x-axis capped at $5{,}000$), including hybrid{+}LSTM/xLSTM. Placeholder until the fresh LSTM{+}xLSTM suite finishes. DualCosine dashed as one classical comparator only---objective is maximize absolute $R$ toward the ideal sibling; rank vs the classical board in Table~\ref{tab:canonical-methods}. Accessibility: Okabe-Ito colors with distinct markers for grayscale print.}
   \label{fig:meta-approach-compare}
 \end{figure}
 

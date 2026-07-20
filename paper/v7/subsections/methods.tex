@@ -105,8 +105,9 @@ Released JSON artifacts may still use the legacy key \texttt{identity} for this 
 \label{sec:classical-board}
 Learned / searched methods are always ranked against the full classical board on absolute $R$ (same $r^{\star}$):
 no-bake, DualCosine / cosine fade, \texttt{seam\_fir3}, classic quadratic, hann/crossfade/soft fades, detrend/ensemble, poly seam, and cycle-local BLIT/BLEP / PolyBLEP / BLAMP where scored.
-DualCosine is additionally the \emph{search-time reward reference} ($R-R_{\mathrm{DualCosine}}$ in PPO) because it is a cheap classical bake already in the operator vocabulary---not because it is the only classical comparator of interest.
-When we write $\Delta R$ without a qualifier in search-freeze tables, it means vs DualCosine; prose and SOTA rankings lead with absolute $R$ vs the classical board (esp.\ no-bake and \texttt{seam\_fir3}).
+The optimization objective is to \emph{maximize} prolonged $R$ toward the ideal sibling (best attainable $R{=}1$ under~\eqref{eq:R}); higher $R$ is strictly better.
+DualCosine appears in PPO as a \emph{constant centering} term ($\rho{=}R-R_{\mathrm{DualCosine}}$) so advantages are roughly zero-mean early in search---it is not the reward target and not the sole classical comparator.
+When tables show $\Delta R$ vs DualCosine, that is a reporting gap vs one classical bake, not the definition of reward.
 
 \begin{algorithm}[t]
 \caption{DualCosine baseline}
@@ -177,8 +178,9 @@ The live hybrid tag is \texttt{PPO+GA+PBT+NAS+depth+MoE} with LSTM enabled in th
 \label{sec:hybrid}
 
 Each iteration rotates among branches: PPO, GA, PBT, NAS, and combo.
-Selection is always by residual $R$ (plus logged auxiliaries).
-Reward for PPO is $R$ minus the DualCosine baseline on the same batch.
+Selection and FitCell are always by absolute residual $R$ (maximize toward the ideal sibling; loss $1-R$).
+For PPO credit assignment only, the scalar advantage signal is centered as $\rho = R - R_{\mathrm{DualCosine}}$ on the same batch (constant shift; does not redefine the objective).
+The reward is larger when $R$ is closer to the best possible value ($R{\to}1$), not when DualCosine is matched.
 
 \begin{algorithm}[t]
 \caption{GA tournament step}
@@ -199,7 +201,7 @@ Reward for PPO is $R$ minus the DualCosine baseline on the same batch.
 \begin{algorithmic}[1]
 \Require Actor--critic $\pi_\phi$, clip $\epsilon$, experience buffer of mutate actions
 \State Sample action $a$ editing ops / hyperparameters from $\pi_\phi$
-\State Fit proposed cfg; observe reward $\rho = R - R_{\mathrm{DualCosine}}$
+\State Fit proposed cfg; observe centered advantage $\rho = R - R_{\mathrm{DualCosine}}$ \Comment{objective remains maximize $R$}
 \State Advantage $\hat{A}$ from critic; ratio $r_\phi = \pi_\phi(a)/\pi_{\phi_{\mathrm{old}}}(a)$
 \State Update $\phi$ with clipped surrogate $\min(r_\phi\hat{A},\,\mathrm{clip}(r_\phi,1-\epsilon,1+\epsilon)\hat{A})$
 \State \Return updated $\pi_\phi$
@@ -230,7 +232,7 @@ Reward for PPO is $R$ minus the DualCosine baseline on the same batch.
   \State cell, $R_{\mathrm{fit}} \gets \mathrm{FitCell}(\mathrm{cfg},\,\mathrm{hp.fit\_steps})$
   \State $R_{\mathrm{eval}} \gets \mathrm{EvalCell}(\mathrm{cell})$
   \State $R \gets \tfrac12 R_{\mathrm{fit}} + \tfrac12 R_{\mathrm{eval}}$ (+ optional depth/MoE bonus)
-  \State UpdatePopulation($P$, cfg, $R$); PPOUpdate($\pi$, reward $= R - R_{\mathrm{DualCosine}}$)
+  \State UpdatePopulation($P$, cfg, $R$); PPOUpdate($\pi$, centered $\rho = R - R_{\mathrm{DualCosine}}$)
   \If{$R > \mathrm{champ}.R$} champ $\gets$ (cfg, cell, $R$); boredom $\gets 0$
   \Else\ boredom $\gets$ boredom $+1$
   \EndIf

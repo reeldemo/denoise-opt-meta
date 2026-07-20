@@ -63,7 +63,7 @@ Hybrid GA--PPO Meta-Search}
     PPO-based architecture proposals, and optional population-based training (PBT).
     On a frozen canonical sine{+}cliff holdout (seed~\texttt{20260719}), the compact meta-favorite
     achieves $R\approx 0.991$ vs classical no-bake $R\approx 0.972$, \texttt{seam\_fir3} $R\approx 0.961$,
-    and DualCosine $R\approx 0.825$ ($\Delta R={+}0.166$ vs DualCosine; search-reward reference).
+    and DualCosine $R\approx 0.825$ (gaps vs classical board; objective is maximize $R$ toward the ideal sibling).
     Hard-cliff strata (top 10\% wrap-jump, $n{=}410$) keep favorite $R\approx 0.9915$ while DualCosine
     falls to $R\approx 0.657$; no-bake $R$ stays high ($\approx 0.967$) because residual mass is small
     relative to ideal RMS (unrepaired engine / passthrough, $x\mapsto x$).

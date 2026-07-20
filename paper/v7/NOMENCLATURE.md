@@ -22,7 +22,8 @@ cracked engine x  --Θ-->  baked y  --ResidualScore-->  R vs ideal sibling r*
 ## Comparison policy
 
 Always rank learned methods on **absolute $R$** vs the full classical non-AI board (no-bake, DualCosine, FIR, poly, fades, VA).
-$\Delta R$ vs DualCosine alone is a search-reward convenience column, not the only classical comparison.
+**Reward / objective** = maximize $R$ toward the ideal sibling (best $R{=}1$).
+$\Delta R$ vs DualCosine is one classical reporting gap; PPO may center $\rho{=}R-R_{\mathrm{DualCosine}}$, but DualCosine is not the reward.
 
 ## Why rename `identity` → no-bake
 

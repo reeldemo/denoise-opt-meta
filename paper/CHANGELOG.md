@@ -12,6 +12,11 @@
 
 ## v7 notes (current)
 
+### Objective vs DualCosine centering (20 July 2026)
+- Clarified: reward/objective is maximize prolonged $R$ toward the ideal sibling (best $R{=}1$); DualCosine is not the reward.
+- PPO uses $\rho{=}R-R_{\mathrm{DualCosine}}$ only as constant advantage centering; selection/FitCell use absolute $R$.
+- Scrubbed “search-reward reference” wording in abstract/Methods/Experiments/Results/EVAL/NOMENCLATURE.
+
 ### Ideal sibling vs no-bake + classical board (20 July 2026)
 - Clarified: ideal sibling $r^{\star}$ is the scoring target (cliff withheld); no-bake is unrepaired engine scored against $r^{\star}$.
 - Reporting policy: always rank AI/favorite on absolute $R$ vs the full classical non-AI board (no-bake, FIR, DualCosine, poly, fades, VA); DualCosine $\Delta R$ is search-reward only.

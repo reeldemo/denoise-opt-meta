@@ -29,9 +29,10 @@ See also `NOMENCLATURE.md`.
 
 ## Comparison policy
 
-- **Primary:** absolute prolonged $R$ of every method vs the same ideal sibling $r^{\star}$.
+- **Objective / reward:** maximize prolonged $R$ toward the ideal sibling (best $R{=}1$). Closer to $r^{\star}$ $\Rightarrow$ larger $R$ $\Rightarrow$ better.
+- **Primary reporting:** absolute $R$ of every method vs the same $r^{\star}$.
 - **Classical board (required):** always report learned/searched methods against non-AI rows (no-bake, DualCosine, `seam_fir3`, poly, fades, VA), not DualCosine alone.
-- **$\Delta R$ vs DualCosine:** search-reward convenience column only; do not treat it as the sole classical comparison.
+- **$\Delta R$ vs DualCosine:** optional reporting gap vs one classical bake; PPO may center advantages as $R-R_{\mathrm{DualCosine}}$, but DualCosine is not the reward target.
 
 ## Seeds and geometry
 
