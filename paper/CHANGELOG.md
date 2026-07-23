@@ -12,6 +12,12 @@
 
 ## v7 notes (current)
 
+### Meta-approach 5k suite complete + heal figures (23 July 2026)
+- Matched 5k outer-loop comparison finished (`all_complete`); table/learning curves regenerated from summaries.
+- Added bar chart `meta_approach_bars.{png,pdf}` and healed wrap-seam figure `fig_meta_heal_samples.{png,pdf}` (Ours champion refit; holdout seed `20260719`).
+- Winner: Ours (hybrid GA–PPO) champ $R\approx 0.99146$ vs DualCosine $\approx 0.81658$ ($\Delta R\approx{+}0.17488$).
+- Placeholder “suite running” captions removed from Results.
+
 ### Near-ceiling R and reward/HP tuning (20 July 2026)
 - Methods/Discussion: no-bake $\approx 0.97$ compresses absolute $\Delta R$; reward shaping and search hyperparameters are first-class tunables with architecture (sec:reward-shaping).
 - DualCosine centering framed as one shaping choice under that regime, not the objective.

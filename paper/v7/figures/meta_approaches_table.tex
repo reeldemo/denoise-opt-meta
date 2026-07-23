@@ -1,6 +1,6 @@
-﻿\begin{table}[t]
+\begin{table}[t]
   \centering
-  \caption{Matched $5$k-budget outer-loop comparison (search seed \texttt{1902771841}; LSTM+xLSTM in bake vocab; reward-mode + HP co-tune in Ours). Clean publishable run in progress. Champion $R$ vs ideal sibling; $\Delta R$ vs DualCosine is one classical gap only. LSTM?/xLSTM?: whether the champion graph included that block.}
+  \caption{Matched $5$k-budget outer-loop comparison (search seed \texttt{1902771841}; LSTM+xLSTM in bake vocab; reward-mode + HP co-tune in Ours). Champion $R$ vs ideal sibling; $\Delta R$ vs DualCosine is one classical gap only. Wall-h: per-method CUDA wall time. LSTM?/xLSTM?: whether the champion graph included that block.}
   \label{tab:meta-approaches}
   \setlength{\tabcolsep}{3pt}
   \small
@@ -8,7 +8,12 @@
     \toprule
     Method & Champ $R$@5k & $\Delta R$ vs DualCosine & Wall-h & LSTM? & xLSTM? \\
     \midrule
-    \textit{(clean 5k suite running)} & -- & -- & -- & -- & -- \\
+    Random NAS & 0.97816 & $+0.16157$ & 5.72 & no & no \\
+    Cont.\ CMA-ES & 0.98468 & $+0.16810$ & 2.28 & no & no \\
+    Arch REINFORCE & 0.98247 & $+0.16588$ & 25.93 & no & yes \\
+    Aging evolution & 0.99079 & $+0.17421$ & 15.02 & no & yes \\
+    TPE Bayes NAS & 0.98106 & $+0.16448$ & 11.18 & yes & no \\
+    Ours (hybrid GA--PPO) & 0.99146 & $+0.17488$ & 8.46 & no & no \\
     \bottomrule
   \end{tabular}
 \end{table}
