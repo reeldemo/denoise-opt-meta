@@ -20,7 +20,7 @@ Source plans: SDD `docs/sdd/specs/paper-v8-review-response/`; locked paper plan 
 |----|----------|--------------------|-------------|
 | Q1 | Ideal sibling — how generated for arbitrary cracked period? | W3 (+ appendix alg) | §Methods Ideal sibling (eq.~\ref{eq:G-siblings}); cite `make_batch` in `overnight_gpu_rl_arch.py`; same seed, cliff withheld |
 | Q2 | DualCosine centering — objective vs advantage baseline? | W3 | §Methods Rem.~\ref{rem:dualcosine-centering} + eq.~\ref{eq:dualcosine-centering}; outer obj eq.~\ref{eq:outer-obj}; DualCosine centering = PPO advantage only |
-| Q3 | Hyperparameter sensitivity of meta-search? | W4 | §Results para.~\ref{para:hp-sensitivity} + Table~\ref{tab:hp-sensitivity} / Fig.~\ref{fig:hp-sensitivity}; `subsections/results_hp_sensitivity.tex`; script `reelsynth/scripts/bench_meta_hp_sensitivity.py`. Answer: local OAT ±50% robustness at 500 iters under seed `1902771841` — sensitivity evidence, not a second 5k ranking. |
+| Q3 | Hyperparameter sensitivity of meta-search? | W4 | §Results para.~\ref{para:hp-sensitivity} + Table~\ref{tab:hp-sensitivity} / Fig.~\ref{fig:hp-sensitivity}; `subsections/results_hp_sensitivity.tex`; script `reelsynth/scripts/bench_meta_hp_sensitivity.py`. **Answer:** 11/11 OAT ±50% arms @500 iters (seed `1902771841`) complete; default champ $R\approx 0.9888$; largest $|\Delta R|\approx 0.012$ (`lr_m50`). Local robustness vs DualCosine gap $\approx 0.17$ — sensitivity evidence, **not** a second 5k ranking. |
 
 ## Suggestions
 
