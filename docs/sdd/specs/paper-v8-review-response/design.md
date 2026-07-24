@@ -10,7 +10,7 @@ Technical design for DenoiseOpt paper **v8** (review response + gap closure). Im
 
 | Choice | Why |
 |--------|-----|
-| Copy `paper/v7/` → `paper/v8/`; leave v7 archived | Clean version boundary; review response is a full rewrite, not in-place edit of frozen v7 PDF. |
+| Copy `paper/v7/` → `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/`; leave v7 archived | Clean version boundary; review response is a full rewrite, not in-place edit of frozen v7 PDF. |
 | Slim Methods + Algorithms 1–9 → appendix + overview TikZ | Addresses clarity weakness without inventing new science. |
 | Fold existing 5k meta / bars / heals / hear packs; **do not** re-run or wipe `meta_approach_compare/` | Constitution §5; AC-3.4 / AC-4.3. |
 | New scripts only for vibrato + HP sensitivity; WT gallery from **existing** exports | Honest budget; no new NAS for diversity. |
@@ -47,7 +47,7 @@ flowchart TD
 
 | Role | Root |
 |------|------|
-| Manuscript | `denoise-opt-meta/paper/v8/` |
+| Manuscript | `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` |
 | Experiment scripts | `reelsynth/scripts/` |
 | Publishable artifacts | `reelsynth/brand/artifacts/` |
 | Mirror pointer | `reelsynth/docs/papers/denoise_opt/README.md` |
@@ -57,23 +57,23 @@ flowchart TD
 
 ## Workstreams W0–W5
 
-### W0 — Scaffold (`paper/v8/`)
+### W0 — Scaffold (`paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/`)
 
 **Actions**
 
-1. Copy `denoise-opt-meta/paper/v7/` → `denoise-opt-meta/paper/v8/` (preserve figures JSON already folded from post-review assets).
+1. Copy `denoise-opt-meta/paper/v7/` → `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` (preserve figures JSON already folded from post-review assets).
 2. Update pointers:
-   - `denoise-opt-meta/paper/main.tex` → comment/path to `paper/v8/`
+   - `denoise-opt-meta/paper/main.tex` → comment/path to `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/`
    - `denoise-opt-meta/paper/CHANGELOG.md` — v8 entry
-   - `denoise-opt-meta/paper/v8/TITLES.md` — drop stale “v6” strings
-3. Create `denoise-opt-meta/paper/v8/REVIEW_RESPONSE.md` skeleton: one row per review weakness / author Q / suggestion → target v8 section/figure/table (fill locations as W1–W5 land).
+   - `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/TITLES.md` — drop stale “v6” strings
+3. Create `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/REVIEW_RESPONSE.md` skeleton: one row per review weakness / author Q / suggestion → target v8 section/figure/table (fill locations as W1–W5 land).
 
 **Key paths**
 
-- `denoise-opt-meta/paper/v8/main.tex`
-- `denoise-opt-meta/paper/v8/subsections/*.tex`
-- `denoise-opt-meta/paper/v8/figures/` (retain v7 copies of `meta_approach_compare.json`, `fig_meta_heal_samples.json`, bars/heal PNGs if present, `real_wt_matrix.json`, …)
-- `denoise-opt-meta/paper/v8/REVIEW_RESPONSE.md`
+- `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.tex`
+- `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/*.tex`
+- `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/` (retain v7 copies of `meta_approach_compare.json`, `fig_meta_heal_samples.json`, bars/heal PNGs if present, `real_wt_matrix.json`, …)
+- `denoise-opt-meta/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/REVIEW_RESPONSE.md`
 
 ---
 
@@ -81,20 +81,20 @@ flowchart TD
 
 **Actions**
 
-1. Slim `paper/v8/subsections/methods.tex`: problem → ideal sibling → $R$ → bake cell $\Theta$ → hybrid loop overview → hyperparams.
-2. New `paper/v8/subsections/appendix_algorithms.tex`: move Algorithms 1–9 out of body; keep ≤2 short in-body sketches if flow needs them.
-3. Overview TikZ before component deep-dives — extend or replace `paper/v8/subsections/arch_diagram.tex`.
+1. Slim `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/methods.tex`: problem → ideal sibling → $R$ → bake cell $\Theta$ → hybrid loop overview → hyperparams.
+2. New `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/appendix_algorithms.tex`: move Algorithms 1–9 out of body; keep ≤2 short in-body sketches if flow needs them.
+3. Overview TikZ before component deep-dives — extend or replace `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/arch_diagram.tex`.
 4. Consistent display names: Random NAS, Cont. CMA-ES, Arch REINFORCE, Aging evolution, TPE Bayes NAS, Ours.
 5. Separate paragraphs/equations: outer objective $\max R(y,r^{\star})$ vs PPO advantage centering $R - R_{\mathrm{DualCosine}}$ (see W3).
 6. Tighten Abstract / Intro to constitution scope (no speech-enhancement / deep-SOTA overclaim).
 
 **Key paths**
 
-- `paper/v8/main.tex` (input order; appendix include)
-- `paper/v8/subsections/methods.tex`
-- `paper/v8/subsections/appendix_algorithms.tex` (**new**)
-- `paper/v8/subsections/arch_diagram.tex`
-- `paper/v8/subsections/introduction.tex`
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.tex` (input order; appendix include)
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/methods.tex`
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/appendix_algorithms.tex` (**new**)
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/arch_diagram.tex`
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/introduction.tex`
 
 ---
 
@@ -105,7 +105,7 @@ flowchart TD
 1. **Vibrato / dynamic pitch (new):** `reelsynth/scripts/bench_vibrato_spectrogram.py` (name locked)
    - Render prolonged cracked vs DualCosine vs Ours under slow vibrato / modulated tiling.
    - Emit spectrogram difference figure + mean $R$ under modulation.
-   - Write artifacts to `reelsynth/brand/artifacts/vibrato_spectrogram/` and copy publishable figure into `paper/v8/figures/` (e.g. `fig_vibrato_spectrogram.pdf` / `.png` + JSON).
+   - Write artifacts to `reelsynth/brand/artifacts/vibrato_spectrogram/` and copy publishable figure into `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/` (e.g. `fig_vibrato_spectrogram.pdf` / `.png` + JSON).
 2. **Hear pack (existing):** cite `reelsynth/brand/artifacts/meta_approach_compare/hear_samples/` (5 tiles; rebuild via `scripts/export_meta_hear_samples.py`). Paper panel figure + short Results paragraph; document WAV path in caption / tooling.
 3. **WT diversity (LOCKED — no new NAS):** compact gallery from existing ReelSynth export + OA AKWF matrices already scored by `scripts/real_wt_wrap_protocol.py` / `brand/artifacts/real_wt_cycles/` and folded `paper/v7/figures/real_wt_matrix.json` → v8 figure panel (waveform strips or matrix highlight). Do **not** launch new meta searches for diversity.
 4. **Transfer appendix:** fold `docs/SIGNAL_HEAL_TRANSFER_PILOT.md` + `brand/artifacts/signal_heal_transfer/` into appendix with **classical-board / not deep SOTA** disclaimer.
@@ -122,10 +122,10 @@ flowchart TD
 | Hear export | `reelsynth/scripts/export_meta_hear_samples.py` |
 | Real WT protocol | `reelsynth/scripts/real_wt_wrap_protocol.py` |
 | Real WT artifacts | `reelsynth/brand/artifacts/real_wt_cycles/` |
-| Real WT matrix (fold) | `paper/v8/figures/real_wt_matrix.json` |
+| Real WT matrix (fold) | `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/real_wt_matrix.json` |
 | Transfer pilot doc | `denoise-opt-meta/docs/SIGNAL_HEAL_TRANSFER_PILOT.md` |
 | Transfer scores | `reelsynth/brand/artifacts/signal_heal_transfer/` |
-| Paper figures out | `paper/v8/figures/` |
+| Paper figures out | `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/` |
 
 ---
 
@@ -142,9 +142,9 @@ flowchart TD
 
 **Key paths**
 
-- `paper/v8/subsections/methods.tex`
-- `paper/v8/subsections/arch_diagram.tex` / intro figure captions
-- `paper/v8/NOMENCLATURE.md` (align if present)
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/methods.tex`
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/subsections/arch_diagram.tex` / intro figure captions
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/NOMENCLATURE.md` (align if present)
 - Generator citation: `reelsynth/scripts/overnight_gpu_rl_arch.py`
 
 ---
@@ -171,7 +171,7 @@ flowchart TD
 
 - `meta_hp_sensitivity/REPRO_MANIFEST.json` + `REPRO.md`
 - `meta_hp_sensitivity/results.json` (champion $R$ mean/var vs default)
-- Figure/table → `paper/v8/figures/` + Results prose answering **Q3**
+- Figure/table → `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/` + Results prose answering **Q3**
 - `REVIEW_RESPONSE.md` Q3 row
 
 ---
@@ -181,16 +181,16 @@ flowchart TD
 **Actions**
 
 1. Update Results / Discussion / Limitations for review narrative without overclaiming.
-2. Rebuild `paper/v8/main.pdf` (`pdflatex` × needed passes).
+2. Rebuild `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.pdf` (`pdflatex` × needed passes).
 3. Finalize every `REVIEW_RESPONSE.md` row.
 4. Point `reelsynth/docs/papers/denoise_opt/README.md` at **v8** (currently stuck on v5).
 5. Commit + push **both** `denoise-opt-meta` and `reelsynth` when implement finishes.
 
 **Key paths**
 
-- `paper/v8/main.pdf`
-- `paper/CHANGELOG.md`, `paper/main.tex`, `paper/v8/TITLES.md`
-- `paper/v8/REVIEW_RESPONSE.md`
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.pdf`
+- `paper/CHANGELOG.md`, `paper/main.tex`, `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/TITLES.md`
+- `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/REVIEW_RESPONSE.md`
 - `reelsynth/docs/papers/denoise_opt/README.md`
 - New reelsynth scripts + `brand/artifacts/{vibrato_spectrogram,meta_hp_sensitivity}/`
 
@@ -206,7 +206,7 @@ flowchart TD
 | AC-2.1 | Formal $\Theta$, $G(\cdot)$ cliff on/off | W3 |
 | AC-2.2 | $\max R$; Q1–Q2 in Methods + REVIEW_RESPONSE | W3 |
 | AC-2.3 | Fig.1 / no-bake caption fixes | W3 |
-| AC-3.1 | `bench_vibrato_spectrogram.py` + `paper/v8/figures/` | W2 |
+| AC-3.1 | `bench_vibrato_spectrogram.py` + `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/` | W2 |
 | AC-3.2 | Hear panel + WAV path docs | W2 |
 | AC-3.3 | Transfer pilot appendix + classical-board disclaimer | W2 |
 | AC-3.4 | Fold v7 meta/bars/heals JSON/figures; no re-run | W0/W2 |

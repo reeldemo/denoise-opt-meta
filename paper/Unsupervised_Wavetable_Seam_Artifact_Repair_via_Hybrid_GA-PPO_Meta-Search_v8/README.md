@@ -31,7 +31,7 @@ PDFs land in `artifacts/literature_oa/pdfs/`. Inventory: `artifacts/literature_o
 Regenerate search learning curves and dataset distribution plots (one command):
 
 ```powershell
-powershell -File paper/v8/regen_search_figures.ps1
+powershell -File paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/regen_search_figures.ps1
 ```
 
 ## Style

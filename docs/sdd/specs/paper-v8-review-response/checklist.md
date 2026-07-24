@@ -40,7 +40,7 @@ Date: 2026-07-24. After T6 ship + T7 analyze.
 
 | AC | Criterion | Result | Evidence |
 |----|-----------|--------|----------|
-| AC-5.1 | `paper/v8/main.pdf` builds; CHANGELOG + pointer + TITLES | **PASS** | 23-page PDF; CHANGELOG/TITLES/`paper/main.tex` |
+| AC-5.1 | `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.pdf` builds; CHANGELOG + pointer + TITLES | **PASS** | 23-page PDF; CHANGELOG/TITLES/`paper/main.tex` |
 | AC-5.2 | `REVIEW_RESPONSE.md` row for every review item | **PASS** | All W/Q/S rows filled; no TBD |
 | AC-5.3 | reelsynth mirror README → v8; both repos committed/pushed | **PASS** | README points at v8; dual-repo ship commits |
 

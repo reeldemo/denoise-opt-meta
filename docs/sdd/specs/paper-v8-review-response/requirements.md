@@ -34,7 +34,7 @@ As a reader, I want evidence beyond static sine+cliff tiles.
 
 **Acceptance criteria**
 
-- AC-3.1: Vibrato/spectrogram eval script + figure in `paper/v8/figures/`.
+- AC-3.1: Vibrato/spectrogram eval script + figure in `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/`.
 - AC-3.2: Hear-sample pack cited with paper panel; WAVs path documented.
 - AC-3.3: Transfer pilot appendix with classical-board disclaimer.
 - AC-3.4: Existing 5k meta/bars/heals folded (not re-run).
@@ -55,7 +55,7 @@ As a maintainer, I want a buildable v8 PDF and synced pointers.
 
 **Acceptance criteria**
 
-- AC-5.1: `paper/v8/main.pdf` builds; CHANGELOG + pointer + TITLES updated.
+- AC-5.1: `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.pdf` builds; CHANGELOG + pointer + TITLES updated.
 - AC-5.2: `REVIEW_RESPONSE.md` has a row for every review item.
 - AC-5.3: reelsynth mirror README points at v8; both repos committed/pushed when implement finishes.
 

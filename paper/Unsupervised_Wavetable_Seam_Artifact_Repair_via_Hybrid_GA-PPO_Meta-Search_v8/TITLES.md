@@ -2,6 +2,8 @@
 
 **Paper version:** v8 (canonical)
 
+**Folder:** `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/`
+
 ## Primary (used in `main.tex`)
 **Unsupervised Wavetable Seam Artifact Repair via Hybrid GA–PPO Meta-Search**
 

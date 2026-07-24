@@ -8,11 +8,11 @@ Date: 2026-07-24. Task: T7 after T6 ship.
 | § | Principle | Status | Evidence |
 |---|-----------|--------|----------|
 | 1 | Honesty over hype | OK | Abstract/Intro/Discussion/Limitations: no speech enhancement / no deep-SOTA CWRU/ECG |
-| 2 | OA-only bibliography | OK | Unchanged OA `\bibitem` set in `paper/v8/main.tex` |
+| 2 | OA-only bibliography | OK | Unchanged OA `\bibitem` set in `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.tex` |
 | 3 | Canonical metric truth | OK | Methods: ideal sibling $G$, no-bake ≠ ideal, $\max R$, DualCosine = PPO centering only |
 | 4 | Primary claim = cycle-local WT seam | OK | Abstract + App.~\ref{app:transfer-pilot} classical-board disclaimer |
 | 5 | Reproducibility; never wipe compare | OK | `meta_hp_sensitivity/` + `vibrato_spectrogram/` sibling dirs; `meta_approach_compare/` intact |
-| 6 | Review completeness | OK | `paper/v8/REVIEW_RESPONSE.md` — every W/Q/S row filled (no TBD) |
+| 6 | Review completeness | OK | `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/REVIEW_RESPONSE.md` — every W/Q/S row filled (no TBD) |
 | 7 | Cross-repo hygiene | OK | CHANGELOG v8; pointer `paper/main.tex`; reelsynth mirror README → v8 |
 
 ## Requirements AC drift
@@ -25,7 +25,7 @@ Date: 2026-07-24. Task: T7 after T6 ship.
 | AC-2.1 | Formal $\Theta$, $G$ cliff on/off | Methods Notation / Ideal sibling | None |
 | AC-2.2 | $\max R$; Q1–Q2 in Methods + REVIEW_RESPONSE | eqs + REVIEW_RESPONSE Q1–Q2 rows | None |
 | AC-2.3 | Fig.1 / no-bake captions | Captions distinguish no-bake / DualCosine / ideal / Ours | None |
-| AC-3.1 | Vibrato script + figure in `paper/v8/figures/` | `bench_vibrato_spectrogram.py`; `fig_vibrato_spectrogram.{png,pdf}` | None |
+| AC-3.1 | Vibrato script + figure in `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/figures/` | `bench_vibrato_spectrogram.py`; `fig_vibrato_spectrogram.{png,pdf}` | None |
 | AC-3.2 | Hear panel + WAV path | `results_eval_listening.tex`; WAVs under `hear_samples/` | None |
 | AC-3.3 | Transfer appendix + classical disclaimer | `appendix_transfer_pilot.tex` | None |
 | AC-3.4 | Fold 5k meta; no re-run | v7 JSON/figures retained; compare tree not wiped | None |

@@ -13,11 +13,15 @@
 
 ## v8 notes (current)
 
+### Folder rename (24 July 2026)
+- Renamed `paper/v8/` → `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` (full title + version).
+- Updated `paper/main.tex` pointer, root README, SDD specs, and reelsynth script/docs paths.
+
 ### W5 ship + W2/W4 fold-in (24 July 2026)
 - `\input` Results snippets: `results_eval_listening.tex` (vibrato / hear / WT gallery) + `results_hp_sensitivity.tex` (Q3 table/figure).
 - Discussion review-narrative paragraph; Limitations honesty: HP = 500-iter OAT sensitivity (not 5k re-search); no deep SOTA CWRU/ECG; no formal human listening study.
 - `REVIEW_RESPONSE.md` rows complete for all weaknesses / Qs / suggestions.
-- PDF rebuilt (`paper/v8/main.pdf`); pointer `paper/main.tex` → v8; `TITLES.md` = v8; reelsynth mirror README → v8.
+- PDF rebuilt (`paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.pdf`); pointer `paper/main.tex` → v8; `TITLES.md` = v8; reelsynth mirror README → v8.
 - HP artifacts: `reelsynth/brand/artifacts/meta_hp_sensitivity/` (11/11 complete, seed `1902771841`); `meta_approach_compare/` untouched.
 - SDD closeout: `docs/sdd/specs/paper-v8-review-response/{analyze,checklist}.md` + `SDD_V8_COMPLETE.flag`.
 
@@ -30,11 +34,11 @@
 - Existing 5k meta/bars/heal figures retained (not re-run).
 
 ### W0 scaffold (24 July 2026)
-- Copied `paper/v7/` → `paper/v8/` (figures and folded post-review JSON retained).
+- Copied `paper/v7/` → `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` (figures and folded post-review JSON retained).
 - Pointer `paper/main.tex` → v8; `TITLES.md` version string → v8.
-- Added `paper/v8/REVIEW_RESPONSE.md` skeleton (weaknesses / author Qs / suggestions → v8 location TBD until W1–W5).
+- Added `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/REVIEW_RESPONSE.md` skeleton (weaknesses / author Qs / suggestions → v8 location TBD until W1–W5).
 - Manuscript rewrite, new vibrato/HP benches, and PDF rebuild are **not** in this entry (W1–W5).
-- Sources: `paper/v8/`. SDD: `docs/sdd/specs/paper-v8-review-response/`.
+- Sources: `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/`. SDD: `docs/sdd/specs/paper-v8-review-response/`.
 
 ## v7 notes (archived)
 
@@ -101,7 +105,7 @@
 
 - Restored from commit `83f4b48` (parent of `b4cef83`, immediately before F1–F5 weakness-elimination landed).
 - Snapshot includes peer-review Phases A–E complete manuscript/artifacts and the weakness-elimination *plan*, but **not** the F1–F5 manuscript/artifact changes (no `poly_baseline` / `jump_control` / `transfer_failures` / `tab:cliff-edge-rmse` / unified SOTA promotion in tex).
-- Sources: `paper/v6/`. Current canonical paper is `paper/v8/` (v7 archived).
+- Sources: `paper/v6/`. Current canonical paper is `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` (v7 archived).
 
 ## v5 notes (archived pre–peer-review revision)
 
