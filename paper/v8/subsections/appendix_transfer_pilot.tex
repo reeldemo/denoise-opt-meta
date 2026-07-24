@@ -1,0 +1,58 @@
+% W2 / AC-3.3 — sci/eng wrap-heal transfer pilot (classical board only).
+% Included under \appendix from main.tex. Sibling T3 owns Algorithms 1--9 appendix.
+
+\section{Transfer pilot on CWRU bearings and MIT-BIH ECG}
+\label{app:transfer-pilot}
+
+We briefly transfer the winning outer loop (\textbf{Ours / hybrid GA--PPO}, approach code \texttt{hybrid\_lstm})
+to public cycle-local wrap tasks outside musical wavetables:
+Case Western Reserve University (CWRU) bearing acceleration periods and MIT-BIH ECG beat windows
+($L{=}256$; prolonged residual $R$ vs an ideal sibling constructed by domain-specific periodization).
+Table~\ref{tab:transfer-pilot} summarizes holdout-refit $R$ against a \emph{classical} board
+(no-bake, DualCosine, fades, endpoint pin, seam FIR, and domain classical proxies).
+Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/};
+prose source: \texttt{denoise-opt-meta/docs/SIGNAL\_HEAL\_TRANSFER\_PILOT.md}.
+
+\paragraph{Classical-board disclaimer (required).}
+This appendix compares against classical / domain-proxy baselines only.
+It is \emph{not} a claim of beating published deep learning SOTA on CWRU diagnosis or ECG enhancement
+(e.g., Cycle-GAN, BeatDiff, or clinical denoisers) unless those models were executed under the same residual protocol---they were not.
+Outer-loop budget is modest ($250$ outer iters / dataset, \texttt{fit\_steps}${}={}40$): a transfer pilot, not a multi-day domain campaign.
+Real content is z-scored per period; absolute clinical/engineering scale is not preserved.
+
+\begin{table}[t]
+  \centering
+  \caption{Transfer pilot holdout-refit prolonged $R$ (higher better) on classical boards.
+    Search-time champion $R$ was slightly higher; holdout-refit is the comparison number.
+    Disclaimer: classical board only---not deep SOTA.}
+  \label{tab:transfer-pilot}
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabular}{@{}lrr@{}}
+    \toprule
+    Method & CWRU bearings & MIT-BIH ECG \\
+    \midrule
+    Ours (\texttt{hybrid\_lstm}) & 0.8705 & 0.8792 \\
+    no-bake / bad-COT passthrough & 0.8675 & 0.6403 \\
+    endpoint-pin (mean) & 0.7990 & 0.7796 \\
+    spline join (ECG proxy) & --- & 0.7134 \\
+    \texttt{seam\_fir3} & 0.7865 & 0.6615 \\
+    DualCosine & 0.7846 & 0.2009 \\
+    linear fade & 0.7929 & 0.2719 \\
+    soft Hann periodize & 0.7703 & 0.1479 \\
+    beat-average SBMM-lite (ECG) & --- & 0.2135 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_signal_heal_transfer.png}
+  \caption{Transfer-pilot classical-board summary (CWRU / MIT-BIH).
+    Bars are holdout-refit prolonged $R$.
+    Not a deep-SOTA claim; see Appendix~\ref{app:transfer-pilot} disclaimer.}
+  \label{fig:signal-heal-transfer}
+\end{figure}
+
+On CWRU, classical DualCosine / fades \emph{hurt} vs no-bake; Ours only narrowly beats no-bake on holdout---transfer is weak on that wrap construction.
+On MIT-BIH ECG, DualCosine collapses morphology while Ours leads the classical board (endpoint pin is the strongest classical comparator).
+Primary paper claims remain cycle-local \emph{wavetable} seam restoration.
