@@ -51,29 +51,30 @@ Hybrid GA--PPO Meta-Search}
     In single-period wavetable synthesis, a sample discontinuity at the wrap boundary injects a
     broadband transient that repeats at the fundamental frequency, producing an audible periodic click.
     We address this \emph{cycle-local seam artifact} with \textbf{DenoiseOpt}, a residual-scored hybrid
-    meta-search that selects and fits bake-cell operators applied at the period boundary.
+    meta-search that selects and fits bake-cell operators $\Theta$ applied at the period boundary.
     The bake cell composes classical DualCosine crossfades, FIR blends, and optional lightweight
     residual networks, possibly routed via Mixture-of-Experts (MoE) soft gating, without requiring
     paired studio-clean recordings.
-    Candidates are ranked by the \emph{prolonged residual score} $R\in[0,1]$ (higher is better):
-    the clamped tiled-RMS agreement between each method's output and a procedural ideal
-    sibling $r^{\star}$ (open-wrap cliff withheld). No-bake leaves the cracked engine unchanged
-    and scores that unrepaired period against the same $r^{\star}$; it is not the ideal itself.
+    Candidates maximize the \emph{prolonged residual score} $R\in[0,1]$ against a procedural ideal
+    sibling $r^{\star}=G(\mathrm{seed},\mathrm{cliff{=}off})$; the cracked engine is
+    $x=G(\mathrm{seed},\mathrm{cliff{=}on})$ from the same draw.
+    No-bake leaves $x$ unchanged and scores that unrepaired period against $r^{\star}$; it is not the ideal.
+    DualCosine may center PPO advantages only; ranking still maximizes absolute $R$.
     The outer search loop interleaves genetic algorithm (GA) tournament selection,
     PPO-based architecture proposals, and optional population-based training (PBT).
     On a frozen canonical sine{+}cliff holdout (seed~\texttt{20260719}), the compact meta-favorite
     achieves $R\approx 0.991$ vs classical no-bake $R\approx 0.972$, \texttt{seam\_fir3} $R\approx 0.961$,
-    and DualCosine $R\approx 0.825$ (gaps vs classical board; objective is maximize $R$ toward the ideal sibling).
+    and DualCosine $R\approx 0.825$ (gaps vs classical board).
     Hard-cliff strata (top 10\% wrap-jump, $n{=}410$) keep favorite $R\approx 0.9915$ while DualCosine
     falls to $R\approx 0.657$; no-bake $R$ stays high ($\approx 0.967$) because residual mass is small
-    relative to ideal RMS (unrepaired engine / passthrough, $x\mapsto x$).
+    relative to ideal RMS (passthrough $x\mapsto x$).
     A same-generator corrupt$\to$corrupt Noise2Noise control reaches $R\approx 0.992$; a supervised
     LSTM sibling ceiling reaches $R\approx 0.995$.
     Wavetable-native transfer uses true ReelSynth-exported factory periods ($n{=}25$) and external
     AKWF CC0 single-cycle WAVs ($n{=}24$) under the same wrap protocol (no LibriSpeech/MUSDB).
     On exports the favorite trails no-bake / FIR (domain shift); on AKWF it matches no-bake and beats DualCosine.
-    Scope is strictly cycle-local wavetable seam restoration aimed at DSP / synthesis venues
-    (DAFx / AES / arXiv cs.SD).
+    Scope is strictly cycle-local wavetable seam restoration (DAFx / AES / arXiv cs.SD);
+    we do not claim speech enhancement or deep SOTA on sci/eng transfer boards.
   \end{abstract}
   \keywords{unsupervised learning; wavetable; wrap discontinuity; seam restoration; DenoiseOpt; prolonged residual score; neural architecture search; reinforcement learning; genetic algorithms; meta-learning}
   \vspace{0.6em}
@@ -90,6 +91,9 @@ Hybrid GA--PPO Meta-Search}
 \input{subsections/limitations}
 \input{subsections/conclusion}
 \input{subsections/acknowledgments}
+
+\appendix
+\input{subsections/appendix_algorithms}
 
 \FloatBarrier
 \raggedbottom

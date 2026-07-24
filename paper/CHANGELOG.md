@@ -2,7 +2,7 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v8** | 2026-07-24 | Current: review-response scaffold (W0); IMRaD clarity, math formalization, eval/listening, HP ±50% (W1–W5 in progress) |
+| **v8** | 2026-07-24 | Current: W0 scaffold + W1 IMRaD Methods + W3 math formalization; eval/listening + HP ±50% (W2/W4/W5 in progress) |
 | v7 | 2026-07-19 | Archived: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
 | v6 | 2026-07-19 | Archived peer-review A–E complete snapshot (restored from `83f4b48`, pre–weakness-elim) |
 | v5 | 2026-07-19 | Archived pre–peer-review-revision snapshot (restored from `3f409b2`) |
@@ -12,6 +12,14 @@
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
 ## v8 notes (current)
+
+### W1 + W3 Methods clarity and math (24 July 2026)
+- Slim IMRaD Methods body: problem → ideal sibling $G$ → $\max R$ → bake $\Theta$ → overview TikZ → search/hybrid → HPs.
+- Algorithms 1–9 moved to `subsections/appendix_algorithms.tex` (Appendix); overview Fig.~\ref{fig:denoiseopt-arch} before deep-dives.
+- Formal $\Theta:\mathbb{R}^{L}\times\mathcal{H}\to\mathbb{R}^{L}$; $r^{\star}=G(\mathrm{seed},\mathrm{cliff=off})$ vs cracked cliff=on; outer $\max R(y,r^{\star})$; DualCosine centering = PPO advantage only (Q1–Q2).
+- Fig.1 / dataset captions distinguish no-bake, DualCosine, ideal, Ours; Abstract/Intro scoped to cycle-local WT seam (no speech/deep-SOTA overclaim).
+- `REVIEW_RESPONSE.md` rows filled for W-clarity, W-math, Q1–Q2, S-imrad, S-appendix, S-overview, S-theta.
+- Existing 5k meta/bars/heal figures retained (not re-run).
 
 ### W0 scaffold (24 July 2026)
 - Copied `paper/v7/` → `paper/v8/` (figures and folded post-review JSON retained).

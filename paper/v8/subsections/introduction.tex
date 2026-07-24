@@ -8,16 +8,24 @@ We define the repair task as \emph{cycle-local seam restoration}: edit a neighbo
 That outer agreement is scored by the prolonged residual $R$ for this periodic seam artifact class.
 
 Figure~\ref{fig:intro-sine} shows one real sine-wrap edge case from the frozen canonical holdout (same \texttt{make\_batch} tile, seed~\texttt{20260719}).
-Panel (a) is the ideal multi-period sine.
-Panel (b) is the cracked engine tile after open-wrap cliff modulation ($R\approx 0.950$), with the ideal overlaid so the seam jump is visible.
-Panel (c) applies DualCosine on that same tile ($R\approx 0.603$ on this severe cliff).
-Panel (d) is the top DenoiseOpt favorite (\texttt{champion\_iter\_000235}, batch $R\approx 0.991$) on the same tile ($R\approx 0.9917$).
-Panels (e)--(f) plot the modulation residual and a seam zoom so the favorite's correction is readable against DualCosine.
+Four roles must stay distinct: (a)~ideal sibling $r^{\star}$ (cliff withheld; unscored target);
+(b)~no-bake / cracked engine $x$ after open-wrap cliff ($R\approx 0.950$ vs $r^{\star}$; ideal overlay);
+(c)~DualCosine classical bake on that same tile ($R\approx 0.603$ on this severe cliff);
+(d)~Ours / DenoiseOpt favorite bake (\texttt{champion\_iter\_000235}, tile $R\approx 0.9917$).
+Panels~(e)--(f) plot the modulation residual and a seam zoom so Ours is readable against DualCosine.
+No-bake is not the ideal; DualCosine is one classical row (and separately a PPO advantage baseline; Section~\ref{sec:methods}).
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/fig_intro_sine_problem.png}
-  \caption{Canonical holdout sine-wrap edge case (seed~\texttt{20260719}, $L{=}256$, $N{=}16$ tiles, same tile across panels). (a)~Ideal sibling (cliff withheld). (b)~Engine with open-wrap cliff (ideal overlay). (c)~DualCosine bake. (d)~DenoiseOpt favorite bake. (e)--(f)~Modulation residual and seam zoom. Prolonged residual $R\in[0,1]$ (1~=~best) is printed per panel where scored. Accessibility: six-panel waveform comparison of ideal, cracked, DualCosine, and favorite seam repairs.}
+  \caption{Canonical holdout sine-wrap edge case (seed~\texttt{20260719}, $L{=}256$, $N{=}16$ tiles, same tile across panels).
+  Distinguish four roles: (a)~ideal sibling $r^{\star}$ (cliff withheld; scoring target, not a method);
+  (b)~no-bake / cracked engine $x$ (passthrough $\Theta{=}{\mathrm{id}}$, scored vs~$r^{\star}$);
+  (c)~DualCosine classical end-fade bake;
+  (d)~Ours (DenoiseOpt favorite bake).
+  (e)--(f)~Modulation residual and seam zoom.
+  Prolonged residual $R\in[0,1]$ (1~=~best) is printed per panel where scored.
+  Accessibility: six-panel waveform comparison of ideal, no-bake, DualCosine, and Ours.}
   \label{fig:intro-sine}
 \end{figure*}
 
@@ -35,20 +43,21 @@ Waveform separation nets (Wave-U-Net, Conv-TasNet, dual-path RNN, SepFormer) and
 
 The contribution is a meta-learning protocol for this periodic seam instance.
 An outer RL+GA(+PBT) loop proposes bake-cell operator graphs and continuous bake parameters.
-Each candidate is scored by prolonged residual $R\in[0,1]$ (1~=~best) between engine-baked multi-period audio and a procedural ideal tiling.
+Each candidate is scored by prolonged residual $R\in[0,1]$ (1~=~best) between engine-baked multi-period audio and a procedural ideal sibling $r^{\star}=G(\mathrm{seed},\mathrm{cliff{=}off})$.
 Paired studio-clean wavetables are not required for every trial.
 Differentiable DSP modules~\cite{engel2020} place DualCosine / FIR / MLP seam ops in an interpretable stack.
 Bayesian HPO~\cite{snoek2012} informs prior families that compete under the same $R$.
 A CUDA hybrid search campaign (PPO+GA+PBT+NAS, depth and MoE biases) has passed a $5{,}000$-iteration clean gate with champion $R\approx 0.9909$ versus DualCosine $\approx 0.8166$ on the runner geometry.
 The frozen canonical holdout and inference benches in Section~\ref{sec:results} are the measured evaluation matrices for this report.
-We do not claim general speech or music enhancement SOTA.
+Primary claim scope is cycle-local wavetable seam restoration (DAFx / AES / arXiv cs.SD).
+We do not claim speech enhancement, music source-separation, or deep SOTA on classical sci/eng transfer boards.
 
 \subsection{Contributions}
 \label{sec:contributions}
 \begin{enumerate}
   \item \textbf{Problem framing.} Cast wavetable wrap discontinuity as cycle-local seam restoration under prolonged tiled evaluation, separating seam-local diagnostics from residual $R$.
   \item \textbf{Hybrid DenoiseOpt outer loop.} Specify RL+GA(+PBT) search over discrete operator graphs and continuous bake parameters, with named branches (GA crossover, PPO mutation, PBT exploit, MoE soft gates).
-  \item \textbf{Formal residual protocol.} Define ideal-tile siblings, prolonged residual $R$, and reimplementable Algorithms~\ref{alg:residual}--\ref{alg:hybrid}. No wrap-closure or search-convergence guarantees.
+  \item \textbf{Formal residual protocol.} Define bake operator $\Theta$, ideal-sibling generator $G$, outer objective $\max R(y,r^{\star})$, and reimplementable Algorithms~\ref{alg:residual}--\ref{alg:hybrid} (Appendix~\ref{app:algorithms}). No wrap-closure or search-convergence guarantees.
   \item \textbf{Open evaluation path.} Release companion code for the synthesizer engine and meta search, with frozen $5$k-gate figures, hard-cliff strata, N2N/seq baselines, and wavetable-native transfer benches.
 \end{enumerate}
 
