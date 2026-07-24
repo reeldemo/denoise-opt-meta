@@ -43,3 +43,4 @@ Source plans: SDD `docs/sdd/specs/paper-v8-review-response/`; locked paper plan 
 - **Q1–Q2 answered in Methods (W3/T2).** **Q3 / W4 (T5):** HP ±50% OAT sensitivity probe landed (script + artifacts + Results snippet); honesty label = sensitivity not full 5k re-search; never touches `meta_approach_compare/`.
 - **AC-1 / W1 (T3):** slim Methods + appendix algs + overview TikZ + display names + constitution-scoped Abstract/Intro.
 - **AC-3 / W2 (T4):** vibrato spectrogram + hear panel + WT gallery + transfer appendix landed; no new NAS; no formal A/B.
+- **AC-5 / W5 (T6):** `main.tex` inputs listening + HP Results; Discussion/Limitations review narrative; CHANGELOG/pointer/TITLES/reelsynth README → v8; `main.pdf` rebuilt; dual-repo commit+push.

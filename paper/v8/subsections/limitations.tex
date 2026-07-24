@@ -3,16 +3,18 @@
 
 \paragraph{Scope and evaluation limits.}
 The prolonged residual $R$ is defined against a procedural no-cliff sibling and does not capture perceptual quality directly.
-Formal listening tests (MOS, MUSHRA) are outside the scope of this work and are deferred to future studies.
+Formal listening tests (MOS, MUSHRA) and claimed A/B listening scores are outside the scope of this work; v8 ships spectrograms and downloadable WAVs for informal audition only.
 PESQ and STOI are excluded because the primary cycles are non-speech synthetic wavetable tiles; speech-quality metrics on sine{+}cliff families would be a domain mismatch.
 MUSHRA was not run (requires human listeners).
 Any perceptual or speech-proxy secondary study would need separately labeled open-access speech snippets and remains out of scope for this narrow-seam paper.
 
 \begin{itemize}
-  \item Residual uses a procedural ideal (no-cliff sibling). Perceptual MOS and listening panels are out of scope.
+  \item Residual uses a procedural ideal (no-cliff sibling). Perceptual MOS and formal listening panels are out of scope.
   \item Bake metrics leave formal listening tests and speech quality metrics to separate studies.
   \item \textbf{PESQ / STOI / MUSHRA deferred.} Primary cycles are non-speech wavetable tiles. Speech metrics would domain-mismatch sine{+}cliff families, so PESQ/STOI numbers are absent here (none invented on synthetic tiles). MUSHRA needs human listeners and was \emph{not run}.
   \item \textbf{No LibriSpeech / MUSDB.} Wavetable-native realism uses true ReelSynth-exported factory periods (primary) and external AKWF CC0 single-cycle WAVs (secondary) under the wrap protocol. Procedural stand-ins are tertiary smoke only. Speech/music enhancement corpora remain off by design.
+  \item \textbf{HP sensitivity is not a $5$k re-search.} Paragraph~\ref{para:hp-sensitivity} reports one-at-a-time $\pm 50\%$ probes at $500$ outer iterations (seed \texttt{1902771841}). It measures local robustness of Table~\ref{tab:hyperparams} defaults; it does not re-prove the matched $5$k approach ranking.
+  \item \textbf{No deep SOTA on CWRU/ECG.} Appendix~\ref{app:transfer-pilot} is a classical-board wrap-heal pilot only.
   \item Classical poly seam fitter is reported; lightweight SSM seq models are deferred (timebox); LSTM remains the supervised seq ceiling.
   \item On exported factory / Rust tiles the meta favorite can trail no-bake or FIR (domain shift). Transfer win-rates are frozen in \texttt{transfer\_failures.json}; we do not claim universal factory superiority.
   \item The CUDA search runner scores Python \texttt{make\_batch} sine{+}cliff draws. A separate Rust \texttt{sound\_bench} export of 20 family tiles (byte-aligned generator) is a secondary transfer block. The Python generative SOTA matrix is the primary multi-family table.

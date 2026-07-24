@@ -2,7 +2,7 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v8** | 2026-07-24 | Current: W0 scaffold + W1 IMRaD Methods + W3 math formalization; eval/listening + HP ±50% (W2/W4/W5 in progress) |
+| **v8** | 2026-07-24 | Current: review-response rewrite complete (W0–W5); HP ±50% OAT sensitivity; vibrato/hear/WT gallery; IMRaD Methods + math formalization |
 | v7 | 2026-07-19 | Archived: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
 | v6 | 2026-07-19 | Archived peer-review A–E complete snapshot (restored from `83f4b48`, pre–weakness-elim) |
 | v5 | 2026-07-19 | Archived pre–peer-review-revision snapshot (restored from `3f409b2`) |
@@ -12,6 +12,14 @@
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
 ## v8 notes (current)
+
+### W5 ship + W2/W4 fold-in (24 July 2026)
+- `\input` Results snippets: `results_eval_listening.tex` (vibrato / hear / WT gallery) + `results_hp_sensitivity.tex` (Q3 table/figure).
+- Discussion review-narrative paragraph; Limitations honesty: HP = 500-iter OAT sensitivity (not 5k re-search); no deep SOTA CWRU/ECG; no formal human listening study.
+- `REVIEW_RESPONSE.md` rows complete for all weaknesses / Qs / suggestions.
+- PDF rebuilt (`paper/v8/main.pdf`); pointer `paper/main.tex` → v8; `TITLES.md` = v8; reelsynth mirror README → v8.
+- HP artifacts: `reelsynth/brand/artifacts/meta_hp_sensitivity/` (11/11 complete, seed `1902771841`); `meta_approach_compare/` untouched.
+- SDD closeout: `docs/sdd/specs/paper-v8-review-response/{analyze,checklist}.md` + `SDD_V8_COMPLETE.flag`.
 
 ### W1 + W3 Methods clarity and math (24 July 2026)
 - Slim IMRaD Methods body: problem → ideal sibling $G$ → $\max R$ → bake $\Theta$ → overview TikZ → search/hybrid → HPs.

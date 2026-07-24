@@ -1,9 +1,22 @@
-% Auto-generated HP sensitivity Results snippet (W4 / Q3). T6 may \input this.
+% W4 / Q3 — HP ±50% OAT sensitivity (500 iters). Included from main.tex (T6).
 \paragraph{Hyperparameter sensitivity (Q3).}
 \label{para:hp-sensitivity}
 RQ: how sensitive is hybrid champion $R$ to $\pm 50\%$ shifts of Table~\ref{tab:hyperparams} knobs?
 We run a \textbf{one-at-a-time sensitivity probe} (not a full $5$k re-search): $500$ outer iterations per config, seed \texttt{1902771841}, sine{+}cliff FitCell matched to the meta-compare protocol (batch $48$, fit steps $24$).
 Perturbed knobs: population size $n$, PPO clip $\epsilon$, fit Adam learning rate, GA second-mutate rate, and PPO entropy coefficient.
-Table~\ref{tab:hp-sensitivity} and Figure~\ref{fig:hp-sensitivity} report champion absolute $R$ versus the Table-2 default (default champ $R\approx 0.9888$; largest $|\Delta R|$ among completed arms $\approx 0.0123$).
+Table~\ref{tab:hp-sensitivity} and Figure~\ref{fig:hp-sensitivity} report champion absolute $R$ versus the Table-2 default (default champ $R\approx 0.9888$; largest $|\Delta R|$ among completed arms $\approx 0.0123$ on \texttt{lr\_m50}).
+All $11/11$ arms completed under this budget.
 
-This is local robustness evidence under the stated budget and seed; the $5$k matched-budget ranking remains the primary approach comparison.
+This is local robustness evidence under the stated budget and seed; the $5$k matched-budget ranking (Table~\ref{tab:meta-approaches}) remains the primary approach comparison.
+We do \emph{not} claim that Table-2 defaults are globally optimal---only that $\pm 50\%$ OAT shifts leave champion $R$ within a small band relative to the DualCosine gap ($\approx 0.17$ on the $5$k gate).
+
+\input{figures/tab_meta_hp_sensitivity}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig_meta_hp_sensitivity.png}
+  \caption{One-at-a-time $\pm 50\%$ hyperparameter sensitivity of hybrid champion $R$
+  at a $500$-iteration budget (seed \texttt{1902771841}). Blue bar / dashed line: Table~\ref{tab:hyperparams} default.
+  This is a \textbf{sensitivity probe}, not a full $5$k re-search per HP.}
+  \label{fig:hp-sensitivity}
+\end{figure}
