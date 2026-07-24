@@ -2,7 +2,8 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v7** | 2026-07-19 | Current: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
+| **v8** | 2026-07-24 | Current: review-response scaffold (W0); IMRaD clarity, math formalization, eval/listening, HP ±50% (W1–W5 in progress) |
+| v7 | 2026-07-19 | Archived: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
 | v6 | 2026-07-19 | Archived peer-review A–E complete snapshot (restored from `83f4b48`, pre–weakness-elim) |
 | v5 | 2026-07-19 | Archived pre–peer-review-revision snapshot (restored from `3f409b2`) |
 | v4 | 2026-07-18 | Superseded archive |
@@ -10,7 +11,16 @@
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
-## v7 notes (current)
+## v8 notes (current)
+
+### W0 scaffold (24 July 2026)
+- Copied `paper/v7/` → `paper/v8/` (figures and folded post-review JSON retained).
+- Pointer `paper/main.tex` → v8; `TITLES.md` version string → v8.
+- Added `paper/v8/REVIEW_RESPONSE.md` skeleton (weaknesses / author Qs / suggestions → v8 location TBD until W1–W5).
+- Manuscript rewrite, new vibrato/HP benches, and PDF rebuild are **not** in this entry (W1–W5).
+- Sources: `paper/v8/`. SDD: `docs/sdd/specs/paper-v8-review-response/`.
+
+## v7 notes (archived)
 
 ### Meta-approach 5k suite complete + heal figures (23 July 2026)
 - Matched 5k outer-loop comparison finished (`all_complete`); table/learning curves regenerated from summaries.
@@ -75,7 +85,7 @@
 
 - Restored from commit `83f4b48` (parent of `b4cef83`, immediately before F1–F5 weakness-elimination landed).
 - Snapshot includes peer-review Phases A–E complete manuscript/artifacts and the weakness-elimination *plan*, but **not** the F1–F5 manuscript/artifact changes (no `poly_baseline` / `jump_control` / `transfer_failures` / `tab:cliff-edge-rmse` / unified SOTA promotion in tex).
-- Sources: `paper/v6/`. Current canonical paper is `paper/v7/`.
+- Sources: `paper/v6/`. Current canonical paper is `paper/v8/` (v7 archived).
 
 ## v5 notes (archived pre–peer-review revision)
 
