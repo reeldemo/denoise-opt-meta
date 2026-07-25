@@ -77,7 +77,8 @@ Hybrid GA--PPO Meta-Search}
     AKWF CC0 single-cycle WAVs ($n{=}24$) under the same wrap protocol (no LibriSpeech/MUSDB).
     On exports the favorite trails no-bake / FIR (domain shift).
     On AKWF it matches no-bake and beats DualCosine.
-    A classical-board sci/eng wrap pilot (CWRU bearings, MIT-BIH ECG) is reported in the appendix only.
+    A classical-board sci/eng wrap transfer (CWRU, MFPT, MIT-BIH, PTB-XL subset, synthetic CNC/PMU)
+    is reported in the main Results with honest not-executed deep-SOTA rows.
     Scope is cycle-local wavetable seam restoration (DAFx / AES / arXiv cs.SD).
     We do not claim speech enhancement or deep SOTA on sci/eng transfer boards.
   \end{abstract}
@@ -90,8 +91,10 @@ Hybrid GA--PPO Meta-Search}
 \input{subsections/methods}
 \input{subsections/experiments}
 \input{subsections/results}
-% W2 eval+listening (T4): separate file to reduce merge risk with T2/T3 Methods work
+% W2 eval+listening (T4)
 \input{subsections/results_eval_listening}
+% Sci/eng wrap transfer (main Results; classical board + honest not-executed rows)
+\input{subsections/results_transfer}
 % W4 HP sensitivity (T5/T6)
 \input{subsections/results_hp_sensitivity}
 \input{subsections/discussion}

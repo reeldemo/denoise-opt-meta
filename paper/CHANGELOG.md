@@ -14,12 +14,12 @@
 
 ## v9 notes (current)
 
-### Language cleanup + transfer honesty (25 July 2026)
-- Copied `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` → `..._v9/` (v8 kept as archive).
-- Paragraph-by-paragraph prose pass on `subsections/*.tex` + abstract: shorter sentences, fewer em dashes / fake contrasts / filler; no manuscript body references to prior paper versions.
-- Transfer appendix: classical-board disclaimer first; states what ran (CWRU + MIT-BIH classical board) and what did not (deep SOTA / MFPT-Paderborn / Cycle-GAN / BeatDiff / formal listening).
-- Constitution retained: cycle-local WT seam primary claim; DualCosine centering ≠ objective; ideal sibling ≠ no-bake.
-- Pointers: `paper/main.tex`, root README, reelsynth docs/scripts → v9; PDF rebuilt.
+### Language cleanup + main-text transfer elevation (25 July 2026)
+- Copied `paper/..._v8/` → `..._v9/` (v8 kept as archive); paragraph language/slop cleanup.
+- Elevated sci/eng wrap transfer into **main** Experiments (`sec:transfer-protocol`) + Results (`sec:transfer-main`, `sec:listening-protocol`).
+- Ran/expanded transfer: CWRU + MIT-BIH (prior) + MFPT (Figshare) + PTB-XL records100 subset + synthetic CNC/PMU pilots.
+- Honest not-executed rows: Cycle-GAN/BeatDiff, Paderborn deep, full PTB-XL 500 Hz, real KIT/PMU, formal MOS.
+- Pointers + PDF rebuilt; reelsynth scripts/docs → v9.
 
 ## v8 notes (archived)
 

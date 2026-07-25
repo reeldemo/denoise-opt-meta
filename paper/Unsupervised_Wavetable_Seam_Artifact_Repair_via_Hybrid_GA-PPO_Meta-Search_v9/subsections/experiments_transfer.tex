@@ -1,0 +1,28 @@
+% Main-text sci/eng wrap transfer (elevated from appendix-only in v9).
+% Included from experiments.tex.
+
+\subsection{Sci/eng wrap-heal transfer protocol}
+\label{sec:transfer-protocol}
+
+Beyond wavetable-native export/AKWF benches, we transfer the same residual protocol and hybrid outer loop
+(\texttt{hybrid\_lstm}) to cycle-local wrap tasks outside musical wavetables.
+Period length is fixed at $L{=}256$. The outer objective remains maximize prolonged $R$ vs an ideal sibling.
+Pilot budget: $150$--$250$ outer iterations per dataset, \texttt{fit\_steps}${}={}40$ (hours-scale, not multi-day).
+Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
+
+\paragraph{Datasets that ran.}
+\begin{itemize}
+  \item \textbf{CWRU bearings} (real): DE @12\,kHz; per-rev windows via RPM; ideal = cubic resample; engine = linear (bad-COT proxy) + wrap cliff.
+  \item \textbf{MFPT bearings} (real): fixed 25\,Hz shaft; same cubic/linear+cliff construction (Figshare mirror of MFPT Fault Data Sets).
+  \item \textbf{MIT-BIH ECG} (real): R--R normal beats; ideal = local mean template + mild endpoint equalize; engine = beat + cliff.
+  \item \textbf{PTB-XL ECG} (real subset): PhysioNet \texttt{records100} (100\,Hz) lead-I beat windows; same classical ECG construction. This is a low-res subset pilot, not the full 500\,Hz corpus.
+  \item \textbf{Synthetic CNC G01} (\texttt{synth\_cnc\_g01}): closed-contour residual with sharp corners vs wide G2-ish blend (KIT CNC DOI login-walled).
+  \item \textbf{Synthetic PMU/AC cycle} (\texttt{synth\_pmu\_cycle}): harmonic voltage cycle with wrap cliff (IEEE DataPort PMU OA account-walled).
+\end{itemize}
+
+\paragraph{Honesty labels (required).}
+All transfer tables are \emph{classical-board} comparisons (no-bake, DualCosine, fades, endpoint pin, seam FIR, plus domain classical COT / SBMM-lite / spline proxies).
+We do \emph{not} claim deep SOTA on diagnosis or clinical enhancement.
+Rows marked \emph{not executed}: Paderborn KAt deep campaign (CC BY-NC + multi-GB), Cycle-GAN / BeatDiff under this residual protocol, full PTB-XL 500\,Hz corpus, real KIT CNC / IEEE 39-bus PMU recordings, and formal MOS/MUSHRA listening.
+Synthetic CNC/PMU rows are protocol pilots, not claims on industrial toolpaths or live PMU streams.
+Results appear in Section~\ref{sec:transfer-main}.

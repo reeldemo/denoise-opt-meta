@@ -1,0 +1,75 @@
+\subsection{Sci/eng wrap-heal transfer results}
+\label{sec:transfer-main}
+
+\paragraph{Classical-board disclaimer.}
+Table~\ref{tab:transfer-main} reports holdout-refit prolonged $R$ on classical / domain-proxy boards only.
+Deep SOTA rows are listed as \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
+Synthetic CNC/PMU rows are protocol pilots when real KIT / DataPort downloads are blocked.
+Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
+
+\begin{table*}[t]
+  \centering
+  \caption{Sci/eng wrap-heal transfer: holdout-refit prolonged $R$ (higher better) on classical boards.
+    Ours = \texttt{hybrid\_lstm}. CWRU/MIT-BIH: 250 outer iters. MFPT/PTB-XL/synth: 150 outer iters (PTB-XL uses PhysioNet \texttt{records100} subset).
+    Classical board only. No invented deep-SOTA scores.}
+  \label{tab:transfer-main}
+  \setlength{\tabcolsep}{2.8pt}
+  \begin{tabular}{@{}lrrrrrr@{}}
+    \toprule
+    Method & CWRU & MFPT & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
+    \midrule
+    Ours (\texttt{hybrid\_lstm}) & 0.8705 & 0.8842 & 0.8792 & 0.6403 & 0.4675 & 0.9682 \\
+    no-bake & 0.8675 & 0.8778 & 0.6403 & 0.4503 & 0.4073 & 0.9563 \\
+    endpoint-pin & 0.7990 & 0.7933 & 0.7796 & 0.5921 & 0.4014 & 0.9605 \\
+    \texttt{seam\_fir3} & 0.7865 & 0.8055 & 0.6615 & 0.4515 & 0.4187 & 0.9477 \\
+    DualCosine & 0.7846 & 0.7761 & 0.2009 & 0.3360 & 0.4135 & 0.9393 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_signal_heal_transfer.png}
+  \caption{Transfer classical-board summary (holdout-refit $R$).
+    Not a deep-SOTA claim; see Table~\ref{tab:transfer-sota-status}.}
+  \label{fig:signal-heal-transfer-main}
+\end{figure}
+
+\begin{table}[t]
+  \centering
+  \caption{Deep / real-data transfer status under this residual protocol.
+    No invented scores.}
+  \label{tab:transfer-sota-status}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lp{0.62\columnwidth}@{}}
+    \toprule
+    Item & Status \\
+    \midrule
+    Cycle-GAN (ECG) & \emph{not executed} (no weights under $R$) \\
+    BeatDiff & \emph{not executed} \\
+    Paderborn KAt deep & \emph{not executed} (registration / multi-GB) \\
+    Full PTB-XL 500\,Hz & deferred (ran \texttt{records100} subset) \\
+    Real KIT CNC / IEEE PMU & deferred (login walls; synth pilots ran) \\
+    Formal MOS/MUSHRA & deferred (Section~\ref{sec:listening-protocol}) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Reading.}
+On CWRU, DualCosine and fades hurt vs no-bake; Ours only narrowly beats no-bake (weak transfer on that wrap).
+On MFPT, Ours leads the classical board ($R{\approx}0.884$) with a small gap over no-bake.
+On MIT-BIH, DualCosine collapses morphology while Ours leads ($R{\approx}0.879$ vs endpoint-pin $R{\approx}0.780$).
+On the PTB-XL \texttt{records100} subset, Ours leads ($R{\approx}0.640$) but absolute scores are lower than MIT-BIH (different sampling / beat construction).
+Synthetic CNC and PMU proxies show modest Ours gains over DualCosine under the same $R$ protocol; they are not substitutes for logged machine or PMU traces.
+Primary claim remains cycle-local \emph{wavetable} seam restoration.
+
+\subsection{Listening / spectrogram protocol (main Results)}
+\label{sec:listening-protocol}
+
+We place audible and spectrogram evidence in the main Results path (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}), not only an appendix note.
+Downloadable WAVs (no-bake / DualCosine / Ours, A4, $3$\,s) and vibrato spectrograms support informal A/B inspection.
+The planned formal listening protocol (forced-choice wrap-click preference; 44.1\,kHz mono; frozen WAV pack) is documented in
+\texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/LISTENING\_PROTOCOL\_MAIN.md}.
+\textbf{Formal MOS / MUSHRA scores were not collected in this work.}
+A future formal listening study would freeze the same WAV pack, recruit listeners under a MUSHRA-style wrap-click impairment scale, and report mean scores with confidence intervals.
+Until that study runs, perceptual claims remain qualitative and secondary to prolonged $R$.
