@@ -1,0 +1,29 @@
+{
+  "eval_seed": 20260719,
+  "tile_index": 46,
+  "wrap_abs": 2.282712936401367,
+  "pick_note": "holdout_batch.pt_max_wrap_prefer_intro_tile46",
+  "cycle_length": 256,
+  "periods_shown": 3,
+  "seam_w": 8,
+  "R_tile": {
+    "engine": 0.9503467082977295,
+    "blit_blep": 0.702644944190979,
+    "polyblep": 0.8685064315795898,
+    "blamp": 0.9503669142723083,
+    "dual_cosine": 0.6029019951820374
+  },
+  "canonical_batch_means_from_va_seam_blep_json": {
+    "polyblep": 0.9288,
+    "blit_blep": 0.868,
+    "blamp": 0.9718,
+    "dual_cosine": 0.8249
+  },
+  "operator_notes": {
+    "blit_blep": "raised-cosine BLEP-family step residual on wrap value jump (Stilson/Smith lineage)",
+    "polyblep": "quadratic polyBLEP residual (Nam et al. / osc::va::poly_blep)",
+    "blamp": "polyBLAMP residual on wrap slope jump (Esqueda et al.)",
+    "dual_cosine": "raised-cosine end fades (baseline bake)"
+  },
+  "png": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v7\\figures\\fig_va_seam_techniques.png"
+}

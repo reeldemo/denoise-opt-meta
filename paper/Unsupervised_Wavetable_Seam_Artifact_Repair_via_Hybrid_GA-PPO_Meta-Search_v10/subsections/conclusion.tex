@@ -1,0 +1,16 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+DenoiseOpt casts wavetable wrap discontinuity as cycle-local seam repair under a blended residual
+$R_{\mathrm{blend}}$ and latency-aware objective $J$, with a hybrid GA--PPO(+PBT) outer loop over bake cells
+(including searchable SeamN2N-parity \texttt{n2n\_unet}).
+Corrupt$\to$corrupt Noise2Noise is the primary neural baseline and champ gate
+(frozen holdout $R_{\mathrm{blend}}{\approx}0.975$).
+A $1{,}200$-iteration hybrid freeze reaches $R_{\mathrm{blend}}{\approx}0.9695$ ($J{\approx}0.960$) but does not clear that gate;
+on multi-family boards Ours wins $13/20$ mean comparisons, while N2N leads holdout and Factory+FX/AKWF
+(${\approx}1{,}280$-cycle balanced corpora).
+Named sci/eng wrap transfer (CWRU, MFPT $n{=}256$, MIT-BIH, PTB-XL 500\,Hz subset, synth CNC/PMU)
+shows Ours leading classical boards under $R_{\mathrm{blend}}$ with measured CUDA latency.
+Deep SOTA weights and formal MOS were not executed.
+Scope remains wavetable seam restoration for DSP / synthesis venues.
+Code: \url{https://github.com/reeldemo/reelsynth}, \url{https://github.com/reeldemo/denoise-opt-meta}.

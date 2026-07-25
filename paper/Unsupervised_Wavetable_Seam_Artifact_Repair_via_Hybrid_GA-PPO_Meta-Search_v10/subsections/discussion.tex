@@ -1,0 +1,68 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{Where residual mass remains.}
+Across the $100{,}000$-cycle procedural bench and lit-combo family stress tests, wrap error is uneven.
+The same generator families dominate the residual budget: \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, and \texttt{extreme\_overlay} show the weakest denoise and residual scores.
+\texttt{harmonic\_fft} and \texttt{am\_fm} are easier.
+\texttt{open\_wrap\_bias} can look strong on wrap-energy proxies yet still lag on prolonged residual.
+Cliff reduction and ideal-matched tiling are related objectives with different rankings.
+
+\paragraph{No-bake $R$ and hard-cliff honesty.}
+Canonical no-bake $R\approx 0.97$ looks easy only if $R$ is treated as a perceptual wrap score, or if no-bake is confused with the ideal sibling.
+No-bake is the unrepaired engine scored against $r^{\star}$.
+The ideal withholds the cliff and is never a method output.
+Under~\eqref{eq:R-blend}, small residual RMS relative to ideal RMS yields high $R_{\mathrm{blend}}$ even when $|x_0-x_{L-1}|$ is large.
+That near-ceiling regime is why tiny $\Delta R$ still matters: climbing $0.97\to 0.991$ uses most of the remaining residual budget, while raw score differences stay small enough that reward shaping and outer-loop hyperparameters must be tuned with the architecture (Section~\ref{sec:reward-shaping}).
+Hard-cliff strata make the operative regime explicit.
+DualCosine drops to $R\approx 0.657$ on the top-10\% wrap-jump tiles while the favorite stays near $0.9915$.
+Favorite wrap-jump barely moves toward zero on that subset.
+We claim tiled residual repair toward $r^{\star}$, not endpoint closure.
+
+\paragraph{N2N stress test and transfer conditions.}
+On the sine{+}cliff holdout, corrupt$\to$corrupt N2N matches the meta favorite within $\approx 10^{-3}$.
+Sibling-supervised N2N and the LSTM ceiling sit slightly above.
+That is expected for oracle-label training on the same generator.
+It does not erase the hybrid search story: DenoiseOpt finds compact bake graphs without engine$\to$ideal supervision at search time, and the hard-cliff DualCosine collapse contrast remains.
+Win conditions (\texttt{transfer\_failures.json}): favorite beats DualCosine on sine cliffs and most AKWF / Rust tiles.
+No-bake and FIR lead on exported factory geometry (domain shift, reported openly).
+On true ReelSynth exports the searched favorite trails no-bake and FIR.
+We report that gap. We do not claim universal factory superiority.
+
+\paragraph{Wrap-jump vs edge RMSE.}
+Primary claim remains prolonged $R$. Wrap-jump is diagnostic only.
+Edge RMSE is the locked seam-local secondary: favorite reduces it on hard cliffs even when wrap-jump stays flat.
+Endpoint-pin zeros wrap-jump while hurting $R$, confirming the objectives differ.
+
+\paragraph{Implication for this paper.}
+Mean $R$ (and mean DualCosine gaps) compress a structured difficulty map.
+Reporting only the search-campaign mean on synthetic sine cliffs understates how much of the remaining $\sim$1\% sits in a few hard families, and how DualCosine fails when wrap-jump is large.
+Hard-cliff strata and wavetable-native transfer (true exports + AKWF) are first-class empirical claims here.
+The contribution targets DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD), not general speech-enhancement leaderboards.
+
+\paragraph{Hybrid search vs.\ plateau.}
+Search traces at the $5$k gate show early high champions then long plateaus near $R\approx 0.99$.
+That plateau is expected under near-ceiling $R$: further gains are small in absolute units and sensitive to reward shaping, entropy/clip, mutation rates, and plateau-triggered branch reweighting.
+Plateau adaptation (deeper cells, denser MoE graphs, higher GA/PBT weight) is the operational response inside one campaign.
+It does not by itself rebalance family-conditional risk.
+A natural next paper is family-conditional and cliff-conditional meta-learning: train or select denoisers per family, or condition the outer loop on measured wrap statistics, and publish per-family residual curves beside the scalar champion, with ablations of reward shaping under the same compressed-$R$ regime.
+
+\paragraph{Hybrid branches.}
+At the reported $5$k-gate search freeze, GA and PBT lead branch-best residuals, with PPO close behind and NAS trailing on this seed (Table~\ref{tab:ablation}).
+These per-branch readings are snapshots from a single hybrid run, not causally isolated single-branch experiments.
+Isolated short-budget re-runs (150 iterations, same search seed) confirm relative ordering under a fixed compute cap (Table~\ref{tab:ablation}).
+The matched $5$k outer-loop comparison (Table~\ref{tab:meta-approaches}, Figures~\ref{fig:meta-approach-bars}--\ref{fig:meta-approach-compare}) places Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS beside \textbf{Ours (hybrid GA--PPO)} under a shared seed and bake vocabulary that includes searchable LSTM/xLSTM blocks.
+Ours wins the absolute-$R$ gate ($R\approx 0.99146$) with Aging evolution close behind ($R\approx 0.99079$).
+Cont.\ CMA-ES is the wall-time leader ($\approx 2.3$\,h) at lower champion $R$.
+Figure~\ref{fig:meta-heal-samples} shows the wrap-seam heal qualitatively on holdout geometry.
+The multi-family SOTA matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws, and ahead of no-bake / FIR on absolute $R$ on that same generator.
+Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
+On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake / FIR.
+That transfer gap matches the narrow Python training geometry.
+
+\paragraph{Review narrative.}
+Peer review asked for Methods clarity, formal ideal-sibling math, broader-than-static eval, and HP justification for meta-search.
+This manuscript answers with slim IMRaD Methods plus Algorithms~1--9 in the appendix (Section~\ref{sec:methods}, Appendix~\ref{app:algorithms}); formal $\Theta$ and $G(\mathrm{seed},\mathrm{cliff})$ siblings (Q1--Q2); vibrato spectrograms, downloadable hear WAVs, and a compact real-WT gallery (Sections~\ref{sec:vibrato-eval}--\ref{sec:wt-gallery}); and a $500$-iteration one-at-a-time $\pm 50\%$ HP sensitivity probe (paragraph~\ref{para:hp-sensitivity}) that measures local sensitivity of Table~\ref{tab:hyperparams} defaults under seed \texttt{1902771841}.
+That probe is not a second $5$k re-search and does not re-rank approaches.
+Sci/eng wrap transfer is reported in main Results as a classical-board pilot (Section~\ref{sec:transfer-main}), not a deep-SOTA CWRU/ECG claim.
+Audible demos support informal inspection only. No formal human listening study was run (protocol in Section~\ref{sec:listening-protocol}).

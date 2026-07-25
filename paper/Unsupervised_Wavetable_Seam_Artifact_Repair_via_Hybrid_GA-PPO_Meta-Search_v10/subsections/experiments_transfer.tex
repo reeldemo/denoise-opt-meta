@@ -1,0 +1,28 @@
+% Main-text sci/eng wrap transfer (elevated from appendix-only in v9).
+% Included from experiments.tex.
+
+\subsection{Sci/eng wrap-heal transfer protocol}
+\label{sec:transfer-protocol}
+
+Beyond wavetable-native Factory+FX / AKWF benches (${\approx}1{,}280$ each), we transfer the same $R_{\mathrm{blend}}{+}J$ protocol and hybrid outer loop
+(\texttt{hybrid\_lstm}) to cycle-local wrap tasks outside musical wavetables.
+Period length is fixed at $L{=}256$. The outer objective maximizes $J$ (primary residual $R_{\mathrm{blend}}$).
+Pilot budget: $150$--$250$ outer iterations per dataset, \texttt{fit\_steps}${}={}40$ (hours-scale, not multi-day).
+Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
+
+\paragraph{Datasets that ran.}
+\begin{itemize}
+  \item \textbf{CWRU bearings} (real): Case Western Reserve University Bearing Data Center; DE @12\,kHz; per-rev windows via RPM; ideal = cubic resample; engine = linear (bad-COT proxy) + wrap cliff; $n{=}256$.
+  \item \textbf{MFPT bearings} (real): Society for Machinery Failure Prevention Technology Fault Data Sets; fixed 25\,Hz shaft; same cubic/linear+cliff construction; $n{=}256$ (up from $128$ in earlier pilots).
+  \item \textbf{MIT-BIH ECG} (real): PhysioNet MIT-BIH Arrhythmia; R--R normal beats; ideal = local mean template + mild endpoint equalize; engine = beat + cliff; $n{=}256$.
+  \item \textbf{PTB-XL ECG} (real subset): PhysioNet \texttt{records500} (\texttt{*\_hr}, 500\,Hz) lead-I beat windows; same classical ECG construction. Subset pilot ($n{=}256$ periods from $94$ records), not the full PTB-XL corpus.
+  \item \textbf{Synthetic CNC G01} (\texttt{synth\_cnc\_g01}): closed-contour residual with sharp corners vs wide G2-ish blend (KIT CNC DOI login-walled; synthetic stand-in); $n{=}256$.
+  \item \textbf{Synthetic PMU/AC cycle} (\texttt{synth\_pmu\_cycle}): harmonic voltage cycle with wrap cliff (IEEE DataPort PMU OA account-walled; synthetic stand-in); $n{=}256$.
+\end{itemize}
+
+\paragraph{Honesty labels (required).}
+All transfer tables are \emph{classical-board} comparisons (no-bake, DualCosine, fades, endpoint pin, seam FIR, plus domain classical COT / SBMM-lite / spline proxies).
+We do \emph{not} claim deep SOTA on diagnosis or clinical enhancement.
+Rows marked \emph{not executed}: Paderborn KAt deep campaign (CC BY-NC + multi-GB), Cycle-GAN / BeatDiff under this residual protocol, full PTB-XL 500\,Hz corpus, real KIT CNC / IEEE 39-bus PMU recordings, and formal MOS/MUSHRA listening.
+Synthetic CNC/PMU rows are protocol pilots, not claims on industrial toolpaths or live PMU streams.
+Results appear in Section~\ref{sec:transfer-main}.

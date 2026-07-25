@@ -1,0 +1,77 @@
+\subsection{Sci/eng wrap-heal transfer results}
+\label{sec:transfer-main}
+
+\paragraph{Classical-board disclaimer.}
+Table~\ref{tab:transfer-main} reports holdout-refit $R_{\mathrm{blend}}$ on classical / domain-proxy boards under the v10.1 protocol ($250$ outer iters, $n{=}256$ periods, $L{=}256$).
+Deep SOTA rows are listed as \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
+Synthetic CNC/PMU rows are protocol pilots when real KIT / DataPort downloads are blocked.
+Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
+
+\begin{table*}[t]
+  \centering
+  \caption{Sci/eng wrap-heal transfer: holdout-refit $R_{\mathrm{blend}}$ (higher better) on classical boards.
+    Ours = \texttt{hybrid\_lstm} under $J$ ($250$ iters, seed \texttt{1902771841}).
+    All six domains use $n{=}256$ periods (MFPT raised from $128$).
+    Classical board only. No invented deep-SOTA scores.}
+  \label{tab:transfer-main}
+  \setlength{\tabcolsep}{2.8pt}
+  \begin{tabular}{@{}lrrrrrr@{}}
+    \toprule
+    Method & CWRU & MFPT & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
+    \midrule
+    Ours (\texttt{hybrid\_lstm}) & 0.9623 & 0.9411 & 0.9565 & 0.9336 & 0.9918 & 0.9915 \\
+    no-bake & 0.8451 & 0.8657 & 0.7495 & 0.7503 & 0.4499 & 0.9356 \\
+    endpoint-pin & 0.5054 & 0.5446 & 0.8650 & 0.8569 & 0.4096 & 0.9442 \\
+    \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.7662 & 0.7462 & 0.5344 & 0.9119 \\
+    DualCosine & 0.4608 & 0.4830 & 0.4137 & 0.4769 & 0.4943 & 0.8272 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_signal_heal_transfer.png}
+  \caption{Transfer classical-board summary (holdout-refit $R_{\mathrm{blend}}$; grouped bars for Table~\ref{tab:transfer-main}).
+    Not a deep-SOTA claim; see Table~\ref{tab:transfer-sota-status}.}
+  \label{fig:signal-heal-transfer-main}
+\end{figure}
+
+\begin{table}[t]
+  \centering
+  \caption{Deep / real-data transfer status under this residual protocol.
+    No invented scores.}
+  \label{tab:transfer-sota-status}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lp{0.62\columnwidth}@{}}
+    \toprule
+    Item & Status \\
+    \midrule
+    Cycle-GAN (ECG) & \emph{not executed} (no weights under $R_{\mathrm{blend}}$) \\
+    BeatDiff & \emph{not executed} \\
+    Paderborn KAt deep & \emph{not executed} (registration / multi-GB) \\
+    Full PTB-XL corpus & deferred (ran \texttt{records500} \texttt{*\_hr} subset, $n{=}256$ periods) \\
+    Real KIT CNC / IEEE PMU & deferred (login walls; synth pilots ran) \\
+    Formal MOS/MUSHRA & deferred (Section~\ref{sec:listening-protocol}) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Reading.}
+Under $R_{\mathrm{blend}}$, Ours leads every classical-board column in Table~\ref{tab:transfer-main}.
+On CWRU/MFPT, DualCosine and fades trail no-bake; Ours clears both by a large margin ($0.96$/$0.94$ vs no-bake $0.85$/$0.87$).
+On MIT-BIH and PTB-XL, endpoint-pin is a strong classical ECG row, but Ours still leads ($0.956$/$0.934$).
+Synthetic CNC shows the largest classical collapse (no-bake $0.45$) with Ours near $0.992$; synth PMU stays near-ceiling for both no-bake and Ours.
+Primary claim remains cycle-local \emph{wavetable} seam restoration; transfer is a protocol stress test, not diagnosis SOTA.
+
+\input{subsections/results_transfer_latency}
+
+\subsection{Listening / spectrogram protocol (main Results)}
+\label{sec:listening-protocol}
+
+We place audible and spectrogram evidence in the main Results path (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}), not only an appendix note.
+Downloadable WAVs (no-bake / DualCosine / Ours, A4, $3$\,s) and vibrato spectrograms support informal A/B inspection.
+The planned formal listening protocol (forced-choice wrap-click preference; 44.1\,kHz mono; frozen WAV pack) is documented in
+\texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/LISTENING\_PROTOCOL\_MAIN.md}.
+\textbf{Formal MOS / MUSHRA scores were not collected in this work.}
+A future formal listening study would freeze the same WAV pack, recruit listeners under a MUSHRA-style wrap-click impairment scale, and report mean scores with confidence intervals.
+Until that study runs, perceptual claims remain qualitative and secondary to $R_{\mathrm{blend}}$.
