@@ -1,0 +1,12 @@
+WEAKNESS_ELIMINATION_COMPLETE
+date: 2026-07-19
+phases: F1 F2 F3 F4 F5
+gates: G1-G7
+primary_realism: reelsynth_export n=25
+secondary_realism: oa_akwf_cc0 n=24
+edge_rmse: locked
+poly: published
+ssm: deferred
+transfer_failures: frozen
+sota_main: includes N2N seq poly
+reject_intact: no_librispeech no_musdb no_mushra no_fake_theory

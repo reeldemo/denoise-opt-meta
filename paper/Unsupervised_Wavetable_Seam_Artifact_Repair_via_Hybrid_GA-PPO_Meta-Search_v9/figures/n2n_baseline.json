@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "train_seed": 424242,
+    "holdout_seed": 20260719,
+    "overnight_search_seed": 1902771841,
+    "note": "no holdout tile leakage; no overnight champion init",
+    "primary": "n2n_corrupt_corrupt",
+    "secondary": "n2n_sibling_supervised",
+    "steps": 20000,
+    "batch": 64,
+    "lr": 0.002,
+    "L": 256,
+    "SEAM_W": 8
+  },
+  "modes": {
+    "n2n_corrupt_corrupt": {
+      "n_params": 53506,
+      "loss_first": 0.3848452568054199,
+      "loss_last": 0.0005793541204184294,
+      "elapsed_sec": 163.28647459999775,
+      "steps": 20000,
+      "eval": {
+        "residual_R": 0.9916602373123169,
+        "dual_cosine_R": 0.8248767852783203,
+        "delta_R_vs_dual_cosine": 0.16678345203399658,
+        "snr_db_mean": 42.257057189941406,
+        "snr_db_std": 3.464144229888916,
+        "sdr_db_mean": 42.3883056640625,
+        "sdr_db_std": 3.467745542526245,
+        "wrap_jump_mean": 0.877788245677948,
+        "wrap_jump_std": 0.6399410367012024,
+        "edge_rmse_mean": 0.02298305742442608,
+        "edge_rmse_std": 0.010161898098886013,
+        "click_energy_mean": 1.1800367832183838,
+        "click_energy_std": 1.2614067792892456
+      },
+      "checkpoint": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\reelsynth\\brand\\artifacts\\n2n_seam_baselines\\n2n_corrupt_corrupt.pt"
+    },
+    "n2n_sibling_supervised": {
+      "n_params": 53506,
+      "loss_first": 0.3852943778038025,
+      "loss_last": 2.7093719836557284e-05,
+      "elapsed_sec": 105.53801910000038,
+      "steps": 20000,
+      "eval": {
+        "residual_R": 0.9933470487594604,
+        "dual_cosine_R": 0.8248767852783203,
+        "delta_R_vs_dual_cosine": 0.16847026348114014,
+        "snr_db_mean": 44.347537994384766,
+        "snr_db_std": 3.754237413406372,
+        "sdr_db_mean": 44.46686553955078,
+        "sdr_db_std": 3.738586664199829,
+        "wrap_jump_mean": 0.883865237236023,
+        "wrap_jump_std": 0.646828293800354,
+        "edge_rmse_mean": 0.01773180440068245,
+        "edge_rmse_std": 0.009062052704393864,
+        "click_energy_mean": 1.1996047496795654,
+        "click_energy_std": 1.2893530130386353
+      },
+      "checkpoint": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\reelsynth\\brand\\artifacts\\n2n_seam_baselines\\n2n_sibling_supervised.pt"
+    }
+  }
+}

@@ -2,7 +2,8 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v8** | 2026-07-24 | Current: review-response rewrite complete (W0–W5); HP ±50% OAT sensitivity; vibrato/hear/WT gallery; IMRaD Methods + math formalization |
+| **v9** | 2026-07-25 | Current: paragraph language/slop cleanup; transfer-pilot honesty front-and-center (classical board only) |
+| v8 | 2026-07-24 | Archived: review-response rewrite complete (W0–W5); HP ±50% OAT sensitivity; vibrato/hear/WT gallery; IMRaD Methods + math formalization |
 | v7 | 2026-07-19 | Archived: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
 | v6 | 2026-07-19 | Archived peer-review A–E complete snapshot (restored from `83f4b48`, pre–weakness-elim) |
 | v5 | 2026-07-19 | Archived pre–peer-review-revision snapshot (restored from `3f409b2`) |
@@ -11,7 +12,16 @@
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
-## v8 notes (current)
+## v9 notes (current)
+
+### Language cleanup + transfer honesty (25 July 2026)
+- Copied `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` → `..._v9/` (v8 kept as archive).
+- Paragraph-by-paragraph prose pass on `subsections/*.tex` + abstract: shorter sentences, fewer em dashes / fake contrasts / filler; no manuscript body references to prior paper versions.
+- Transfer appendix: classical-board disclaimer first; states what ran (CWRU + MIT-BIH classical board) and what did not (deep SOTA / MFPT-Paderborn / Cycle-GAN / BeatDiff / formal listening).
+- Constitution retained: cycle-local WT seam primary claim; DualCosine centering ≠ objective; ideal sibling ≠ no-bake.
+- Pointers: `paper/main.tex`, root README, reelsynth docs/scripts → v9; PDF rebuilt.
+
+## v8 notes (archived)
 
 ### Folder rename (24 July 2026)
 - Renamed `paper/v8/` → `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` (full title + version).
@@ -105,7 +115,7 @@
 
 - Restored from commit `83f4b48` (parent of `b4cef83`, immediately before F1–F5 weakness-elimination landed).
 - Snapshot includes peer-review Phases A–E complete manuscript/artifacts and the weakness-elimination *plan*, but **not** the F1–F5 manuscript/artifact changes (no `poly_baseline` / `jump_control` / `transfer_failures` / `tab:cliff-edge-rmse` / unified SOTA promotion in tex).
-- Sources: `paper/v6/`. Current canonical paper is `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/` (v7 archived).
+- Sources: `paper/v6/`. Current canonical paper is `paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v9/` (v8 archived).
 
 ## v5 notes (archived pre–peer-review revision)
 

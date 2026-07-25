@@ -12,20 +12,20 @@ Companion to the synth implementation: [reeldemo/reelsynth](https://github.com/r
 
 **Julian M. Kleber** Â· [ORCID 0000-0001-5518-0932](https://orcid.org/0000-0001-5518-0932) Â· [julian.m.kleber@gmail.com](mailto:julian.m.kleber@gmail.com)
 
-## Current paper (v8)
+## Current paper (v9)
 
 **Title:** *Unsupervised Wavetable Seam Artifact Repair via Hybrid GA–PPO Meta-Search*
 
 | | |
 |--|--|
-| PDF | [`paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.pdf`](paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/main.pdf) |
-| Sources | [`paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/`](paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/) |
+| PDF | [`paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v9/main.pdf`](paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v9/main.pdf) |
+| Sources | [`paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v9/`](paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v9/) |
 | Changelog | [`paper/CHANGELOG.md`](paper/CHANGELOG.md) |
 
 Build:
 
 ```powershell
-cd paper\Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8
+cd paper\Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v9
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
 ```
@@ -39,7 +39,7 @@ pdflatex -interaction=nonstopmode main.tex
 - **Family hardness:** `nonlinear` / `combo` / `extreme_overlay` / `triple_mix` repeatedly worst; follow-up paper sketched in Outlook (family-/cliff-conditional meta-learning).
 - Overnight GPU hybrid (PPO+GA+PBT+NAS+depth+MoE) interim champ **Râ‰ˆ0.991** â€” final overnight tables after the 5k+ clean gate.
 
-Older versions: [`paper/v7/`](paper/v7/) (weakness-elim archive), [`paper/v6/`](paper/v6/), [`paper/v5/`](paper/v5/), [`paper/v4/`](paper/v4/), [`paper/v3/`](paper/v3/), [`paper/v2/`](paper/v2/), [`paper/v1/`](paper/v1/).
+Older versions: [`paper/..._v8/`](paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/) (language pre-cleanup archive), [`paper/v7/`](paper/v7/) (weakness-elim archive), [`paper/v6/`](paper/v6/), [`paper/v5/`](paper/v5/), [`paper/v4/`](paper/v4/), [`paper/v3/`](paper/v3/), [`paper/v2/`](paper/v2/), [`paper/v1/`](paper/v1/).
 
 ---
 
@@ -63,7 +63,8 @@ cargo run -p reelsynth --release --bin bench_denoise_meta -- 1500
 
 ```
 GO_CRITERIA.md        # release gate
-paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/  # current arXiv twocolumn paper (v8)
+paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v9/  # current arXiv twocolumn paper (v9)
+paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v8/  # v8 archive
 paper/v7/             # weakness-elim archive
 paper/v6/             # peer-review A-E / pre-weakness-elim archive
 paper/v5/             # pre-peer-review-revision archive

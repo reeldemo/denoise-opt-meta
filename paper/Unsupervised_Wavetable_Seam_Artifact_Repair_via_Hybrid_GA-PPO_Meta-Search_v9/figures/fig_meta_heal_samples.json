@@ -1,0 +1,79 @@
+{
+  "schema": "denoiseopt.meta_heal_samples.v1",
+  "approach_code": "hybrid_lstm",
+  "approach_display": "Ours (hybrid GA\u2013PPO)",
+  "eval_seed": 20260719,
+  "search_seed": 1902771841,
+  "tile_index": 46,
+  "wrap_abs": 2.282712936401367,
+  "holdout_source": "holdout_batch.pt",
+  "pick_note": "prefer_intro_tile46",
+  "champ_raw_from_summary": 0.9914649724960327,
+  "delta_r_vs_dual_cosine_summary": 0.1748800277709961,
+  "refit": {
+    "fit_steps": 64,
+    "batch": 64,
+    "lr": 0.06844036093419292,
+    "adv_coef": 0.0,
+    "converged": false,
+    "train_r_last": 0.9915947914123535
+  },
+  "train_r_last": 0.9915947914123535,
+  "champ_arch": {
+    "depth": 12,
+    "width": 48,
+    "act": "tanh",
+    "ops": [
+      "cycle_net",
+      "fade_pull",
+      "fir5"
+    ],
+    "wet": 0.7245407380693173,
+    "fir": [
+      0.09384575163009412,
+      0.48805814652102797,
+      0.39091825891943194,
+      0.331059364757842,
+      0.46083074612670105
+    ],
+    "cell_kind": "tf_split",
+    "soft_logits": [
+      -0.7310634675404777,
+      0.1710795557276254,
+      -0.6233001575325193,
+      0.9827618982555753,
+      0.3947958367868978,
+      0.373733937967083,
+      0.46914590455657923,
+      0.37583370129354693,
+      -0.08300391880653188,
+      0.41187302648163265,
+      0.21241824583315116,
+      -0.36736061966500033,
+      0.3777839866967111,
+      1.352627609124864,
+      -0.11422418026695591
+    ],
+    "blocks": [
+      "tf_split"
+    ],
+    "use_adv_aux": true,
+    "moe_mode": "sequential"
+  },
+  "R_tile": {
+    "no_bake": 0.9503467082977295,
+    "dual_cosine": 0.6029019951820374,
+    "seam_fir3": 0.9599027633666992,
+    "ours_hybrid": 0.9904486536979675
+  },
+  "R_holdout_mean": {
+    "no_bake": 0.9717606902122498,
+    "dual_cosine": 0.8248767852783203,
+    "seam_fir3": 0.9641148447990417,
+    "ours_hybrid": 0.9913885593414307,
+    "n": 64
+  },
+  "note": "Cell weights are refit from champion arch+HP (meta suite does not persist fitted state_dict). Tile R is holdout geometry; summary champ_raw is search-time FitCell score. Rank by absolute R vs classical board; DualCosine \u0394R is reporting only.",
+  "png": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v7\\figures\\fig_meta_heal_samples.png",
+  "pdf": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v7\\figures\\fig_meta_heal_samples.pdf"
+}
