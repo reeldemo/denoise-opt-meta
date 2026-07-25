@@ -1,10 +1,10 @@
 % W2 / AC-3.* vibrato spectrograms, hear panel, WT diversity gallery
 % Included from main.tex (separate file to reduce merge risk with T2/T3 Methods edits).
 
-\subsection{Vibrato playback and spectrograms}
+\subsection{Vibrato spectrograms}
 \label{sec:vibrato-eval}
 
-RQ: do wrap-seam differences remain visible under \emph{dynamic} pitch (slow vibrato), beyond static tiled periods?
+Do wrap-seam differences stay visible under slow vibrato, beyond static tiled periods?
 Figure~\ref{fig:vibrato-spectrogram} renders the same holdout cracked period, DualCosine bake, and refit \textbf{Ours (hybrid GA--PPO)} champion under shared sinusoidal vibrato ($\pm 3\%$ depth at $5$\,Hz around $220$\,Hz).
 Panels (a--c) show magnitude spectrograms; (d--e) show DualCosine$-$no-bake and Ours$-$no-bake differences; (g) reports cycle-local prolonged $R$ alongside a modulated-playback residual under the same pitch envelope.
 On the annotated high-wrap tile, Ours retains high cycle $R$ and high modulated $R$, while DualCosine remains the weakest classical comparator.
@@ -25,7 +25,7 @@ Source: \texttt{reelsynth/scripts/bench\_vibrato\_spectrogram.py}; artifacts und
   \label{fig:vibrato-spectrogram}
 \end{figure*}
 
-\subsection{Downloadable hear samples}
+\subsection{Downloadable audio samples}
 \label{sec:hear-samples}
 
 As an audible companion to Figure~\ref{fig:meta-heal-samples}, we release five fixed-pitch (A4, $3$\,s, $44.1$\,kHz mono) wavetable clips for no-bake, DualCosine, and Ours-healed periods from the matched-suite holdout
@@ -44,7 +44,7 @@ Readers can download and listen; we do \emph{not} report formal MOS/MUSHRA or cl
   \label{fig:hear-samples-panel}
 \end{figure*}
 
-\subsection{Compact wavetable diversity gallery}
+\subsection{Factory and AKWF examples}
 \label{sec:wt-gallery}
 
 Beyond the synthetic sine{+}cliff narrative, Figure~\ref{fig:wt-diversity-gallery} shows a compact gallery of true ReelSynth-exported factory periods (one mid-morph frame per bank) and Adventure Kid Waveforms (AKWF) CC0 single-cycle files already used by the wrap protocol.

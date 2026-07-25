@@ -1,31 +1,21 @@
 \section{Limitations}
 \label{sec:limitations}
 
-\paragraph{Scope and evaluation limits.}
-The blended residual $R_{\mathrm{blend}}$ uses a procedural no-cliff sibling for seams and an engine-identity prior for the mid-cycle body; it does not capture perceptual quality directly.
-Formal listening tests (MOS, MUSHRA) and claimed A/B listening scores are outside the scope of this work.
-We ship spectrograms and downloadable WAVs for informal audition only.
-PESQ and STOI are excluded because the primary cycles are non-speech synthetic wavetable tiles.
-Speech-quality metrics on sine{+}cliff families would be a domain mismatch.
-MUSHRA was not run (requires human listeners).
-Any perceptual or speech-proxy secondary study would need separately labeled open-access speech snippets and remains out of scope for this narrow-seam paper.
-
 \begin{itemize}
-  \item Residual uses $R_{\mathrm{blend}}$ / $J$ under a procedural ideal (seams) and engine identity (body). Perceptual MOS and formal listening panels are out of scope.
-  \item Bake metrics leave formal listening tests and speech quality metrics to separate studies.
-  \item \textbf{PESQ / STOI / MUSHRA deferred.} Primary cycles are non-speech wavetable tiles. Speech metrics would domain-mismatch sine{+}cliff families, so PESQ/STOI numbers are absent here (none invented on synthetic tiles). MUSHRA needs human listeners and was \emph{not run}.
-  \item \textbf{No LibriSpeech / MUSDB.} Wavetable-native realism uses ReelSynth Factory+FX exports (${\approx}1{,}280$) and AKWF CC0 single-cycle WAVs (${\approx}1{,}280$) under the wrap protocol. Procedural stand-ins are tertiary smoke only. Speech/music enhancement corpora remain off by design.
-  \item \textbf{HP sensitivity is not a full re-search.} Paragraph~\ref{para:hp-sensitivity} reports one-at-a-time $\pm 50\%$ probes at a short outer budget. It measures local sensitivity of Table~\ref{tab:hyperparams} defaults.
-  \item \textbf{Classical-board transfer only where deep models did not run.} Section~\ref{sec:transfer-main} reports CWRU/MFPT/MIT-BIH/PTB-XL-subset and synthetic CNC/PMU pilots. Cycle-GAN, BeatDiff, Paderborn deep, real KIT/PMU streams, and formal MOS remain not executed (Table~\ref{tab:transfer-sota-status}).
-  \item Classical poly seam fitter is reported; lightweight SSM seq models are deferred (timebox); LSTM remains the supervised seq ceiling.
-  \item On exported Factory+FX / Rust tiles the meta favorite can trail no-bake or FIR (domain shift). Transfer win-rates are frozen in artifacts; we do not claim universal factory superiority.
-  \item The CUDA search runner scores Python \texttt{make\_batch} sine{+}cliff draws. A separate Rust \texttt{sound\_bench} export of 20 family tiles is a secondary transfer block. The Python generative SOTA matrix is the primary multi-family table.
-  \item Per-trial architecture width is capped for search throughput. Full Demucs-/diffusion-scale stacks were screened out (domain mismatch vs $L{=}256$ periodic seams). Champ gate vs Noise2Noise may not be met at every budget; we report the measured freeze honestly.
-  \item We do not claim wrap-closure or hybrid-search convergence theorems. Empirical gains are protocol-bound. Endpoint-pin shows wrap-jump can be zeroed while residual falls.
+  \item $R_{\mathrm{blend}}$ / $J$ use a procedural no-cliff sibling for seams and an engine-identity prior for the mid-cycle body. They do not measure perceptual quality. Formal MOS/MUSHRA panels are out of scope; we ship spectrograms and downloadable WAVs for informal audition only.
+  \item PESQ and STOI are excluded: primary cycles are non-speech wavetable tiles. Speech metrics on sine{+}cliff families would be a domain mismatch. MUSHRA was not run.
+  \item No LibriSpeech / MUSDB. Wavetable-native realism uses ReelSynth Factory+FX exports (${\approx}1{,}280$) and AKWF CC0 single-cycle WAVs (${\approx}1{,}280$). Procedural stand-ins are tertiary smoke only.
+  \item HP sensitivity (paragraph~\ref{para:hp-sensitivity}) is a short one-at-a-time $\pm 50\%$ probe, not a full re-search of Table~\ref{tab:hyperparams} defaults.
+  \item Sci/eng transfer (Section~\ref{sec:transfer-main}) is classical-board only where deep models did not run. Cycle-GAN, BeatDiff, Paderborn deep, real KIT/PMU streams, and formal MOS remain not executed (Table~\ref{tab:transfer-sota-status}).
+  \item Lightweight SSM seq models are deferred; LSTM remains the supervised seq ceiling.
+  \item On exported Factory+FX / Rust tiles the meta favorite can trail no-bake or FIR (domain shift). We do not claim universal factory superiority.
+  \item Search scores Python \texttt{make\_batch} sine{+}cliff draws. The Rust \texttt{sound\_bench} export of 20 family tiles is secondary. The Python multi-family matrix is primary.
+  \item Per-trial architecture width is capped for search throughput. Full Demucs-/diffusion-scale stacks were screened out. The champ gate vs Noise2Noise may not be met at every budget; we report the measured freeze honestly.
+  \item We do not claim wrap-closure or hybrid-search convergence theorems. Endpoint-pin shows wrap-jump can be zeroed while residual falls.
 \end{itemize}
 
-\subsection{Outlook: follow-up publication}
+\subsection{Future work}
 \label{sec:outlook}
 
-A self-contained follow-up can treat \emph{which sounds fail} as the primary object of study: stratified residual heatmaps over the ten procedural families, cliff-size conditioning, and family-specialist or mixture-of-experts denoisers selected by the same RL--GA outer loop.
-That paper would cite the present mean-$R$ hybrid protocol as the baseline and ask whether beating $R>0.999$ is mainly an architecture problem or a coverage problem over hard families.
+A follow-up can treat \emph{which sounds fail} as the primary object: stratified residual heatmaps over the ten procedural families, cliff-size conditioning, and family-specialist or mixture-of-experts denoisers selected by the same RL--GA outer loop.
+That paper would cite the present mean-$R$ hybrid protocol as baseline and ask whether beating $R>0.999$ is mainly an architecture problem or a coverage problem over hard families.

@@ -1,7 +1,7 @@
 % W4 / Q3 HP +/-50% OAT sensitivity (500 iters). Included from main.tex (T6).
-\paragraph{Hyperparameter sensitivity (Q3).}
+\paragraph{Hyperparameter sensitivity.}
 \label{para:hp-sensitivity}
-RQ: how sensitive is hybrid champion $R$ to $\pm 50\%$ shifts of Table~\ref{tab:hyperparams} knobs?
+How sensitive is hybrid champion $R$ to $\pm 50\%$ shifts of Table~\ref{tab:hyperparams} knobs?
 We run a \textbf{one-at-a-time sensitivity probe} (not a full $5$k re-search).
 Each config uses $500$ outer iterations, seed \texttt{1902771841}, and sine{+}cliff FitCell matched to the meta-compare protocol (batch $48$, fit steps $24$).
 Perturbed knobs: population size $n$, PPO clip $\epsilon$, fit Adam learning rate, GA second-mutate rate, and PPO entropy coefficient.

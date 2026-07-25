@@ -48,29 +48,29 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    In single-period wavetable synthesis, a sample discontinuity at the wrap boundary injects a
-    broadband transient that repeats at the fundamental, producing an audible periodic click.
-    We treat this \emph{cycle-local seam artifact} with \textbf{DenoiseOpt}: a residual-scored hybrid
-    meta-search that selects and fits bake-cell operators $\Theta$ at the period boundary.
-    The bake cell can compose DualCosine crossfades, FIR blends, and optional lightweight residual
-    networks (including a searchable SeamN2N-parity \texttt{n2n\_unet} block), with optional MoE soft gating.
+    In single-period wavetable synthesis, a discontinuity at the wrap injects a broadband click that
+    repeats at the fundamental.
+    We address this \emph{cycle-local seam} with \textbf{DenoiseOpt}: a hybrid meta-search that
+    proposes and fits bake-cell operators $\Theta$ at the period boundary.
+    Bake cells may combine DualCosine fades, FIR blends, and small residual nets
+    (including a searchable SeamN2N-parity \texttt{n2n\_unet}), with optional MoE gating.
     Paired studio-clean recordings are not required.
-    Candidates maximize a blended residual
+    Candidates maximize the blended residual
     $R_{\mathrm{blend}}=\alpha R_{\mathrm{seam}}+(1-\alpha)R_{\mathrm{body}}$ ($\alpha{=}0.7$)
     under latency-aware $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ ($\lambda{=}0.02$),
-    against a procedural ideal sibling $r^{\star}=G(\mathrm{seed},\mathrm{cliff{=}off})$
-    with mid-cycle identity vs the cracked engine $x=G(\mathrm{seed},\mathrm{cliff{=}on})$.
-    The primary neural baseline is a same-generator corrupt$\to$corrupt Noise2Noise control
+    scored against a procedural ideal sibling $r^{\star}=G(\mathrm{seed},\mathrm{cliff{=}off})$
+    while preserving mid-cycle identity vs the cracked engine $x=G(\mathrm{seed},\mathrm{cliff{=}on})$.
+    The primary neural baseline is same-generator corrupt$\to$corrupt Noise2Noise
     (\texttt{SeamN2N}, ${\approx}53.5$k; frozen holdout $R_{\mathrm{blend}}{\approx}0.975$).
-    DualCosine is demoted to a classical appendix / PPO-centering row.
-    The outer loop interleaves GA tournament selection, PPO architecture proposals, and optional PBT.
-    Balanced ${\approx}1{,}280$-cycle boards (multi-family, Factory+FX, AKWF) make corpus-size comparisons fair.
-    A classical-board sci/eng wrap transfer names CWRU, MFPT ($n{=}256$), MIT-BIH, PTB-XL 500\,Hz subset,
-    and synthetic CNC/PMU pilots in the Introduction and reports them in Results.
+    DualCosine is a classical comparator and PPO-centering row, not the gate.
+    The outer loop interleaves GA, PPO architecture edits, and optional PBT.
+    Balanced ${\approx}1{,}280$-cycle boards (multi-family, Factory+FX, AKWF) keep corpus sizes comparable.
+    We also transfer the wrap protocol to CWRU, MFPT ($n{=}256$), MIT-BIH, a PTB-XL 500\,Hz subset,
+    and synthetic CNC/PMU pilots (classical boards; Results).
     Scope is cycle-local wavetable seam restoration (DAFx / AES / arXiv cs.SD).
     We do not claim speech enhancement or deep SOTA on sci/eng transfer boards.
   \end{abstract}
-  \keywords{unsupervised learning; wavetable; wrap discontinuity; seam restoration; DenoiseOpt; prolonged residual score; neural architecture search; reinforcement learning; genetic algorithms; meta-learning}
+  \keywords{wavetable synthesis; wrap discontinuity; seam restoration; unsupervised learning; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}
 }]
 

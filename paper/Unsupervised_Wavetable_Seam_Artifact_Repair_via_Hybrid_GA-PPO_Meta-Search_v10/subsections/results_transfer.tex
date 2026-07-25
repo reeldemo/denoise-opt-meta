@@ -1,7 +1,7 @@
-\subsection{Sci/eng wrap-heal transfer results}
+\subsection{Transfer to bearings, ECG, and synthetic cycles}
 \label{sec:transfer-main}
 
-\paragraph{Classical-board disclaimer.}
+\paragraph{Classical methods only.}
 Table~\ref{tab:transfer-main} reports holdout-refit $R_{\mathrm{blend}}$ on classical / domain-proxy boards under the v10.1 protocol ($250$ outer iters, $n{=}256$ periods, $L{=}256$).
 Deep SOTA rows are listed as \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
 Synthetic CNC/PMU rows are protocol pilots when real KIT / DataPort downloads are blocked.
@@ -56,7 +56,7 @@ Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
   \end{tabular}
 \end{table}
 
-\paragraph{Reading.}
+\paragraph{Takeaways.}
 Under $R_{\mathrm{blend}}$, Ours leads every classical-board column in Table~\ref{tab:transfer-main}.
 On CWRU/MFPT, DualCosine and fades trail no-bake; Ours clears both by a large margin ($0.96$/$0.94$ vs no-bake $0.85$/$0.87$).
 On MIT-BIH and PTB-XL, endpoint-pin is a strong classical ECG row, but Ours still leads ($0.956$/$0.934$).
@@ -65,13 +65,12 @@ Primary claim remains cycle-local \emph{wavetable} seam restoration; transfer is
 
 \input{subsections/results_transfer_latency}
 
-\subsection{Listening / spectrogram protocol (main Results)}
+\subsection{Listening protocol (no formal MOS)}
 \label{sec:listening-protocol}
 
-We place audible and spectrogram evidence in the main Results path (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}), not only an appendix note.
+Audible and spectrogram evidence sits in the main Results path (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}), not only an appendix note.
 Downloadable WAVs (no-bake / DualCosine / Ours, A4, $3$\,s) and vibrato spectrograms support informal A/B inspection.
 The planned formal listening protocol (forced-choice wrap-click preference; 44.1\,kHz mono; frozen WAV pack) is documented in
 \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/LISTENING\_PROTOCOL\_MAIN.md}.
 \textbf{Formal MOS / MUSHRA scores were not collected in this work.}
-A future formal listening study would freeze the same WAV pack, recruit listeners under a MUSHRA-style wrap-click impairment scale, and report mean scores with confidence intervals.
-Until that study runs, perceptual claims remain qualitative and secondary to $R_{\mathrm{blend}}$.
+Until a formal study runs, perceptual claims remain qualitative and secondary to $R_{\mathrm{blend}}$.

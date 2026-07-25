@@ -1,7 +1,7 @@
 \section{Experiments}
 \label{sec:experiments}
 
-\paragraph{Protocol freeze.}
+\paragraph{Locked evaluation protocol.}
 Evaluation follows \texttt{EVAL\_PROTOCOL.md} in this paper folder (v10.1).
 Primary metric: $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Search objective: $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ ($\lambda{=}0.02$).
 Champ gate: strictly beat frozen Noise2Noise corrupt$\to$corrupt holdout $R_{\mathrm{blend}}$.
@@ -9,7 +9,7 @@ Secondary: SNR, SDR, wrap-jump, seam-local edge RMSE; debug keys include pure $R
 Holdout seed \texttt{20260719}. Search seed \texttt{1902771841}. N2N train seed \texttt{424242}.
 We report the hybrid\_lstm freeze plus holdout / multi-family / Factory+FX / AKWF / transfer benches.
 PESQ/STOI stay out of scope on non-speech cycles. LibriSpeech and MUSDB are not used.
-Venue positioning: DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD).
+Venue: DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD).
 
 \subsection{Dataset}
 \label{sec:dataset}

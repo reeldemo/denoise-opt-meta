@@ -1,8 +1,9 @@
 \section{Results}
 \label{sec:results}
 
-\paragraph{v10.1 hybrid freeze ($R_{\mathrm{blend}}{+}J$).}
-RQ: under the blended residual and latency objective, does hybrid GA--PPO beat the frozen Noise2Noise gate?
+\subsection{Hybrid freeze under $R_{\mathrm{blend}}$ and $J$}
+\label{sec:v10-freeze}
+Under the blended residual and latency objective, does hybrid GA--PPO beat the frozen Noise2Noise gate?
 A $1{,}200$-iteration \texttt{hybrid\_lstm} search (seed \texttt{1902771841}, ${\approx}1.65$\,h wall) selects on
 $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ ($\lambda{=}0.02$).
 Champion search scores: $R_{\mathrm{blend}}{\approx}0.9695$, $J{\approx}0.9603$, $t{\approx}5.08$\,ms
@@ -11,7 +12,8 @@ Frozen corrupt$\to$corrupt Noise2Noise holdout gate is $R_{\mathrm{blend}}{\appr
 The search champ does \emph{not} clear that gate ($\texttt{champ\_beats\_n2n}{=}\mathrm{false}$).
 Artifacts: \texttt{meta\_approach\_compare\_v10/hybrid\_lstm/}.
 
-\paragraph{N2N vs Ours (holdout, multi-family, Factory+FX, AKWF).}
+\subsection{Noise2Noise vs Ours on four boards}
+\label{sec:n2n-vs-ours-boards}
 Table~\ref{tab:n2n-vs-ours} summarizes the Phase-2 board under $R_{\mathrm{blend}}$.
 On the frozen sine{+}cliff holdout (seed \texttt{20260719}), Noise2Noise leads
 ($R_{\mathrm{blend}}{\approx}0.9750$ vs Ours ${\approx}0.9697$; $\Delta{\approx}{-}0.0053$).
@@ -40,24 +42,23 @@ Latency: holdout Ours ${\approx}4.57$\,ms vs N2N ${\approx}0.65$\,ms ($J$ still 
   \end{tabular}
 \end{table}
 
-\paragraph{Legacy whole-curve context (v9 geometry).}
-Earlier whole-curve prolonged-$R$ freezes ($R{\approx}0.991$ vs DualCosine ${\approx}0.825$) remain historical context only;
+\paragraph{Earlier whole-curve scores (context only).}
+Earlier whole-curve prolonged-$R$ freezes ($R{\approx}0.991$ vs DualCosine ${\approx}0.825$) are historical context only;
 v10.1 selection uses $R_{\mathrm{blend}}{+}J$ and Noise2Noise as the primary neural baseline.
 
-\paragraph{Family-conditional hardness (completed bench).}
-RQ: which procedural families dominate remaining residual mass?
+\subsection{Which families stay hard}
+\label{sec:family-hardness}
 On the fitted DenoiseOpt $100{,}000$-cycle bench, denoise score $D$ is lowest for \texttt{nonlinear} ($D\approx 0.39$) and \texttt{combo} ($D\approx 0.40$), then \texttt{triple\_mix} / \texttt{extreme\_overlay} ($D\approx 0.51$--$0.52$), while \texttt{harmonic\_fft} and \texttt{am\_fm} sit near $D\approx 0.69$--$0.70$.
 Lit-combo champion family stress (prolonged residual) similarly ranks \texttt{open\_wrap\_bias} ($R\approx 0.83$) and \texttt{extreme\_overlay} / \texttt{combo} ($R\approx 0.88$--$0.89$) below \texttt{harmonic\_fft} ($R\approx 0.95$).
 Hard sounds recur.
 
-\paragraph{Hybrid search (historical $5$k whole-curve freeze).}
-RQ: what champion whole-curve $R$ did the prior hybrid campaign reach?
+\paragraph{Historical $5$k whole-curve freeze.}
 At the reported $5$k-gate search freeze ($\approx 6{,}922$ clean iterations, $\approx 7.9$\,h on RTX~3090) the champion residual was $R\approx 0.99093$ with DualCosine $\approx 0.81658$ on the CUDA search runner ($\Delta R\approx{+}0.174$).
 That freeze used whole-curve prolonged $R$ (superseded by $R_{\mathrm{blend}}$ for v10.1 selection).
 Monitoring plots below are regenerated from that freeze.
 
-\paragraph{Inference time at matched score.}
-RQ: among near-max-$R$ fitted cells, which is fastest at matched score?
+\subsection{Inference latency at matched score}
+\label{sec:inference-latency}
 Across diverse high-$R$ fitted cells ($R\ge 0.98$), we timed CUDA forward passes (batch 64, prolonged residual).
 Within a tight band of the best residual ($R \ge R_{\max}-5\cdot10^{-4}$), the \textbf{favorite} is the lowest-latency model:
 \texttt{champion\_iter\_000235} with $R\approx 0.9910$, $\approx 3.15$\,ms/batch, $\approx 37$k parameters
@@ -66,7 +67,6 @@ Selection rule: maximize $R$, then minimize latency inside the band.
 
 \subsection{Top-5 architectures}
 \label{sec:top5-arch}
-RQ: which fitted bake graphs achieve near-max $R$ at lowest latency on the inference bench?
 Table~\ref{tab:top5} ranks five distinct fitted bake graphs from the CUDA inference bench
 (\texttt{inference\_bench.json}, batch 64), preferring residual $R$ first and latency on ties,
 and skipping near-duplicate copies of the same topology signature.
@@ -90,7 +90,8 @@ and skipping near-duplicate copies of the same topology signature.
   {\footnotesize *Favorite (fastest in $R\ge R_{\max}-5\cdot10^{-4}$ band).}
 \end{table}
 
-\paragraph{Classical vs favorite (canonical holdout).}
+\subsection{Classical methods vs neural favorite}
+\label{sec:classical-vs-favorite}
 Table~\ref{tab:canonical-methods} scores the classical (non-AI) bake set (no-bake, DualCosine, and \texttt{seam\_fir3}) plus the neural favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}).
 Every row uses the same ideal sibling $r^{\star}$; higher $R$ means closer to that sibling.
 DualCosine reaches $R\approx 0.825$ ($\approx 1.35$\,ms/batch), near the search-monitor DualCosine $\approx 0.817$ on live draws from the same generator.
@@ -124,10 +125,10 @@ $\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{s
   \end{tabular}
 \end{table}
 
-\subsection{SOTA matrix (multi-family + secondary metrics)}
+\subsection{Multi-family comparison}
 \label{sec:sota-main}
 
-RQ: does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades) and fixed MLP/CNN baselines across twenty generative families?
+Does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades) and fixed MLP/CNN baselines across twenty generative families?
 Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}), with canonical-holdout SNR/SDR/wrap-jump for the same method set from \texttt{sota\_matrix.json}.
 Figures~\ref{fig:sota-heatmap}--\ref{fig:sota-method-bars} plot the same ranking.
 PESQ/STOI/MUSHRA are omitted for non-speech cycles (Limitations).
@@ -185,10 +186,10 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
   \label{fig:sota-method-bars}
 \end{figure}
 
-\subsection{Hard-cliff strata}
+\subsection{Hard cliffs hide DualCosine failure}
 \label{sec:cliff-strata}
 
-RQ: does high no-bake $R$ hide DualCosine failure on large wrap jumps?
+Does high no-bake $R$ hide DualCosine failure on large wrap jumps?
 Table~\ref{tab:cliff-strata} stratifies a $4{,}096$-tile holdout draw (seed \texttt{20260719}) by engine wrap-jump percentiles (p75$\approx 1.387$, p90$\approx 1.832$; frozen in \texttt{cliff\_strata.json}).
 No-bake $R_{\mathrm{blend}}$ can stay high on mild cliffs because residual mass remains small relative to ideal RMS under the unit clamp of~\eqref{eq:R-blend}.
 DualCosine collapses on hard cliffs ($0.819$ $\to$ $0.657$), while the meta favorite holds ($R\approx 0.9915$).
@@ -242,10 +243,10 @@ Click energy remains an optional diagnostic.
   \end{tabular}
 \end{table}
 
-\subsection{N2N and seq baselines}
+\subsection{Noise2Noise and sequence baselines}
 \label{sec:n2n-baselines}
 
-RQ: how does DenoiseOpt compare to true Noise2Noise-style and lightweight seq restorers on the same generator?
+How does DenoiseOpt compare to true Noise2Noise-style and lightweight seq restorers on the same generator?
 Primary corrupt$\to$corrupt N2N (20k Adam steps, 53k params, train seed \texttt{424242}) reaches canonical $R\approx 0.9917$, matching the meta favorite within $\approx 0.001$.
 Secondary sibling-supervised N2N reaches $R\approx 0.9933$.
 A bidirectional LSTM (76k params, 15k steps, train seed \texttt{424243}) is the supervised ceiling at $R\approx 0.9952$.
@@ -262,10 +263,10 @@ Figure~\ref{fig:n2n-vs-ours} plots these canonical holdout scores beside no-bake
   \label{fig:n2n-vs-ours}
 \end{figure}
 
-\subsection{Wavetable-native transfer}
+\subsection{Factory exports and AKWF cycles}
 \label{sec:real-wt}
 
-RQ: does the wrap protocol transfer beyond synthetic sine cliffs onto \emph{true} exports and third-party OA cycles?
+Does the wrap protocol transfer beyond synthetic sine cliffs onto true exports and third-party OA cycles?
 Table~\ref{tab:real-wt} scores ReelSynth-exported factory periods (primary realism, $n{=}25$; byte-true factory frames resampled to $L{=}256$) and Adventure Kid Waveforms (AKWF) CC0 single-cycle WAVs (secondary, $n{=}24$) after close-seam idealization and the same open-wrap cliff.
 Procedural stand-ins are demoted to tertiary smoke and no longer carry the primary realism claim.
 On exported factory periods the favorite ($R\approx 0.911$) trails no-bake / \texttt{seam\_fir3} / poly (domain shift) while still beating DualCosine ($0.883$).
@@ -294,10 +295,10 @@ LibriSpeech/MUSDB are not used.
   \end{tabular}
 \end{table}
 
-\subsection{Polynomial baseline and jump-aware control}
+\subsection{Polynomial baseline and endpoint-pin control}
 \label{sec:poly-jump}
 
-RQ: does a cheap classical poly fitter close the S7 residual, and does endpoint pinning show the wrap-jump vs $R$ tradeoff?
+Does a cheap classical poly fitter close the residual, and does endpoint pinning show the wrap-jump vs $R$ tradeoff?
 A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R\approx 0.972$ ($\approx$ no-bake) with wrap-jump essentially unchanged (\texttt{poly\_baseline.json}).
 SSM seq models are deferred; the LSTM remains the supervised seq ceiling.
 An endpoint-pin control (\texttt{jump\_control.json}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$; hard $0.822$).
@@ -306,7 +307,7 @@ Methods that zero wrap-jump are not the same objective as prolonged $R$; we do n
 \subsection{Classical VA seam repairs (BLIT/BLEP, PolyBLEP, BLAMP)}
 \label{sec:va-seam-baselines}
 
-RQ: do the cited VA antialias tools~\cite{stilson1996,nam2009polyblep,esqueda2016blamp} beat DualCosine on prolonged $R$ when applied as cycle-local seam residuals?
+Do the cited VA antialias tools~\cite{stilson1996,nam2009polyblep,esqueda2016blamp} beat DualCosine on prolonged $R$ when applied as cycle-local seam residuals?
 
 \paragraph{What each operator changes.}
 Figure~\ref{fig:va-seam-techniques} shows the family on one high-wrap sine{+}cliff tile (same seed and tile as Figure~\ref{fig:intro-sine}).
@@ -361,10 +362,10 @@ None matches the favorite on prolonged $R$.
   {\footnotesize Latency (canonical, CUDA): PolyBLEP $\approx 1.43$\,ms/batch; DualCosine $\approx 1.06$; BLIT/BLEP $\approx 123$; BLAMP $\approx 54$. Frozen in \texttt{va\_seam\_blep.json}.}
 \end{table*}
 
-\subsection{Transfer conditions}
+\subsection{When search helps vs classical methods}
 \label{sec:transfer}
 
-RQ: when does hybrid search win vs the classical non-AI board (no-bake / FIR / DualCosine) and supervised nets?
+When does hybrid search win vs the classical non-AI board (no-bake / FIR / DualCosine) and supervised nets?
 Per-cycle $\Delta R$ on export, AKWF, Rust \texttt{sound\_bench}, and sine{+}cliff holdout (\texttt{transfer\_failures.json}):
 favorite win-rate vs DualCosine is high on sine cliffs ($1.00$) and AKWF ($0.88$), and moderate on export ($0.64$) / Rust ($0.75$);
 win-rate vs no-bake is high only on sine cliffs ($0.92$) and collapses on export ($0.24$) / Rust ($0.20$).
@@ -374,7 +375,7 @@ No-bake/FIR win on mild seams and OOD factory geometry (honest domain shift, rep
 \subsection{Ablations and compute}
 \label{sec:ablation-compute}
 
-RQ: how do search branch-best freezes compare to short isolated GA/PPO budgets, and what compute was used?
+How do search branch-best freezes compare to short isolated GA/PPO budgets, and what compute was used?
 Table~\ref{tab:ablation} reports two views. Search \emph{branch-best freezes} at the $5$k gate come from one hybrid history. Isolated short-budget re-runs (GA-only, PPO-only, GA{+}PPO, full) use 150 iters on the same search seed with plateau adapt off.
 Short-budget champions sit below the multi-hour freeze by construction. They are labeled as such.
 Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM is from an \texttt{nvidia-smi} poll during a short full-branch search replay (30 iters) plus a champion forward{+}FitCell replay. The campaign \texttt{history.jsonl} did not log memory.
@@ -421,10 +422,10 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
   {\footnotesize Peak memory: max \texttt{nvidia-smi} \texttt{memory.used} during a 30-iter full-branch search probe ($\approx 3.29$\,GiB) and champion forward{+}FitCell replay ($\approx 3.17$\,GiB). The multi-hour search process itself left no memory log. Idle GPU occupancy was already $\approx 3.0$\,GiB from other sessions.}
 \end{table}
 
-\subsection{Meta-learning approach comparison ($5$k matched budget)}
+\subsection{Matched-budget outer-loop comparison}
 \label{sec:meta-approaches-results}
 
-RQ: under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to \textbf{Ours (hybrid GA--PPO)}?
+Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to \textbf{Ours (hybrid GA--PPO)}?
 Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs DualCosine, wall hours, and whether the champion graph used an LSTM or xLSTM block.
 At the completed gate, \textbf{Ours} leads on absolute champion $R$ ($R\approx 0.99146$, $\Delta R\approx{+}0.17488$ vs DualCosine $\approx 0.81658$; $\approx 8.46$\,h), with Aging evolution second ($R\approx 0.99079$).
 Neither Ours nor Aging evolution selected an LSTM block in the champion graph.
@@ -456,10 +457,10 @@ Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
   \label{fig:meta-heal-samples}
 \end{figure}
 
-\subsection{Rust \texttt{sound\_bench} transfer (20 tiles)}
+\subsection{Rust \texttt{sound\_bench} transfer}
 \label{sec:rust-bench}
 
-RQ: does the Python-trained favorite transfer to Rust \texttt{sound\_bench} tiles against the classical non-AI board?
+Does the Python-trained favorite transfer to Rust \texttt{sound\_bench} tiles against the classical non-AI board?
 Table~\ref{tab:rust-bench} scores no-bake, \texttt{seam\_fir3}, DualCosine, other classical rows, and the Python-trained neural favorite on 20 Rust-exported tiles (10 families $\times$ 2 seeds).
 This closes the prior gap where multi-family tables used only Python generative stand-ins.
 Honest transfer note: the favorite was searched on Python \texttt{make\_batch} sine{+}cliff geometry.

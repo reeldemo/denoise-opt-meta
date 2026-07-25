@@ -42,12 +42,12 @@ These symbols follow a different convention from Noise2Noise clean/noisy pairs.
   \end{tabular}
 \end{table}
 
-\subsection{Problem and ideal sibling}
+\subsection{Problem setup: cracked period and ideal sibling}
 \label{sec:ideal-tile}
 
 \textbf{Problem.} Given a cracked period $x$, choose a bake configuration $h$ so that the repaired cycle $y=\Theta(x;h)$ matches a no-cliff ideal under prolonged tiling.
 
-\textbf{Ideal sibling (Q1).}
+\textbf{Ideal sibling.}
 Let $G(\mathrm{seed},\mathrm{cliff})$ denote the procedural generator used by the CUDA FitCell batch maker
 (\texttt{make\_batch} in \texttt{overnight\_gpu\_rl\_arch.py}): one draw of frequency, phase, and mid-cycle content, with an optional open-wrap cliff of width $W$ at both ends.
 For any seed,
@@ -62,10 +62,10 @@ For an arbitrary cracked period from this family, the sibling is obtained by rep
 That is exactly the pair returned by \texttt{make\_batch}.
 This sibling relationship makes unsupervised ranking possible without paired studio recordings~\cite{lehtinen2018,kashyap2021n2n}.
 
-\subsection{Outer objective and blended residual $R_{\mathrm{blend}}$}
+\subsection{Blended residual $R_{\mathrm{blend}}$ and latency objective $J$}
 \label{sec:residual-score}
 
-\textbf{Primary metric (v10.1).}
+\textbf{Primary metric.}
 After tiling length $N$, define unit residual scores on index masks.
 $R_{\mathrm{seam}}$ compares $y$ to $r^{\star}$ on wrap neighborhoods of width $W$ at each period head/tail.
 $R_{\mathrm{body}}$ compares $y$ to the cracked engine $x$ on the complementary mid-cycle body (identity prior: do not morph content away from the engine).
@@ -107,7 +107,7 @@ Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP res
 Plain-language roles: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap; BLAMP corrects a \emph{slope}/corner jump; DualCosine fades endpoints without a BLEP residual.
 They are scored in Section~\ref{sec:va-seam-baselines}.
 
-\paragraph{Four roles (do not conflate).}
+\paragraph{Four roles (keep separate).}
 \label{sec:four-roles}
 \begin{itemize}
   \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld; scoring target only (panel~(a) in Figure~\ref{fig:intro-sine}).
@@ -125,7 +125,7 @@ Learned / searched methods are always ranked against the full classical board on
 no-bake, DualCosine / cosine fade, \texttt{seam\_fir3}, classic quadratic, hann/crossfade/soft fades, detrend/ensemble, poly seam, and cycle-local BLIT/BLEP / PolyBLEP / BLAMP where scored.
 When tables show $\Delta R$ vs DualCosine, that is a reporting gap vs one classical bake, not the definition of reward.
 
-\begin{remark}[DualCosine centering is PPO advantage only (Q2)]
+\begin{remark}[DualCosine centering is PPO advantage only]
 \label{rem:dualcosine-centering}
 The outer objective remains~\eqref{eq:outer-obj}: maximize absolute $R(y,r^{\star})$.
 In the PPO branch only, we optionally form a centered advantage
@@ -139,10 +139,10 @@ All of those still maximize absolute $R$.
 DualCosine centering is soft relative shaping for the actor--critic, not a hard absolute ranking target.
 \end{remark}
 
-\subsection{Pipeline overview}
+\subsection{Search pipeline}
 \label{sec:pipeline-overview}
 
-Figure~\ref{fig:denoiseopt-arch} summarizes the residual-scored hybrid loop before component detail.
+Figure~\ref{fig:denoiseopt-arch} summarizes the residual-scored hybrid loop.
 Each outer iteration proposes a bake configuration $h$, runs FitCell (Appendix~\ref{app:algorithms}, Algorithm~\ref{alg:fit}) to fit continuous parameters under loss $1-R$, evaluates prolonged $R$ vs $r^{\star}$, and updates the population / PPO policy.
 Pseudocode for GA, PPO, PBT, and the full hybrid rotation is in Algorithms~\ref{alg:ga}--\ref{alg:hybrid}.
 
@@ -163,13 +163,13 @@ FitCell draws sibling batches via $G$, applies $\Theta(\cdot;h)$, and steps Adam
 Each iteration rotates among branches: PPO, GA, PBT, NAS, and combo.
 Selection and FitCell are always by absolute residual $R$ (maximize toward the ideal sibling; loss $1-R$).
 
-\paragraph{Near-ceiling $R$ and why reward / search HPs matter.}
+\paragraph{Near-ceiling scores need reward shaping.}
 \label{sec:reward-shaping}
 On the sine{+}cliff generator, no-bake already sits near $R\approx 0.97$, and strong classical / searched bakes live in a narrow band toward $1$ (often $0.99$--$0.991$).
-Absolute gaps of order $10^{-3}$--$10^{-2}$ are scientifically real but tiny as raw PPO/GA signals.
+Absolute gaps of order $10^{-3}$--$10^{-2}$ are real but tiny as raw PPO/GA signals.
 Without shaping, advantages collapse.
-Hyperparameters (clip, entropy, mutation rate, population size, fit steps, learning rate) then dominate whether the outer loop can climb the last percent.
-We therefore treat \textbf{reward shaping and search hyperparameters as first-class tunables} alongside bake architecture.
+Hyperparameters (clip, entropy, mutation rate, population size, fit steps, learning rate) then decide whether the outer loop can climb the last percent.
+We therefore treat reward shaping and search hyperparameters as first-class tunables alongside bake architecture.
 In the present hybrid, PPO uses a searchable shaping mode among $\{\texttt{abs\_r},\,\texttt{vs\_dualcosine},\,\texttt{vs\_nobake},\,\texttt{neglog\_gap}\}$ (PBT-mutated; default $\rho = R - R_{\mathrm{DualCosine}}$ per Remark~\ref{rem:dualcosine-centering}).
 PBT mutates fit / PPO hyperparameters and reward mode in-population; plateau adaptation retunes branch mix and depth/MoE bias when champions stall.
 The matched $5$k meta-approach comparison (Section~\ref{sec:meta-compare}) is the sole GPU experimentation vehicle for outer-loop family, HP, and reward-shaping sweeps under a shared FitCell budget.
