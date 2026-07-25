@@ -15,7 +15,7 @@ Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
   \item \textbf{CWRU bearings} (real): DE @12\,kHz; per-rev windows via RPM; ideal = cubic resample; engine = linear (bad-COT proxy) + wrap cliff.
   \item \textbf{MFPT bearings} (real): fixed 25\,Hz shaft; same cubic/linear+cliff construction (Figshare mirror of MFPT Fault Data Sets).
   \item \textbf{MIT-BIH ECG} (real): R--R normal beats; ideal = local mean template + mild endpoint equalize; engine = beat + cliff.
-  \item \textbf{PTB-XL ECG} (real subset): PhysioNet \texttt{records100} (100\,Hz) lead-I beat windows; same classical ECG construction. This is a low-res subset pilot, not the full 500\,Hz corpus.
+  \item \textbf{PTB-XL ECG} (real subset): PhysioNet \texttt{records500} (\texttt{*\_hr}, 500\,Hz) lead-I beat windows; same classical ECG construction. This is a subset pilot ($n{=}256$ periods from $94$ records), not the full PTB-XL corpus.
   \item \textbf{Synthetic CNC G01} (\texttt{synth\_cnc\_g01}): closed-contour residual with sharp corners vs wide G2-ish blend (KIT CNC DOI login-walled).
   \item \textbf{Synthetic PMU/AC cycle} (\texttt{synth\_pmu\_cycle}): harmonic voltage cycle with wrap cliff (IEEE DataPort PMU OA account-walled).
 \end{itemize}

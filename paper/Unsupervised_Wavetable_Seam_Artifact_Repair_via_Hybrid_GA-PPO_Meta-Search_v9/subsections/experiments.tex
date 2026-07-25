@@ -28,6 +28,7 @@ There is no supervised clean/noisy training split of studio audio.
 
 \paragraph{Multi-family diversity ($\ge 20$ waveforms).}
 Beyond the single sine{+}cliff holdout, Phase~3a scores methods on \textbf{20} generative draws: ten family variants (\texttt{sine\_cliff}, \texttt{harmonic\_fft}, \texttt{am\_fm}, \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, \texttt{extreme\_overlay}, \texttt{open\_wrap\_bias}, \texttt{soft\_noise}, \texttt{wide\_seam}) $\times$ two seeds (\texttt{20260719} and \texttt{20260720}), batch 64 each.
+Figure~\ref{fig:dataset-families} counts cycles per family ($128$ each).
 These Python generative variants stress harmonic / AM--FM / nonlinear / overlay / open-wrap behavior of \texttt{make\_batch} and remain the primary SOTA matrix.
 Separately, \texttt{export\_sound\_bench\_tiles} exports \textbf{20} Rust \texttt{sound\_bench} engine/ideal pairs (10 families $\times$ 2 seeds, $L{=}256$, byte-aligned with \texttt{generate\_sound} / \texttt{generate\_sound\_ideal}) scored under the same residual geometry as a secondary transfer block (Table~\ref{tab:rust-bench}).
 Every method sees the same tensors per waveform.
@@ -35,6 +36,62 @@ Every method sees the same tensors per waveform.
 The search objective is maximize $R$ toward the ideal sibling (best $R{=}1$).
 DualCosine is one classical comparator and a PPO centering constant.
 It is not the reward target.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_dataset_family_counts.png}
+  \caption{Multi-family SOTA board: $128$ cycles per family ($2$ seeds $\times$ batch $64$).}
+  \label{fig:dataset-families}
+\end{figure}
+
+\paragraph{Dataset statistics.}
+Table~\ref{tab:dataset-stats} and Figures~\ref{fig:dataset-size}--\ref{fig:dataset-transfer-sizes} inventory every evaluation board used in this paper.
+The primary procedural holdout is a frozen $4{,}096$-cycle metrics draw ($L{=}256$, $N{=}16$ tiles, seed \texttt{20260719}) plus a matched score batch of $64$ cycles (five consecutive seeds for classical mean$\pm$std).
+Multi-family SOTA scores $20$ waveforms ($10$ families $\times$ $2$ seeds, batch $64$; $1{,}280$ cycles).
+Wavetable-native boards use ReelSynth factory exports ($n{=}25$) and AKWF CC0 cycles ($n{=}24$).
+Sci/eng transfer tiles $1{,}408$ periods across CWRU, MFPT, MIT-BIH, PTB-XL, and synthetic CNC/PMU (cache metas under \texttt{signal\_heal\_transfer/cache/}).
+Search never trains on the frozen holdout; N2N/seq baselines use disjoint train seeds \texttt{424242}/\texttt{424243}.
+Artifacts: \texttt{dataset\_inventory.json}, \texttt{fig\_dataset\_*.png}.
+
+\begin{table}[t]
+  \centering
+  \caption{Dataset statistics (evaluation boards).
+    $L{=}256$ unless noted. Hours are raw source duration on disk where measurable, not tiled period count.}
+  \label{tab:dataset-stats}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}llp{0.42\columnwidth}@{}}
+    \toprule
+    Board & Size & Notes \\
+    \midrule
+    Holdout metrics & $4{,}096$ cycles & seed \texttt{20260719}; $N{=}16$ tiles \\
+    Score batch & $64$ cycles & classical / favorite tables \\
+    Multi-family SOTA & $1{,}280$ cycles & $10$ families $\times$ $2$ seeds $\times$ $64$ \\
+    Factory export & $25$ periods & ReelSynth mid-morph frames \\
+    AKWF OA & $24$ periods & CC0 single-cycle WAVs \\
+    Meta $5$k compare & $6$ approaches & shared seed; batch $48$ \\
+    CWRU & $256$ periods & $4$ MAT files; DE @12\,kHz; ${\approx}0.025$\,h raw \\
+    MFPT & $128$ periods & shaft-rate windows \\
+    MIT-BIH & $256$ periods & $10$ records @360\,Hz; ${\approx}3.76$\,h raw \\
+    PTB-XL & $256$ periods & $94$ \texttt{*\_hr} @500\,Hz; ${\approx}0.54$\,h raw \\
+    synth CNC / PMU & $256{+}256$ & procedural pilots \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_dataset_size_overview.png}
+  \caption{Corpus sizes across evaluation boards (cycles or periods).
+    Holdout metrics draw, matched score batch, multi-family SOTA, factory/AKWF wavetable-native sets, and summed transfer periods.}
+  \label{fig:dataset-size}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_dataset_transfer_sizes.png}
+  \caption{Sci/eng transfer domain sizes: tiled eval periods at $L{=}256$ (with source $f_s$ where applicable).}
+  \label{fig:dataset-transfer-sizes}
+\end{figure}
 
 \paragraph{Dataset metrics.}
 A metrics draw of $4{,}096$ cycles under the holdout seed yields mean ideal RMS $0.721\pm0.016$, mean engine residual RMS $0.021\pm0.013$, and mean absolute wrap jump $|x_0-x_{L-1}|$ of $0.913\pm0.634$.
@@ -46,7 +103,7 @@ Figure~\ref{fig:intro-sine} is the documented sine-wrap edge case: a high-$|wrap
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_dataset_distributions.png}
-  \caption{Evaluation corpus statistics on the frozen holdout seed (\texttt{20260719}, $n{=}4{,}096$ cycles).
+  \caption{Holdout distribution statistics (seed \texttt{20260719}, $n{=}4{,}096$ cycles).
     Distinguish: ideal sibling $r^{\star}$ (cliff withheld); no-bake $=$ unrepaired cracked engine (not $r^{\star}$); DualCosine $=$ one classical bake.
     Top left: ideal RMS per cycle.
     Top right: engine residual RMS before any bake.

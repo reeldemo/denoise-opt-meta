@@ -86,6 +86,7 @@ $\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{s
 
 RQ: does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades) and fixed MLP/CNN baselines across twenty generative families?
 Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}), with canonical-holdout SNR/SDR/wrap-jump for the same method set from \texttt{sota\_matrix.json}.
+Figures~\ref{fig:sota-heatmap}--\ref{fig:sota-method-bars} plot the same ranking.
 PESQ/STOI/MUSHRA are omitted for non-speech cycles (Limitations).
 Primary reading is absolute $R$ rank vs classical rows (no-bake $0.965$, poly $0.966$, \texttt{seam\_fir3} $0.955$, DualCosine $0.814$).
 Fixed MLP-on-$R$ and CNN/U-Net-lite-on-$R$ (no outer NAS) sit between DualCosine and the meta favorite.
@@ -132,6 +133,13 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
   \includegraphics[width=\columnwidth]{figures/fig_sota_heatmap.png}
   \caption{Colorblind-safe (\texttt{cividis}) heatmap of mean prolonged $R$ for selected methods $\times$ generative families (2 seeds each). Higher is better.}
   \label{fig:sota-heatmap}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_sota_method_bars.png}
+  \caption{Multi-family mean prolonged $R$ by method (same $20$-waveform board as Table~\ref{tab:sota-main}).}
+  \label{fig:sota-method-bars}
 \end{figure}
 
 \subsection{Hard-cliff strata}
@@ -201,6 +209,15 @@ A bidirectional LSTM (76k params, 15k steps, train seed \texttt{424243}) is the 
 A tiny depthwise 1D CNN (3.2k params) reaches $R\approx 0.9864$.
 Holdout tiles never enter training.
 Classical DualCosine / \texttt{seam\_fir3} remain in Table~\ref{tab:cliff-strata}.
+Figure~\ref{fig:n2n-vs-ours} plots these canonical holdout scores beside no-bake, DualCosine, and the neural favorite.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_n2n_vs_ours_bars.png}
+  \caption{Canonical holdout prolonged $R$: N2N and seq baselines vs Ours (neural favorite).
+    Train seeds \texttt{424242}/\texttt{424243} are disjoint from holdout \texttt{20260719}.}
+  \label{fig:n2n-vs-ours}
+\end{figure}
 
 \subsection{Wavetable-native transfer}
 \label{sec:real-wt}

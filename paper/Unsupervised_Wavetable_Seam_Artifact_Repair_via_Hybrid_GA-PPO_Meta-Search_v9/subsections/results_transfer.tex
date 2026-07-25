@@ -10,7 +10,7 @@ Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
 \begin{table*}[t]
   \centering
   \caption{Sci/eng wrap-heal transfer: holdout-refit prolonged $R$ (higher better) on classical boards.
-    Ours = \texttt{hybrid\_lstm}. CWRU/MIT-BIH: 250 outer iters. MFPT/PTB-XL/synth: 150 outer iters (PTB-XL uses PhysioNet \texttt{records100} subset).
+    Ours = \texttt{hybrid\_lstm}. CWRU/MIT-BIH: 250 outer iters. MFPT/PTB-XL/synth: 150 outer iters (PTB-XL uses PhysioNet \texttt{records500} \texttt{*\_hr} @500\,Hz subset).
     Classical board only. No invented deep-SOTA scores.}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.8pt}
@@ -30,7 +30,7 @@ Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_signal_heal_transfer.png}
-  \caption{Transfer classical-board summary (holdout-refit $R$).
+  \caption{Transfer classical-board summary (holdout-refit $R$; grouped bars for Table~\ref{tab:transfer-main}).
     Not a deep-SOTA claim; see Table~\ref{tab:transfer-sota-status}.}
   \label{fig:signal-heal-transfer-main}
 \end{figure}
@@ -48,7 +48,7 @@ Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
     Cycle-GAN (ECG) & \emph{not executed} (no weights under $R$) \\
     BeatDiff & \emph{not executed} \\
     Paderborn KAt deep & \emph{not executed} (registration / multi-GB) \\
-    Full PTB-XL 500\,Hz & deferred (ran \texttt{records100} subset) \\
+    Full PTB-XL corpus & deferred (ran \texttt{records500} \texttt{*\_hr} subset, $n{=}256$ periods) \\
     Real KIT CNC / IEEE PMU & deferred (login walls; synth pilots ran) \\
     Formal MOS/MUSHRA & deferred (Section~\ref{sec:listening-protocol}) \\
     \bottomrule
@@ -59,7 +59,7 @@ Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
 On CWRU, DualCosine and fades hurt vs no-bake; Ours only narrowly beats no-bake (weak transfer on that wrap).
 On MFPT, Ours leads the classical board ($R{\approx}0.884$) with a small gap over no-bake.
 On MIT-BIH, DualCosine collapses morphology while Ours leads ($R{\approx}0.879$ vs endpoint-pin $R{\approx}0.780$).
-On the PTB-XL \texttt{records100} subset, Ours leads ($R{\approx}0.640$) but absolute scores are lower than MIT-BIH (different sampling / beat construction).
+On the PTB-XL \texttt{records500} (\texttt{*\_hr}, 500\,Hz) subset, Ours leads ($R{\approx}0.640$) but absolute scores are lower than MIT-BIH (different beat construction / domain).
 Synthetic CNC and PMU proxies show modest Ours gains over DualCosine under the same $R$ protocol; they are not substitutes for logged machine or PMU traces.
 Primary claim remains cycle-local \emph{wavetable} seam restoration.
 
