@@ -1,7 +1,7 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{Hybrid freeze under $R_{\mathrm{blend}}$ and $J$}
+\subsection{Hybrid search under $R_{\mathrm{blend}}$ and $J$}
 \label{sec:v10-freeze}
 Under the blended residual and latency objective, does hybrid GA--PPO beat the frozen Noise2Noise gate?
 A $1{,}200$-iteration \texttt{hybrid\_lstm} search (seed \texttt{1902771841}, ${\approx}1.65$\,h wall) selects on
@@ -14,7 +14,7 @@ Artifacts: \texttt{meta\_approach\_compare\_v10/hybrid\_lstm/}.
 
 \subsection{Noise2Noise vs Ours on four boards}
 \label{sec:n2n-vs-ours-boards}
-Table~\ref{tab:n2n-vs-ours} summarizes the Phase-2 board under $R_{\mathrm{blend}}$.
+Table~\ref{tab:n2n-vs-ours} summarizes the four evaluation boards under $R_{\mathrm{blend}}$.
 On the frozen sine{+}cliff holdout (seed \texttt{20260719}), Noise2Noise leads
 ($R_{\mathrm{blend}}{\approx}0.9750$ vs Ours ${\approx}0.9697$; $\Delta{\approx}{-}0.0053$).
 On the $20$-waveform multi-family board, Ours mean $R_{\mathrm{blend}}{\approx}0.9311$ exceeds N2N ${\approx}0.9249$
@@ -29,7 +29,8 @@ Latency: holdout Ours ${\approx}4.57$\,ms vs N2N ${\approx}0.65$\,ms ($J$ still 
     Multi-family: $10$ families $\times$ $2$ seeds. Factory+FX / AKWF: $n{=}1{,}280$ each.
     Gate column: whether Ours strictly exceeds N2N on that board.}
   \label{tab:n2n-vs-ours}
-  \setlength{\tabcolsep}{3pt}
+  \footnotesize
+  \setlength{\tabcolsep}{2pt}
   \begin{tabular}{@{}lrrrc@{}}
     \toprule
     Board & Ours $R_{\mathrm{blend}}$ & N2N $R_{\mathrm{blend}}$ & $\Delta$ & Ours$>$N2N \\
@@ -138,7 +139,7 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
 
 \begin{table*}[t]
   \centering
-  \caption{SOTA comparison on 20 generative waveforms (10 families $\times$ 2 seeds, batch 64).
+  \caption{Comparison across 20 generative waveforms (10 families $\times$ 2 seeds, batch 64).
   $R$/SNR/SDR/wrap-jump are multifamily mean$\pm$std. Rank by absolute $R$ vs the classical non-AI board (no-bake, poly, FIR, DualCosine, \ldots).
   Column $\Delta R$* is vs DualCosine only (one classical gap for reporting; canonical freeze seed \texttt{20260719}); ms* likewise.
   The search objective is maximize absolute $R$ toward the ideal sibling, not DualCosine matching.
@@ -275,7 +276,7 @@ LibriSpeech/MUSDB are not used.
 
 \begin{table}[t]
   \centering
-  \caption{Wavetable-native wrap protocol (Phase F1). Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Mean prolonged $R$. Primary = ReelSynth export; secondary = AKWF CC0 files.}
+  \caption{Wavetable-native wrap protocol. Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Mean prolonged $R$. Primary = ReelSynth export; secondary = AKWF CC0 files.}
   \label{tab:real-wt}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
@@ -382,7 +383,7 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
 
 \begin{table}[t]
   \centering
-  \caption{Ablations. Left block: search branch-best freeze (run \texttt{gpu-rl-arch-20260719T083019Z}, final iter $\approx 6{,}922$). Right block: isolated short-budget re-runs (150 iters, seed \texttt{1902771841}, plateau adapt off). $R$ is prolonged residual on the runner geometry.}
+  \caption{Ablations. Left column: best score reached by each branch in the recorded search run (final iteration $\approx 6{,}922$). Right column: isolated 150-iteration re-runs (seed \texttt{1902771841}). $R$ is prolonged residual on the runner geometry.}
   \label{tab:ablation}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
@@ -391,11 +392,11 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
     \midrule
     Full hybrid & 0.99093 & 0.98113 \\
     GA-only & 0.99016 & 0.98062 \\
-    PBT (branch best / n/a isolated) & 0.99012 & --- \\
+    PBT (search branch) & 0.99012 & --- \\
     PPO-only & 0.98924 & 0.97932 \\
     GA{+}PPO & --- & 0.98007 \\
-    combo (branch best) & 0.98854 & --- \\
-    NAS (branch best) & 0.98677 & --- \\
+    Combined branch & 0.98854 & --- \\
+    NAS branch & 0.98677 & --- \\
     DualCosine (runner) & 0.81658 & 0.81658 \\
     \bottomrule
   \end{tabular}
@@ -403,7 +404,7 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
 
 \begin{table}[t]
   \centering
-  \caption{Compute budget for the reported $5$k-gate search freeze (RTX~3090, PyTorch $2.6$+cu124, search seed \texttt{1902771841}). Arch evaluations $\approx$ clean iterations.}
+  \caption{Compute budget for the reported 5,000-evaluation search run (RTX~3090, PyTorch $2.6$+cu124, search seed \texttt{1902771841}). Architecture evaluations approximately equal clean iterations.}
   \label{tab:compute}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lr@{}}
@@ -416,7 +417,7 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
     Population size & 12 \\
     Final champion $R$ & 0.99093 \\
     DualCosine baseline (runner) & 0.81658 \\
-    Peak VRAM (nvidia-smi replay) & $\approx 3.29$\,GiB \\
+    Peak VRAM (replay) & $\approx 3.29$\,GiB \\
     \bottomrule
   \end{tabular}\\[0.4em]
   {\footnotesize Peak memory: max \texttt{nvidia-smi} \texttt{memory.used} during a 30-iter full-branch search probe ($\approx 3.29$\,GiB) and champion forward{+}FitCell replay ($\approx 3.17$\,GiB). The multi-hour search process itself left no memory log. Idle GPU occupancy was already $\approx 3.0$\,GiB from other sessions.}
@@ -439,14 +440,14 @@ Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/meta_approach_bars.png}
-  \caption{Matched $5$k-budget meta-approach comparison (search seed \texttt{1902771841}): (a) champion prolonged $R$; (b) $\Delta R$ vs DualCosine (reporting gap only; objective is maximize absolute $R$ toward the ideal sibling). Manuscript names; Okabe--Ito colors with distinct hatches for grayscale print.}
+  \caption{Matched 5,000-evaluation comparison of search methods (search seed \texttt{1902771841}). Bars report champion prolonged $R$; the dashed line is the DualCosine reference. Colors and hatches remain distinguishable in grayscale.}
   \label{fig:meta-approach-bars}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
-  \caption{Matched $5$k-budget meta-learning comparison: champion residual $R$ versus outer iteration (x-axis capped at $5{,}000$). DualCosine dashed as one classical comparator only. Objective is maximize absolute $R$ toward the ideal sibling; rank vs the classical board in Table~\ref{tab:canonical-methods}. Accessibility: Okabe--Ito colors with distinct markers for grayscale print.}
+  \caption{Champion residual $R$ over a matched 5,000-evaluation search budget. The dashed line is the DualCosine reference; the objective is absolute $R$ toward the ideal sibling. Colors and markers remain distinguishable in grayscale.}
   \label{fig:meta-approach-compare}
 \end{figure}
 
@@ -516,34 +517,34 @@ The primary SOTA claim remains the Python multi-family matrix.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/champ_residual_vs_iter.png}
-  \caption{$5$k-gate search freeze: champion residual $R$ versus clean search iteration (x-axis capped at $5{,}000$), with DualCosine baseline on the runner geometry (RTX~3090). Accessibility: black line with circle markers; DualCosine as a dashed gray baseline.}
+  \caption{Champion residual $R$ over the first 5,000 search iterations, with the DualCosine reference on the same runner geometry (RTX~3090). The black line uses circle markers; the reference is dashed gray.}
   \label{fig:champ-residual}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/branch_bests_vs_iter.png}
-  \caption{$5$k-gate search freeze: per-branch best residual trajectories (PPO/RL, GA, PBT, NAS, combo) versus iteration (x-axis capped at $5{,}000$). Accessibility: colorblind-safe colors plus distinct markers (circle, square, triangle, diamond, inverted triangle) for grayscale print.}
+  \caption{Best residual score reached by each search branch over the first 5,000 iterations (PPO/RL, GA, PBT, NAS, and combined). Colors and markers remain distinguishable in grayscale.}
   \label{fig:branch-bests}
 \end{figure}
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/search_panel.png}
-  \caption{Full-width search monitoring panel at the $5$k-gate freeze (first $5{,}000$ iterations): champion $R$ (top) and branch-best trajectories (bottom). Markers and Okabe-Ito colors match Figure~\ref{fig:branch-bests}. Source: \texttt{history.jsonl}.}
+  \caption{Search progress over the first 5,000 iterations: champion residual $R$ (top) and best residual by search branch (bottom). Markers and colors match Figure~\ref{fig:branch-bests}.}
   \label{fig:search-panel}
 \end{figure*}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/residual_by_branch.png}
-  \caption{Per-trial residual scatter by search branch for the first $5{,}000$ iterations at the $5$k-gate freeze, with champion overlay. Branch markers match Figure~\ref{fig:branch-bests}.}
+  \caption{Per-trial residual scores by search branch over the first 5,000 iterations, with the champion trajectory overlaid. Branch markers match Figure~\ref{fig:branch-bests}.}
   \label{fig:residual-branch}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/champion_timeline.png}
-  \caption{Champion update timeline for the first $5{,}000$ iterations at the $5$k-gate freeze. Sparse $R$ labels mark first, mid-peak, and latest improvements for twocolumn legibility.}
+  \caption{Champion updates over the first 5,000 iterations. Sparse $R$ labels mark the first, middle, and final improvements for two-column legibility.}
   \label{fig:champ-timeline}
 \end{figure}

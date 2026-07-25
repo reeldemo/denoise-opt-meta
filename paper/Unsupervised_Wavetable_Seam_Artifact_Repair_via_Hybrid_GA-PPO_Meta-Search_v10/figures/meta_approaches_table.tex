@@ -1,12 +1,12 @@
 \begin{table}[t]
   \centering
-  \caption{Matched $5$k-budget outer-loop comparison (search seed \texttt{1902771841}; LSTM+xLSTM in bake vocab; reward-mode + HP co-tune in Ours). Champion $R$ vs ideal sibling; $\Delta R$ vs DualCosine is one classical gap only. Wall-h: per-method CUDA wall time. LSTM?/xLSTM?: whether the champion graph included that block.}
+  \caption{Search methods at a matched 5,000-evaluation budget (search seed \texttt{1902771841}). Champion $R$ is measured against the ideal sibling; $\Delta R$ is reported relative to DualCosine. Wall time is per-method CUDA time. LSTM and xLSTM indicate whether the champion graph included that block.}
   \label{tab:meta-approaches}
-  \setlength{\tabcolsep}{3pt}
-  \small
+  \setlength{\tabcolsep}{2pt}
+  \scriptsize
   \begin{tabular}{@{}lrrrcc@{}}
     \toprule
-    Method & Champ $R$@5k & $\Delta R$ vs DualCosine & Wall-h & LSTM? & xLSTM? \\
+    Method & $R$ @ 5k & $\Delta R$ vs DC & h & LSTM & xLSTM \\
     \midrule
     Random NAS & 0.97816 & $+0.16157$ & 5.72 & no & no \\
     Cont.\ CMA-ES & 0.98468 & $+0.16810$ & 2.28 & no & no \\

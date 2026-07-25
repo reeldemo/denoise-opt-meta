@@ -5,12 +5,12 @@
 Table~\ref{tab:transfer-main} reports holdout-refit $R_{\mathrm{blend}}$ on classical / domain-proxy boards under the v10.1 protocol ($250$ outer iters, $n{=}256$ periods, $L{=}256$).
 Deep SOTA rows are listed as \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
 Synthetic CNC/PMU rows are protocol pilots when real KIT / DataPort downloads are blocked.
-Artifacts: \texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/}.
+Artifacts: \texttt{brand/artifacts/signal\_heal\_transfer/}.
 
 \begin{table*}[t]
   \centering
   \caption{Sci/eng wrap-heal transfer: holdout-refit $R_{\mathrm{blend}}$ (higher better) on classical boards.
-    Ours = \texttt{hybrid\_lstm} under $J$ ($250$ iters, seed \texttt{1902771841}).
+    DenoiseOpt = \texttt{hybrid\_lstm} under $J$ ($250$ iterations, seed \texttt{1902771841}).
     All six domains use $n{=}256$ periods (MFPT raised from $128$).
     Classical board only. No invented deep-SOTA scores.}
   \label{tab:transfer-main}
@@ -71,6 +71,6 @@ Primary claim remains cycle-local \emph{wavetable} seam restoration; transfer is
 Audible and spectrogram evidence sits in the main Results path (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}), not only an appendix note.
 Downloadable WAVs (no-bake / DualCosine / Ours, A4, $3$\,s) and vibrato spectrograms support informal A/B inspection.
 The planned formal listening protocol (forced-choice wrap-click preference; 44.1\,kHz mono; frozen WAV pack) is documented in
-\texttt{reelsynth/brand/artifacts/signal\_heal\_transfer/LISTENING\_PROTOCOL\_MAIN.md}.
+\texttt{brand/artifacts/signal\_heal\_transfer/LISTENING\_PROTOCOL\_MAIN.md}.
 \textbf{Formal MOS / MUSHRA scores were not collected in this work.}
 Until a formal study runs, perceptual claims remain qualitative and secondary to $R_{\mathrm{blend}}$.

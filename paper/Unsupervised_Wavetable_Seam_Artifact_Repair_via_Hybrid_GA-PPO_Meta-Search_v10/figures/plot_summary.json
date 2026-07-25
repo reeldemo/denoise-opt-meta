@@ -4,8 +4,8 @@
   "final_iter": 5000,
   "max_iter_arg": 5000,
   "final_champ": 0.9909298121929169,
-  "baseline_dual_cosine": 0.8165849447250366,
-  "delta_vs_baseline": 0.17434486746788025,
+  "baseline_dual_cosine": 0.81658,
+  "delta_vs_baseline": 0.1743498121929169,
   "n_champ_updates": 1,
   "champ_events_tail": [
     {
