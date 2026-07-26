@@ -9,10 +9,12 @@ Columns are: CWRU/MFPT/Paderborn bearing revolutions, MIT-BIH/PTB-XL ECG beats, 
 This pilot uses the historical prolonged-$R$ FitCell objective (frozen
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/signal_heal_transfer/results_table.json}{results\_table.json});
 it is \emph{not} a v10.1 $R_{\mathrm{blend}}$ retag.
-Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps, train seed \texttt{424242}, holdout seed \texttt{20260719})
-is scored on the same seven boards and appears as a row in Table~\ref{tab:transfer-main}
+Domain-trained Noise2Noise-style SeamN2N (corrupt$\to$corrupt, $4000$ Adam steps, train seed \texttt{424242}, holdout seed \texttt{20260719};
+our stack, not Lehtinen's reference code) is scored on the same seven boards and appears as a row in Table~\ref{tab:transfer-main}
 (debug $R_{\mathrm{blend}}$ lives in the artifact JSON).
-Deep transfer baselines remain out of scope here (Table~\ref{tab:transfer-sota-status}).
+Author ECG Cycle-GAN is included on MIT-BIH/PTB-XL as an OOD wrap-$R$ probe
+(clinical restore $\neq$ wrap-$R$; Table~\ref{tab:transfer-sota-status}).
+BeatDiff remains blocked pending author checkpoint download.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
@@ -21,7 +23,8 @@ Artifacts:
   \caption{Wrap-heal transfer under prolonged residual $R$ (higher better; historical whole-curve score).
     DenoiseOpt trains/searches \texttt{hybrid\_lstm} for $250$ iterations per domain (seed \texttt{1902771841}).
     Boards: CWRU/MFPT/Paderborn K001 bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
-    ($n{=}256$ periods each). Domain-trained N2N: corrupt$\to$corrupt holdout $R$ ($4000$ steps, seed \texttt{424242}).}
+    ($n{=}256$ periods each). SeamN2N: corrupt$\to$corrupt holdout $R$ ($4000$ steps, seed \texttt{424242}).
+    Cycle-GAN: author Operational Cycle-GAN weights, OOD wrap-$R$ on ECG only (--- elsewhere).}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.2pt}
   \begin{tabular}{@{}lrrrrrrr@{}}
@@ -29,11 +32,12 @@ Artifacts:
     Method & CWRU & MFPT & Paderborn & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
     \midrule
     Ours (\texttt{hybrid\_lstm}) & 0.9623 & 0.9411 & 0.9270 & 0.9565 & 0.9379 & 0.9918 & 0.9915 \\
-    Domain N2N & 0.8686 & 0.8817 & 0.8387 & 0.6530 & 0.5702 & 0.4833 & 0.9789 \\
+    SeamN2N (ours, N2N-style) & 0.8686 & 0.8817 & 0.8387 & 0.6530 & 0.5702 & 0.4833 & 0.9789 \\
     no-bake & 0.8451 & 0.8657 & 0.8376 & 0.7495 & 0.7617 & 0.4499 & 0.9356 \\
     endpoint-pin & 0.5054 & 0.5446 & 0.5670 & 0.8650 & 0.8696 & 0.4096 & 0.9442 \\
     \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.5601 & 0.7662 & 0.7604 & 0.5344 & 0.9119 \\
     DualCosine & 0.4608 & 0.4830 & 0.4710 & 0.4137 & 0.5118 & 0.4943 & 0.8272 \\
+    Cycle-GAN (author, OOD) & --- & --- & --- & 0.0700 & 0.1555 & --- & --- \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -48,7 +52,7 @@ Artifacts:
 
 \begin{table}[t]
   \centering
-  \caption{Transfer baselines and data cuts left for follow-up work.}
+  \caption{Author-method and data-cut status under this residual protocol (no invented scores).}
   \label{tab:transfer-sota-status}
   \setlength{\tabcolsep}{3pt}
   \resizebox{\columnwidth}{!}{%
@@ -56,12 +60,15 @@ Artifacts:
     \toprule
     Scope & Note \\
     \midrule
-    Domain-trained Noise2Noise & Scored on all seven Table~\ref{tab:transfer-main} boards
-      (holdout prolonged $R$; expanded PTB-XL N2N $R{=}0.5702$) \\
-    Cycle-GAN (ECG) & OOD wrap-$R$ scored (MIT-BIH $R{=}0.0700$; PTB-XL $R{=}0.1480$);
-      clinical restore $\neq$ wrap-$R$; not a Table~\ref{tab:transfer-main} row \\
-    BeatDiff & Not run (no usable diffusion checkpoint) \\
-    Paderborn KAt deep models & Deep unwired; classical + Ours + domain N2N are in Table~\ref{tab:transfer-main} \\
+    SeamN2N (ours, N2N-style) & Scored on all seven Table~\ref{tab:transfer-main} boards
+      (holdout prolonged $R$; expanded PTB-XL $R{=}0.5702$); not Lehtinen code \\
+    Cycle-GAN (ECG, author) & OOD wrap-$R$ in Table~\ref{tab:transfer-main}
+      (MIT-BIH $R{=}0.0700$; PTB-XL $R{=}0.1555$); clinical restore $\neq$ wrap-$R$ \\
+    BeatDiff (Bedin NeurIPS\,2024) & Not run --- HF \texttt{lbedin/BeatDiff} needs
+      \texttt{huggingface-cli login}; Drive Orbax prior incomplete via gdown \\
+    Paderborn KAt deep (Al~Firdausi CNN) & Author \texttt{model.pth} loaded; K001 healthy$\to$Normal
+      rate ${=}1.0$ ($n{=}256$ segs); wrap-$R$ refused (fault classifier $\neq$ denoise).
+      Wrap board: Ours $0.9270$ / SeamN2N $0.8387$ / DualCosine $0.4710$ \\
     Expanded PTB-XL & records500 lead-I expanded ($\sim$2k\,$+$\,\texttt{\_hr} records; board $n{=}256$;
       Ours $R{=}0.9379$; multi-lead still out of scope) \\
     Real KIT CNC / IEEE PMU & Synthetic pilots only (download walls) \\
@@ -73,16 +80,19 @@ Artifacts:
 
 \paragraph{Takeaways.}
 Under prolonged $R$, Ours leads every classical-board column in Table~\ref{tab:transfer-main},
-including Dual Cosine and domain-trained Noise2Noise on every domain.
-Domain N2N beats Dual Cosine everywhere and sits near no-bake on CWRU/MFPT/Paderborn, but trails Ours by a wide margin
+including Dual Cosine and SeamN2N on every domain.
+SeamN2N beats Dual Cosine everywhere and sits near no-bake on CWRU/MFPT/Paderborn, but trails Ours by a wide margin
 on ECG and synth CNC ($R{\approx}0.56$--$0.65$ and $0.48$ vs Ours ${>}0.93$).
-On MIT-BIH and PTB-XL, endpoint-pin remains a strong classical ECG row above domain N2N; Ours still leads both.
-Synthetic CNC shows the largest classical collapse with Ours near $0.992$; domain N2N only recovers to $0.4833$.
-Synth PMU is the strongest domain-N2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
-Paderborn K001 (Table~\ref{tab:transfer-main}) shows Ours $R{=}0.9270$ vs domain N2N $0.8387$ and DualCosine $0.4710$
-(smoke $20$-iter run was $0.8932$ and is not used as the protocol number).
-An Operational Cycle-GAN checkpoint loads and scores under wrap-$R$, but the OOD probe collapses
-($R{\approx}0.07$--$0.15$; Table~\ref{tab:transfer-sota-status})---clinical ECG restore is not the wrap residual objective.
+On MIT-BIH and PTB-XL, endpoint-pin remains a strong classical ECG row above SeamN2N; Ours still leads both.
+Author Operational Cycle-GAN on the same ECG wrap boards collapses under OOD wrap-$R$
+($R{\approx}0.07$--$0.16$)---clinical ECG restore is not the wrap residual objective, but the author stack
+is now a Table~\ref{tab:transfer-main} row rather than a deferred claim.
+Synthetic CNC shows the largest classical collapse with Ours near $0.992$; SeamN2N only recovers to $0.4833$.
+Synth PMU is the strongest SeamN2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
+Paderborn K001 wrap board shows Ours $R{=}0.9270$ vs SeamN2N $0.8387$ and DualCosine $0.4710$;
+the published Al~Firdausi CNN runs as a native fault classifier on K001 (healthy$\to$Normal rate $1.0$)
+and is not forced into wrap-$R$ (Table~\ref{tab:transfer-sota-status}).
+BeatDiff author priors remain unavailable without HF login or a complete Drive Orbax download.
 Latency timings in Appendix~\ref{app:supplement} remain wavetable-checkpoint zero-shot;
 primary claim remains cycle-local wavetable seam restoration.
 
