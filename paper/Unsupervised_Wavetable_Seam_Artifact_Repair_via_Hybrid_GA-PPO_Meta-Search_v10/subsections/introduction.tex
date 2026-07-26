@@ -55,15 +55,12 @@ $R_{\mathrm{blend}}=\alpha R_{\mathrm{seam}}(\mathrm{ideal},\mathrm{out})+(1-\al
 The searchable cell vocabulary includes an explicit \texttt{n2n\_unet} block at SeamN2N-parity scale (distinct from the smaller TinyUNet1D \texttt{unet} block).
 
 \paragraph{Transfer datasets outside wavetables.}
-We also score the same wrap protocol on six cycle-local transfer sets
+As a cross-domain stress test (not a diagnosis claim), we reuse the same wrap protocol on six cycle-local boards
 (Section~\ref{sec:transfer-protocol}):
-\textbf{CWRU} bearings (drive-end @12\,kHz; cubic ideal vs linear+cliff engine);
-\textbf{MFPT} bearings (fixed 25\,Hz shaft; same construction; $n{=}256$ periods);
-\textbf{MIT-BIH} Arrhythmia ECG (R--R normal beats with local-mean template ideal);
-\textbf{PTB-XL} ECG 500\,Hz subset (PhysioNet \texttt{records500}/\texttt{*\_hr} lead-I windows; subset pilot, not the full corpus);
-\textbf{synth CNC G01} (procedural closed-contour residual; KIT CNC login-walled, so synthetic only);
-\textbf{synth PMU/AC cycle} (procedural harmonic voltage cycle; IEEE DataPort PMU account-walled, so synthetic only).
-Transfer tables compare classical boards unless a deep row is explicitly run.
+\textbf{CWRU} and \textbf{MFPT} bearing vibration (one shaft revolution as a period);
+\textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz ECG subset (one heartbeat as a period);
+plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downloads are walled.
+On each board we train/search the hybrid bake cell under $R_{\mathrm{blend}}{+}J$ and compare against classical baselines.
 
 This paper contributes a meta-search protocol for this periodic seam problem.
 An outer RL+GA(+PBT) loop proposes bake-cell graphs and continuous bake parameters.

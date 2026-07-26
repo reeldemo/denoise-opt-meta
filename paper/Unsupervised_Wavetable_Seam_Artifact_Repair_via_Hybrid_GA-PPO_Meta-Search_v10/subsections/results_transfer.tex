@@ -1,18 +1,21 @@
 \subsection{Transfer to bearings, ECG, and synthetic cycles}
 \label{sec:transfer-main}
 
-\paragraph{Classical methods only.}
-Table~\ref{tab:transfer-main} reports holdout-refit $R_{\mathrm{blend}}$ on classical / domain-proxy boards under the v10.1 protocol ($250$ outer iters, $n{=}256$ periods, $L{=}256$).
-Deep SOTA rows are listed as \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
-Synthetic CNC/PMU rows are protocol pilots when real KIT / DataPort downloads are blocked.
-Artifacts: \texttt{brand/artifacts/signal\_heal\_transfer/}.
+\paragraph{Setup reminder.}
+Table~\ref{tab:transfer-main} reports $R_{\mathrm{blend}}$ after training/searching DenoiseOpt
+(\texttt{hybrid\_lstm}, $250$ outer iterations, seed \texttt{1902771841}) on each transfer board
+from Section~\ref{sec:transfer-protocol} ($n{=}256$ periods, $L{=}256$).
+Columns are: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, and synthetic CNC/PMU pilots.
+Deep SOTA rows remain \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
+Artifacts:
+\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
 \begin{table*}[t]
   \centering
-  \caption{Sci/eng wrap-heal transfer: holdout-refit $R_{\mathrm{blend}}$ (higher better) on classical boards.
-    DenoiseOpt = \texttt{hybrid\_lstm} under $J$ ($250$ iterations, seed \texttt{1902771841}).
-    All six domains use $n{=}256$ periods (MFPT raised from $128$).
-    Classical board only. No invented deep-SOTA scores.}
+  \caption{Wrap-heal transfer under $R_{\mathrm{blend}}$ (higher better).
+    DenoiseOpt trains/searches \texttt{hybrid\_lstm} for $250$ iterations per domain (seed \texttt{1902771841}).
+    Boards: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
+    ($n{=}256$ periods each). Classical board only; no invented deep-SOTA scores.}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.8pt}
   \begin{tabular}{@{}lrrrrrr@{}}
