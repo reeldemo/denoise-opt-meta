@@ -19,9 +19,11 @@ We collect honesty notes here rather than repeating them through Results and Dis
     Domain-trained Noise2Noise quality \emph{was} run on the six sci/eng transfer boards
     (Table~\ref{tab:transfer-main}); it trails Ours on every column under prolonged $R$.
     Latency timings in Appendix~\ref{app:supplement} still use the wavetable checkpoint zero-shot.
-    Cycle-GAN / BeatDiff / Paderborn-deep / real KIT--PMU / MOS remain incomplete
+    Cycle-GAN / BeatDiff / real KIT--PMU / MOS remain incomplete
     (Table~\ref{tab:transfer-sota-status}): Cycle-GAN has an OOD wrap-$R$ probe only;
-    BeatDiff and deep Paderborn are still not run; PTB-XL is expanded lead-I (not multi-lead).
+    BeatDiff is still not run; Paderborn Al~Firdausi CNN is trained from scratch as a
+    native 4-class fault classifier (plus an optional arch-reuse wrap bake, labeled
+    separately); PTB-XL is expanded lead-I (not multi-lead).
     Rust \texttt{sound\_bench} scores classical rows and the favorite only.
   \item \textbf{Domain shift on exports.}
     On Factory+FX / Rust tiles the meta favorite can trail no-bake or FIR while still beating Dual Cosine.

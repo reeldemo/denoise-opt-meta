@@ -38,8 +38,10 @@ Artifacts:
     \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.5601 & 0.7662 & 0.7604 & 0.5344 & 0.9119 \\
     DualCosine & 0.4608 & 0.4830 & 0.4710 & 0.4137 & 0.5118 & 0.4943 & 0.8272 \\
     Cycle-GAN (author, OOD) & --- & --- & --- & 0.0700 & 0.1555 & --- & --- \\
+    Al~Firdausi backbone (wrap bake)$^\dagger$ & --- & --- & 0.8390 & --- & --- & --- & --- \\
     \bottomrule
-  \end{tabular}
+  \end{tabular}\\[0.35em]
+  {\footnotesize $^\dagger$Architecture-reuse residual bake on author CNN\_1D\_2L conv blocks (not the published fault classifier; Paderborn only).}
 \end{table*}
 
 \begin{figure*}[t]
@@ -66,8 +68,11 @@ Artifacts:
       (MIT-BIH $R{=}0.0700$; PTB-XL $R{=}0.1555$); clinical restore $\neq$ wrap-$R$ \\
     BeatDiff (Bedin NeurIPS\,2024) & Not run --- HF \texttt{lbedin/BeatDiff} needs
       \texttt{huggingface-cli login}; Drive Orbax prior incomplete via gdown \\
-    Paderborn KAt deep (Al~Firdausi CNN) & Author \texttt{model.pth} loaded; K001 healthy$\to$Normal
-      rate ${=}1.0$ ($n{=}256$ segs); wrap-$R$ refused (fault classifier $\neq$ denoise).
+    Paderborn KAt deep (Al~Firdausi CNN) & Trained CNN\_1D\_2L from scratch (not frozen
+      \texttt{model.pth}); bearings K001/KA04/KI04/KB23; file-holdout seed \texttt{20260726},
+      train seed \texttt{42}, $20$ epochs; 4-class holdout acc $0.8590$ ($n{=}2560$ segs;
+      NORMAL/IR/OR/OR+IR). Classifier wrap-$R$ N/A. Arch-reuse wrap bake $R{=}0.8390$
+      ($4000$ steps; Table~\ref{tab:transfer-main}$^\dagger$).
       Wrap board: Ours $0.9270$ / SeamN2N $0.8387$ / DualCosine $0.4710$ \\
     Expanded PTB-XL & records500 lead-I expanded ($\sim$2k\,$+$\,\texttt{\_hr} records; board $n{=}256$;
       Ours $R{=}0.9379$; multi-lead still out of scope) \\
@@ -89,9 +94,12 @@ Author Operational Cycle-GAN on the same ECG wrap boards collapses under OOD wra
 is now a Table~\ref{tab:transfer-main} row rather than a deferred claim.
 Synthetic CNC shows the largest classical collapse with Ours near $0.992$; SeamN2N only recovers to $0.4833$.
 Synth PMU is the strongest SeamN2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
-Paderborn K001 wrap board shows Ours $R{=}0.9270$ vs SeamN2N $0.8387$ and DualCosine $0.4710$;
-the published Al~Firdausi CNN runs as a native fault classifier on K001 (healthy$\to$Normal rate $1.0$)
-and is not forced into wrap-$R$ (Table~\ref{tab:transfer-sota-status}).
+Paderborn wrap board shows Ours $R{=}0.9270$ vs SeamN2N $0.8387$ and DualCosine $0.4710$;
+an architecture-reuse residual bake on the Al~Firdausi CNN\_1D\_2L conv backbone reaches
+$R{=}0.8390$ (near SeamN2N; not the published method).
+Separately, we train that CNN from scratch as a 4-class fault classifier on
+K001/KA04/KI04/KB23 (holdout acc $0.8590$) and do not rename classification as wrap-$R$
+(Table~\ref{tab:transfer-sota-status}).
 BeatDiff author priors remain unavailable without HF login or a complete Drive Orbax download.
 Latency timings in Appendix~\ref{app:supplement} remain wavetable-checkpoint zero-shot;
 primary claim remains cycle-local wavetable seam restoration.

@@ -40,7 +40,9 @@ Artifacts:
     (Lessmeier et al., PHME 2016; CC BY-NC 4.0).
     Equal-angle shaft revolutions when speed is available; cubic ideal vs linear+cliff engine
     (same classical board construction as CWRU/MFPT). Real data; $n{=}256$ periods.
-    Deep Paderborn diagnosis models remain unwired (Table~\ref{tab:transfer-sota-status}).
+    Separately, Al~Firdausi CNN\_1D\_2L is trained from scratch on K001/KA04/KI04/KB23
+    as a 4-class fault classifier; an optional arch-reuse wrap bake is labeled separately
+    (Table~\ref{tab:transfer-sota-status}).
   \item[MIT-BIH ECG.]
     Classic PhysioNet arrhythmia ECG corpus.
     We take normal R--R beat windows as periods: the ideal is a local mean beat template with mild endpoint equalization;
@@ -63,6 +65,7 @@ Artifacts:
 
 \paragraph{Scope note.}
 Transfer tables compare classical rows, domain-trained Noise2Noise, and Ours under this residual protocol.
-Deep diagnosis SOTA (Cycle-GAN, BeatDiff, Paderborn deep, \ldots) and formal listening remain out of scope
+Author ECG Cycle-GAN has an OOD wrap-$R$ probe; Paderborn Al~Firdausi is a trained fault classifier
+(plus labeled arch-reuse wrap bake); BeatDiff and formal listening remain out of scope
 (Section~\ref{sec:limitations}; Table~\ref{tab:transfer-sota-status}).
 Results appear in Section~\ref{sec:transfer-main}.
