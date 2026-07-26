@@ -1,0 +1,60 @@
+% Main-text sci/eng wrap transfer (elevated from appendix-only in v9).
+% Included from experiments.tex.
+
+\subsection{Cross-domain wrap transfer protocol}
+\label{sec:transfer-protocol}
+
+The primary claim of this paper is wavetable seam repair.
+As a stress test, we ask whether the \emph{same} cycle-local wrap geometry and DenoiseOpt search
+still help on short periodic signals from other fields (not as domain diagnosis SOTA, but as
+``does a wrap cliff + ideal sibling still make sense?''
+
+\paragraph{Shared transfer recipe.}
+For each domain we cut fixed-length periods ($L{=}256$), build an ideal sibling (smooth / template / cubic path)
+and a cracked engine (same content with an open-wrap cliff, sometimes with a deliberately worse interpolant),
+then run the same prolonged residual $R$ FitCell objective and \texttt{hybrid\_lstm} outer loop used in the
+historical wavetable search freezes
+($150$--$250$ outer iterations per dataset, \texttt{fit\_steps}${}={}40$).
+(This transfer pilot predates the v10.1 $R_{\mathrm{blend}}{+}J$ lock; do not read Table~\ref{tab:transfer-main} as $R_{\mathrm{blend}}$.)
+Classical baselines (no-bake, DualCosine, FIR, endpoint pin, \ldots) share that board.
+Domain-trained Noise2Noise quality was not executed here.
+Artifacts:
+\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
+
+\paragraph{What each dataset is.}
+\begin{description}
+  \item[CWRU bearings.]
+    Public vibration recordings from the Case Western Reserve University Bearing Data Center
+    (drive-end accelerometer, typically 12\,kHz).
+    One shaft revolution is treated as one ``period'': the ideal uses cubic resampling of the revolution;
+    the engine uses a coarser linear path plus a wrap cliff (bad change-of-time proxy).
+    Real data; $n{=}256$ periods.
+  \item[MFPT bearings.]
+    Fault-bearing vibration from the Society for Machinery Failure Prevention Technology Fault Data Sets
+    (fixed 25\,Hz shaft rate in our windows).
+    Same cubic-ideal / linear+cliff-engine construction as CWRU.
+    Real data; $n{=}256$ periods.
+  \item[MIT-BIH ECG.]
+    Classic PhysioNet arrhythmia ECG corpus.
+    We take normal R--R beat windows as periods: the ideal is a local mean beat template with mild endpoint equalization;
+    the engine is the beat plus an artificial wrap cliff.
+    Real data; $n{=}256$ periods.
+  \item[PTB-XL ECG (subset).]
+    Large PhysioNet clinical ECG collection.
+    We use the 500\,Hz \texttt{records500} / \texttt{*\_hr} lead-I beat windows only (a subset pilot)
+    ($n{=}256$ periods from 94 records), not the full PTB-XL corpus.
+    Same beat-template ideal / cliffed engine idea as MIT-BIH.
+  \item[Synthetic CNC G01.]
+    Stand-in for closed machine-tool contours (sharp corners vs a wide blend).
+    Real KIT CNC downloads are login-walled, so this row is a procedural pilot with the same wrap protocol;
+    $n{=}256$. Not a claim on industrial toolpaths.
+  \item[Synthetic PMU / AC cycle.]
+    Stand-in for one power-system AC / PMU voltage cycle with a wrap cliff.
+    Real IEEE DataPort PMU streams need an account, so this row is synthetic;
+    $n{=}256$. Not a claim on live grid telemetry.
+\end{description}
+
+\paragraph{Scope note.}
+Transfer tables are classical-board comparisons under this residual protocol.
+Deep diagnosis SOTA and formal listening are out of scope (Section~\ref{sec:limitations}).
+Results appear in Section~\ref{sec:transfer-main}.

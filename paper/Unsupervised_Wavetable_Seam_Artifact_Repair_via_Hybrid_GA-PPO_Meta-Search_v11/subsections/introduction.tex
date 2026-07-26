@@ -1,0 +1,65 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Wavetable oscillators store one period and wrap the read pointer at the end of the table.
+If the endpoints disagree ($x[0]\neq x[L-1]$), that wrap is a hard discontinuity.
+Under cyclic playback it becomes a click locked to the fundamental.
+The same geometry appears whenever a short loop is tiled for listening or scoring.
+
+We treat the task as \emph{cycle-local seam restoration}: edit a neighborhood of the wrap, and optionally a small residual cell over the period, so multi-period playback matches an ideal reference that never opens the wrap cliff.
+Agreement uses a discontinuity-weighted blend $R_{\mathrm{blend}}$ (seam fidelity vs the ideal, plus mid-cycle identity vs the cracked engine) under a latency-aware objective $J$ (Section~\ref{sec:residual-score}).
+
+\paragraph{Four roles.}
+Keep these distinct (Figure~\ref{fig:intro-sine}; Section~\ref{sec:four-roles}):
+\begin{enumerate}
+  \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld. Scoring target only. Not a method.
+  \item \textbf{No-bake}: unrepaired cracked engine $x$, scored vs $r^{\star}$. A do-nothing reference.
+  \item \textbf{Dual Cosine}: classical raised-cosine end fade. Classical baseline.
+  \item \textbf{Ours (DenoiseOpt)}: searched bake cell from the hybrid outer loop.
+\end{enumerate}
+Corrupt-to-corrupt \textbf{Noise2Noise} is a fifth comparator: the primary neural gate under the locked $R_{\mathrm{blend}}$ protocol (Section~\ref{sec:n2n-vs-ours-boards}).
+It is not shown in Figure~\ref{fig:intro-sine}, which illustrates roles on one hard sine-wrap tile.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig_intro_sine_problem.png}
+  \caption{Hard sine-wrap holdout tile (seed~\texttt{20260719}).
+  (a)~Ideal sibling $r^{\star}$.
+  (b)~No-bake cracked engine.
+  (c)~Dual Cosine fade.
+  (d)~Ours (searched bake).
+  (e)--(f)~Residual and seam zoom.
+  Printed scores use whole-curve prolonged $R$ for this figure; primary selection uses $R_{\mathrm{blend}}$ (Table~\ref{tab:n2n-vs-ours}).}
+  \label{fig:intro-sine}
+\end{figure*}
+
+Classical virtual-analog tools already address wrap energy locally
+(BLIT/BLEP~\cite{stilson1996}, PolyBLEP~\cite{nam2009polyblep}, BLAMP~\cite{esqueda2016blamp}).
+We score cycle-local bake versions of those operators beside Dual Cosine (Section~\ref{sec:va-seam-baselines}).
+Label-free restoration such as Noise2Noise shows that useful reconstructors can be ranked without paired clean targets when the evaluation geometry is explicit~\cite{lehtinen2018,kashyap2021n2n}.
+On the search side, NAS, aging evolution, PBT, CMA-ES, and evolution-guided policy gradients motivate a hybrid outer loop: GA for diversity, PPO for discrete architecture edits, and PBT-style exploit--mutate on elites~\cite{elsken2019,real2019,jaderberg2017,schulman2017,khadka2018}.
+
+\paragraph{Key findings.}
+Under the locked v10.1 $R_{\mathrm{blend}}$ protocol:
+\begin{itemize}
+  \item The hybrid champion does \emph{not} clear the frozen Noise2Noise holdout gate
+    ($R_{\mathrm{blend}}{\approx}0.9697$ vs $0.9750$). Dual Cosine on that holdout sits near $0.541$.
+  \item On twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$; $13/20$ wins). Both crush Dual Cosine.
+  \item On hard wrap cliffs, classical fades collapse while searched cells and Noise2Noise hold (Section~\ref{sec:cliff-strata}).
+  \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours; both still beat Dual Cosine.
+\end{itemize}
+Contribution in one line: compact searchable bake cells that remain robust when classical fades fail, and that need no paired clean targets at search time.
+Older whole-curve scores near $R{\approx}0.991$ are historical context only; they must not dominate the mental model of the locked protocol.
+
+\paragraph{Scope.}
+Cycle-local wavetable seam repair for DSP / synthesis venues.
+Cross-domain wrap transfer (bearings, ECG, synthetic CNC/PMU) is a protocol stress test against classical fades, not a diagnosis claim (Section~\ref{sec:transfer-main}).
+Caveats and exclusions live in Section~\ref{sec:limitations}.
+
+\subsection{Contributions}
+\label{sec:contributions}
+\begin{enumerate}
+  \item \textbf{Problem framing.} Wrap discontinuity as cycle-local seam restoration under tiled evaluation, with $R_{\mathrm{seam}}$, $R_{\mathrm{body}}$, and primary $R_{\mathrm{blend}}$.
+  \item \textbf{Hybrid DenoiseOpt loop.} RL+GA(+PBT) search over bake graphs and continuous parameters, scored by $R_{\mathrm{blend}}$ and ranked by $J$.
+  \item \textbf{Open evaluation path.} Frozen Noise2Noise gate, multi-family and wavetable-native boards, and named transfer benches with released code and artifacts.
+\end{enumerate}

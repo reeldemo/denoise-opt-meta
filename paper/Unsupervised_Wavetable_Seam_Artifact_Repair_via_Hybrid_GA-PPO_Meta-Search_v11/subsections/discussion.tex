@@ -1,0 +1,26 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{Main story under $R_{\mathrm{blend}}$.}
+The locked protocol does not crown the hybrid champion over Noise2Noise on the holdout
+($0.9697$ vs $0.9750$).
+Dual Cosine on that board sits near $0.541$.
+The useful reading is therefore not ``searched bake beats every neural baseline.''
+It is: compact searchable bake cells that crush classical fades, stay competitive with Noise2Noise on multi-family means ($13/20$ wins), and hold on hard cliffs where Dual Cosine collapses
+(Table~\ref{tab:n2n-vs-ours}, Section~\ref{sec:cliff-strata}).
+Older whole-curve numbers near $R{\approx}0.991$ belong in the historical boards only (Limitations).
+
+\paragraph{Which families stay hard.}
+Across large procedural benches, wrap error is uneven.
+Families such as \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, and \texttt{extreme\_overlay} dominate the residual budget; \texttt{harmonic\_fft} and \texttt{am\_fm} are easier.
+Mean scores hide that structure.
+
+\paragraph{Search near the ceiling.}
+Under near-ceiling residuals, further gains are small in absolute units and sensitive to reward shaping and branch weights.
+Plateau adaptation (deeper cells, denser MoE graphs, higher GA/PBT weight) is the operational response inside one campaign.
+Matched outer-loop bake-offs and HP probes sit in Appendix~\ref{app:supplement}.
+
+\paragraph{Evidence beyond static tiles.}
+Vibrato spectrograms and downloadable hear WAVs support informal inspection (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}).
+Sci/eng wrap transfer is a classical-board stress test (Section~\ref{sec:transfer-main}).
+Perceptual and scope limits are collected in Section~\ref{sec:limitations}.
