@@ -9,8 +9,9 @@ Columns are: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, and synthe
 This pilot uses the historical prolonged-$R$ FitCell objective (frozen
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/signal_heal_transfer/results_table.json}{results\_table.json});
 it is \emph{not} a v10.1 $R_{\mathrm{blend}}$ retag.
-Domain-trained Noise2Noise quality scores were not run on these boards
-(latency Table~\ref{tab:transfer-latency} reports zero-shot wavetable N2N timing only).
+Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps, train seed \texttt{424242}, holdout seed \texttt{20260719})
+is scored on the same six boards and appears as a row in Table~\ref{tab:transfer-main}
+(debug $R_{\mathrm{blend}}$ lives in the artifact JSON).
 Deep transfer baselines remain out of scope here (Table~\ref{tab:transfer-sota-status}).
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
@@ -20,7 +21,7 @@ Artifacts:
   \caption{Wrap-heal transfer under prolonged residual $R$ (higher better; historical whole-curve score).
     DenoiseOpt trains/searches \texttt{hybrid\_lstm} for $250$ iterations per domain (seed \texttt{1902771841}).
     Boards: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
-    ($n{=}256$ periods each). Classical board only; domain-trained Noise2Noise quality not scored.}
+    ($n{=}256$ periods each). Domain-trained N2N: corrupt$\to$corrupt holdout $R$ ($4000$ steps, seed \texttt{424242}).}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.8pt}
   \begin{tabular}{@{}lrrrrrr@{}}
@@ -28,6 +29,7 @@ Artifacts:
     Method & CWRU & MFPT & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
     \midrule
     Ours (\texttt{hybrid\_lstm}) & 0.9623 & 0.9411 & 0.9565 & 0.9336 & 0.9918 & 0.9915 \\
+    Domain N2N & 0.8686 & 0.8817 & 0.6530 & 0.5605 & 0.4833 & 0.9789 \\
     no-bake & 0.8451 & 0.8657 & 0.7495 & 0.7503 & 0.4499 & 0.9356 \\
     endpoint-pin & 0.5054 & 0.5446 & 0.8650 & 0.8569 & 0.4096 & 0.9442 \\
     \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.7662 & 0.7462 & 0.5344 & 0.9119 \\
@@ -54,10 +56,10 @@ Artifacts:
     \toprule
     Scope & Note \\
     \midrule
-    Domain-trained Noise2Noise & Not scored on transfer boards (wavetable N2N timing only) \\
-    Cycle-GAN (ECG) & Not run \\
-    BeatDiff & Not run \\
-    Paderborn KAt deep models & Not run (dataset access) \\
+    Domain-trained Noise2Noise & Scored on six boards (holdout prolonged $R$; Table~\ref{tab:transfer-main}) \\
+    Cycle-GAN (ECG) & Not run (no adapted weights under $R$) \\
+    BeatDiff & Not run (no diffusion checkpoints) \\
+    Paderborn KAt deep models & Not run ($K001$.rar UnRAR blocked; deep unwired) \\
     Full PTB-XL & Subset only ($500$\,Hz lead-I, $n{=}256$) \\
     Real KIT CNC / IEEE PMU & Synthetic pilots only (download walls) \\
     Formal MOS / MUSHRA & Not collected \\
@@ -68,13 +70,14 @@ Artifacts:
 
 \paragraph{Takeaways.}
 Under prolonged $R$, Ours leads every classical-board column in Table~\ref{tab:transfer-main},
-including Dual Cosine on every domain.
-On CWRU/MFPT, Dual Cosine and fades trail no-bake; Ours clears both by a large margin.
-On MIT-BIH and PTB-XL, endpoint-pin is a strong classical ECG row, but Ours still leads.
-Synthetic CNC shows the largest classical collapse with Ours near $0.992$.
-Domain-trained Noise2Noise quality was not run on these boards
-(zero-shot timing in Appendix~\ref{app:supplement}).
-Primary claim remains cycle-local wavetable seam restoration.
+including Dual Cosine and domain-trained Noise2Noise on every domain.
+Domain N2N beats Dual Cosine everywhere and sits near no-bake on CWRU/MFPT, but trails Ours by a wide margin
+on ECG and synth CNC ($R{\approx}0.56$--$0.65$ and $0.48$ vs Ours ${>}0.93$).
+On MIT-BIH and PTB-XL, endpoint-pin remains a strong classical ECG row above domain N2N; Ours still leads both.
+Synthetic CNC shows the largest classical collapse with Ours near $0.992$; domain N2N only recovers to $0.4833$.
+Synth PMU is the strongest domain-N2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
+Latency timings in Appendix~\ref{app:supplement} remain wavetable-checkpoint zero-shot;
+primary claim remains cycle-local wavetable seam restoration.
 
 \subsection{Listening protocol (no formal listening study)}
 \label{sec:listening-protocol}

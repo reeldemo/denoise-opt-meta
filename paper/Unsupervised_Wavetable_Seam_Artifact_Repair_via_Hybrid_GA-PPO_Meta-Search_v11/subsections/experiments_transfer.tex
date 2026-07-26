@@ -17,7 +17,8 @@ historical wavetable search freezes
 ($150$--$250$ outer iterations per dataset, \texttt{fit\_steps}${}={}40$).
 (This transfer pilot predates the v10.1 $R_{\mathrm{blend}}{+}J$ lock; do not read Table~\ref{tab:transfer-main} as $R_{\mathrm{blend}}$.)
 Classical baselines (no-bake, DualCosine, FIR, endpoint pin, \ldots) share that board.
-Domain-trained Noise2Noise quality was not executed here.
+Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps) is scored on the same six boards
+and reported beside classical rows in Table~\ref{tab:transfer-main}.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
@@ -55,6 +56,7 @@ Artifacts:
 \end{description}
 
 \paragraph{Scope note.}
-Transfer tables are classical-board comparisons under this residual protocol.
-Deep diagnosis SOTA and formal listening are out of scope (Section~\ref{sec:limitations}).
+Transfer tables compare classical rows, domain-trained Noise2Noise, and Ours under this residual protocol.
+Deep diagnosis SOTA (Cycle-GAN, BeatDiff, Paderborn deep, \ldots) and formal listening remain out of scope
+(Section~\ref{sec:limitations}; Table~\ref{tab:transfer-sota-status}).
 Results appear in Section~\ref{sec:transfer-main}.

@@ -15,9 +15,12 @@ We collect honesty notes here rather than repeating them through Results and Dis
     Many secondary tables and figures still report historical whole-curve prolonged $R$ (canonical board, cliff strata, matched outer loops, VA board).
     Those boards are labeled as such; they must not overwrite the holdout gate reading
     ($R_{\mathrm{blend}}{\approx}0.9697$ for Ours vs $0.9750$ for Noise2Noise).
-  \item \textbf{Where Noise2Noise was not run.}
-    Domain-trained Noise2Noise quality was not executed on sci/eng transfer boards
-    (only optional zero-shot timing in Appendix~\ref{app:supplement}).
+  \item \textbf{Domain Noise2Noise vs transfer depth.}
+    Domain-trained Noise2Noise quality \emph{was} run on the six sci/eng transfer boards
+    (Table~\ref{tab:transfer-main}); it trails Ours on every column under prolonged $R$.
+    Latency timings in Appendix~\ref{app:supplement} still use the wavetable checkpoint zero-shot.
+    Cycle-GAN / BeatDiff / Paderborn-deep / full PTB-XL / real KIT--PMU / MOS remain not run
+    (Table~\ref{tab:transfer-sota-status}).
     Rust \texttt{sound\_bench} scores classical rows and the favorite only.
   \item \textbf{Domain shift on exports.}
     On Factory+FX / Rust tiles the meta favorite can trail no-bake or FIR while still beating Dual Cosine.

@@ -5,7 +5,8 @@
 Table~\ref{tab:transfer-latency} reports wall-clock inference on transfer holdout batches
 (device=\texttt{cuda}, batch=64, warmup=20, timed=100; includes residual scoring).
 These timings pair with the prolonged-$R$ transfer board (Table~\ref{tab:transfer-main}).
-N2N uses the wavetable \texttt{n2n\_corrupt\_corrupt} checkpoint zero-shot; domain-trained N2N quality was not run.
+N2N latency uses the wavetable \texttt{n2n\_corrupt\_corrupt} checkpoint zero-shot;
+domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
 
 \begin{table*}[t]
   \centering
