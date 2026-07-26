@@ -48,8 +48,12 @@ Artifacts:
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth,height=0.38\textheight,keepaspectratio]{figures/fig_signal_heal_transfer.png}
-  \caption{Transfer classical-board summary (holdout-refit prolonged $R$; grouped bars for Table~\ref{tab:transfer-main}).
-    See Table~\ref{tab:transfer-sota-status} for baselines left to follow-up.}
+  \caption{Grouped bars for Table~\ref{tab:transfer-main}: prolonged residual $R$ by board and method
+    (higher better; JSON-only). Core rows (Ours, SeamN2N, no-bake, endpoint-pin, \texttt{seam\_fir3}, DualCosine)
+    appear on all seven boards. Hatched bars are author OOD wrap-$R$ probes on ECG (BeatDiff, Cycle-GAN;
+    clinical restore $\neq$ wrap-$R$) and the Paderborn Al~Firdausi architecture-reuse wrap bake
+    (not the published fault classifier; see Table~\ref{tab:transfer-sota-status}).
+    Missing cells are omitted rather than zero-filled.}
   \label{fig:signal-heal-transfer-main}
 \end{figure*}
 
