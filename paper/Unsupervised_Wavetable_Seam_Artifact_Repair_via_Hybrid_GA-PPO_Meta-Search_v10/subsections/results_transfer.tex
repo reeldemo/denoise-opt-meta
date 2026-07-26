@@ -11,7 +11,7 @@ This pilot uses the historical prolonged-$R$ FitCell objective (frozen
 it is \emph{not} a v10.1 $R_{\mathrm{blend}}$ retag.
 Domain-trained Noise2Noise quality scores were not run on these boards
 (latency Table~\ref{tab:transfer-latency} reports zero-shot wavetable N2N timing only).
-Deep SOTA rows remain \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
+Deep transfer baselines remain out of scope here (Table~\ref{tab:transfer-sota-status}).
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
@@ -20,8 +20,7 @@ Artifacts:
   \caption{Wrap-heal transfer under prolonged residual $R$ (higher better; historical whole-curve score).
     DenoiseOpt trains/searches \texttt{hybrid\_lstm} for $250$ iterations per domain (seed \texttt{1902771841}).
     Boards: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
-    ($n{=}256$ periods each). Classical board only; domain-trained N2N quality not executed;
-    no invented deep-SOTA scores.}
+    ($n{=}256$ periods each). Classical board only; domain-trained Noise2Noise quality not scored.}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.8pt}
   \begin{tabular}{@{}lrrrrrr@{}}
@@ -41,28 +40,27 @@ Artifacts:
   \centering
   \includegraphics[width=\textwidth,height=0.38\textheight,keepaspectratio]{figures/fig_signal_heal_transfer.png}
   \caption{Transfer classical-board summary (holdout-refit prolonged $R$; grouped bars for Table~\ref{tab:transfer-main}).
-    Not a deep-SOTA claim; domain-trained N2N quality not run; see Table~\ref{tab:transfer-sota-status}.}
+    See Table~\ref{tab:transfer-sota-status} for baselines left to follow-up.}
   \label{fig:signal-heal-transfer-main}
 \end{figure*}
 
 \begin{table}[t]
   \centering
-  \caption{Deep / real-data transfer status under this residual protocol.
-    No invented scores.}
+  \caption{Transfer baselines and data cuts left for follow-up work.}
   \label{tab:transfer-sota-status}
   \setlength{\tabcolsep}{3pt}
   \resizebox{\columnwidth}{!}{%
-  \begin{tabular}{@{}ll@{}}
+  \begin{tabular}{@{}lp{0.52\columnwidth}@{}}
     \toprule
-    Item & Status \\
+    Scope & Note \\
     \midrule
-    Domain-trained N2N quality & \emph{not executed} (zero-shot WT N2N latency only) \\
-    Cycle-GAN (ECG) & \emph{not executed} (no weights under this residual) \\
-    BeatDiff & \emph{not executed} \\
-    Paderborn KAt deep & \emph{not executed} (registration / multi-GB) \\
-    Full PTB-XL corpus & deferred (\texttt{records500} \texttt{*\_hr} subset, $n{=}256$) \\
-    Real KIT CNC / IEEE PMU & deferred (login walls; synth pilots ran) \\
-    Formal MOS/MUSHRA & deferred (Section~\ref{sec:listening-protocol}) \\
+    Domain-trained Noise2Noise & Not scored on transfer boards (wavetable N2N timing only) \\
+    Cycle-GAN (ECG) & Not run \\
+    BeatDiff & Not run \\
+    Paderborn KAt deep models & Not run (dataset access) \\
+    Full PTB-XL & Subset only ($500$\,Hz lead-I, $n{=}256$) \\
+    Real KIT CNC / IEEE PMU & Synthetic pilots only (download walls) \\
+    Formal MOS / MUSHRA & Not collected \\
     \bottomrule
   \end{tabular}%
   }
