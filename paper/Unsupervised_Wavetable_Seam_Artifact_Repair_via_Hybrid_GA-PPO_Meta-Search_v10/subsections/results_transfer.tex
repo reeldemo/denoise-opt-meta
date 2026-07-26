@@ -31,13 +31,13 @@ Artifacts:
   \end{tabular}
 \end{table*}
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_signal_heal_transfer.png}
+  \includegraphics[width=\textwidth,height=0.38\textheight,keepaspectratio]{figures/fig_signal_heal_transfer.png}
   \caption{Transfer classical-board summary (holdout-refit $R_{\mathrm{blend}}$; grouped bars for Table~\ref{tab:transfer-main}).
     Not a deep-SOTA claim; see Table~\ref{tab:transfer-sota-status}.}
   \label{fig:signal-heal-transfer-main}
-\end{figure}
+\end{figure*}
 
 \begin{table}[t]
   \centering
@@ -45,18 +45,20 @@ Artifacts:
     No invented scores.}
   \label{tab:transfer-sota-status}
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lp{0.62\columnwidth}@{}}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{@{}ll@{}}
     \toprule
     Item & Status \\
     \midrule
     Cycle-GAN (ECG) & \emph{not executed} (no weights under $R_{\mathrm{blend}}$) \\
     BeatDiff & \emph{not executed} \\
     Paderborn KAt deep & \emph{not executed} (registration / multi-GB) \\
-    Full PTB-XL corpus & deferred (ran \texttt{records500} \texttt{*\_hr} subset, $n{=}256$ periods) \\
+    Full PTB-XL corpus & deferred (\texttt{records500} \texttt{*\_hr} subset, $n{=}256$) \\
     Real KIT CNC / IEEE PMU & deferred (login walls; synth pilots ran) \\
     Formal MOS/MUSHRA & deferred (Section~\ref{sec:listening-protocol}) \\
     \bottomrule
-  \end{tabular}
+  \end{tabular}%
+  }
 \end{table}
 
 \paragraph{Takeaways.}

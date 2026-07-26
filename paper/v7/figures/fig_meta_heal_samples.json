@@ -16,9 +16,9 @@
     "lr": 0.06844036093419292,
     "adv_coef": 0.0,
     "converged": false,
-    "train_r_last": 0.9915947914123535
+    "train_r_last": 0.9777886867523193
   },
-  "train_r_last": 0.9915947914123535,
+  "train_r_last": 0.9777886867523193,
   "champ_arch": {
     "depth": 12,
     "width": 48,
@@ -64,13 +64,13 @@
     "no_bake": 0.9503467082977295,
     "dual_cosine": 0.6029019951820374,
     "seam_fir3": 0.9599027633666992,
-    "ours_hybrid": 0.9904486536979675
+    "ours_hybrid": 0.987586259841919
   },
   "R_holdout_mean": {
     "no_bake": 0.9717606902122498,
     "dual_cosine": 0.8248767852783203,
     "seam_fir3": 0.9641148447990417,
-    "ours_hybrid": 0.9913885593414307,
+    "ours_hybrid": 0.9909780025482178,
     "n": 64
   },
   "note": "Cell weights are refit from champion arch+HP (meta suite does not persist fitted state_dict). Tile R is holdout geometry; summary champ_raw is search-time FitCell score. Rank by absolute R vs classical board; DualCosine \u0394R is reporting only.",
