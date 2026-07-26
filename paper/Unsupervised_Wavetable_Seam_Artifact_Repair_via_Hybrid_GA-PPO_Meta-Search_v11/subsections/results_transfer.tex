@@ -12,9 +12,8 @@ it is \emph{not} a v10.1 $R_{\mathrm{blend}}$ retag.
 Domain-trained Noise2Noise-style SeamN2N (corrupt$\to$corrupt, $4000$ Adam steps, train seed \texttt{424242}, holdout seed \texttt{20260719};
 our stack, not Lehtinen's reference code) is scored on the same seven boards and appears as a row in Table~\ref{tab:transfer-main}
 (debug $R_{\mathrm{blend}}$ lives in the artifact JSON).
-Author ECG Cycle-GAN is included on MIT-BIH/PTB-XL as an OOD wrap-$R$ probe
+Author ECG Cycle-GAN and BeatDiff are included on MIT-BIH/PTB-XL as OOD wrap-$R$ probes
 (clinical restore $\neq$ wrap-$R$; Table~\ref{tab:transfer-sota-status}).
-BeatDiff remains blocked pending author checkpoint download.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
@@ -24,7 +23,7 @@ Artifacts:
     DenoiseOpt trains/searches \texttt{hybrid\_lstm} for $250$ iterations per domain (seed \texttt{1902771841}).
     Boards: CWRU/MFPT/Paderborn K001 bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
     ($n{=}256$ periods each). SeamN2N: corrupt$\to$corrupt holdout $R$ ($4000$ steps, seed \texttt{424242}).
-    Cycle-GAN: author Operational Cycle-GAN weights, OOD wrap-$R$ on ECG only (--- elsewhere).}
+    Cycle-GAN / BeatDiff: author weights, OOD wrap-$R$ on ECG only (--- elsewhere; clinical $\neq$ wrap-$R$).}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.2pt}
   \begin{tabular}{@{}lrrrrrrr@{}}
@@ -37,11 +36,13 @@ Artifacts:
     endpoint-pin & 0.5054 & 0.5446 & 0.5670 & 0.8650 & 0.8696 & 0.4096 & 0.9442 \\
     \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.5601 & 0.7662 & 0.7604 & 0.5344 & 0.9119 \\
     DualCosine & 0.4608 & 0.4830 & 0.4710 & 0.4137 & 0.5118 & 0.4943 & 0.8272 \\
+    BeatDiff (author, OOD)$^\ddagger$ & --- & --- & --- & 0.3693 & 0.3259 & --- & --- \\
     Cycle-GAN (author, OOD) & --- & --- & --- & 0.0700 & 0.1555 & --- & --- \\
     Al~Firdausi backbone (wrap bake)$^\dagger$ & --- & --- & 0.8390 & --- & --- & --- & --- \\
     \bottomrule
   \end{tabular}\\[0.35em]
-  {\footnotesize $^\dagger$Architecture-reuse residual bake on author CNN\_1D\_2L conv blocks (not the published fault classifier; Paderborn only).}
+  {\footnotesize $^\dagger$Architecture-reuse residual bake on author CNN\_1D\_2L conv blocks (not the published fault classifier; Paderborn only).
+    $^\ddagger$Drive Orbax prior (step $9360$), one-step denoise at $\sigma{=}0.5$ after mono$\to$9-lead tile; not Bedin native metrics.}
 \end{table*}
 
 \begin{figure*}[t]
@@ -66,8 +67,9 @@ Artifacts:
       (holdout prolonged $R$; expanded PTB-XL $R{=}0.5702$); not Lehtinen code \\
     Cycle-GAN (ECG, author) & OOD wrap-$R$ in Table~\ref{tab:transfer-main}
       (MIT-BIH $R{=}0.0700$; PTB-XL $R{=}0.1555$); clinical restore $\neq$ wrap-$R$ \\
-    BeatDiff (Bedin NeurIPS\,2024) & Not run --- HF \texttt{lbedin/BeatDiff} needs
-      \texttt{huggingface-cli login}; Drive Orbax prior incomplete via gdown \\
+    BeatDiff (Bedin NeurIPS\,2024) & OOD wrap-$R$ in Table~\ref{tab:transfer-main}
+      (MIT-BIH $R{=}0.3693$; PTB-XL $R{=}0.3259$); Drive prior (not HF);
+      clinical morph prior $\neq$ wrap-$R$ \\
     Paderborn KAt deep (Al~Firdausi CNN) & Trained CNN\_1D\_2L from scratch (not frozen
       \texttt{model.pth}); bearings K001/KA04/KI04/KB23; file-holdout seed \texttt{20260726},
       train seed \texttt{42}, $20$ epochs; 4-class holdout acc $0.8590$ ($n{=}2560$ segs;
@@ -92,6 +94,9 @@ On MIT-BIH and PTB-XL, endpoint-pin remains a strong classical ECG row above Sea
 Author Operational Cycle-GAN on the same ECG wrap boards collapses under OOD wrap-$R$
 ($R{\approx}0.07$--$0.16$)---clinical ECG restore is not the wrap residual objective, but the author stack
 is now a Table~\ref{tab:transfer-main} row rather than a deferred claim.
+Author BeatDiff (Drive Orbax prior, step $9360$) as a one-step OOD wrap probe reaches
+$R{\approx}0.33$--$0.37$---above Cycle-GAN but still far below Ours/SeamN2N/no-bake on ECG;
+we do not treat Bedin native morph metrics as wrap-$R$.
 Synthetic CNC shows the largest classical collapse with Ours near $0.992$; SeamN2N only recovers to $0.4833$.
 Synth PMU is the strongest SeamN2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
 Paderborn wrap board shows Ours $R{=}0.9270$ vs SeamN2N $0.8387$ and DualCosine $0.4710$;
@@ -100,7 +105,6 @@ $R{=}0.8390$ (near SeamN2N; not the published method).
 Separately, we train that CNN from scratch as a 4-class fault classifier on
 K001/KA04/KI04/KB23 (holdout acc $0.8590$) and do not rename classification as wrap-$R$
 (Table~\ref{tab:transfer-sota-status}).
-BeatDiff author priors remain unavailable without HF login or a complete Drive Orbax download.
 Latency timings in Appendix~\ref{app:supplement} remain wavetable-checkpoint zero-shot;
 primary claim remains cycle-local wavetable seam restoration.
 
