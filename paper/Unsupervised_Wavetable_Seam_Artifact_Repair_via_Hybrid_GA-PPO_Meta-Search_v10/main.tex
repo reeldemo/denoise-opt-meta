@@ -48,28 +48,23 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    In single-period wavetable synthesis, a discontinuity at the wrap injects a broadband click that
-    repeats at the fundamental.
-    We address this \emph{cycle-local seam} with \textbf{DenoiseOpt}: a hybrid meta-search that
-    proposes and fits bake-cell operators $\Theta$ at the period boundary.
-    Bake cells may combine DualCosine fades, FIR blends, and small residual nets
-    (including a searchable SeamN2N-parity \texttt{n2n\_unet}), with optional MoE gating.
-    Paired studio-clean recordings are not required.
-    Candidates maximize the blended residual
-    $R_{\mathrm{blend}}=\alpha R_{\mathrm{seam}}+(1-\alpha)R_{\mathrm{body}}$ ($\alpha{=}0.7$)
-    under latency-aware $J$ ($\lambda{=}0.02$; Methods),
-    scored against a procedural ideal sibling $r^{\star}=G(\mathrm{seed},\mathrm{cliff{=}off})$
-    while preserving mid-cycle identity vs the cracked engine $x=G(\mathrm{seed},\mathrm{cliff{=}on})$.
-    The primary neural baseline is same-generator corrupt$\to$corrupt Noise2Noise
-    (\texttt{SeamN2N}, ${\approx}53.5$k; frozen holdout $R_{\mathrm{blend}}{\approx}0.975$).
-    DualCosine is a classical comparator and PPO-centering row, not the gate.
-    The outer loop interleaves GA, PPO architecture edits, and optional PBT.
-    Balanced ${\approx}1{,}280$-cycle boards (multi-family, Factory+FX, AKWF) keep corpus sizes comparable.
-    We also transfer the wrap protocol---and train/search the same hybrid bake cell---to
-    CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, and synthetic CNC/PMU pilots
-    (classical boards; Results).
-    Scope is cycle-local wavetable seam restoration (DAFx / AES / arXiv cs.SD).
-    We do not claim speech enhancement or deep SOTA on sci/eng transfer boards.
+    Looping a single-period wavetable with mismatched endpoints produces an audible click that
+    repeats every cycle.
+    We repair that wrap seam without paired studio-clean recordings.
+    \textbf{DenoiseOpt} is a hybrid search (genetic algorithms plus reinforcement learning) that
+    proposes and fits small seam-repair operators---classical fades and filters mixed with tiny
+    residual networks---and ranks them against a same-seed ``no-cliff'' reference while keeping
+    mid-cycle identity with the cracked engine.
+    On the primary blended score, corrupt-to-corrupt Noise2Noise is the neural gate and Dual Cosine
+    is the classical fade baseline.
+    A $1{,}200$-iteration hybrid run reaches blended residual ${\approx}0.970$ but does not beat the
+    frozen Noise2Noise holdout (${\approx}0.975$); Dual Cosine on that same holdout sits near $0.541$.
+    Across twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$;
+    $13/20$ wins) and both crush Dual Cosine (${\approx}0.51$ mean).
+    On balanced Factory+FX and AKWF corpora, Noise2Noise leads Ours, and both still beat Dual Cosine.
+    The same wrap recipe transfers to bearing, ECG, and synthetic CNC/PMU cycle boards against
+    classical fades (domain-trained Noise2Noise quality was not run there).
+    Scope is cycle-local wavetable seam repair, not speech enhancement or deep diagnosis SOTA.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; seam restoration; unsupervised learning; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}

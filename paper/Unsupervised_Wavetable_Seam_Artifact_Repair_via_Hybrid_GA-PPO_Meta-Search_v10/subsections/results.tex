@@ -8,37 +8,45 @@ A $1{,}200$-iteration \texttt{hybrid\_lstm} search (seed \texttt{1902771841}, ${
 $J$~\eqref{eq:outer-obj} ($\lambda{=}0.02$).
 Champion search scores: $R_{\mathrm{blend}}{\approx}0.9695$, $J{\approx}0.9603$, $t{\approx}5.08$\,ms
 (\texttt{tf\_split}+MoE cell; no LSTM/xLSTM in the champ graph).
+Search-monitor Dual Cosine on the same runner is $R_{\mathrm{blend}}{\approx}0.504$
+($\Delta R_{\mathrm{blend}}\approx{+}0.466$ vs Dual Cosine).
 Frozen corrupt$\to$corrupt Noise2Noise holdout gate is $R_{\mathrm{blend}}{\approx}0.9750$.
-The search champ does \emph{not} clear that gate ($\texttt{champ\_beats\_n2n}{=}\mathrm{false}$).
+The search champ does \emph{not} clear that gate ($\texttt{champ\_beats\_n2n}{=}\mathrm{false}$),
+even though it clearly clears Dual Cosine.
 Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/meta_approach_compare_v10.json}{v10 search data}.
 
 \subsection{Noise2Noise vs Ours on four boards}
 \label{sec:n2n-vs-ours-boards}
-Table~\ref{tab:n2n-vs-ours} summarizes the four evaluation boards under $R_{\mathrm{blend}}$.
-On the frozen sine{+}cliff holdout (seed \texttt{20260719}), Noise2Noise leads
-($R_{\mathrm{blend}}{\approx}0.9750$ vs Ours ${\approx}0.9697$; $\Delta{\approx}{-}0.0053$).
-On the $20$-waveform multi-family board, Ours mean $R_{\mathrm{blend}}{\approx}0.9311$ exceeds N2N ${\approx}0.9249$
-and wins $13/20$ boards ($\Delta$ mean ${\approx}{+}0.0062$).
+Table~\ref{tab:n2n-vs-ours} summarizes the four evaluation boards under $R_{\mathrm{blend}}$,
+with Dual Cosine as the classical fade row on every board.
+On the frozen sine{+}cliff holdout (seed \texttt{20260719}), Noise2Noise leads Ours
+($0.9750$ vs $0.9697$; $\Delta{\approx}{-}0.0053$), while Dual Cosine collapses to $0.5409$
+(Ours$-$DualCosine $\Delta{\approx}{+}0.429$).
+On the $20$-waveform multi-family board, Ours mean $0.9311$ exceeds N2N $0.9249$
+($13/20$ wins; $\Delta$ mean ${\approx}{+}0.0062$) and both dominate Dual Cosine (mean ${\approx}0.514$).
 On balanced wavetable-native corpora ($n{=}1{,}280$ each), N2N leads Factory+FX
-($0.771$ vs $0.699$) and AKWF ($0.731$ vs $0.679$).
+($0.771$ vs Ours $0.699$; Dual Cosine $0.589$) and AKWF
+($0.731$ vs Ours $0.679$; Dual Cosine $0.424$).
 Latency: holdout Ours ${\approx}4.57$\,ms vs N2N ${\approx}0.65$\,ms ($J$ still favors N2N on holdout).
 
 \begin{table}[t]
   \centering
-  \caption{Noise2Noise vs Ours under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Holdout seed \texttt{20260719}.
-    Multi-family: $10$ families $\times$ $2$ seeds. Factory+FX / AKWF: $n{=}1{,}280$ each.
-    Gate column: whether Ours strictly exceeds N2N on that board.}
+  \caption{Ours vs Noise2Noise \emph{and} Dual Cosine under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
+    Holdout seed \texttt{20260719}. Multi-family: $10$ families $\times$ $2$ seeds.
+    Factory+FX / AKWF: $n{=}1{,}280$ each.
+    $\Delta_{\mathrm{N2N}}$ / $\Delta_{\mathrm{DC}}$ are Ours minus that baseline;
+    Gate: whether Ours strictly exceeds N2N.}
   \label{tab:n2n-vs-ours}
   \footnotesize
   \setlength{\tabcolsep}{2pt}
-  \begin{tabular}{@{}lrrrc@{}}
+  \begin{tabular}{@{}lrrrrrc@{}}
     \toprule
-    Board & Ours $R_{\mathrm{blend}}$ & N2N $R_{\mathrm{blend}}$ & $\Delta$ & Ours$>$N2N \\
+    Board & Ours & N2N & DualCosine & $\Delta_{\mathrm{N2N}}$ & $\Delta_{\mathrm{DC}}$ & Gate \\
     \midrule
-    Holdout & 0.9697 & 0.9750 & $-0.0053$ & no \\
-    Multi-family (mean) & 0.9311 & 0.9249 & $+0.0062$ & $13/20$ \\
-    Factory+FX & 0.6990 & 0.7714 & $-0.0724$ & no \\
-    AKWF OA & 0.6794 & 0.7305 & $-0.0511$ & no \\
+    Holdout & 0.9697 & 0.9750 & 0.5409 & $-0.0053$ & $+0.4289$ & no \\
+    Multi-family (mean) & 0.9311 & 0.9249 & 0.5144 & $+0.0062$ & $+0.4167$ & $13/20$ \\
+    Factory+FX & 0.6990 & 0.7714 & 0.5887 & $-0.0724$ & $+0.1104$ & no \\
+    AKWF OA & 0.6794 & 0.7305 & 0.4244 & $-0.0511$ & $+0.2551$ & no \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -101,6 +109,9 @@ No-bake (passthrough; unrepaired engine vs $r^{\star}$) scores $R\approx 0.972$.
 It is a do-nothing reference, not the ideal.
 The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) at $\approx 2.56$\,ms/batch ($\approx 37$k params):
 $\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{seam\_fir3}, and $\Delta R \approx {+}0.166$ vs DualCosine.
+This table is a classical-board snapshot under prolonged $R$; Noise2Noise appears on the multi-family matrix
+(Table~\ref{tab:sota-main}: favorite $0.977$ vs N2N corrupt$\to$corrupt $0.970$ vs DualCosine $0.814$)
+and on the $R_{\mathrm{blend}}$ four-board (Table~\ref{tab:n2n-vs-ours}).
 
 \begin{table}[t]
   \centering
@@ -129,13 +140,18 @@ $\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{s
 \subsection{Multi-family comparison}
 \label{sec:sota-main}
 
-Does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades) and fixed MLP/CNN baselines across twenty generative families?
+Does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades),
+fixed MLP/CNN baselines, \emph{and} Noise2Noise across twenty generative families?
 Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}), with canonical-holdout SNR/SDR/wrap-jump for the same method set from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/sota_matrix.json}{SOTA matrix}.
 Figures~\ref{fig:sota-heatmap}--\ref{fig:sota-method-bars} plot the same ranking.
 PESQ/STOI/MUSHRA are omitted for non-speech cycles (Limitations).
-Primary reading is absolute $R$ rank vs classical rows (no-bake $0.965$, poly $0.966$, \texttt{seam\_fir3} $0.955$, DualCosine $0.814$).
+Primary reading is absolute prolonged-$R$ rank:
+neural favorite $0.977$, corrupt$\to$corrupt N2N $0.970$, no-bake $0.965$, poly $0.966$,
+\texttt{seam\_fir3} $0.955$, DualCosine $0.814$
+(historical whole-curve board; not the v10.1 $R_{\mathrm{blend}}$ four-board in Table~\ref{tab:n2n-vs-ours}).
 Fixed MLP-on-$R$ and CNN/U-Net-lite-on-$R$ (no outer NAS) sit between DualCosine and the meta favorite.
 Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20 waveforms: $W{=}0$, $p{\approx}8.9{\times}10^{-5}$, mean $\Delta R{=}{+}0.162$ (bootstrap 95\% CI $[0.155,0.170]$); vs no-bake the multifamily mean gap is smaller ($\approx{+}0.012$) but still favors the searched bake on this generator.
+Vs corrupt$\to$corrupt N2N the mean gap is smaller still ($\approx{+}0.007$ on this prolonged-$R$ board).
 
 \begin{table*}[t]
   \centering
@@ -192,11 +208,13 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
 
 Does high no-bake $R$ hide DualCosine failure on large wrap jumps?
 Table~\ref{tab:cliff-strata} stratifies a $4{,}096$-tile holdout draw (seed \texttt{20260719}) by engine wrap-jump percentiles (p75$\approx 1.387$, p90$\approx 1.832$; frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/cliff_strata.json}{cliff-strata data}).
-No-bake $R_{\mathrm{blend}}$ can stay high on mild cliffs because residual mass remains small relative to ideal RMS under the unit clamp of~\eqref{eq:R-blend}.
-DualCosine collapses on hard cliffs ($0.819$ $\to$ $0.657$), while the meta favorite holds ($R\approx 0.9915$).
+This board uses whole-curve prolonged $R$ (historical; not $R_{\mathrm{blend}}$).
+No-bake $R$ can stay high on mild cliffs because residual mass remains small relative to ideal RMS.
+DualCosine collapses on hard cliffs ($0.819$ $\to$ $0.657$), while the meta favorite holds ($R\approx 0.9915$)
+and corrupt$\to$corrupt N2N stays slightly ahead ($R\approx 0.9922$ on all / top-10\%).
 Favorite wrap-jump on the top-10\% subset stays $\approx 1.83$ (vs no-bake $2.09$).
 The claim is tiled residual repair, not endpoint-zeroing.
-\textbf{Edge RMSE} is the locked required seam-local secondary (EVAL\_PROTOCOL): on the top-10\% subset it drops from no-bake $0.095$ to favorite $0.021$ (DualCosine $0.990$).
+\textbf{Edge RMSE} is the locked required seam-local secondary (EVAL\_PROTOCOL): on the top-10\% subset it drops from no-bake $0.095$ to favorite $0.021$ (N2N corrupt$\to$corrupt also $0.021$; DualCosine $0.990$).
 Click energy remains an optional diagnostic.
 
 \begin{table*}[t]
@@ -428,6 +446,8 @@ Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM
 
 Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to \textbf{Ours (hybrid GA--PPO)}?
 Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs DualCosine, wall hours, and whether the champion graph used an LSTM or xLSTM block.
+This is an outer-loop bake-off under historical whole-curve prolonged $R$; Noise2Noise is not an outer-loop method here
+(see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main} for Ours vs N2N vs Dual Cosine).
 At the completed gate, \textbf{Ours} leads on absolute champion $R$ ($R\approx 0.99146$, $\Delta R\approx{+}0.17488$ vs DualCosine $\approx 0.81658$; $\approx 8.46$\,h), with Aging evolution second ($R\approx 0.99079$).
 Neither Ours nor Aging evolution selected an LSTM block in the champion graph.
 Arch REINFORCE / Aging evolution champions used xLSTM, and TPE used LSTM (vocab presence, not a full-stack claim).

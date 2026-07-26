@@ -2,20 +2,26 @@
 \label{sec:transfer-main}
 
 \paragraph{Setup reminder.}
-Table~\ref{tab:transfer-main} reports $R_{\mathrm{blend}}$ after training/searching DenoiseOpt
+Table~\ref{tab:transfer-main} reports whole-curve prolonged residual $R$ after training/searching DenoiseOpt
 (\texttt{hybrid\_lstm}, $250$ outer iterations, seed \texttt{1902771841}) on each transfer board
 from Section~\ref{sec:transfer-protocol} ($n{=}256$ periods, $L{=}256$).
 Columns are: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, and synthetic CNC/PMU pilots.
+This pilot uses the historical prolonged-$R$ FitCell objective (frozen
+\href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/signal_heal_transfer/results_table.json}{results\_table.json});
+it is \emph{not} a v10.1 $R_{\mathrm{blend}}$ retag.
+Domain-trained Noise2Noise quality scores were not run on these boards
+(latency Table~\ref{tab:transfer-latency} reports zero-shot wavetable N2N timing only).
 Deep SOTA rows remain \emph{not executed} (Table~\ref{tab:transfer-sota-status}).
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
 \begin{table*}[t]
   \centering
-  \caption{Wrap-heal transfer under $R_{\mathrm{blend}}$ (higher better).
+  \caption{Wrap-heal transfer under prolonged residual $R$ (higher better; historical whole-curve score).
     DenoiseOpt trains/searches \texttt{hybrid\_lstm} for $250$ iterations per domain (seed \texttt{1902771841}).
     Boards: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
-    ($n{=}256$ periods each). Classical board only; no invented deep-SOTA scores.}
+    ($n{=}256$ periods each). Classical board only; domain-trained N2N quality not executed;
+    no invented deep-SOTA scores.}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.8pt}
   \begin{tabular}{@{}lrrrrrr@{}}
@@ -34,8 +40,8 @@ Artifacts:
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth,height=0.38\textheight,keepaspectratio]{figures/fig_signal_heal_transfer.png}
-  \caption{Transfer classical-board summary (holdout-refit $R_{\mathrm{blend}}$; grouped bars for Table~\ref{tab:transfer-main}).
-    Not a deep-SOTA claim; see Table~\ref{tab:transfer-sota-status}.}
+  \caption{Transfer classical-board summary (holdout-refit prolonged $R$; grouped bars for Table~\ref{tab:transfer-main}).
+    Not a deep-SOTA claim; domain-trained N2N quality not run; see Table~\ref{tab:transfer-sota-status}.}
   \label{fig:signal-heal-transfer-main}
 \end{figure*}
 
@@ -50,7 +56,8 @@ Artifacts:
     \toprule
     Item & Status \\
     \midrule
-    Cycle-GAN (ECG) & \emph{not executed} (no weights under $R_{\mathrm{blend}}$) \\
+    Domain-trained N2N quality & \emph{not executed} (zero-shot WT N2N latency only) \\
+    Cycle-GAN (ECG) & \emph{not executed} (no weights under this residual) \\
     BeatDiff & \emph{not executed} \\
     Paderborn KAt deep & \emph{not executed} (registration / multi-GB) \\
     Full PTB-XL corpus & deferred (\texttt{records500} \texttt{*\_hr} subset, $n{=}256$) \\
@@ -62,10 +69,13 @@ Artifacts:
 \end{table}
 
 \paragraph{Takeaways.}
-Under $R_{\mathrm{blend}}$, Ours leads every classical-board column in Table~\ref{tab:transfer-main}.
+Under prolonged $R$, Ours leads every classical-board column in Table~\ref{tab:transfer-main},
+including Dual Cosine on every domain.
 On CWRU/MFPT, DualCosine and fades trail no-bake; Ours clears both by a large margin ($0.96$/$0.94$ vs no-bake $0.85$/$0.87$).
 On MIT-BIH and PTB-XL, endpoint-pin is a strong classical ECG row, but Ours still leads ($0.956$/$0.934$).
 Synthetic CNC shows the largest classical collapse (no-bake $0.45$) with Ours near $0.992$; synth PMU stays near-ceiling for both no-bake and Ours.
+We do \emph{not} claim a Noise2Noise quality comparison on these transfer boards
+(only zero-shot timing appears in Table~\ref{tab:transfer-latency}).
 Primary claim remains cycle-local \emph{wavetable} seam restoration; transfer is a protocol stress test, not diagnosis SOTA.
 
 \input{subsections/results_transfer_latency}
@@ -80,4 +90,5 @@ and vibrato spectrograms support informal A/B inspection.
 The planned formal listening protocol is
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/signal_heal_transfer/LISTENING_PROTOCOL_MAIN.md}{LISTENING\_PROTOCOL\_MAIN.md}.
 \textbf{Formal MOS / MUSHRA scores were not collected in this work.}
-Until a formal study runs, perceptual claims remain qualitative and secondary to $R_{\mathrm{blend}}$.
+Until a formal study runs, perceptual claims remain qualitative and secondary to residual scores
+($R_{\mathrm{blend}}$ on wavetable boards; prolonged $R$ on this transfer pilot).

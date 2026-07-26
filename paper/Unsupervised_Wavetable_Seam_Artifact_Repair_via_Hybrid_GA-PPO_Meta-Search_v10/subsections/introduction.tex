@@ -60,7 +60,9 @@ As a cross-domain stress test (not a diagnosis claim), we reuse the same wrap pr
 \textbf{CWRU} and \textbf{MFPT} bearing vibration (one shaft revolution as a period);
 \textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz ECG subset (one heartbeat as a period);
 plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downloads are walled.
-On each board we train/search the hybrid bake cell under $R_{\mathrm{blend}}{+}J$ and compare against classical baselines.
+On each board we train/search the hybrid bake cell under prolonged residual $R$
+(historical transfer freeze; not the v10.1 $R_{\mathrm{blend}}$ lock)
+and compare against classical baselines; domain-trained Noise2Noise quality was not run.
 
 This paper contributes a meta-search protocol for this periodic seam problem.
 An outer RL+GA(+PBT) loop proposes bake-cell graphs and continuous bake parameters.

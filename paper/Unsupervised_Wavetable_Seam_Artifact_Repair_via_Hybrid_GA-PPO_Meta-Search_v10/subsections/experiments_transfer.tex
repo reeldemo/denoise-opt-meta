@@ -12,9 +12,12 @@ still help on short periodic signals from other fields---not as domain diagnosis
 \paragraph{Shared transfer recipe.}
 For each domain we cut fixed-length periods ($L{=}256$), build an ideal sibling (smooth / template / cubic path)
 and a cracked engine (same content with an open-wrap cliff, sometimes with a deliberately worse interpolant),
-then run the same $R_{\mathrm{blend}}{+}J$ objective and \texttt{hybrid\_lstm} outer loop used on wavetables
+then run the same prolonged residual $R$ FitCell objective and \texttt{hybrid\_lstm} outer loop used in the
+historical wavetable search freezes
 ($150$--$250$ outer iterations per dataset, \texttt{fit\_steps}${}={}40$).
+(This transfer pilot predates the v10.1 $R_{\mathrm{blend}}{+}J$ lock; do not read Table~\ref{tab:transfer-main} as $R_{\mathrm{blend}}$.)
 Classical baselines (no-bake, DualCosine, FIR, endpoint pin, \ldots) share that board.
+Domain-trained Noise2Noise quality was not executed here.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 

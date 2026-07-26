@@ -20,11 +20,18 @@ Favorite wrap-jump barely moves toward zero on that subset.
 We claim tiled residual repair toward $r^{\star}$, not endpoint closure.
 
 \paragraph{Noise2Noise is a close peer, not a free win.}
-On the sine{+}cliff holdout, corrupt$\to$corrupt N2N matches the meta favorite within $\approx 10^{-3}$.
-Sibling-supervised N2N and the LSTM ceiling sit slightly above.
-That is expected for oracle-label training on the same generator.
-It does not erase the hybrid search story: DenoiseOpt finds compact bake graphs without engine$\to$ideal supervision at search time, and the hard-cliff DualCosine collapse contrast remains.
-Win conditions (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/transfer_failures.json}{transfer results}): favorite beats DualCosine on sine cliffs and most AKWF / Rust tiles.
+Under the v10.1 $R_{\mathrm{blend}}$ four-board (Table~\ref{tab:n2n-vs-ours}), corrupt$\to$corrupt N2N
+leads the sine{+}cliff holdout ($0.975$ vs Ours $0.970$) and Factory+FX / AKWF,
+while Ours wins $13/20$ multi-family means; Dual Cosine sits far below both on every board
+(holdout Dual Cosine ${\approx}0.541$).
+On the older prolonged-$R$ cliff and multi-family matrices, N2N again matches or slightly exceeds
+the meta favorite, with Dual Cosine collapsing on hard wrap jumps.
+That is expected for a strong unsupervised neural baseline on the same generator.
+It does not erase the hybrid search story: DenoiseOpt finds compact bake graphs without
+engine$\to$ideal supervision at search time, and the Dual Cosine collapse contrast remains.
+Win conditions: favorite beats Dual Cosine on sine cliffs and most AKWF / Rust tiles
+(\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/transfer_failures.json}{transfer results});
+vs Noise2Noise the story is mixed (Table~\ref{tab:n2n-vs-ours}) rather than a Dual-Cosine-only win.
 No-bake and FIR lead on exported factory geometry (domain shift, reported openly).
 On true ReelSynth exports the searched favorite trails no-bake and FIR.
 We report that gap; we do not claim universal factory superiority.
@@ -55,9 +62,9 @@ The matched $5$k outer-loop comparison (Table~\ref{tab:meta-approaches}, Figures
 Ours wins the absolute-$R$ gate ($R\approx 0.99146$) with Aging evolution close behind ($R\approx 0.99079$).
 Cont.\ CMA-ES is the wall-time leader ($\approx 2.3$\,h) at lower champion $R$.
 Figure~\ref{fig:meta-heal-samples} shows the wrap-seam heal qualitatively on holdout geometry.
-The multi-family matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws, and ahead of no-bake / FIR on absolute $R$ on that same generator.
+The multi-family matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws, slightly ahead of corrupt$\to$corrupt N2N on mean prolonged $R$, and ahead of no-bake / FIR on absolute $R$ on that same generator.
 Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
-On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake / FIR.
+On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake / FIR; Noise2Noise was not scored on that Rust export board.
 That transfer gap matches the narrow Python training geometry.
 
 \paragraph{Evidence beyond static tiles.}
