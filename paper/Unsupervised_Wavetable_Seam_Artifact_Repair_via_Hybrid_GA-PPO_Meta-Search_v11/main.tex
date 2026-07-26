@@ -1,6 +1,11 @@
 %% DenoiseOpt paper -- arXiv-style double-column preprint
 %% Template: article[twocolumn] + local arxiv-twocolumn.sty
 %% Bibliography policy: OA-only (every \\bibitem has a downloadable OA PDF).
+%%
+%% PDF output name: pdflatex does not take the filename from \title.
+%% Build with -jobname matching the paper slug, e.g.:
+%%   pdflatex -jobname=Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11 main.tex
+%% or:  .\build.ps1   /   latexmk
 \documentclass[10pt,twocolumn,letterpaper]{article}
 
 \usepackage{arxiv-twocolumn}

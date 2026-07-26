@@ -8,10 +8,22 @@ arXiv-style double-column preprint for the DenoiseOpt residual-scored hybrid RL+
 
 ## Build
 
-```bash
-pdflatex main.tex
-pdflatex main.tex
+Source file stays `main.tex`. The PDF basename is set by the compiler `-jobname` (not by `\title`).
+
+```powershell
+.\build.ps1
 ```
+
+or:
+
+```bash
+JOB=Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11
+pdflatex -jobname=$JOB main.tex
+pdflatex -jobname=$JOB main.tex
+```
+
+or `latexmk` (see `.latexmkrc`). Output:
+`Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11.pdf`.
 
 ## Figures
 
