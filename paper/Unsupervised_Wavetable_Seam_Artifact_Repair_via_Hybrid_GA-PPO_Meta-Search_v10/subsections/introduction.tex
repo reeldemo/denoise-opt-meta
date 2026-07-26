@@ -51,9 +51,16 @@ Under the locked v10.1 $R_{\mathrm{blend}}$ protocol:
 Contribution in one line: compact searchable bake cells that remain robust when classical fades fail, and that need no paired clean targets at search time.
 Older whole-curve scores near $R{\approx}0.991$ are historical context only; they must not dominate the mental model of the locked protocol.
 
+\paragraph{Transfer datasets.}
+As a cross-domain stress test (not a diagnosis claim), we reuse the same wrap protocol on six boards
+(Section~\ref{sec:transfer-protocol}):
+\textbf{CWRU} and \textbf{MFPT} bearing vibration (one shaft revolution as a period);
+\textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz ECG subset (one heartbeat as a period);
+plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downloads are walled.
+Domain-trained Noise2Noise quality was not run there.
+
 \paragraph{Scope.}
 Cycle-local wavetable seam repair for DSP / synthesis venues.
-Cross-domain wrap transfer (bearings, ECG, synthetic CNC/PMU) is a protocol stress test against classical fades, not a diagnosis claim (Section~\ref{sec:transfer-main}).
 Caveats and exclusions live in Section~\ref{sec:limitations}.
 
 \subsection{Contributions}
