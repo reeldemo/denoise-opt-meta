@@ -29,8 +29,7 @@ The search campaign draws fresh i.i.d.\ batches from this generator and does not
 There is no supervised clean/noisy training split of studio audio.
 
 \paragraph{Multi-family diversity ($\ge 20$ waveforms).}
-Beyond the single sine{+}cliff holdout, Phase~3a scores methods on \textbf{20} generative draws: ten family variants (\texttt{sine\_cliff}, \texttt{harmonic\_fft}, \texttt{am\_fm}, \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, \texttt{extreme\_overlay}, \texttt{open\_wrap\_bias}, \texttt{soft\_noise}, \texttt{wide\_seam}) $\times$ two seeds (\texttt{20260719} and \texttt{20260720}), batch 64 each.
-Figure~\ref{fig:dataset-families} counts cycles per family ($128$ each).
+Beyond the single sine{+}cliff holdout, Phase~3a scores methods on \textbf{20} generative draws: ten family variants (\texttt{sine\_cliff}, \texttt{harmonic\_fft}, \texttt{am\_fm}, \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, \texttt{extreme\_overlay}, \texttt{open\_wrap\_bias}, \texttt{soft\_noise}, \texttt{wide\_seam}) $\times$ two seeds (\texttt{20260719} and \texttt{20260720}), batch 64 each ($128$ cycles per family; $1{,}280$ total).
 These Python generative variants stress harmonic / AM--FM / nonlinear / overlay / open-wrap behavior of \texttt{make\_batch} and remain the primary SOTA matrix.
 Separately, \texttt{export\_sound\_bench\_tiles} exports \textbf{20} Rust \texttt{sound\_bench} engine/ideal pairs (10 families $\times$ 2 seeds, $L{=}256$, byte-aligned with \texttt{generate\_sound} / \texttt{generate\_sound\_ideal}) scored under the same residual geometry as a secondary transfer block (Table~\ref{tab:rust-bench}).
 Every method sees the same tensors per waveform.
@@ -38,13 +37,6 @@ Every method sees the same tensors per waveform.
 The search objective is maximize $R$ toward the ideal sibling (best $R{=}1$).
 DualCosine is one classical comparator and a PPO centering constant.
 It is not the reward target.
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\columnwidth]{figures/fig_dataset_family_counts.png}
-  \caption{Multi-family SOTA board: $128$ cycles per family ($2$ seeds $\times$ batch $64$).}
-  \label{fig:dataset-families}
-\end{figure}
 
 \paragraph{Dataset statistics.}
 Table~\ref{tab:dataset-stats} and Figures~\ref{fig:dataset-size}--\ref{fig:dataset-transfer-sizes} inventory every evaluation board used in this paper.
