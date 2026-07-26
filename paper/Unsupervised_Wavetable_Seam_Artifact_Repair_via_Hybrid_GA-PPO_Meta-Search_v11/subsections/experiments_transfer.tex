@@ -17,7 +17,7 @@ historical wavetable search freezes
 ($150$--$250$ outer iterations per dataset, \texttt{fit\_steps}${}={}40$).
 (This transfer pilot predates the v10.1 $R_{\mathrm{blend}}{+}J$ lock; do not read Table~\ref{tab:transfer-main} as $R_{\mathrm{blend}}$.)
 Classical baselines (no-bake, DualCosine, FIR, endpoint pin, \ldots) share that board.
-Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps) is scored on the same six boards
+Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps) is scored on the same seven boards
 and reported beside classical rows in Table~\ref{tab:transfer-main}.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
@@ -35,6 +35,12 @@ Artifacts:
     (fixed 25\,Hz shaft rate in our windows).
     Same cubic-ideal / linear+cliff-engine construction as CWRU.
     Real data; $n{=}256$ periods.
+  \item[Paderborn KAt (K001).]
+    Paderborn Bearing Data Center healthy bearing K001 vibration
+    (Lessmeier et al., PHME 2016; CC BY-NC 4.0).
+    Equal-angle shaft revolutions when speed is available; cubic ideal vs linear+cliff engine
+    (same classical board construction as CWRU/MFPT). Real data; $n{=}256$ periods.
+    Deep Paderborn diagnosis models remain unwired (Table~\ref{tab:transfer-sota-status}).
   \item[MIT-BIH ECG.]
     Classic PhysioNet arrhythmia ECG corpus.
     We take normal R--R beat windows as periods: the ideal is a local mean beat template with mild endpoint equalization;

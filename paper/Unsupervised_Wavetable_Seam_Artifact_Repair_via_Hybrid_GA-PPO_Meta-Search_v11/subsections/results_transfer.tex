@@ -5,12 +5,12 @@
 Table~\ref{tab:transfer-main} reports whole-curve prolonged residual $R$ after training/searching DenoiseOpt
 (\texttt{hybrid\_lstm}, $250$ outer iterations, seed \texttt{1902771841}) on each transfer board
 from Section~\ref{sec:transfer-protocol} ($n{=}256$ periods, $L{=}256$).
-Columns are: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, and synthetic CNC/PMU pilots.
+Columns are: CWRU/MFPT/Paderborn bearing revolutions, MIT-BIH/PTB-XL ECG beats, and synthetic CNC/PMU pilots.
 This pilot uses the historical prolonged-$R$ FitCell objective (frozen
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/signal_heal_transfer/results_table.json}{results\_table.json});
 it is \emph{not} a v10.1 $R_{\mathrm{blend}}$ retag.
 Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps, train seed \texttt{424242}, holdout seed \texttt{20260719})
-is scored on the same six boards and appears as a row in Table~\ref{tab:transfer-main}
+is scored on the same seven boards and appears as a row in Table~\ref{tab:transfer-main}
 (debug $R_{\mathrm{blend}}$ lives in the artifact JSON).
 Deep transfer baselines remain out of scope here (Table~\ref{tab:transfer-sota-status}).
 Artifacts:
@@ -20,20 +20,20 @@ Artifacts:
   \centering
   \caption{Wrap-heal transfer under prolonged residual $R$ (higher better; historical whole-curve score).
     DenoiseOpt trains/searches \texttt{hybrid\_lstm} for $250$ iterations per domain (seed \texttt{1902771841}).
-    Boards: CWRU/MFPT bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
+    Boards: CWRU/MFPT/Paderborn K001 bearing revolutions, MIT-BIH/PTB-XL ECG beats, synthetic CNC/PMU pilots
     ($n{=}256$ periods each). Domain-trained N2N: corrupt$\to$corrupt holdout $R$ ($4000$ steps, seed \texttt{424242}).}
   \label{tab:transfer-main}
-  \setlength{\tabcolsep}{2.8pt}
-  \begin{tabular}{@{}lrrrrrr@{}}
+  \setlength{\tabcolsep}{2.2pt}
+  \begin{tabular}{@{}lrrrrrrr@{}}
     \toprule
-    Method & CWRU & MFPT & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
+    Method & CWRU & MFPT & Paderborn & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
     \midrule
-    Ours (\texttt{hybrid\_lstm}) & 0.9623 & 0.9411 & 0.9565 & 0.9379 & 0.9918 & 0.9915 \\
-    Domain N2N & 0.8686 & 0.8817 & 0.6530 & 0.5702 & 0.4833 & 0.9789 \\
-    no-bake & 0.8451 & 0.8657 & 0.7495 & 0.7617 & 0.4499 & 0.9356 \\
-    endpoint-pin & 0.5054 & 0.5446 & 0.8650 & 0.8696 & 0.4096 & 0.9442 \\
-    \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.7662 & 0.7604 & 0.5344 & 0.9119 \\
-    DualCosine & 0.4608 & 0.4830 & 0.4137 & 0.5118 & 0.4943 & 0.8272 \\
+    Ours (\texttt{hybrid\_lstm}) & 0.9623 & 0.9411 & 0.9270 & 0.9565 & 0.9379 & 0.9918 & 0.9915 \\
+    Domain N2N & 0.8686 & 0.8817 & 0.8387 & 0.6530 & 0.5702 & 0.4833 & 0.9789 \\
+    no-bake & 0.8451 & 0.8657 & 0.8376 & 0.7495 & 0.7617 & 0.4499 & 0.9356 \\
+    endpoint-pin & 0.5054 & 0.5446 & 0.5670 & 0.8650 & 0.8696 & 0.4096 & 0.9442 \\
+    \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.5601 & 0.7662 & 0.7604 & 0.5344 & 0.9119 \\
+    DualCosine & 0.4608 & 0.4830 & 0.4710 & 0.4137 & 0.5118 & 0.4943 & 0.8272 \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -56,14 +56,12 @@ Artifacts:
     \toprule
     Scope & Note \\
     \midrule
-    Domain-trained Noise2Noise & Scored on seven boards incl.\ Paderborn K001
-      (holdout prolonged $R$; six-board Table~\ref{tab:transfer-main}; Paderborn N2N $R{=}0.8387$;
-      expanded PTB-XL N2N $R{=}0.5702$) \\
+    Domain-trained Noise2Noise & Scored on all seven Table~\ref{tab:transfer-main} boards
+      (holdout prolonged $R$; expanded PTB-XL N2N $R{=}0.5702$) \\
     Cycle-GAN (ECG) & OOD wrap-$R$ scored (MIT-BIH $R{=}0.0700$; PTB-XL $R{=}0.1480$);
-      clinical restore $\neq$ wrap-$R$ \\
+      clinical restore $\neq$ wrap-$R$; not a Table~\ref{tab:transfer-main} row \\
     BeatDiff & Not run (no usable diffusion checkpoint) \\
-    Paderborn KAt deep models & Deep unwired; classical board + full Ours ($R{=}0.9270$, $250$ iters)
-      + domain N2N available \\
+    Paderborn KAt deep models & Deep unwired; classical + Ours + domain N2N are in Table~\ref{tab:transfer-main} \\
     Expanded PTB-XL & records500 lead-I expanded ($\sim$2k\,$+$\,\texttt{\_hr} records; board $n{=}256$;
       Ours $R{=}0.9379$; multi-lead still out of scope) \\
     Real KIT CNC / IEEE PMU & Synthetic pilots only (download walls) \\
@@ -76,15 +74,15 @@ Artifacts:
 \paragraph{Takeaways.}
 Under prolonged $R$, Ours leads every classical-board column in Table~\ref{tab:transfer-main},
 including Dual Cosine and domain-trained Noise2Noise on every domain.
-Domain N2N beats Dual Cosine everywhere and sits near no-bake on CWRU/MFPT, but trails Ours by a wide margin
+Domain N2N beats Dual Cosine everywhere and sits near no-bake on CWRU/MFPT/Paderborn, but trails Ours by a wide margin
 on ECG and synth CNC ($R{\approx}0.56$--$0.65$ and $0.48$ vs Ours ${>}0.93$).
 On MIT-BIH and PTB-XL, endpoint-pin remains a strong classical ECG row above domain N2N; Ours still leads both.
 Synthetic CNC shows the largest classical collapse with Ours near $0.992$; domain N2N only recovers to $0.4833$.
 Synth PMU is the strongest domain-N2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
-On the Paderborn K001 classical wrap board, full-protocol Ours ($250$ iters) reaches $R{=}0.9270$
-(vs domain N2N $0.8387$; smoke $20$-iter run was $0.8932$ and is not used as the protocol number).
+Paderborn K001 (Table~\ref{tab:transfer-main}) shows Ours $R{=}0.9270$ vs domain N2N $0.8387$ and DualCosine $0.4710$
+(smoke $20$-iter run was $0.8932$ and is not used as the protocol number).
 An Operational Cycle-GAN checkpoint loads and scores under wrap-$R$, but the OOD probe collapses
-($R{\approx}0.07$--$0.15$)---clinical ECG restore is not the wrap residual objective.
+($R{\approx}0.07$--$0.15$; Table~\ref{tab:transfer-sota-status})---clinical ECG restore is not the wrap residual objective.
 Latency timings in Appendix~\ref{app:supplement} remain wavetable-checkpoint zero-shot;
 primary claim remains cycle-local wavetable seam restoration.
 
