@@ -53,16 +53,19 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    Looping a wavetable with mismatched endpoints produces a click at every period.
+    Looping a wavetable with mismatched endpoints produces a click locked to every period.
     We repair that wrap seam without paired clean recordings.
-    \textbf{DenoiseOpt} searches small seam-repair operators (classical fades plus tiny residual
-    networks) with a hybrid genetic-algorithm and reinforcement-learning loop.
-    Candidates are ranked by a blended residual score that rewards seam fidelity to a no-cliff
-    ideal sibling and mid-cycle identity to the cracked engine.
-    Under the locked protocol, corrupt-to-corrupt Noise2Noise is the neural gate and Dual Cosine is
-    the classical fade baseline.
-    A $1{,}200$-iteration hybrid run reaches about $0.970$ on the holdout blend score but does not
-    beat frozen Noise2Noise (about $0.975$); Dual Cosine sits near $0.541$.
+    The edit is local and can be scored by seam fidelity to a no-cliff ideal sibling plus
+    mid-cycle identity to the cracked engine, so a learned bake is a reasonable alternative to
+    hand-tuning one fade.
+    Typical fixes are classical raised-cosine fades, virtual-analog seam operators, and
+    unsupervised domain denoisers such as corrupt-to-corrupt Noise2Noise; transfer boards further
+    probe cross-domain travel.
+    Because no single method fits every engine family, \textbf{DenoiseOpt} searches over repair
+    policies (classical fades plus tiny residual cells) with a hybrid genetic-algorithm and PPO
+    meta-loop, ranking candidates by $R_{\mathrm{blend}}$.
+    A $1{,}200$-iteration hybrid champion reaches about $0.9697$ on holdout $R_{\mathrm{blend}}$
+    but does not beat frozen Noise2Noise (about $0.9750$); Dual Cosine sits near $0.541$.
     On twenty multi-family boards, Ours edges Noise2Noise on mean score and both crush Dual Cosine.
     On hard wrap cliffs, classical fades collapse while searched cells hold.
     The contribution is compact searchable bake cells that stay robust when classical fades fail
