@@ -72,7 +72,11 @@ $R_{\mathrm{body}}$ compares $y$ to the cracked engine $x$ on the complementary 
 The primary score is
 \begin{equation}
 \label{eq:R-blend}
-R_{\mathrm{blend}}=\alpha R_{\mathrm{seam}}(r^{\star},y)+(1-\alpha)R_{\mathrm{body}}(x,y),\qquad \alpha{=}0.7,
+\begin{aligned}
+R_{\mathrm{blend}}
+&=\alpha R_{\mathrm{seam}}(r^{\star},y)+(1-\alpha)R_{\mathrm{body}}(x,y),\\
+\alpha&=0.7.
+\end{aligned}
 \end{equation}
 with each component in the same clamp form
 $\mathrm{clamp}(1-\mathrm{rms}/\mathrm{rms}_{\mathrm{ref}},0,1)$.
@@ -82,8 +86,12 @@ Whole-curve prolonged $R$ remains a debug key only.
 Candidates maximize latency-aware
 \begin{equation}
 \label{eq:outer-obj}
-J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm},\qquad
-\mathrm{latency\_norm}=\frac{\log(1+t_{\mathrm{ms}})}{\log(1+50)},\qquad \lambda{=}0.02.
+\begin{aligned}
+J&=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm},\\
+\mathrm{latency\_norm}
+&=\frac{\log(1+t_{\mathrm{ms}})}{\log(1+50)},
+\quad \lambda=0.02.
+\end{aligned}
 \end{equation}
 FitCell minimizes $1-R_{\mathrm{blend}}$; selection and champion updates use $J$.
 A champion must also strictly beat the frozen corrupt$\to$corrupt Noise2Noise holdout $R_{\mathrm{blend}}$ (primary baseline).

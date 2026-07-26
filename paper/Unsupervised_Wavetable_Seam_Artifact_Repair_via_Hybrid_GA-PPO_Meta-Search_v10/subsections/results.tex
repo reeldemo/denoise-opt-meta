@@ -5,7 +5,7 @@
 \label{sec:v10-freeze}
 Under the blended residual and latency objective, does hybrid GA--PPO beat the frozen Noise2Noise gate?
 A $1{,}200$-iteration \texttt{hybrid\_lstm} search (seed \texttt{1902771841}, ${\approx}1.65$\,h wall) selects on
-$J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ ($\lambda{=}0.02$).
+$J$~\eqref{eq:outer-obj} ($\lambda{=}0.02$).
 Champion search scores: $R_{\mathrm{blend}}{\approx}0.9695$, $J{\approx}0.9603$, $t{\approx}5.08$\,ms
 (\texttt{tf\_split}+MoE cell; no LSTM/xLSTM in the champ graph).
 Frozen corrupt$\to$corrupt Noise2Noise holdout gate is $R_{\mathrm{blend}}{\approx}0.9750$.

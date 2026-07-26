@@ -57,7 +57,7 @@ Hybrid GA--PPO Meta-Search}
     Paired studio-clean recordings are not required.
     Candidates maximize the blended residual
     $R_{\mathrm{blend}}=\alpha R_{\mathrm{seam}}+(1-\alpha)R_{\mathrm{body}}$ ($\alpha{=}0.7$)
-    under latency-aware $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ ($\lambda{=}0.02$),
+    under latency-aware $J$ ($\lambda{=}0.02$; Methods),
     scored against a procedural ideal sibling $r^{\star}=G(\mathrm{seed},\mathrm{cliff{=}off})$
     while preserving mid-cycle identity vs the cracked engine $x=G(\mathrm{seed},\mathrm{cliff{=}on})$.
     The primary neural baseline is same-generator corrupt$\to$corrupt Noise2Noise

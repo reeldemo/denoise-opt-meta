@@ -3,7 +3,8 @@
 
 \paragraph{Locked evaluation protocol.}
 Evaluation follows \texttt{EVAL\_PROTOCOL.md} in this paper folder (v10.1).
-Primary metric: $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Search objective: $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ ($\lambda{=}0.02$).
+Primary metric: $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
+Search objective: $J$ as in~\eqref{eq:outer-obj} ($\lambda{=}0.02$).
 Champ gate: strictly beat frozen Noise2Noise corrupt$\to$corrupt holdout $R_{\mathrm{blend}}$.
 Secondary: SNR, SDR, wrap-jump, seam-local edge RMSE; debug keys include pure $R_{\mathrm{seam}}$ and whole-curve $R$.
 Holdout seed \texttt{20260719}. Search seed \texttt{1902771841}. N2N train seed \texttt{424242}.

@@ -47,9 +47,8 @@ Compact waveform cells draw on Wave-U-Net / Conv-TasNet / dual-path and attentio
 \paragraph{Noise2Noise baseline and blended score.}
 The primary neural comparator is a corrupt$\to$corrupt Noise2Noise seam CNN (\texttt{SeamN2N}, ${\approx}53.5$k parameters) trained on the same generator family~\cite{lehtinen2018,kashyap2021n2n}.
 DualCosine stays a classical appendix row and a PPO advantage baseline---not the gate.
-Search and champion selection maximize
-$J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ with $\lambda{=}0.02$,
-where
+Search and champion selection maximize latency-aware $J$~\eqref{eq:outer-obj}
+($\lambda{=}0.02$), where
 $R_{\mathrm{blend}}=\alpha R_{\mathrm{seam}}(\mathrm{ideal},\mathrm{out})+(1-\alpha)R_{\mathrm{body}}(\mathrm{eng},\mathrm{out})$
 ($\alpha{=}0.7$) balances discontinuity-local fidelity against mid-cycle identity
 (Section~\ref{sec:residual-score}).
