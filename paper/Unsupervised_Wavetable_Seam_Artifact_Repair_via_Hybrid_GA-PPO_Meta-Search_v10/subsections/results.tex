@@ -10,7 +10,7 @@ Champion search scores: $R_{\mathrm{blend}}{\approx}0.9695$, $J{\approx}0.9603$,
 (\texttt{tf\_split}+MoE cell; no LSTM/xLSTM in the champ graph).
 Frozen corrupt$\to$corrupt Noise2Noise holdout gate is $R_{\mathrm{blend}}{\approx}0.9750$.
 The search champ does \emph{not} clear that gate ($\texttt{champ\_beats\_n2n}{=}\mathrm{false}$).
-Artifacts: \texttt{meta\_approach\_compare\_v10/hybrid\_lstm/}.
+Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/meta_approach_compare_v10.json}{v10 search data}.
 
 \subsection{Noise2Noise vs Ours on four boards}
 \label{sec:n2n-vs-ours-boards}
@@ -69,7 +69,7 @@ Selection rule: maximize $R$, then minimize latency inside the band.
 \subsection{Top-5 architectures}
 \label{sec:top5-arch}
 Table~\ref{tab:top5} ranks five distinct fitted bake graphs from the CUDA inference bench
-(\texttt{inference\_bench.json}, batch 64), preferring residual $R$ first and latency on ties,
+(\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/inference_bench.json}{inference data}, batch 64), preferring residual $R$ first and latency on ties,
 and skipping near-duplicate copies of the same topology signature.
 
 \begin{table}[t]
@@ -130,7 +130,7 @@ $\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{s
 \label{sec:sota-main}
 
 Does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades) and fixed MLP/CNN baselines across twenty generative families?
-Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}), with canonical-holdout SNR/SDR/wrap-jump for the same method set from \texttt{sota\_matrix.json}.
+Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}), with canonical-holdout SNR/SDR/wrap-jump for the same method set from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/sota_matrix.json}{SOTA matrix}.
 Figures~\ref{fig:sota-heatmap}--\ref{fig:sota-method-bars} plot the same ranking.
 PESQ/STOI/MUSHRA are omitted for non-speech cycles (Limitations).
 Primary reading is absolute $R$ rank vs classical rows (no-bake $0.965$, poly $0.966$, \texttt{seam\_fir3} $0.955$, DualCosine $0.814$).
@@ -191,7 +191,7 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
 \label{sec:cliff-strata}
 
 Does high no-bake $R$ hide DualCosine failure on large wrap jumps?
-Table~\ref{tab:cliff-strata} stratifies a $4{,}096$-tile holdout draw (seed \texttt{20260719}) by engine wrap-jump percentiles (p75$\approx 1.387$, p90$\approx 1.832$; frozen in \texttt{cliff\_strata.json}).
+Table~\ref{tab:cliff-strata} stratifies a $4{,}096$-tile holdout draw (seed \texttt{20260719}) by engine wrap-jump percentiles (p75$\approx 1.387$, p90$\approx 1.832$; frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/cliff_strata.json}{cliff-strata data}).
 No-bake $R_{\mathrm{blend}}$ can stay high on mild cliffs because residual mass remains small relative to ideal RMS under the unit clamp of~\eqref{eq:R-blend}.
 DualCosine collapses on hard cliffs ($0.819$ $\to$ $0.657$), while the meta favorite holds ($R\approx 0.9915$).
 Favorite wrap-jump on the top-10\% subset stays $\approx 1.83$ (vs no-bake $2.09$).
@@ -225,7 +225,7 @@ Click energy remains an optional diagnostic.
 
 \begin{table}[t]
   \centering
-  \caption{Required seam-local secondary on top-10\% wrap-jump tiles ($n{=}410$): edge RMSE (lower better). Frozen in \texttt{cliff\_strata.json}.}
+  \caption{Required seam-local secondary on top-10\% wrap-jump tiles ($n{=}410$): edge RMSE (lower better). Frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/cliff_strata.json}{cliff-strata data}.}
   \label{tab:cliff-edge-rmse}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lr@{}}
@@ -300,9 +300,9 @@ LibriSpeech/MUSDB are not used.
 \label{sec:poly-jump}
 
 Does a cheap classical poly fitter close the residual, and does endpoint pinning show the wrap-jump vs $R$ tradeoff?
-A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R\approx 0.972$ ($\approx$ no-bake) with wrap-jump essentially unchanged (\texttt{poly\_baseline.json}).
+A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R\approx 0.972$ ($\approx$ no-bake) with wrap-jump essentially unchanged (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/poly_baseline.json}{polynomial results}).
 SSM seq models are deferred; the LSTM remains the supervised seq ceiling.
-An endpoint-pin control (\texttt{jump\_control.json}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$; hard $0.822$).
+An endpoint-pin control (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/jump_control.json}{pinning results}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$; hard $0.822$).
 Methods that zero wrap-jump are not the same objective as prolonged $R$; we do not claim wrap-jump SOTA for the favorite.
 
 \subsection{Classical virtual-analog seam repairs}
@@ -323,8 +323,8 @@ It does not insert a BLEP-style residual.
 It trades wrap energy for a wide end-fade distortion that prolonged $R$ penalizes on hard cliffs.
 
 \paragraph{Scores.}
-Table~\ref{tab:va-seam-blep} reports batch means from \texttt{va\_seam\_blep.json} (seed \texttt{20260719}, batch 64).
-Implementation: \texttt{reelsynth/scripts/baselines/va\_seam\_blep.py} (PolyBLEP matches \texttt{osc::va::poly\_blep}; BLIT/BLEP uses a raised-cosine step residual; BLAMP applies a polyBLAMP lobe to the wrap slope jump).
+Table~\ref{tab:va-seam-blep} reports batch means from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/va_seam_blep.json}{VA results} (seed \texttt{20260719}, batch 64).
+Implementation is released in the \href{https://github.com/reeldemo/reelsynth}{ReelSynth repository} (PolyBLEP matches \texttt{osc::va::poly\_blep}; BLIT/BLEP uses a raised-cosine step residual; BLAMP applies a polyBLAMP lobe to the wrap slope jump).
 PolyBLEP reaches mean $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine) but trails no-bake / \texttt{seam\_fir3} / the meta favorite.
 BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping mean $R$ to $0.868$ and collapsing on hard cliffs ($R\approx 0.712$).
 BLAMP is near-no-bake on this value-cliff geometry (mean $R\approx 0.972$).
@@ -360,14 +360,14 @@ None matches the favorite on prolonged $R$.
     DualCosine & 0.8249 & 18.0 & 17.8 & 0.292 & 0.506 & 0.6574 & 0.814 \\
     \bottomrule
   \end{tabular}\\[0.3em]
-  {\footnotesize Latency (canonical, CUDA): PolyBLEP $\approx 1.43$\,ms/batch; DualCosine $\approx 1.06$; BLIT/BLEP $\approx 123$; BLAMP $\approx 54$. Frozen in \texttt{va\_seam\_blep.json}.}
+  {\footnotesize Latency (canonical, CUDA): PolyBLEP $\approx 1.43$\,ms/batch; DualCosine $\approx 1.06$; BLIT/BLEP $\approx 123$; BLAMP $\approx 54$. Frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/va_seam_blep.json}{VA results}.}
 \end{table*}
 
 \subsection{When search helps vs classical methods}
 \label{sec:transfer}
 
 When does hybrid search win vs the classical non-AI board (no-bake / FIR / DualCosine) and supervised nets?
-Per-cycle $\Delta R$ on export, AKWF, Rust \texttt{sound\_bench}, and sine{+}cliff holdout (\texttt{transfer\_failures.json}):
+Per-cycle $\Delta R$ on export, AKWF, Rust \texttt{sound\_bench}, and sine{+}cliff holdout (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/transfer_failures.json}{transfer results}):
 favorite win-rate vs DualCosine is high on sine cliffs ($1.00$) and AKWF ($0.88$), and moderate on export ($0.64$) / Rust ($0.75$);
 win-rate vs no-bake is high only on sine cliffs ($0.92$) and collapses on export ($0.24$) / Rust ($0.20$).
 Search value is therefore highest on hard cliffs, on OA tracks where DualCosine collapses, and when compact bake graphs are needed without engine$\to$ideal labels at search time.
@@ -379,7 +379,7 @@ No-bake/FIR win on mild seams and OOD factory geometry (honest domain shift, rep
 How do search branch-best freezes compare to short isolated GA/PPO budgets, and what compute was used?
 Table~\ref{tab:ablation} reports two views. Search \emph{branch-best freezes} at the $5$k gate come from one hybrid history. Isolated short-budget re-runs (GA-only, PPO-only, GA{+}PPO, full) use 150 iters on the same search seed with plateau adapt off.
 Short-budget champions sit below the multi-hour freeze by construction. They are labeled as such.
-Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM is from an \texttt{nvidia-smi} poll during a short full-branch search replay (30 iters) plus a champion forward{+}FitCell replay. The campaign \texttt{history.jsonl} did not log memory.
+Table~\ref{tab:compute} summarizes the search-campaign compute budget. Peak VRAM is from an \texttt{nvidia-smi} poll during a short full-branch search replay (30 iters) plus a champion forward{+}FitCell replay. The campaign log did not record memory.
 
 \begin{table}[t]
   \centering
@@ -433,7 +433,7 @@ Neither Ours nor Aging evolution selected an LSTM block in the champion graph.
 Arch REINFORCE / Aging evolution champions used xLSTM, and TPE used LSTM (vocab presence, not a full-stack claim).
 Figure~\ref{fig:meta-approach-bars} is the at-a-glance bar comparison; Figure~\ref{fig:meta-approach-compare} shows champion-$R$ learning curves (x-axis capped at $5{,}000$).
 Figure~\ref{fig:meta-heal-samples} shows a holdout wrap-seam heal (seed \texttt{20260719}) for the refit Ours champion against no-bake, DualCosine, and ideal sibling $r^{\star}$.
-Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
+Source: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/meta_approach_compare.json}{matched-budget results} (search seed \texttt{1902771841}).
 
 \input{figures/meta_approaches_table}
 

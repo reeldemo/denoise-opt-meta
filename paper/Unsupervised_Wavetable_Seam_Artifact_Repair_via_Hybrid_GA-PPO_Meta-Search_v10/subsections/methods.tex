@@ -49,7 +49,7 @@ These symbols follow a different convention from Noise2Noise clean/noisy pairs.
 
 \textbf{Ideal sibling.}
 Let $G(\mathrm{seed},\mathrm{cliff})$ denote the procedural generator used by the CUDA FitCell batch maker
-(\texttt{make\_batch} in \texttt{overnight\_gpu\_rl\_arch.py}): one draw of frequency, phase, and mid-cycle content, with an optional open-wrap cliff of width $W$ at both ends.
+(\texttt{make\_batch} in the CUDA search runner): one draw of frequency, phase, and mid-cycle content, with an optional open-wrap cliff of width $W$ at both ends.
 For any seed,
 \begin{equation}
 \label{eq:G-siblings}
@@ -186,7 +186,7 @@ The matched $5$k meta-approach comparison (Section~\ref{sec:meta-compare}) is th
 \label{sec:meta-compare}
 
 Beyond the hybrid outer loop, we compare five additional outer-loop families under a matched $5{,}000$-evaluation budget, shared search seed \texttt{1902771841}, and the same FitCell / prolonged-$R$ protocol (LSTM and xLSTM included in the searchable bake vocabulary).
-Table and figure legends use the short display names below (artifact folders keep stable code keys; see \texttt{NOMENCLATURE.md}):
+Table and figure legends use the short display names below (artifact folders keep stable code keys; see the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/NOMENCLATURE.md}{nomenclature}):
 \begin{itemize}
   \item \textbf{Random NAS} (\texttt{random}): independent uniform draws over bake graphs and fit hyperparameters (control).
   \item \textbf{Cont.\ CMA-ES} (\texttt{cmaes}): diagonal covariance-matrix adaptation over a continuous encoding of depth, width, cell kind, block logits, and fit hyperparameters~\cite{hansen2016cmaes}.
@@ -208,12 +208,12 @@ Bake-width caps (tiny residual cells) keep $C_{\mathrm{fwd}}$ far below full-ban
 
 Table~\ref{tab:hyperparams} lists the CUDA search defaults used for the $5$k-gate freeze reported in Results.
 Under the near-ceiling residual regime (Section~\ref{sec:reward-shaping}), these outer-loop and fit hyperparameters are co-tuned with architecture; PBT and plateau adaptation continue to mutate several of them online.
-Companion listings: Algorithms~\ref{alg:residual}--\ref{alg:hybrid} (Appendix~\ref{app:algorithms}) and \texttt{docs/PSEUDOCODE.md}.
+Companion listings: Algorithms~\ref{alg:residual}--\ref{alg:hybrid} (Appendix~\ref{app:algorithms}) and the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/docs/PSEUDOCODE.md}{pseudocode notes}.
 
 \begin{table}[t]
   \centering
   \small
-  \caption{Hybrid search hyperparameters (RTX~3090 DenoiseOpt CUDA search runner / \texttt{denoise\_meta\_evo.py} defaults). Co-tuned with reward shaping under near-ceiling $R$ (Section~\ref{sec:reward-shaping}).}
+  \caption{Hybrid search hyperparameters (RTX~3090 DenoiseOpt CUDA search-runner defaults). Co-tuned with reward shaping under near-ceiling $R$ (Section~\ref{sec:reward-shaping}).}
   \label{tab:hyperparams}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lp{0.48\columnwidth}@{}}
