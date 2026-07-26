@@ -1,6 +1,6 @@
 # Appendix stub — sci/eng wrap-heal transfer pilot
 
-**Date:** 20260725T123816Z
+**Date:** 20260726T074617Z
 
 Pilot transfer of DenoiseOpt’s winning outer loop (**hybrid GA–PPO / `hybrid_lstm`**) to public cycle-local wrap tasks (CWRU, MIT-BIH, PTB-XL; MFPT if available; synthetic CNC/PMU proxies when OA downloads are blocked). Period length $L=256$; score = prolonged residual $R$ vs ideal sibling.
 
@@ -11,6 +11,7 @@ Pilot transfer of DenoiseOpt’s winning outer loop (**hybrid GA–PPO / `hybrid
 | Method | $R$ | Label |
 |--------|-----|-------|
 | `ours_hybrid_lstm` | 0.9623 | Ours (hybrid GA–PPO / hybrid_lstm outer loop) |
+| `n2n_domain_trained` | 0.8686 | n2n_domain_trained (nested R) |
 | `cot_linear_periodize` | 0.8451 | bearings classical bad-COT control (passthrough of linear resample) |
 | `no_bake` | 0.8451 | classical / passthrough |
 | `endpoint_pin_mean` | 0.5054 | classical endpoint pin |
@@ -29,24 +30,28 @@ Pilot transfer of DenoiseOpt’s winning outer loop (**hybrid GA–PPO / `hybrid
 | `spline_join` | 0.8082 | domain classical spline/FIR join (not Cycle-GAN / deep SOTA) |
 | `seam_fir3` | 0.7662 | classical seam FIR3 |
 | `no_bake` | 0.7495 | classical / passthrough |
+| `n2n_domain_trained` | 0.6530 | n2n_domain_trained (nested R) |
 | `linear_fade` | 0.4671 | classical linear fade |
 | `dual_cosine` | 0.4137 | classical DualCosine fade |
 | `soft_periodize_hann` | 0.3743 | classical Hann soft-periodize |
 | `beat_average_sbmm_lite` | 0.3541 | ECG classical SBMM-lite beat average (not BeatDiff/Cycle-GAN) |
+| `cycle_gan_ecg` | 0.0700 | cycle_gan_ecg (nested R) |
 
 ### ptbxl_ecg
 
 | Method | $R$ | Label |
 |--------|-----|-------|
-| `ours_hybrid_lstm` | 0.9336 | Ours (hybrid GA–PPO / hybrid_lstm outer loop) |
-| `endpoint_pin_mean` | 0.8569 | classical endpoint pin |
-| `no_bake` | 0.7503 | classical / passthrough |
-| `seam_fir3` | 0.7462 | classical seam FIR3 |
-| `spline_join` | 0.7442 | domain classical spline/FIR join (not Cycle-GAN / deep SOTA) |
-| `linear_fade` | 0.5108 | classical linear fade |
-| `dual_cosine` | 0.4769 | classical DualCosine fade |
-| `soft_periodize_hann` | 0.4530 | classical Hann soft-periodize |
-| `beat_average_sbmm_lite` | 0.3260 | ECG classical SBMM-lite beat average (not BeatDiff/Cycle-GAN) |
+| `ours_hybrid_lstm` | 0.9379 | Ours (hybrid GA–PPO / hybrid_lstm outer loop) |
+| `endpoint_pin_mean` | 0.8696 | classical endpoint pin |
+| `no_bake` | 0.7617 | classical / passthrough |
+| `spline_join` | 0.7608 | domain classical spline/FIR join (not Cycle-GAN / deep SOTA) |
+| `seam_fir3` | 0.7604 | classical seam FIR3 |
+| `n2n_domain_trained` | 0.5702 | n2n_domain_trained (nested R) |
+| `linear_fade` | 0.5456 | classical linear fade |
+| `dual_cosine` | 0.5118 | classical DualCosine fade |
+| `soft_periodize_hann` | 0.4877 | classical Hann soft-periodize |
+| `beat_average_sbmm_lite` | 0.3633 | ECG classical SBMM-lite beat average (not BeatDiff/Cycle-GAN) |
+| `cycle_gan_ecg` | 0.1480 | cycle_gan_ecg (nested R) |
 
 ### synth_cnc_g01
 
@@ -57,6 +62,7 @@ Pilot transfer of DenoiseOpt’s winning outer loop (**hybrid GA–PPO / `hybrid
 | `linear_fade` | 0.5691 | classical linear fade |
 | `seam_fir3` | 0.5344 | classical seam FIR3 |
 | `dual_cosine` | 0.4943 | classical DualCosine fade |
+| `n2n_domain_trained` | 0.4833 | n2n_domain_trained (nested R) |
 | `soft_periodize_hann` | 0.4734 | classical Hann soft-periodize |
 | `no_bake` | 0.4499 | classical / passthrough |
 | `endpoint_pin_mean` | 0.4096 | classical endpoint pin |
@@ -66,6 +72,7 @@ Pilot transfer of DenoiseOpt’s winning outer loop (**hybrid GA–PPO / `hybrid
 | Method | $R$ | Label |
 |--------|-----|-------|
 | `ours_hybrid_lstm` | 0.9915 | Ours (hybrid GA–PPO / hybrid_lstm outer loop) |
+| `n2n_domain_trained` | 0.9789 | n2n_domain_trained (nested R) |
 | `endpoint_pin_mean` | 0.9442 | classical endpoint pin |
 | `no_bake` | 0.9356 | classical / passthrough |
 | `seam_fir3` | 0.9119 | classical seam FIR3 |
@@ -79,6 +86,7 @@ Pilot transfer of DenoiseOpt’s winning outer loop (**hybrid GA–PPO / `hybrid
 | Method | $R$ | Label |
 |--------|-----|-------|
 | `ours_hybrid_lstm` | 0.9411 | Ours (hybrid GA–PPO / hybrid_lstm outer loop) |
+| `n2n_domain_trained` | 0.8817 | n2n_domain_trained (nested R) |
 | `cot_linear_periodize` | 0.8657 | bearings classical bad-COT control (passthrough of linear resample) |
 | `no_bake` | 0.8657 | classical / passthrough |
 | `seam_fir3` | 0.5726 | classical seam FIR3 |
@@ -87,6 +95,21 @@ Pilot transfer of DenoiseOpt’s winning outer loop (**hybrid GA–PPO / `hybrid
 | `cot_cubic_then_dualcosine` | 0.4830 | bearings classical: DualCosine on cracked (not published deep COT) |
 | `dual_cosine` | 0.4830 | classical DualCosine fade |
 | `soft_periodize_hann` | 0.4405 | classical Hann soft-periodize |
+
+### paderborn_kat
+
+| Method | $R$ | Label |
+|--------|-----|-------|
+| `ours_hybrid_lstm` | 0.9270 | Ours (hybrid GA–PPO / hybrid_lstm outer loop) |
+| `n2n_domain_trained` | 0.8387 | n2n_domain_trained (nested R) |
+| `cot_linear_periodize` | 0.8376 | bearings classical bad-COT control (passthrough of linear resample) |
+| `no_bake` | 0.8376 | classical / passthrough |
+| `endpoint_pin_mean` | 0.5670 | classical endpoint pin |
+| `seam_fir3` | 0.5601 | classical seam FIR3 |
+| `linear_fade` | 0.4856 | classical linear fade |
+| `cot_cubic_then_dualcosine` | 0.4710 | bearings classical: DualCosine on cracked (not published deep COT) |
+| `dual_cosine` | 0.4710 | classical DualCosine fade |
+| `soft_periodize_hann` | 0.4286 | classical Hann soft-periodize |
 
 ## Caveats
 

@@ -28,12 +28,12 @@ Artifacts:
     \toprule
     Method & CWRU & MFPT & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
     \midrule
-    Ours (\texttt{hybrid\_lstm}) & 0.9623 & 0.9411 & 0.9565 & 0.9336 & 0.9918 & 0.9915 \\
-    Domain N2N & 0.8686 & 0.8817 & 0.6530 & 0.5605 & 0.4833 & 0.9789 \\
-    no-bake & 0.8451 & 0.8657 & 0.7495 & 0.7503 & 0.4499 & 0.9356 \\
-    endpoint-pin & 0.5054 & 0.5446 & 0.8650 & 0.8569 & 0.4096 & 0.9442 \\
-    \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.7662 & 0.7462 & 0.5344 & 0.9119 \\
-    DualCosine & 0.4608 & 0.4830 & 0.4137 & 0.4769 & 0.4943 & 0.8272 \\
+    Ours (\texttt{hybrid\_lstm}) & 0.9623 & 0.9411 & 0.9565 & 0.9379 & 0.9918 & 0.9915 \\
+    Domain N2N & 0.8686 & 0.8817 & 0.6530 & 0.5702 & 0.4833 & 0.9789 \\
+    no-bake & 0.8451 & 0.8657 & 0.7495 & 0.7617 & 0.4499 & 0.9356 \\
+    endpoint-pin & 0.5054 & 0.5446 & 0.8650 & 0.8696 & 0.4096 & 0.9442 \\
+    \texttt{seam\_fir3} & 0.4483 & 0.5726 & 0.7662 & 0.7604 & 0.5344 & 0.9119 \\
+    DualCosine & 0.4608 & 0.4830 & 0.4137 & 0.5118 & 0.4943 & 0.8272 \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -56,12 +56,16 @@ Artifacts:
     \toprule
     Scope & Note \\
     \midrule
-    Domain-trained Noise2Noise & Scored on seven boards incl.\ Paderborn K001 classical wrap
-      (holdout prolonged $R$; six-board Table~\ref{tab:transfer-main}; Paderborn N2N $R{=}0.8387$) \\
-    Cycle-GAN (ECG) & Not run (no adapted weights under $R$) \\
-    BeatDiff & Not run (no diffusion checkpoints) \\
-    Paderborn KAt deep models & Not run ($K001$ extracted; classical board + domain N2N available; deep unwired) \\
-    Full PTB-XL & Subset only ($500$\,Hz lead-I, $n{=}256$) \\
+    Domain-trained Noise2Noise & Scored on seven boards incl.\ Paderborn K001
+      (holdout prolonged $R$; six-board Table~\ref{tab:transfer-main}; Paderborn N2N $R{=}0.8387$;
+      expanded PTB-XL N2N $R{=}0.5702$) \\
+    Cycle-GAN (ECG) & OOD wrap-$R$ scored (MIT-BIH $R{=}0.0700$; PTB-XL $R{=}0.1480$);
+      clinical restore $\neq$ wrap-$R$ \\
+    BeatDiff & Not run (no usable diffusion checkpoint) \\
+    Paderborn KAt deep models & Deep unwired; classical board + full Ours ($R{=}0.9270$, $250$ iters)
+      + domain N2N available \\
+    Expanded PTB-XL & records500 lead-I expanded ($\sim$2k\,$+$\,\texttt{\_hr} records; board $n{=}256$;
+      Ours $R{=}0.9379$; multi-lead still out of scope) \\
     Real KIT CNC / IEEE PMU & Synthetic pilots only (download walls) \\
     Formal MOS / MUSHRA & Not collected \\
     \bottomrule
@@ -77,6 +81,10 @@ on ECG and synth CNC ($R{\approx}0.56$--$0.65$ and $0.48$ vs Ours ${>}0.93$).
 On MIT-BIH and PTB-XL, endpoint-pin remains a strong classical ECG row above domain N2N; Ours still leads both.
 Synthetic CNC shows the largest classical collapse with Ours near $0.992$; domain N2N only recovers to $0.4833$.
 Synth PMU is the strongest domain-N2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
+On the Paderborn K001 classical wrap board, full-protocol Ours ($250$ iters) reaches $R{=}0.9270$
+(vs domain N2N $0.8387$; smoke $20$-iter run was $0.8932$ and is not used as the protocol number).
+An Operational Cycle-GAN checkpoint loads and scores under wrap-$R$, but the OOD probe collapses
+($R{\approx}0.07$--$0.15$)---clinical ECG restore is not the wrap residual objective.
 Latency timings in Appendix~\ref{app:supplement} remain wavetable-checkpoint zero-shot;
 primary claim remains cycle-local wavetable seam restoration.
 
