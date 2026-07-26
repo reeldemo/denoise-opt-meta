@@ -38,7 +38,8 @@ SepFormer and audio spectrogram transformers push attention-heavy audio stacks f
 These lines are \textbf{used} as design priors for tiny searchable cells (shallow U-Net / dilated / dual-path / attention blocks under a strict per-trial bake budget).
 They are not frozen full-scale separators inside every meta trial.
 
-\subsection{NAS and RL controllers}
+\subsection{Architecture search and reinforcement-learning controllers}
+\label{sec:related-nas}
 Elsken et al.\ taxonomize NAS by search space, strategy, and evaluation cost~\cite{elsken2019}.
 Their performance-estimation axis includes lower-fidelity proxies such as shorter training, data subsets, and lower-resolution images~\cite{elsken2019}.
 Zoph and Le couple RL controllers to architecture search~\cite{zoph2017nas}.
@@ -47,7 +48,7 @@ Progressive and platform-aware NAS add staged evaluation and latency-aware rewar
 We \textbf{use} this family as the ancestor of RL proposing architecture edits (add/remove/mutate ops, toggle residual-primary, mutate MLP/FIR), scored with prolonged residual.
 PPO supplies the clipped-surrogate policy update when the hybrid search loop logs PPO mutation branches~\cite{schulman2017}.
 
-\subsection{Evolutionary NAS and population schedules}
+\subsection{Evolutionary architecture search and population schedules}
 Large-scale and regularized / aging evolution showed that evolutionary NAS can discover competitive image classifiers when population turnover is carefully regularized~\cite{real2017large,real2019}.
 Population Based Training jointly adapts weights and hyperparameters in an asynchronous population~\cite{jaderberg2017}.
 Practical Bayesian optimization~\cite{snoek2012} and CMA-ES tutorials~\cite{hansen2016cmaes} inform local Bayesian and continuous evolutionary prior families.
@@ -58,7 +59,7 @@ Khadka and Tumer's evolution-guided policy gradient (ERL) interleaves an evoluti
 We \textbf{use} ERL as the spirit of interleaving GA population steps with PPO updates at tiny population sizes.
 We do not claim a full ERL robotics stack.
 
-\subsection{Mixture-of-experts soft gating}
+\subsection{Soft expert gating}
 Sparsely gated MoE layers increase capacity via conditional computation~\cite{shazeer2017}.
 We \textbf{use} MoE as motivation for soft gates over heterogeneous seam blocks (e.g., U-Net vs dilated vs attention cells) under residual scoring, at bake-scale widths.
 

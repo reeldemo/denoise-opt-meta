@@ -62,7 +62,7 @@ For an arbitrary cracked period from this family, the sibling is obtained by rep
 That is exactly the pair returned by \texttt{make\_batch}.
 This sibling relationship makes unsupervised ranking possible without paired studio recordings~\cite{lehtinen2018,kashyap2021n2n}.
 
-\subsection{Blended residual $R_{\mathrm{blend}}$ and latency objective $J$}
+\subsection{Blended residual score and latency-aware objective}
 \label{sec:residual-score}
 
 \textbf{Primary metric.}
@@ -106,7 +106,7 @@ We do not claim convergence guarantees for the hybrid outer loop, nor a general 
 Search may discover \texttt{n2n\_unet} cells at the same scale; TinyUNet1D \texttt{unet} is a different, smaller block~\cite{lehtinen2018,kashyap2021n2n}.
 \end{remark}
 
-\subsection{Bake operator $\Theta$ and classical baselines}
+\subsection{Seam bake operator and classical baselines}
 \label{sec:bake}
 
 A \textbf{bake cell} $\Theta(\cdot;h)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual cells (MLP/FIR/U-Net-lite/attention-lite/LSTM-lite) and optional MoE soft gates over experts (Appendix~\ref{app:algorithms}, Algorithms~\ref{alg:dualcosine}--\ref{alg:moe}).
@@ -156,7 +156,7 @@ Pseudocode for GA, PPO, PBT, and the full hybrid rotation is in Algorithms~\ref{
 
 \input{subsections/arch_diagram}
 
-\subsection{Search space and FitCell}
+\subsection{Search space and inner fit}
 \label{sec:search-space}
 
 Each genome encodes: ordered op list (fade, polish, FIR, pin, residual write), depth, residual cell type (none, MLP, FIR, U-Net-lite, attn-lite, LSTM-lite), optional MoE expert count $K\in\{2,3,4\}$, and continuous $\theta$ in the CUDA runner box bounds.

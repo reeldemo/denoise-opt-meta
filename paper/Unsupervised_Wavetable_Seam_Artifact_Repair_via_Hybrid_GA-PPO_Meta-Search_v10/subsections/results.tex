@@ -1,7 +1,7 @@
 \section{Results}
 \label{sec:results}
 
-\subsection{Hybrid search under $R_{\mathrm{blend}}$ and $J$}
+\subsection{Hybrid search under the blended score}
 \label{sec:v10-freeze}
 Under the blended residual and latency objective, does hybrid GA--PPO beat the frozen Noise2Noise gate?
 A $1{,}200$-iteration \texttt{hybrid\_lstm} search (seed \texttt{1902771841}, ${\approx}1.65$\,h wall) selects on
@@ -53,7 +53,7 @@ On the fitted DenoiseOpt $100{,}000$-cycle bench, denoise score $D$ is lowest fo
 Lit-combo champion family stress (prolonged residual) similarly ranks \texttt{open\_wrap\_bias} ($R\approx 0.83$) and \texttt{extreme\_overlay} / \texttt{combo} ($R\approx 0.88$--$0.89$) below \texttt{harmonic\_fft} ($R\approx 0.95$).
 Hard sounds recur.
 
-\paragraph{Historical $5$k whole-curve freeze.}
+\paragraph{Earlier whole-curve search freeze.}
 At the reported $5$k-gate search freeze ($\approx 6{,}922$ clean iterations, $\approx 7.9$\,h on RTX~3090) the champion residual was $R\approx 0.99093$ with DualCosine $\approx 0.81658$ on the CUDA search runner ($\Delta R\approx{+}0.174$).
 That freeze used whole-curve prolonged $R$ (superseded by $R_{\mathrm{blend}}$ for v10.1 selection).
 Monitoring plots below are regenerated from that freeze.
@@ -187,7 +187,7 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
   \label{fig:sota-method-bars}
 \end{figure}
 
-\subsection{Hard cliffs hide DualCosine failure}
+\subsection{Hard cliffs expose classical fade failure}
 \label{sec:cliff-strata}
 
 Does high no-bake $R$ hide DualCosine failure on large wrap jumps?
@@ -296,7 +296,7 @@ LibriSpeech/MUSDB are not used.
   \end{tabular}
 \end{table}
 
-\subsection{Polynomial baseline and endpoint-pin control}
+\subsection{Polynomial baseline and endpoint pinning}
 \label{sec:poly-jump}
 
 Does a cheap classical poly fitter close the residual, and does endpoint pinning show the wrap-jump vs $R$ tradeoff?
@@ -305,7 +305,7 @@ SSM seq models are deferred; the LSTM remains the supervised seq ceiling.
 An endpoint-pin control (\texttt{jump\_control.json}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$; hard $0.822$).
 Methods that zero wrap-jump are not the same objective as prolonged $R$; we do not claim wrap-jump SOTA for the favorite.
 
-\subsection{Classical VA seam repairs (BLIT/BLEP, PolyBLEP, BLAMP)}
+\subsection{Classical virtual-analog seam repairs}
 \label{sec:va-seam-baselines}
 
 Do the cited VA antialias tools~\cite{stilson1996,nam2009polyblep,esqueda2016blamp} beat DualCosine on prolonged $R$ when applied as cycle-local seam residuals?
@@ -458,7 +458,7 @@ Source: \texttt{meta\_approach\_compare.json} (search seed \texttt{1902771841}).
   \label{fig:meta-heal-samples}
 \end{figure}
 
-\subsection{Rust \texttt{sound\_bench} transfer}
+\subsection{Transfer to Rust engine tiles}
 \label{sec:rust-bench}
 
 Does the Python-trained favorite transfer to Rust \texttt{sound\_bench} tiles against the classical non-AI board?

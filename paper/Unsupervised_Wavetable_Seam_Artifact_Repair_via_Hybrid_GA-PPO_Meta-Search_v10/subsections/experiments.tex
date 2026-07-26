@@ -109,7 +109,7 @@ Figure~\ref{fig:intro-sine} is the documented sine-wrap edge case: a high-$|wrap
   \label{fig:dataset-distributions}
 \end{figure}
 
-\paragraph{Hybrid search campaign ($5$k clean gate).}
+\paragraph{Hybrid search campaign (5,000-iteration freeze).}
 A CUDA search tagged \texttt{PPO+GA+PBT+NAS+depth+MoE} runs with a large declared iteration budget (order $10^{5}$).
 At the reported freeze (run \texttt{gpu-rl-arch-20260719T083019Z}, $\approx 6{,}922$ clean iters / $\approx 7.9$\,h on RTX~3090) the champion residual is $R\approx 0.99093$ against DualCosine baseline $\approx 0.81658$ ($\Delta R\approx{+}0.174$).
 Branch-best residuals at the freeze: GA $\approx 0.99016$, PBT $\approx 0.99012$, PPO $\approx 0.98924$, combo $\approx 0.98854$, NAS $\approx 0.98677$.
