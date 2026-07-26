@@ -48,23 +48,20 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    Looping a single-period wavetable with mismatched endpoints produces an audible click that
-    repeats every cycle.
-    We repair that wrap seam without paired studio-clean recordings.
-    \textbf{DenoiseOpt} is a hybrid search (genetic algorithms plus reinforcement learning) that
-    proposes and fits small seam-repair operators---classical fades and filters mixed with tiny
-    residual networks---and ranks them against a same-seed ``no-cliff'' reference while keeping
-    mid-cycle identity with the cracked engine.
-    On the primary blended score, corrupt-to-corrupt Noise2Noise is the neural gate and Dual Cosine
-    is the classical fade baseline.
-    A $1{,}200$-iteration hybrid run reaches blended residual ${\approx}0.970$ but does not beat the
-    frozen Noise2Noise holdout (${\approx}0.975$); Dual Cosine on that same holdout sits near $0.541$.
-    Across twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$;
-    $13/20$ wins) and both crush Dual Cosine (${\approx}0.51$ mean).
-    On balanced Factory+FX and AKWF corpora, Noise2Noise leads Ours, and both still beat Dual Cosine.
-    The same wrap recipe transfers to bearing, ECG, and synthetic CNC/PMU cycle boards against
-    classical fades (domain-trained Noise2Noise quality was not run there).
-    Scope is cycle-local wavetable seam repair, not speech enhancement or deep diagnosis SOTA.
+    Looping a wavetable with mismatched endpoints produces a click at every period.
+    We repair that wrap seam without paired clean recordings.
+    \textbf{DenoiseOpt} searches small seam-repair operators (classical fades plus tiny residual
+    networks) with a hybrid genetic-algorithm and reinforcement-learning loop.
+    Candidates are ranked by a blended residual score that rewards seam fidelity to a no-cliff
+    ideal sibling and mid-cycle identity to the cracked engine.
+    Under the locked protocol, corrupt-to-corrupt Noise2Noise is the neural gate and Dual Cosine is
+    the classical fade baseline.
+    A $1{,}200$-iteration hybrid run reaches about $0.970$ on the holdout blend score but does not
+    beat frozen Noise2Noise (about $0.975$); Dual Cosine sits near $0.541$.
+    On twenty multi-family boards, Ours edges Noise2Noise on mean score and both crush Dual Cosine.
+    On hard wrap cliffs, classical fades collapse while searched cells hold.
+    The contribution is compact searchable bake cells that stay robust when classical fades fail
+    and that need no paired clean targets at search time.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; seam restoration; unsupervised learning; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}
@@ -75,12 +72,8 @@ Hybrid GA--PPO Meta-Search}
 \input{subsections/methods}
 \input{subsections/experiments}
 \input{subsections/results}
-% W2 eval+listening (T4)
 \input{subsections/results_eval_listening}
-% Sci/eng wrap transfer (main Results; classical board + honest not-executed rows)
 \input{subsections/results_transfer}
-% W4 HP sensitivity (T5/T6)
-\input{subsections/results_hp_sensitivity}
 \input{subsections/discussion}
 \input{subsections/tooling}
 \input{subsections/ethics}
@@ -90,6 +83,7 @@ Hybrid GA--PPO Meta-Search}
 
 \appendix
 \input{subsections/appendix_algorithms}
+\input{subsections/appendix_supplement}
 \input{subsections/appendix_transfer_pilot}
 
 \FloatBarrier

@@ -71,24 +71,20 @@ Artifacts:
 \paragraph{Takeaways.}
 Under prolonged $R$, Ours leads every classical-board column in Table~\ref{tab:transfer-main},
 including Dual Cosine on every domain.
-On CWRU/MFPT, DualCosine and fades trail no-bake; Ours clears both by a large margin ($0.96$/$0.94$ vs no-bake $0.85$/$0.87$).
-On MIT-BIH and PTB-XL, endpoint-pin is a strong classical ECG row, but Ours still leads ($0.956$/$0.934$).
-Synthetic CNC shows the largest classical collapse (no-bake $0.45$) with Ours near $0.992$; synth PMU stays near-ceiling for both no-bake and Ours.
-We do \emph{not} claim a Noise2Noise quality comparison on these transfer boards
-(only zero-shot timing appears in Table~\ref{tab:transfer-latency}).
-Primary claim remains cycle-local \emph{wavetable} seam restoration; transfer is a protocol stress test, not diagnosis SOTA.
-
-\input{subsections/results_transfer_latency}
+On CWRU/MFPT, Dual Cosine and fades trail no-bake; Ours clears both by a large margin.
+On MIT-BIH and PTB-XL, endpoint-pin is a strong classical ECG row, but Ours still leads.
+Synthetic CNC shows the largest classical collapse with Ours near $0.992$.
+Domain-trained Noise2Noise quality was not run on these boards
+(zero-shot timing in Appendix~\ref{app:supplement}).
+Primary claim remains cycle-local wavetable seam restoration.
 
 \subsection{Listening protocol (no formal listening study)}
 \label{sec:listening-protocol}
 
-Audible and spectrogram evidence sits in the main Results path (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}), not only an appendix note.
-Downloadable WAVs (no-bake / DualCosine / Ours, A4, $3$\,s;
-\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/meta_approach_compare/hear_samples}{hear-sample WAVs})
-and vibrato spectrograms support informal A/B inspection.
-The planned formal listening protocol is
-\href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/signal_heal_transfer/LISTENING_PROTOCOL_MAIN.md}{LISTENING\_PROTOCOL\_MAIN.md}.
-\textbf{Formal MOS / MUSHRA scores were not collected in this work.}
-Until a formal study runs, perceptual claims remain qualitative and secondary to residual scores
-($R_{\mathrm{blend}}$ on wavetable boards; prolonged $R$ on this transfer pilot).
+Downloadable WAVs
+(\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/meta_approach_compare/hear_samples}{hear-sample WAVs})
+and vibrato spectrograms support informal A/B inspection
+(Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}).
+Formal MOS / MUSHRA scores were not collected.
+Until a formal study runs, perceptual claims remain qualitative and secondary to residual scores.
+See Section~\ref{sec:limitations}.

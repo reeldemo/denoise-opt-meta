@@ -1,21 +1,44 @@
 \section{Limitations}
 \label{sec:limitations}
 
+We collect honesty notes here rather than repeating them through Results and Discussion.
+
 \begin{itemize}
-  \item $R_{\mathrm{blend}}$ / $J$ use a procedural no-cliff sibling for seams and an engine-identity prior for the mid-cycle body. They do not measure perceptual quality. Formal MOS/MUSHRA panels are out of scope; we ship spectrograms and downloadable WAVs for informal audition only.
-  \item PESQ and STOI are excluded: primary cycles are non-speech wavetable tiles. Speech metrics on sine{+}cliff families would be a domain mismatch. MUSHRA was not run.
-  \item No LibriSpeech / MUSDB. Wavetable-native realism uses ReelSynth Factory+FX exports (${\approx}1{,}280$) and AKWF CC0 single-cycle WAVs (${\approx}1{,}280$). Procedural stand-ins are tertiary smoke only.
-  \item HP sensitivity (paragraph~\ref{para:hp-sensitivity}) is a short one-at-a-time $\pm 50\%$ probe, not a full re-search of Table~\ref{tab:hyperparams} defaults.
-  \item Sci/eng transfer (Section~\ref{sec:transfer-main}) is classical-board only where deep models did not run. Cycle-GAN, BeatDiff, Paderborn deep, real KIT/PMU streams, and formal MOS remain not executed (Table~\ref{tab:transfer-sota-status}).
-  \item Lightweight SSM seq models are deferred; LSTM remains the supervised seq ceiling.
-  \item On exported Factory+FX / Rust tiles the meta favorite can trail no-bake or FIR (domain shift). We do not claim universal factory superiority.
-  \item Search scores Python \texttt{make\_batch} sine{+}cliff draws. The Rust \texttt{sound\_bench} export of 20 family tiles is secondary. The Python multi-family matrix is primary.
-  \item Per-trial architecture width is capped for search throughput. Full Demucs-/diffusion-scale stacks were screened out. The champ gate vs Noise2Noise may not be met at every budget; we report the measured freeze honestly.
-  \item We do not claim wrap-closure or hybrid-search convergence theorems. Endpoint-pin shows wrap-jump can be zeroed while residual falls.
+  \item \textbf{Not a perceptual score.}
+    $R_{\mathrm{blend}}$ and $J$ use a procedural no-cliff sibling for seams and an engine-identity prior for the mid-cycle body.
+    They do not measure listening quality.
+    No formal MOS or MUSHRA was run.
+    Downloadable WAVs and vibrato spectrograms support informal A/B only (Section~\ref{sec:listening-protocol}).
+    PESQ and STOI are excluded: primary cycles are non-speech wavetable tiles.
+  \item \textbf{Locked story vs older whole-curve $R$.}
+    Primary claims use $R_{\mathrm{blend}}$ under the v10.1 lock (Table~\ref{tab:n2n-vs-ours}).
+    Many secondary tables and figures still report historical whole-curve prolonged $R$ (canonical board, cliff strata, matched outer loops, VA board).
+    Those boards are labeled as such; they must not overwrite the holdout gate reading
+    ($R_{\mathrm{blend}}{\approx}0.9697$ for Ours vs $0.9750$ for Noise2Noise).
+  \item \textbf{Where Noise2Noise was not run.}
+    Domain-trained Noise2Noise quality was not executed on sci/eng transfer boards
+    (only optional zero-shot timing in Appendix~\ref{app:supplement}).
+    Rust \texttt{sound\_bench} scores classical rows and the favorite only.
+  \item \textbf{Domain shift on exports.}
+    On Factory+FX / Rust tiles the meta favorite can trail no-bake or FIR while still beating Dual Cosine.
+    We do not claim universal factory superiority.
+  \item \textbf{Search geometry.}
+    Search scores Python generator draws.
+    The Python multi-family matrix is primary; Rust export is secondary.
+    Per-trial width is capped; Demucs-/diffusion-scale stacks were screened out.
+  \item \textbf{No wrap-closure theorems.}
+    Endpoint-pin can zero wrap-jump while residual falls.
+    We claim tiled residual repair toward $r^{\star}$, not endpoint closure or search convergence.
+  \item \textbf{Transfer scope.}
+    Sci/eng wrap transfer is a classical-board pilot, not deep CWRU/ECG SOTA
+    (Table~\ref{tab:transfer-sota-status}).
+  \item \textbf{Hyperparameter probe.}
+    The $\pm 50\%$ one-at-a-time probe (Appendix~\ref{app:supplement}) is not a full re-search of Table~\ref{tab:hyperparams}.
 \end{itemize}
 
 \subsection{Future work}
 \label{sec:outlook}
 
-A follow-up can treat \emph{which sounds fail} as the primary object: stratified residual heatmaps over the ten procedural families, cliff-size conditioning, and family-specialist or mixture-of-experts denoisers selected by the same RL--GA outer loop.
-That paper would cite the present mean-$R$ hybrid protocol as baseline and ask whether beating $R>0.999$ is mainly an architecture problem or a coverage problem over hard families.
+A follow-up can treat which sounds fail as the primary object: stratified residual heatmaps over procedural families, cliff-size conditioning, and family-specialist cells under the same outer loop.
+That paper would cite the present hybrid protocol as baseline and ask whether further gains are mainly architecture or coverage over hard families.
+Formal listening (even a small author-plus-colleague preference note on high-wrap tiles) remains the clearest missing perceptual check.

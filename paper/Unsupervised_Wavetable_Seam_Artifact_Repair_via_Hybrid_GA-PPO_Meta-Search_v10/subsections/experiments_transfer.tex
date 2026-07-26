@@ -6,7 +6,7 @@
 
 The primary claim of this paper is wavetable seam repair.
 As a stress test, we ask whether the \emph{same} cycle-local wrap geometry and DenoiseOpt search
-still help on short periodic signals from other fields---not as domain diagnosis SOTA, but as
+still help on short periodic signals from other fields (not as domain diagnosis SOTA, but as
 ``does a wrap cliff + ideal sibling still make sense?''
 
 \paragraph{Shared transfer recipe.}
@@ -41,7 +41,7 @@ Artifacts:
     Real data; $n{=}256$ periods.
   \item[PTB-XL ECG (subset).]
     Large PhysioNet clinical ECG collection.
-    We use the 500\,Hz \texttt{records500} / \texttt{*\_hr} lead-I beat windows only---a subset pilot
+    We use the 500\,Hz \texttt{records500} / \texttt{*\_hr} lead-I beat windows only (a subset pilot)
     ($n{=}256$ periods from 94 records), not the full PTB-XL corpus.
     Same beat-template ideal / cliffed engine idea as MIT-BIH.
   \item[Synthetic CNC G01.]
@@ -54,9 +54,7 @@ Artifacts:
     $n{=}256$. Not a claim on live grid telemetry.
 \end{description}
 
-\paragraph{What we do not claim.}
-Transfer tables are \emph{classical-board} comparisons under this residual protocol.
-We do \emph{not} claim deep SOTA on bearing diagnosis or clinical ECG enhancement.
-Not executed here: Paderborn KAt deep campaign, Cycle-GAN / BeatDiff under $R_{\mathrm{blend}}$,
-full PTB-XL, real KIT CNC / IEEE PMU streams, and formal MOS/MUSHRA.
+\paragraph{Scope note.}
+Transfer tables are classical-board comparisons under this residual protocol.
+Deep diagnosis SOTA and formal listening are out of scope (Section~\ref{sec:limitations}).
 Results appear in Section~\ref{sec:transfer-main}.

@@ -1,19 +1,10 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-DenoiseOpt casts wavetable wrap discontinuity as cycle-local seam repair under a blended residual
-$R_{\mathrm{blend}}$ and latency-aware objective $J$, with a hybrid GA--PPO(+PBT) outer loop over bake cells
-(including searchable SeamN2N-parity \texttt{n2n\_unet}).
-Corrupt$\to$corrupt Noise2Noise is the primary neural baseline and champ gate
-(frozen holdout $R_{\mathrm{blend}}{\approx}0.975$); Dual Cosine is the classical fade comparator
-(holdout $R_{\mathrm{blend}}{\approx}0.541$).
-A $1{,}200$-iteration hybrid freeze reaches $R_{\mathrm{blend}}{\approx}0.9695$ ($J{\approx}0.960$) but does not clear the N2N gate,
-while clearly beating Dual Cosine.
-On multi-family boards Ours wins $13/20$ mean comparisons vs N2N; N2N leads holdout and Factory+FX/AKWF
-(${\approx}1{,}280$-cycle balanced corpora), and both beat Dual Cosine on those boards.
-Named sci/eng wrap transfer (CWRU, MFPT $n{=}256$, MIT-BIH, PTB-XL 500\,Hz subset, synth CNC/PMU)
-shows Ours leading classical boards---including Dual Cosine---under prolonged $R$, with measured CUDA latency;
-domain-trained N2N quality was not executed there.
-Deep SOTA weights and formal MOS were not run.
-Scope remains wavetable seam restoration for DSP / synthesis venues.
+DenoiseOpt casts wavetable wrap discontinuity as cycle-local seam repair under blended residual $R_{\mathrm{blend}}$ and latency-aware objective $J$.
+A hybrid GA+PPO(+PBT) outer loop searches compact bake cells without paired clean targets at search time.
+Under the locked protocol, Noise2Noise is the neural gate and Dual Cosine is the classical fade baseline.
+The hybrid freeze reaches $R_{\mathrm{blend}}{\approx}0.970$ on holdout but does not clear Noise2Noise (${\approx}0.975$); Dual Cosine sits near $0.541$.
+On multi-family boards Ours edges Noise2Noise on mean score; on hard cliffs classical fades collapse while searched cells hold.
+The contribution is robust searchable seam cells for DSP / synthesis, not speech-enhancement or diagnosis SOTA.
 Code: \url{https://github.com/reeldemo/reelsynth}, \url{https://github.com/reeldemo/denoise-opt-meta}.

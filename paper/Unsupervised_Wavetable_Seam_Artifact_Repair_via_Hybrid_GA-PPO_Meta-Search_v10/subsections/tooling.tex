@@ -1,24 +1,11 @@
 \section{Tooling and AI use}
 \label{sec:tooling}
 
-\paragraph{Literature discovery.}
-Open literature was gathered with the Klaut Research Gateway (local OpenAlex / Crossref / arXiv providers) under queries spanning virtual-analog anti-aliasing, unsupervised restoration, HPO/PBT, RL--GA hybrids for NAS, and audio denoise architectures.
-Source PDFs were downloaded for every bibliography entry (\href{https://github.com/reeldemo/denoise-opt-meta/tree/master/artifacts/literature_oa/pdfs}{literature PDFs}).
-Paywalled-only items were dropped or replaced.
-
-\paragraph{Paper drafting.}
-Section planning and revision passes used Klaut \texttt{research\_paper\_*} tools with local Ollama when available.
-AI drafts were scaffolding only.
-Claims, numbers, and citations were checked against harvest records, PDF analyses, and measured artifacts.
-Final prose was edited for DSP terminology and to cut generic filler.
-
-\paragraph{Where AI was not used.}
-Model fitting, residual scoring, DualCosine baselines, hybrid GPU search, and inference benchmarks are conventional code (Rust / PyTorch) with deterministic logs and JSON artifacts.
+Open literature was gathered with local OpenAlex / Crossref / arXiv providers; every bibliography entry has a downloadable OA PDF
+(\href{https://github.com/reeldemo/denoise-opt-meta/tree/master/artifacts/literature_oa/pdfs}{literature PDFs}).
+Section planning used research-assistant tools as scaffolding only.
+Claims, numbers, and citations were checked against measured JSON artifacts and code.
+Fitting, residual scoring, baselines, and hybrid GPU search are conventional Rust / PyTorch with deterministic logs.
 AI did not invent experimental numbers.
-
-\paragraph{Other tools.}
-Rust/\texttt{cargo} for the procedural bench. PyTorch CUDA for hybrid GA--PPO search. matplotlib for figures. MiKTeX \texttt{pdflatex} for PDF builds. GitHub for versioned papers and artifacts.
 Audible demos:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/meta_approach_compare/hear_samples}{hear-sample WAVs}.
-Vibrato protocol:
-\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/bench_vibrato_spectrogram.py}{\texttt{bench\_vibrato\_spectrogram.py}}.

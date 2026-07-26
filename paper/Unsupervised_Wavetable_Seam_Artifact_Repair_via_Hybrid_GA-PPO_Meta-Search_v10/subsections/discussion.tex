@@ -1,74 +1,26 @@
 \section{Discussion}
 \label{sec:discussion}
 
+\paragraph{Main story under $R_{\mathrm{blend}}$.}
+The locked protocol does not crown the hybrid champion over Noise2Noise on the holdout
+($0.9697$ vs $0.9750$).
+Dual Cosine on that board sits near $0.541$.
+The useful reading is therefore not ``searched bake beats every neural baseline.''
+It is: compact searchable bake cells that crush classical fades, stay competitive with Noise2Noise on multi-family means ($13/20$ wins), and hold on hard cliffs where Dual Cosine collapses
+(Table~\ref{tab:n2n-vs-ours}, Section~\ref{sec:cliff-strata}).
+Older whole-curve numbers near $R{\approx}0.991$ belong in the historical boards only (Limitations).
+
 \paragraph{Which families stay hard.}
-Across the $100{,}000$-cycle procedural bench and lit-combo family stress tests, wrap error is uneven.
-The same generator families dominate the residual budget: \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, and \texttt{extreme\_overlay} show the weakest denoise and residual scores.
-\texttt{harmonic\_fft} and \texttt{am\_fm} are easier.
-\texttt{open\_wrap\_bias} can look strong on wrap-energy proxies yet still lag on prolonged residual.
-Cliff reduction and ideal-matched tiling are related objectives with different rankings.
+Across large procedural benches, wrap error is uneven.
+Families such as \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, and \texttt{extreme\_overlay} dominate the residual budget; \texttt{harmonic\_fft} and \texttt{am\_fm} are easier.
+Mean scores hide that structure.
 
-\paragraph{High unrepaired scores are not a free pass.}
-Canonical no-bake $R\approx 0.97$ looks easy only if $R$ is treated as a perceptual wrap score, or if no-bake is confused with the ideal sibling.
-No-bake is the unrepaired engine scored against $r^{\star}$.
-The ideal withholds the cliff and is never a method output.
-Under~\eqref{eq:R-blend}, small residual RMS relative to ideal RMS yields high $R_{\mathrm{blend}}$ even when $|x_0-x_{L-1}|$ is large.
-That near-ceiling regime is why tiny $\Delta R$ still matters: climbing $0.97\to 0.991$ uses most of the remaining residual budget, while raw score differences stay small enough that reward shaping and outer-loop hyperparameters must be tuned with the architecture (Section~\ref{sec:reward-shaping}).
-Hard-cliff strata make the operative regime explicit.
-DualCosine drops to $R\approx 0.657$ on the top-10\% wrap-jump tiles while the favorite stays near $0.9915$.
-Favorite wrap-jump barely moves toward zero on that subset.
-We claim tiled residual repair toward $r^{\star}$, not endpoint closure.
-
-\paragraph{Noise2Noise is a close peer, not a free win.}
-Under the v10.1 $R_{\mathrm{blend}}$ four-board (Table~\ref{tab:n2n-vs-ours}), corrupt$\to$corrupt N2N
-leads the sine{+}cliff holdout ($0.975$ vs Ours $0.970$) and Factory+FX / AKWF,
-while Ours wins $13/20$ multi-family means; Dual Cosine sits far below both on every board
-(holdout Dual Cosine ${\approx}0.541$).
-On the older prolonged-$R$ cliff and multi-family matrices, N2N again matches or slightly exceeds
-the meta favorite, with Dual Cosine collapsing on hard wrap jumps.
-That is expected for a strong unsupervised neural baseline on the same generator.
-It does not erase the hybrid search story: DenoiseOpt finds compact bake graphs without
-engine$\to$ideal supervision at search time, and the Dual Cosine collapse contrast remains.
-Win conditions: favorite beats Dual Cosine on sine cliffs and most AKWF / Rust tiles
-(\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v10/figures/transfer_failures.json}{transfer results});
-vs Noise2Noise the story is mixed (Table~\ref{tab:n2n-vs-ours}) rather than a Dual-Cosine-only win.
-No-bake and FIR lead on exported factory geometry (domain shift, reported openly).
-On true ReelSynth exports the searched favorite trails no-bake and FIR.
-We report that gap; we do not claim universal factory superiority.
-
-\paragraph{Wrap jump versus seam-edge error.}
-Primary claim remains prolonged $R$. Wrap-jump is diagnostic only.
-Edge RMSE is the locked seam-local secondary: favorite reduces it on hard cliffs even when wrap-jump stays flat.
-Endpoint-pin zeros wrap-jump while hurting $R$, confirming the objectives differ.
-
-\paragraph{What the mean hides.}
-Mean $R$ (and mean DualCosine gaps) compress a structured difficulty map.
-Reporting only the search-campaign mean on synthetic sine cliffs understates how much of the remaining $\sim$1\% sits in a few hard families, and how DualCosine fails when wrap-jump is large.
-Hard-cliff strata and wavetable-native transfer (true exports + AKWF) are first-class empirical claims here.
-The contribution targets DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD), not general speech-enhancement leaderboards.
-
-\paragraph{Search plateaus near the ceiling.}
-Search traces at the $5$k gate show early high champions then long plateaus near $R\approx 0.99$.
-That plateau is expected under near-ceiling $R$: further gains are small in absolute units and sensitive to reward shaping, entropy/clip, mutation rates, and plateau-triggered branch reweighting.
+\paragraph{Search near the ceiling.}
+Under near-ceiling residuals, further gains are small in absolute units and sensitive to reward shaping and branch weights.
 Plateau adaptation (deeper cells, denser MoE graphs, higher GA/PBT weight) is the operational response inside one campaign.
-It does not by itself rebalance family-conditional risk.
-A natural next step is family-conditional and cliff-conditional meta-learning: train or select denoisers per family, or condition the outer loop on measured wrap statistics, and publish per-family residual curves beside the scalar champion.
-
-\paragraph{Branch snapshots and matched outer loops.}
-At the reported $5$k-gate search freeze, GA and PBT lead branch-best residuals, with PPO close behind and NAS trailing on this seed (Table~\ref{tab:ablation}).
-These per-branch readings are snapshots from a single hybrid run, not causally isolated single-branch experiments.
-Isolated short-budget re-runs (150 iterations, same search seed) confirm relative ordering under a fixed compute cap (Table~\ref{tab:ablation}).
-The matched $5$k outer-loop comparison (Table~\ref{tab:meta-approaches}, Figures~\ref{fig:meta-approach-bars}--\ref{fig:meta-approach-compare}) places Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS beside \textbf{Ours (hybrid GA--PPO)} under a shared seed and bake vocabulary that includes searchable LSTM/xLSTM blocks.
-Ours wins the absolute-$R$ gate ($R\approx 0.99146$) with Aging evolution close behind ($R\approx 0.99079$).
-Cont.\ CMA-ES is the wall-time leader ($\approx 2.3$\,h) at lower champion $R$.
-Figure~\ref{fig:meta-heal-samples} shows the wrap-seam heal qualitatively on holdout geometry.
-The multi-family matrix (Table~\ref{tab:sota-main}) shows the meta favorite ahead of DualCosine on $R$, SNR, and SDR across twenty Python generative draws, slightly ahead of corrupt$\to$corrupt N2N on mean prolonged $R$, and ahead of no-bake / FIR on absolute $R$ on that same generator.
-Fixed MLP/CNN-on-$R$ baselines beat DualCosine and trail the searched favorite.
-On Rust \texttt{sound\_bench} tiles (Table~\ref{tab:rust-bench}) the same favorite beats DualCosine (mean $\Delta R={+}0.063$) and trails no-bake / FIR; Noise2Noise was not scored on that Rust export board.
-That transfer gap matches the narrow Python training geometry.
+Matched outer-loop bake-offs and HP probes sit in Appendix~\ref{app:supplement}.
 
 \paragraph{Evidence beyond static tiles.}
-Vibrato spectrograms, downloadable hear WAVs, and a compact real-WT gallery (Sections~\ref{sec:vibrato-eval}--\ref{sec:wt-gallery}) support informal inspection under dynamic pitch and exported wavetables.
-A $500$-iteration one-at-a-time $\pm 50\%$ HP sensitivity probe (paragraph~\ref{para:hp-sensitivity}) measures local sensitivity of Table~\ref{tab:hyperparams} defaults under seed \texttt{1902771841}; it is not a second $5$k re-search.
-Sci/eng wrap transfer is a classical-board pilot (Section~\ref{sec:transfer-main}), not a deep-SOTA CWRU/ECG claim.
-No formal human listening study was run (protocol in Section~\ref{sec:listening-protocol}).
+Vibrato spectrograms and downloadable hear WAVs support informal inspection (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}).
+Sci/eng wrap transfer is a classical-board stress test (Section~\ref{sec:transfer-main}).
+Perceptual and scope limits are collected in Section~\ref{sec:limitations}.
