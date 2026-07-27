@@ -2,7 +2,7 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v13** | 2026-07-27 | Full review response: multi-seed re-search (D1), multi-run statistics, assertive narrative rewrite, math clarity |
+| **v13** | 2026-07-27 | Full review response: multi-seed holdout stats, assertive narrative, math clarity; matched-5k $R_{\mathrm{blend}}$ re-search launched |
 | v12 | 2026-07-27 | SEO wrap-discontinuity title + folder slug; Klaut science+English merge shipped (paper id `…a2139527`) |
 | v11 | 2026-07-27 | Peer-review response: metric lock honesty, modest claims, transfer reframed, learning curves, param fairness |
 | v10 / v10.1 | 2026-07-26 | $R_{\mathrm{blend}}$ lock + N2N gate story |
@@ -16,7 +16,19 @@
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
-## v12 notes (current)
+## v13 notes (current)
+
+### Multi-seed holdout + narrative (27 July 2026)
+- Five holdout seeds (`20260719`--`20260723`): Ours $0.9708\pm0.0014$, N2N $0.9767\pm0.0015$, Dual Cosine $0.542\pm0.038$ (Ours beats N2N on $0/5$ seeds).
+- Multi-family mean-of-means: Ours $0.9337\pm0.0028$ vs N2N $0.9308\pm0.0045$ (mean win frac $0.47$; sign test $p{=}1.0$).
+- Artifacts: `reelsynth/brand/artifacts/holdout_multiseed_v13/`, `figures/multiseed_summary.json`.
+- Assertive abstract/intro/conclusion; expanded $R_{\mathrm{seam}}$/$R_{\mathrm{body}}$ RMS definitions; role-summary table; disclaimers consolidated into Limitations.
+- Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}$ launched into `meta_approach_compare_v13_rblend/` (3 search seeds; hybrid first).
+
+### Scaffold (27 July 2026)
+- Copied v12 → v13 slug; `build.ps1` jobname updated; SDD at `docs/sdd/specs/paper-v13-full-review-response/`.
+
+## v12 notes
 
 ### Klaut Pro review + English polish merge (27 July 2026)
 - Klaut paper id: `unsupervised-wrap-discontinuity-repair-in-waveta-a2139527` (`KLAUT_PAPER_ID.txt`).

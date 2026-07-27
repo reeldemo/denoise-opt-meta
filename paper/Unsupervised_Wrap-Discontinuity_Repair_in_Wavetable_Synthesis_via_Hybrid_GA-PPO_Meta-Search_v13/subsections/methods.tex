@@ -69,21 +69,43 @@ The ideal sibling is a procedural self-supervised scoring twin (cliff withheld),
 \label{sec:residual-score}
 
 \textbf{Primary metric.}
-After tiling length $N$, define unit residual scores on index masks.
-$R_{\mathrm{seam}}$ compares $y$ to $r^{\star}$ on wrap neighborhoods of width $W$ at each period head/tail.
-$R_{\mathrm{body}}$ compares $y$ to the cracked engine $x$ on the complementary mid-cycle body (identity prior: do not morph content away from the engine).
-The primary score is
+After tiling each cycle $N$ times, let $y$ be the repaired output, $r^{\star}$ the ideal sibling, and $x$ the cracked engine.
+Define the wrap-neighborhood mask $\mathcal{S}$ of width $W{=}8$ at each period head/tail and the complementary mid-cycle body mask $\mathcal{B}$.
+Component scores use the unit clamp of relative RMS:
+\begin{equation}
+\label{eq:R-component}
+R(a,b;\mathcal{M})
+=\mathrm{clamp}\!\left(
+  1-\frac{\mathrm{RMS}\bigl((a-b)\odot\mathbf{1}_{\mathcal{M}}\bigr)}
+         {\mathrm{RMS}\bigl(a\odot\mathbf{1}_{\mathcal{M}}\bigr)+\varepsilon},
+  0,1\right).
+\end{equation}
+Then $R_{\mathrm{seam}}=R(r^{\star},y;\mathcal{S})$ (seam fidelity vs the ideal) and
+$R_{\mathrm{body}}=R(x,y;\mathcal{B})$ (mid-cycle identity vs the engine).
+The primary reported score is
 \begin{equation}
 \label{eq:R-blend}
 \begin{aligned}
 R_{\mathrm{blend}}
-&=\alpha R_{\mathrm{seam}}(r^{\star},y)+(1-\alpha)R_{\mathrm{body}}(x,y),\\
+&=\alpha R_{\mathrm{seam}}+(1-\alpha)R_{\mathrm{body}},\\
 \alpha&=0.7.
 \end{aligned}
 \end{equation}
-with each component in the same clamp form
-$\mathrm{clamp}(1-\mathrm{rms}/\mathrm{rms}_{\mathrm{ref}},0,1)$.
-Whole-curve prolonged $R$ remains a debug key only.
+Whole-curve prolonged $R$ remains a debug / superseded key only.
+
+\textbf{Roles of the three quantities.}
+\begin{center}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Quantity & Role & Used for \\
+\midrule
+$R_{\mathrm{blend}}$ & Primary quality metric & Tables, figures, reporting \\
+$J$ & Latency-aware search objective & Champion selection \\
+N2N gate & Frozen neural benchmark & Holdout pass/fail \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \textbf{Search objective.}
 Candidates maximize latency-aware
@@ -101,7 +123,6 @@ A champion must also strictly beat the frozen corrupt$\to$corrupt Noise2Noise ho
 
 \textbf{Every} scored row applies some $\Theta$ to $x$ and is evaluated under~\eqref{eq:R-blend}.
 The ideal sibling is the seam scoring target. Body identity uses the engine.
-We do not claim convergence guarantees for the hybrid outer loop, nor a general wrap-closure theorem for arbitrary repair operators.
 
 \begin{remark}[Noise2Noise primary baseline]
 \label{rem:n2n}

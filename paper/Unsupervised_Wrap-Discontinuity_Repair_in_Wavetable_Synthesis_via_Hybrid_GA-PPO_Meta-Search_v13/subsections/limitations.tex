@@ -18,16 +18,14 @@ We collect honesty notes here rather than repeating them through Results and Dis
     Whole-curve prolonged $R$ near $0.991$ (including the historical freeze $R{\approx}0.99093$ vs Dual Cosine ${\approx}0.81658$)
     is a superseded debug score.
     It is not a current holdout result and must not overwrite the gate reading
-    ($R_{\mathrm{blend}}{\approx}0.9697$ for Ours vs $0.9750$ for Noise2Noise).
-    Boards regenerated under $R_{\mathrm{blend}}$ this cycle include cliff strata, transfer, top-5 inference,
-    Rust sound\_bench, intro panel, isolated ablate-* re-scores, and a cheap frozen-champ 5k re-fit.
-    Still incomplete until full regen (see \texttt{METRIC\_REGEN.md}):
-    Deferred D1 matched $5$k outer-loop \emph{re-search}, branch-best freezes without weights, and HP probe under $R_{\mathrm{blend}}$.
-    Learning-curve bars remain historical prolonged-$R$ trajectories until D1.
-  \item \textbf{Single-run primary freeze.}
-    Table~\ref{tab:n2n-vs-ours} is one locked freeze per board.
-    Multi-seed $\pm$ appears where already collected (cliff tile std; canonical five-seed prolonged snapshot; multi-family waveform $\pm$).
-    We do not invent error bars for single-run boards (DAFx/AES bar).
+    (Ours below Noise2Noise on mean holdout $R_{\mathrm{blend}}$).
+  \item \textbf{Multi-seed protocol.}
+    Holdout tables report mean$\pm$std over five evaluation seeds
+    (\texttt{20260719}--\texttt{20260723}).
+    Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}$ runs across three search seeds
+    (\texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}); see artifacts
+    \texttt{meta\_approach\_compare\_v13\_rblend/}.
+    Sign tests / win-rates on multi-family boards use paired per-family scores.
   \item \textbf{Domain Noise2Noise vs transfer depth.}
     Domain-trained Noise2Noise quality \emph{was} run on the seven wrap-protocol stress-test boards
     (Table~\ref{tab:transfer-main}). It trails Ours on every column under $R_{\mathrm{blend}}$.
@@ -55,5 +53,4 @@ We collect honesty notes here rather than repeating them through Results and Dis
 \label{sec:outlook}
 
 A follow-up can treat which sounds fail as the primary object: stratified residual heatmaps over procedural families, cliff-size conditioning, and family-specialist operators under the same outer loop.
-Full matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}$ (Deferred D1) would close the remaining prolonged-$R$ boards.
 Formal listening (even a small author-plus-colleague preference note on high-wrap tiles) remains the clearest missing perceptual check.

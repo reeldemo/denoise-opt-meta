@@ -20,37 +20,35 @@ Rewrite abstract (AC-3.1), contributions list (AC-3.2), and expand R_blend/J def
 
 **ACs:** AC-3.1, AC-3.2, AC-3.4, AC-4.1, AC-4.2, AC-5.1, AC-5.2.
 
-## T4 — Run multi-seed outer-loop search (D1)
+## T4 — Run multi-seed outer-loop search (D1) [IN PROGRESS]
 
 Execute `bench_meta_approaches_5k.py` with seeds 1902771841, 2026072701, 2026072702 (5k iters each, all 6 approaches).
+Launcher: `reelsynth/scripts/launch_v13_multiseed_search.ps1` → `brand/artifacts/meta_approach_compare_v13_rblend/`.
 
-**ACs:** AC-1.1–AC-1.4.
+**ACs:** AC-1.1–AC-1.4 (partial until all seeds finish).
+**Gate:** GPU compute (~days wall for full 3×6×5k).
 
-**Gate:** GPU compute (~8h/seed).
+## T5 — Run multi-seed holdout evaluation [DONE]
 
-## T5 — Run multi-seed holdout evaluation
-
-Evaluate frozen champions on 5 holdout seeds. Run `bench_sota_matrix.py`, `bench_canonical_eval_dataset.py`, `bench_cliff_strata.py`, `bench_v10_n2n_vs_ours.py` per seed.
+Five holdout seeds evaluated. Summary in `holdout_multiseed_v13/multiseed_summary.json`.
 
 **ACs:** AC-2.1, AC-2.4.
 
-## T6 — Aggregate statistics
+## T6 — Aggregate statistics [DONE]
 
-Write `scripts/aggregate_multiseed_stats.py`. Compute mean/std, win-rate, sign test. Emit `multiseed_summary.json`.
+`scripts/aggregate_multiseed_stats.py` wrote mean/std, win-rate, sign test.
 
-**ACs:** AC-2.3 (sign test p-value computed).
+**ACs:** AC-2.3.
 
-## T7 — Update tables and results narrative
+## T7 — Update tables and results narrative [DONE pending D1 curves]
 
-Replace single-freeze tables with multi-seed mean +/- std. Restructure results section (AC-3.3). Insert win-rate and sign-test results.
+Multi-seed holdout numbers in Results / Intro / Conclusion. Learning-curve figure refresh waits on D1 seed completion.
 
-**ACs:** AC-2.2, AC-2.3, AC-3.3.
+**ACs:** AC-2.2, AC-2.3, AC-3.3 (holdout side).
 
-## T8 — Build, audit, push
+## T8 — Build, audit, push [IN PROGRESS]
 
-Build PDF (AC-6.1). Klaut English audit (AC-6.2). Update REVIEW_RESPONSE.md (AC-6.4). Commit and push both repos (AC-6.3).
-
-**ACs:** AC-6.1–AC-6.4.
+PDF built via `build.ps1`. Commit/push both repos. Klaut English audit optional follow-up.
 
 ## Parallel plan
 

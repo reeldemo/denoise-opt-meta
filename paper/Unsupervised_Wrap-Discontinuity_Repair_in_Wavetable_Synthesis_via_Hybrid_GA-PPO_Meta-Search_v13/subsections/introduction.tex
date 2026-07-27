@@ -71,24 +71,20 @@ Label-free restoration such as Noise2Noise shows that useful reconstructors can 
 On the search side, neural architecture search (NAS), aging evolution, PBT, covariance matrix adaptation evolution strategy (CMA-ES), and evolution-guided policy gradients motivate a hybrid outer loop: GA for diversity, PPO for discrete architecture edits, and PBT-style exploit--mutate on elites~\cite{elsken2019,real2019,jaderberg2017,schulman2017,khadka2018}.
 
 \paragraph{Key findings.}
-Under the locked v10.1 $R_{\mathrm{blend}}$ protocol (primary story: Table~\ref{tab:n2n-vs-ours}):
+Under the locked v10.1 $R_{\mathrm{blend}}$ protocol with multi-seed evaluation (primary story: Table~\ref{tab:n2n-vs-ours}):
 \begin{itemize}
-  \item The hybrid champion does \emph{not} clear the frozen Noise2Noise holdout gate
-    ($R_{\mathrm{blend}}{\approx}0.9697$ vs $0.9750$). Dual Cosine on that holdout sits near $0.541$.
-  \item On twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$, with $13/20$ wins). Both beat Dual Cosine.
+  \item On the primary holdout, the hybrid champion sits just below the frozen Noise2Noise gate on every seed ($0.971{\pm}0.001$ vs $0.977{\pm}0.001$) and well above Dual Cosine ($0.542{\pm}0.038$).
+  \item On twenty multi-family boards, Ours mean-of-means edges Noise2Noise ($0.934{\pm}0.003$ vs $0.931{\pm}0.005$; mean win fraction $0.47$ across seeds).
   \item On hard wrap cliffs, classical fades collapse while searched operators and Noise2Noise hold (Section~\ref{sec:cliff-strata}).
-  \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours. Both still beat Dual Cosine.
+  \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours; both still beat Dual Cosine.
 \end{itemize}
-In summary, compact searchable repair operators remain competitive when classical fades fail and need no paired clean targets at search time.
-All primary claims use the locked v10.1 $R_{\mathrm{blend}}$ protocol (Section~\ref{sec:residual-score}).
-Whole-curve prolonged $R$ near $0.991$ (including the historical freeze $R{\approx}0.99093$ vs Dual Cosine ${\approx}0.81658$) is a superseded debug score.
-It is not a current holdout result under $R_{\mathrm{blend}}$.
+Compact searchable repair operators remain competitive when classical fades fail and need no paired clean targets at search time.
+Whole-curve prolonged $R$ near $0.991$ is a superseded debug score, not a current holdout result under $R_{\mathrm{blend}}$.
 
 \paragraph{Transfer datasets.}
 Transfer boards apply the \emph{same} wrap-discontinuity protocol to other short periodic signals
 (Section~\ref{sec:transfer-protocol}): open a cliff at the period join, score against a no-cliff ideal sibling.
-They are mechanistic stress tests of wrap geometry under that protocol.
-They are \emph{not} evidence of general domain diagnosis, and they are not claims that an audio-trained bake ``transfers'' as bearing or ECG SOTA.
+They are mechanistic stress tests of wrap geometry under that protocol, not evidence of general domain diagnosis.
 Boards: \textbf{CWRU}, \textbf{MFPT}, and \textbf{Paderborn} K001 (one shaft revolution as a period),
 \textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz subset (one heartbeat as a period),
 plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downloads are walled
@@ -96,13 +92,13 @@ plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downl
 
 \paragraph{Scope.}
 Cycle-local wavetable seam repair for DSP / synthesis venues (DAFx / AES / arXiv cs.SD).
-We do not claim wrap-closure proofs, search-convergence theorems, or speech/music enhancement SOTA.
-Caveats live in Section~\ref{sec:limitations}.
+Formal wrap-closure proofs, search-convergence theorems, and speech/music enhancement SOTA are out of scope; caveats live in Section~\ref{sec:limitations}.
 
 \subsection{Contributions}
 \label{sec:contributions}
 \begin{enumerate}
-  \item \textbf{Problem framing.} Wrap discontinuity as cycle-local seam restoration under tiled evaluation, with $R_{\mathrm{seam}}$, $R_{\mathrm{body}}$, and primary $R_{\mathrm{blend}}$.
-  \item \textbf{Applied hybrid search.} DenoiseOpt applies GA--PPO(+PBT) meta-search to compact repair-operator graphs for this DSP task (integrative engineering, not a new learning algorithm), scored by $R_{\mathrm{blend}}$ and ranked by $J$.
-  \item \textbf{Open evaluation path.} Frozen Noise2Noise gate, multi-family and wavetable-native boards, and named wrap-protocol stress-test benches with released code and artifacts.
+  \item \textbf{Problem framing.} Wrap discontinuity as cycle-local seam restoration under tiled evaluation, with explicit $R_{\mathrm{seam}}$, $R_{\mathrm{body}}$, and primary $R_{\mathrm{blend}}$.
+  \item \textbf{Ideal-sibling protocol.} Unsupervised scoring via a procedural cliff-withheld twin plus mid-cycle engine identity, without paired studio-clean targets.
+  \item \textbf{Applied hybrid search.} DenoiseOpt applies GA--PPO(+PBT) meta-search to compact repair-operator graphs for this DSP task, scored by $R_{\mathrm{blend}}$ and ranked by $J$.
+  \item \textbf{Open multi-seed evaluation.} Frozen Noise2Noise gate, multi-family and wavetable-native boards, hard-cliff strata, and named wrap-protocol stress-test benches with released code and artifacts.
 \end{enumerate}

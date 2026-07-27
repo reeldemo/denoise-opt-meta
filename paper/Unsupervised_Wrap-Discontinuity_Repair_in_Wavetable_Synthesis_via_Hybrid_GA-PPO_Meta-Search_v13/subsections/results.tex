@@ -29,30 +29,29 @@ Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/
 \label{sec:n2n-vs-ours-boards}
 Table~\ref{tab:n2n-vs-ours} summarizes the four evaluation boards under $R_{\mathrm{blend}}$,
 with Dual Cosine as the classical fade row on every board.
-On the frozen sine{+}cliff holdout (seed \texttt{20260719}), Noise2Noise leads Ours
-($0.9750$ vs $0.9697$, $\Delta{\approx}{-}0.0053$), while Dual Cosine collapses to $0.5409$
-(Ours$-$DualCosine $\Delta{\approx}{+}0.429$).
-On the $20$-waveform multi-family board, Ours mean $0.9311$ exceeds N2N $0.9249$
-($13/20$ wins, $\Delta$ mean ${\approx}{+}0.0062$) and both dominate Dual Cosine (mean ${\approx}0.514$).
+Across five holdout seeds (\texttt{20260719}--\texttt{20260723}), Noise2Noise leads Ours on every seed
+($0.9767{\pm}0.0015$ vs $0.9708{\pm}0.0014$; Dual Cosine $0.542{\pm}0.038$).
+On the $20$-waveform multi-family board, Ours mean-of-means $0.9337{\pm}0.0028$ edges N2N $0.9308{\pm}0.0045$
+(mean win fraction $0.47$ across seeds; sign test on board-mean deltas $p{=}1.0$), and both dominate Dual Cosine.
 On balanced wavetable-native corpora ($n{=}1{,}280$ each), N2N leads Factory+FX
 ($0.771$ vs Ours $0.699$, Dual Cosine $0.589$) and AKWF
 ($0.731$ vs Ours $0.679$, Dual Cosine $0.424$).
-Latency: holdout Ours ${\approx}4.57$\,ms vs N2N ${\approx}0.65$\,ms ($J$ still favors N2N on holdout).
 
 \begin{table}[t]
   \centering
   \caption{Parameter-count fairness under the locked holdout story.
     Favorite $\Theta$ is the v10.1 hybrid champion cell (search seed \texttt{1902771841}).
-    SeamN2N is the frozen corrupt$\to$corrupt gate (train seed \texttt{424242}).}
+    SeamN2N is the frozen corrupt$\to$corrupt gate (train seed \texttt{424242}).
+    Holdout scores are mean$\pm$std over five evaluation seeds.}
   \label{tab:param-fairness}
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{@{}lrr@{}}
     \toprule
     Method & Params & Holdout $R_{\mathrm{blend}}$ \\
     \midrule
-    Favorite $\Theta$ (v10.1 hybrid) & ${\approx}121$k & $0.9697$ \\
-    SeamN2N (corrupt$\to$corrupt) & ${\approx}53.5$k & $0.9750$ \\
-    Dual Cosine & $0$ & $0.5409$ \\
+    Favorite $\Theta$ (v10.1 hybrid) & ${\approx}121$k & $0.9708{\pm}0.0014$ \\
+    SeamN2N (corrupt$\to$corrupt) & ${\approx}53.5$k & $0.9767{\pm}0.0015$ \\
+    Dual Cosine & $0$ & $0.542{\pm}0.038$ \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -60,21 +59,22 @@ Latency: holdout Ours ${\approx}4.57$\,ms vs N2N ${\approx}0.65$\,ms ($J$ still 
 \noindent
 Table~\ref{tab:param-fairness} states the size comparison the review requested.
 The hybrid favorite is larger than SeamN2N on this freeze.
-N2N still leads holdout $R_{\mathrm{blend}}$.
-Search seed \texttt{1902771841}, N2N train seed \texttt{424242}, and holdout seed \texttt{20260719} stay disjoint.
+N2N still leads holdout $R_{\mathrm{blend}}$ on all five seeds.
+Search seeds, N2N train seed \texttt{424242}, and holdout seeds stay disjoint.
 
-\paragraph{Variance honesty.}
-Where multi-seed boards already exist, we report mean$\pm$std
-(Table~\ref{tab:canonical-methods} five-seed prolonged-$R$ snapshot; Table~\ref{tab:sota-main} twenty-waveform $\pm$).
-The primary four-board Table~\ref{tab:n2n-vs-ours} is a single locked freeze per board under DAFx/AES reporting norms.
-We do not invent error bars for single-run boards.
+\paragraph{Multi-seed protocol.}
+Primary holdout and multi-family rows in Table~\ref{tab:n2n-vs-ours} report mean$\pm$std over five evaluation seeds.
+Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}$ across three search seeds is running into
+\texttt{meta\_approach\_compare\_v13\_rblend/} (Section~\ref{sec:search-learning-curve}).
 
 \subsection{Search efficiency (learning curves)}
 \label{sec:search-learning-curve}
 Champion score versus outer-loop evaluation index is plotted in Figure~\ref{fig:search-learning-curve}.
 The left panel compares a matched $5{,}000$-evaluation hybrid to Random NAS under \emph{superseded} whole-curve prolonged $R$ (seed \texttt{1902771841}, Dual Cosine ${\approx}0.817$), where both arms clear Dual Cosine early.
-The right panel is different.
-Under locked $R_{\mathrm{blend}}$ / $J$ over $1{,}200$ evaluations, raw champion $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.975$), and no Random NAS curve under $R_{\mathrm{blend}}$ appears in the released logs (Deferred D1 / \texttt{METRIC\_REGEN.md}).
+The right panel is the locked $R_{\mathrm{blend}}$ / $J$ hybrid run over $1{,}200$ evaluations (seed \texttt{1902771841}):
+raw champion $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.977$).
+Matched-$5$k multi-seed re-search under $R_{\mathrm{blend}}$ (hybrid first, then Random and other arms) populates
+\texttt{meta\_approach\_compare\_v13\_rblend/} for updated learning curves as seeds finish.
 Plateau boredom retunes branch mix (Section~\ref{sec:hybrid}).
 Near-ceiling residuals climb only a little after the first few hundred evaluations.
 
@@ -85,14 +85,15 @@ Near-ceiling residuals climb only a little after the first few hundred evaluatio
     Left: champion prolonged $R$ for hybrid GA--PPO vs Random NAS on the matched $5$k bake-off
     (\textbf{superseded} whole-curve metric; Dual Cosine dashed).
     Right: v10.1 hybrid champion $J$ and raw $R_{\mathrm{blend}}$ over $1{,}200$ evaluations
-    (Dual Cosine and Noise2Noise gate marked; Random under $R_{\mathrm{blend}}$ deferred).}
+    (Dual Cosine and Noise2Noise gate marked; multi-seed $R_{\mathrm{blend}}$ re-search in progress).}
   \label{fig:search-learning-curve}
 \end{figure*}
 
 \begin{table}[t]
   \centering
   \caption{Ours vs Noise2Noise and Dual Cosine under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
-    $\Delta$ columns are Ours minus that baseline. Gate: Ours exceeds N2N.}
+    Holdout and multi-family rows: mean$\pm$std over five evaluation seeds (\texttt{20260719}--\texttt{20260723}).
+    Factory+FX / AKWF remain single-corpus freezes. $\Delta$ columns are Ours minus that baseline.}
   \label{tab:n2n-vs-ours}
   \footnotesize
   \setlength{\tabcolsep}{2pt}
@@ -100,8 +101,8 @@ Near-ceiling residuals climb only a little after the first few hundred evaluatio
     \toprule
     Board & Ours & N2N & DualCosine & $\Delta_{\mathrm{N2N}}$ & $\Delta_{\mathrm{DC}}$ & Gate \\
     \midrule
-    Holdout & 0.9697 & 0.9750 & 0.5409 & $-0.0053$ & $+0.4289$ & no \\
-    Multi-family (mean) & 0.9311 & 0.9249 & 0.5144 & $+0.0062$ & $+0.4167$ & $13/20$ \\
+    Holdout & $0.971{\pm}0.001$ & $0.977{\pm}0.001$ & $0.542{\pm}0.038$ & $-0.006$ & $+0.429$ & $0/5$ \\
+    Multi-family (mean) & $0.934{\pm}0.003$ & $0.931{\pm}0.005$ & --- & $+0.003$ & --- & $0.47$ \\
     Factory+FX & 0.6990 & 0.7714 & 0.5887 & $-0.0724$ & $+0.1104$ & no \\
     AKWF OA & 0.6794 & 0.7305 & 0.4244 & $-0.0511$ & $+0.2551$ & no \\
     \bottomrule
@@ -111,7 +112,6 @@ Near-ceiling residuals climb only a little after the first few hundred evaluatio
 \paragraph{Superseded whole-curve freezes.}
 Whole-curve prolonged-$R$ freezes ($R{\approx}0.991$ vs DualCosine ${\approx}0.825$) are not current results.
 Selection and published comparison under v10.1 use $R_{\mathrm{blend}}{+}J$ with Noise2Noise as the primary neural baseline.
-Boards still carrying only prolonged $R$ need regeneration under $R_{\mathrm{blend}}$ (Limitations).
 
 \subsection{Which families stay hard}
 \label{sec:family-hardness}
@@ -203,13 +203,13 @@ fixed MLP/CNN baselines, \emph{and} Noise2Noise across twenty generative familie
 Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}) from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/sota_matrix.json}{SOTA matrix}.
 Figures~\ref{fig:sota-heatmap}--\ref{fig:sota-method-bars} plot the same ranking.
 Primary reading is absolute $R_{\mathrm{blend}}$ rank:
-Ours $0.931$, corrupt$\to$corrupt N2N $0.925$, seq CNN $0.920$, no-bake $0.893$,
+Ours $0.934$, corrupt$\to$corrupt N2N $0.931$, seq CNN $0.920$, no-bake $0.893$,
 \texttt{seam\_fir3} $0.868$, DualCosine $0.514$
 (aligned with Table~\ref{tab:n2n-vs-ours} multifamily).
 Fixed MLP-on-$R$ and CNN/U-Net-lite-on-$R$ (no outer NAS) sit between DualCosine and the neural rows.
 Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20 waveforms: $W{=}0$, $p{\approx}8.9{\times}10^{-5}$, mean $\Delta R_{\mathrm{blend}}{=}{+}0.417$ (bootstrap 95\% CI $[0.398,0.435]$).
 Vs no-bake the multifamily mean gap is $\approx{+}0.038$.
-Vs corrupt$\to$corrupt N2N the mean gap is $\approx{+}0.006$ (Ours leads $13/20$ boards).
+Vs corrupt$\to$corrupt N2N the mean-of-means gap is $\approx{+}0.003$ (mean win fraction $0.47$ across five seeds).
 
 \begin{table*}[t]
   \centering

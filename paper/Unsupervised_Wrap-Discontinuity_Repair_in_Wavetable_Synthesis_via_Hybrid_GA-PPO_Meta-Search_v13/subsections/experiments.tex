@@ -2,11 +2,11 @@
 \label{sec:experiments}
 
 \paragraph{Locked evaluation protocol.}
-Evaluation follows the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/EVAL_PROTOCOL.md}{v10.1 evaluation protocol}.
+Evaluation follows the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v13/EVAL_PROTOCOL.md}{v10.1 evaluation protocol}.
 Primary metric is $R_{\mathrm{blend}}$ ($\alpha{=}0.7$); search objective is $J$ as in~\eqref{eq:outer-obj} ($\lambda{=}0.02$).
 The champ gate is to strictly beat frozen Noise2Noise corrupt$\to$corrupt holdout $R_{\mathrm{blend}}$.
 Secondary keys cover SNR, SDR, wrap-jump, and seam-local edge RMSE, with debug keys for pure $R_{\mathrm{seam}}$ and whole-curve $R$.
-Seeds: holdout \texttt{20260719}, search \texttt{1902771841}, N2N train \texttt{424242}.
+Holdout evaluation uses five seeds (\texttt{20260719}--\texttt{20260723}); search uses three seeds (\texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}); N2N train seed is \texttt{424242}.
 We report the hybrid\_lstm freeze plus holdout / multi-family / Factory+FX / AKWF / transfer benches.
 PESQ/STOI stay out of scope on non-speech cycles, and LibriSpeech / MUSDB are not used.
 Venue: DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD).
