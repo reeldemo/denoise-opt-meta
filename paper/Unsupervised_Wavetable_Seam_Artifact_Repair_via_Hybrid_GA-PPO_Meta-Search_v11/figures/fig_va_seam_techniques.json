@@ -6,18 +6,23 @@
   "cycle_length": 256,
   "periods_shown": 3,
   "seam_w": 8,
+  "primary_metric": "r_blend",
+  "blend_alpha": 0.7,
   "R_tile": {
-    "engine": 0.9503467082977295,
-    "blit_blep": 0.702644944190979,
-    "polyblep": 0.8685064315795898,
-    "blamp": 0.9503669142723083,
-    "dual_cosine": 0.6029019951820374
+    "R_engine": 0.8974066376686096,
+    "R_dual_cosine": 0.30000001192092896,
+    "R_neural_favorite_tile": 0.9888886213302612,
+    "R_blit_blep": 0.38548460602760315,
+    "R_polyblep": 0.7258341908454895,
+    "R_blamp": 0.8974423408508301
   },
   "canonical_batch_means_from_va_seam_blep_json": {
-    "polyblep": 0.9288,
-    "blit_blep": 0.868,
-    "blamp": 0.9718,
-    "dual_cosine": 0.8249
+    "polyblep": 0.7949,
+    "blit_blep": 0.6324,
+    "blamp": 0.9142,
+    "dual_cosine": 0.5409,
+    "no_bake": 0.9142,
+    "seam_fir3": 0.8842
   },
   "operator_notes": {
     "blit_blep": "raised-cosine BLEP-family step residual on wrap value jump (Stilson/Smith lineage)",
@@ -25,5 +30,5 @@
     "blamp": "polyBLAMP residual on wrap slope jump (Esqueda et al.)",
     "dual_cosine": "raised-cosine end fades (baseline bake)"
   },
-  "png": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\v7\\figures\\fig_va_seam_techniques.png"
+  "png": "C:\\Users\\Julian\\Documents\\Programming\\github\\reeldemo\\denoise-opt-meta\\paper\\Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11\\figures\\fig_va_seam_techniques.png"
 }

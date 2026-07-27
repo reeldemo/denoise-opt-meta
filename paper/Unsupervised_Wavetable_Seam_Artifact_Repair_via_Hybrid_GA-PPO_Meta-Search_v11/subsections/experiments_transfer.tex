@@ -5,67 +5,50 @@
 \label{sec:transfer-protocol}
 
 The primary claim of this paper is wavetable seam repair.
-As a stress test, we ask whether the \emph{same} cycle-local wrap geometry and DenoiseOpt search
-still help on short periodic signals from other fields (not as domain diagnosis SOTA, but as
-``does a wrap cliff + ideal sibling still make sense?''
+Transfer boards answer a narrower mechanistic question:
+does the \emph{same} wrap-discontinuity protocol (open a cliff at a period join, score against a no-cliff ideal sibling, fit a compact repair operator) still make sense on other short periodic signals?
+They are stress tests of that geometry.
+They are \emph{not} claims that an audio-trained bake transfers as bearing-fault or ECG diagnosis SOTA,
+and they are not claims that fatigue cracks or grid phase events ``are'' wavetable seams.
 
 \paragraph{Shared transfer recipe.}
 For each domain we cut fixed-length periods ($L{=}256$), build an ideal sibling (smooth / template / cubic path)
 and a cracked engine (same content with an open-wrap cliff, sometimes with a deliberately worse interpolant),
-then run the same prolonged residual $R$ FitCell objective and \texttt{hybrid\_lstm} outer loop used in the
-historical wavetable search freezes
-($150$--$250$ outer iterations per dataset, \texttt{fit\_steps}${}={}40$).
-(This transfer pilot predates the v10.1 $R_{\mathrm{blend}}{+}J$ lock. Do not read Table~\ref{tab:transfer-main} as $R_{\mathrm{blend}}$.)
+then score classical baselines and a domain-trained DenoiseOpt / Noise2Noise stack under locked $R_{\mathrm{blend}}$
+(\texttt{hybrid\_lstm} FitCell, $150$--$250$ outer iterations where searched, \texttt{fit\_steps}${}={}40$).
 Classical baselines (no-bake, DualCosine, FIR, endpoint pin, \ldots) share that board.
 Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps) is scored on the same seven boards
 and reported beside classical rows in Table~\ref{tab:transfer-main}.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
-\paragraph{What each dataset is.}
-\begin{description}
-  \item[CWRU bearings.]
-    Public vibration recordings from the Case Western Reserve University Bearing Data Center
-    (drive-end accelerometer, typically 12\,kHz).
-    One shaft revolution is treated as one ``period'': the ideal uses cubic resampling of the revolution.
-    The engine uses a coarser linear path plus a wrap cliff (bad change-of-time proxy).
-    Real data, $n{=}256$ periods.
-  \item[MFPT bearings.]
-    Fault-bearing vibration from the Society for Machinery Failure Prevention Technology Fault Data Sets
-    (fixed 25\,Hz shaft rate in our windows).
-    Same cubic-ideal / linear+cliff-engine construction as CWRU.
-    Real data, $n{=}256$ periods.
-  \item[Paderborn KAt (K001).]
-    Paderborn Bearing Data Center healthy bearing K001 vibration
-    (Lessmeier et al., PHME 2016, CC BY-NC 4.0).
-    Equal-angle shaft revolutions when speed is available, with cubic ideal vs linear+cliff engine
-    (same classical board construction as CWRU/MFPT). Real data, $n{=}256$ periods.
-    Separately, Al~Firdausi CNN\_1D\_2L is trained from scratch on K001/KA04/KI04/KB23
-    as a 4-class fault classifier. An optional arch-reuse wrap bake is labeled separately
-    (Table~\ref{tab:transfer-sota-status}).
-  \item[MIT-BIH ECG.]
-    Classic PhysioNet arrhythmia ECG corpus.
-    We take normal R--R beat windows as periods: the ideal is a local mean beat template with mild endpoint equalization.
-    The engine is the beat plus an artificial wrap cliff.
-    Real data, $n{=}256$ periods.
-  \item[PTB-XL ECG (subset).]
-    Large PhysioNet clinical ECG collection.
-    We use the 500\,Hz \texttt{records500} / \texttt{*\_hr} lead-I beat windows only (a subset pilot)
-    ($n{=}256$ periods from 94 records), not the full PTB-XL corpus.
-    Same beat-template ideal / cliffed engine idea as MIT-BIH.
-  \item[Synthetic CNC G01.]
-    Stand-in for closed machine-tool contours (sharp corners vs a wide blend).
-    Real KIT CNC downloads are login-walled, so this row is a procedural pilot with the same wrap protocol
-    ($n{=}256$). Not a claim on industrial toolpaths.
-  \item[Synthetic PMU / AC cycle.]
-    Stand-in for one power-system AC / PMU voltage cycle with a wrap cliff.
-    Real IEEE DataPort PMU streams need an account, so this row is synthetic
-    ($n{=}256$). Not a claim on live grid telemetry.
-\end{description}
+\paragraph{Seam analogy by domain family.}
+\textbf{Bearing revolutions (CWRU / MFPT / Paderborn).}
+One shaft revolution is the period.
+The seam is the join between the last and first angle samples after resampling to $L{=}256$.
+A wrap cliff models a bad change-of-time / interpolant at that join, not a physics model of fatigue crack growth.
+Ideal siblings use a smoother angular path (cubic) than the cracked engine (linear + cliff).
+
+\textbf{ECG beats (MIT-BIH / PTB-XL subset).}
+One heartbeat (R--R window) is the period.
+The seam is the join between beat end and beat start when the window is tiled.
+A wrap cliff is an artificial endpoint mismatch on that window.
+The ideal is a mild endpoint-equalized beat template.
+Clinical arrhythmia restore metrics are out of scope.
+
+\textbf{Synthetic CNC / PMU.}
+Stand-ins for closed machine-tool contours and one AC / PMU voltage cycle when real KIT / IEEE DataPort downloads are walled.
+The seam is again a period-join cliff under the same residual protocol.
+These rows are procedural pilots, not industrial toolpath or live-grid claims.
+
+\paragraph{What each dataset is (pointers).}
+CWRU / MFPT / Paderborn K001: public vibration, $n{=}256$ revolutions each (Paderborn also hosts a separate Al~Firdausi 4-class fault classifier, labeled apart from wrap-$R_{\mathrm{blend}}$).
+MIT-BIH and PTB-XL 500\,Hz lead-I subset: PhysioNet beat windows, $n{=}256$.
+Synthetic CNC G01 and synthetic PMU/AC: procedural, $n{=}256$.
 
 \paragraph{Scope note.}
 Transfer tables compare classical rows, domain-trained Noise2Noise, and Ours under this residual protocol.
-Author ECG Cycle-GAN and BeatDiff have OOD wrap-$R$ probes. Paderborn Al~Firdausi is a trained fault classifier
+Author ECG Cycle-GAN and BeatDiff have OOD wrap probes. Paderborn Al~Firdausi is a trained fault classifier
 (plus labeled arch-reuse wrap bake). Formal listening remain out of scope
 (Section~\ref{sec:limitations} and Table~\ref{tab:transfer-sota-status}).
 Results appear in Section~\ref{sec:transfer-main}.

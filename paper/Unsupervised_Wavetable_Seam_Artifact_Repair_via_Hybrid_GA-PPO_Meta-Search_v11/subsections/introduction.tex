@@ -25,10 +25,14 @@ The same geometry appears whenever a short loop is tiled for listening or scorin
 \paragraph{Terminology.}
 \begin{itemize}
   \item \textbf{Seam} (wrap join / loop join): the join between the end and start of one looped period, where a click appears if the endpoints mismatch. The seam is local. The signal is the whole waveform.
-  \item \textbf{Repair operator} (bake operator $\Theta$, short: operator): the searchable local edit applied at the seam (formerly called a ``cell'' in code notes).
+  \item \textbf{Repair operator} (bake operator $\Theta$, short: operator): the searchable local edit applied at the seam (legacy code name: bake cell).
   \item \textbf{Residual operator}: optional tiny learned network inside a repair operator.
+  \item \textbf{FitCell}: inner continuous-parameter fit of one candidate $\Theta$ under the residual loss (Appendix~\ref{app:algorithms}).
   \item \textbf{$R$} / \textbf{$R_{\mathrm{blend}}$}: unsupervised seam-quality scores. Whole-curve prolonged $R$ is for debug. $R_{\mathrm{blend}}$ is for primary selection. Details in Section~\ref{sec:residual-score}.
-  \item \textbf{Outer loop} / \textbf{meta-search}: GA--PPO search over repair-operator graphs (not end-to-end training of one large network).
+  \item \textbf{$J$}: latency-aware search objective $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ (Section~\ref{sec:residual-score}).
+  \item \textbf{MoE}: mixture-of-experts soft gating over small bake experts inside a repair operator.
+  \item \textbf{PBT}: population-based training (exploit--mutate on elites in the outer loop).
+  \item \textbf{Outer loop} / \textbf{meta-search}: genetic algorithm (GA) plus proximal policy optimization (PPO) search over repair-operator graphs (not end-to-end training of one large network).
   \item \textbf{Holdout}: frozen eval set / seed used for reported scores.
 \end{itemize}
 
@@ -55,7 +59,7 @@ It is not shown in Figure~\ref{fig:intro-sine}, which illustrates roles on one h
   (c)~Dual Cosine fade.
   (d)~Ours (searched bake).
   (e)--(f)~Residual and seam zoom.
-  Printed scores use whole-curve prolonged $R$ for this figure. Primary selection uses $R_{\mathrm{blend}}$ (Table~\ref{tab:n2n-vs-ours}).}
+  Accompanying JSON scores use locked $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; tile~46: no-bake $0.897$, Dual Cosine $0.300$, Ours $0.989$; Table~\ref{tab:n2n-vs-ours}).}
   \label{fig:intro-sine}
 \end{figure*}
 
@@ -63,10 +67,10 @@ Classical virtual-analog tools already address wrap energy locally
 (BLIT/BLEP~\cite{stilson1996}, PolyBLEP~\cite{nam2009polyblep}, BLAMP~\cite{esqueda2016blamp}).
 We score cycle-local bake versions of those operators beside Dual Cosine (Section~\ref{sec:va-seam-baselines}).
 Label-free restoration such as Noise2Noise shows that useful reconstructors can be ranked without paired clean targets when the evaluation geometry is explicit~\cite{lehtinen2018,kashyap2021n2n}.
-On the search side, NAS, aging evolution, PBT, CMA-ES, and evolution-guided policy gradients motivate a hybrid outer loop: GA for diversity, PPO for discrete architecture edits, and PBT-style exploit--mutate on elites~\cite{elsken2019,real2019,jaderberg2017,schulman2017,khadka2018}.
+On the search side, neural architecture search (NAS), aging evolution, PBT, covariance matrix adaptation evolution strategy (CMA-ES), and evolution-guided policy gradients motivate a hybrid outer loop: GA for diversity, PPO for discrete architecture edits, and PBT-style exploit--mutate on elites~\cite{elsken2019,real2019,jaderberg2017,schulman2017,khadka2018}.
 
 \paragraph{Key findings.}
-Under the locked v10.1 $R_{\mathrm{blend}}$ protocol:
+Under the locked v10.1 $R_{\mathrm{blend}}$ protocol (primary story: Table~\ref{tab:n2n-vs-ours}):
 \begin{itemize}
   \item The hybrid champion does \emph{not} clear the frozen Noise2Noise holdout gate
     ($R_{\mathrm{blend}}{\approx}0.9697$ vs $0.9750$). Dual Cosine on that holdout sits near $0.541$.
@@ -75,26 +79,28 @@ Under the locked v10.1 $R_{\mathrm{blend}}$ protocol:
   \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours. Both still beat Dual Cosine.
 \end{itemize}
 In summary, compact searchable repair operators remain competitive when classical fades fail and need no paired clean targets at search time.
-All main-text claims, tables, and figures use the locked v10.1 $R_{\mathrm{blend}}$ protocol (Section~\ref{sec:residual-score}).
-Whole-curve prolonged $R$ near $0.991$ is a superseded debug score from earlier freezes.
-It is not a current result.
+All primary claims use the locked v10.1 $R_{\mathrm{blend}}$ protocol (Section~\ref{sec:residual-score}).
+Whole-curve prolonged $R$ near $0.991$ (including the historical freeze $R{\approx}0.99093$ vs Dual Cosine ${\approx}0.81658$) is a superseded debug score.
+It is not a current holdout result under $R_{\mathrm{blend}}$.
 
 \paragraph{Transfer datasets.}
-As a cross-domain stress test (not a diagnosis claim), we reuse the same wrap protocol on seven boards
-(Section~\ref{sec:transfer-protocol}):
-\textbf{CWRU}, \textbf{MFPT}, and \textbf{Paderborn} K001 bearing vibration (one shaft revolution as a period),
-\textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz ECG subset (one heartbeat as a period),
-plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downloads are walled.
-Domain-trained Noise2Noise quality is scored on those boards (Table~\ref{tab:transfer-main}). Deep diagnosis baselines remain out of scope.
+Transfer boards apply the \emph{same} wrap-discontinuity protocol to other short periodic signals
+(Section~\ref{sec:transfer-protocol}): open a cliff at the period join, score against a no-cliff ideal sibling.
+They are mechanistic stress tests of that geometry, not claims that an audio-trained bake ``transfers'' as bearing or ECG diagnosis SOTA.
+Boards: \textbf{CWRU}, \textbf{MFPT}, and \textbf{Paderborn} K001 (one shaft revolution as a period),
+\textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz subset (one heartbeat as a period),
+plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downloads are walled
+(Table~\ref{tab:transfer-main}).
 
 \paragraph{Scope.}
-Cycle-local wavetable seam repair for DSP / synthesis venues.
-Caveats and exclusions live in Section~\ref{sec:limitations}.
+Cycle-local wavetable seam repair for DSP / synthesis venues (DAFx / AES / arXiv cs.SD).
+We do not claim wrap-closure proofs, search-convergence theorems, or speech/music enhancement SOTA.
+Caveats live in Section~\ref{sec:limitations}.
 
 \subsection{Contributions}
 \label{sec:contributions}
 \begin{enumerate}
   \item \textbf{Problem framing.} Wrap discontinuity as cycle-local seam restoration under tiled evaluation, with $R_{\mathrm{seam}}$, $R_{\mathrm{body}}$, and primary $R_{\mathrm{blend}}$.
-  \item \textbf{Hybrid DenoiseOpt loop.} RL+GA(+PBT) search over bake graphs and continuous parameters, scored by $R_{\mathrm{blend}}$ and ranked by $J$.
-  \item \textbf{Open evaluation path.} Frozen Noise2Noise gate, multi-family and wavetable-native boards, and named transfer benches with released code and artifacts.
+  \item \textbf{Applied hybrid search.} DenoiseOpt applies GA--PPO(+PBT) meta-search to compact repair-operator graphs for this DSP task (integrative engineering, not a new learning algorithm), scored by $R_{\mathrm{blend}}$ and ranked by $J$.
+  \item \textbf{Open evaluation path.} Frozen Noise2Noise gate, multi-family and wavetable-native boards, and named wrap-protocol stress-test benches with released code and artifacts.
 \end{enumerate}

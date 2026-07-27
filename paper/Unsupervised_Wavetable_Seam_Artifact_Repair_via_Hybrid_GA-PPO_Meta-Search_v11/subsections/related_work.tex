@@ -24,9 +24,10 @@ Wave-U-Net, Conv-TasNet, dual-path, and attention audio models supply block prio
 They supply block priors rather than serving as frozen full-scale separators inside every meta trial.
 
 \paragraph{Search and hybrids.}
-NAS taxonomies, RL controllers, progressive and latency-aware NAS, aging evolution, PBT, CMA-ES, and evolution-guided policy gradients motivate the hybrid outer loop~\cite{elsken2019,zoph2017nas,pham2018,liu2018pnas,tan2019mnasnet,real2019,jaderberg2017,hansen2016cmaes,khadka2018,schulman2017}.
-MoE soft gates motivate routing among small heterogeneous operators under one residual score~\cite{shazeer2017}.
+Neural architecture search (NAS) taxonomies, reinforcement-learning (RL) controllers, progressive and latency-aware NAS, aging evolution, population-based training (PBT), CMA-ES, and evolution-guided policy gradients motivate applying a hybrid outer loop to this DSP task~\cite{elsken2019,zoph2017nas,pham2018,liu2018pnas,tan2019mnasnet,real2019,jaderberg2017,hansen2016cmaes,khadka2018,schulman2017}.
+Mixture-of-experts (MoE) soft gates motivate routing among small heterogeneous operators under one residual score~\cite{shazeer2017}.
 Matched outer-loop bake-offs (Random, CMA-ES, REINFORCE, aging evolution, TPE vs hybrid) sit in Appendix~\ref{app:supplement}.
+We do not claim a new foundational NAS/RL algorithm.
 
 \paragraph{Used vs screened (short).}
 Used anchors include VA discontinuity control~\cite{stilson1996,esqueda2016blamp,nam2009polyblep}, unsupervised restoration~\cite{lehtinen2018,kashyap2021n2n,wisdom2020}, DDSP~\cite{engel2020}, compact waveform operators as above, and NAS/RL/PPO/PBT/CMA-ES/ERL/MoE as above.

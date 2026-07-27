@@ -49,7 +49,8 @@ These symbols follow a different convention from Noise2Noise clean/noisy pairs.
 
 \textbf{Ideal sibling.}
 Let $G(\mathrm{seed},\mathrm{cliff})$ denote the procedural generator used by the CUDA FitCell batch maker
-(\texttt{make\_batch} in the CUDA search runner): one draw of frequency, phase, and mid-cycle content, with an optional open-wrap cliff of width $W$ at both ends.
+(FitCell $=$ inner continuous-parameter fit of one candidate $\Theta$; Algorithm~\ref{alg:fit}):
+one draw of frequency, phase, and mid-cycle content, with an optional open-wrap cliff of width $W$ at both ends.
 For any seed,
 \begin{equation}
 \label{eq:G-siblings}
@@ -109,7 +110,7 @@ Search may discover \texttt{n2n\_unet} operators at the same scale. TinyUNet1D \
 \subsection{Seam bake operator and classical baselines}
 \label{sec:bake}
 
-A \textbf{repair operator} $\Theta(\cdot;h)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual operators (MLP/FIR/U-Net-lite/attention-lite/LSTM-lite) and optional MoE soft gates over experts (Appendix~\ref{app:algorithms}, Algorithms~\ref{alg:dualcosine}--\ref{alg:moe}).
+A \textbf{repair operator} $\Theta(\cdot;h)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual operators (MLP/FIR/U-Net-lite/attention-lite/LSTM-lite) and optional mixture-of-experts (MoE) soft gates over experts (Appendix~\ref{app:algorithms}, Algorithms~\ref{alg:dualcosine}--\ref{alg:moe}).
 Bake parameters live in a bounded box. Architecture strings are discrete graphs over those ops.
 Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile. They share the DualCosine / FIR interface and are not a full oscillator rewrite.
 Plain-language roles: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap. BLAMP corrects a \emph{slope}/corner jump. DualCosine fades endpoints without a BLEP residual.

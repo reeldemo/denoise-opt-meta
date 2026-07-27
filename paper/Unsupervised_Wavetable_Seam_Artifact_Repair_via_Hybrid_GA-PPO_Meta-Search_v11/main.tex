@@ -57,13 +57,14 @@ Hybrid GA--PPO Meta-Search}
     We study unsupervised repair of that local discontinuity without paired clean recordings.
     Scoring combines seam fidelity to a no-cliff ideal sibling with mid-cycle identity to the cracked engine.
     Classical raised-cosine fades, virtual-analog seam operators, and corrupt-to-corrupt Noise2Noise are strong baselines on some boards.
-    Transfer benches apply the same wrap protocol to vibration, ECG, and synthetic cycles.
-    Because no single operator fits every engine family, \textbf{DenoiseOpt} searches compact repair policies (classical fades plus tiny residual operators) with a hybrid genetic-algorithm and PPO meta-loop, ranking candidates by $R_{\mathrm{blend}}$.
+    Transfer benches reuse the same wrap-discontinuity protocol on other periodic signals as stress tests, not domain diagnosis claims.
+    Because no single operator fits every engine family, \textbf{DenoiseOpt} applies a hybrid genetic-algorithm (GA), proximal policy optimization (PPO), and population-based training (PBT) meta-loop to search compact repair operators, ranking candidates by the blended residual $R_{\mathrm{blend}}$.
+    This is an application of known search tools to a crisp DSP problem, not a new learning algorithm.
     A $1{,}200$-iteration hybrid champion reaches about $0.9697$ on holdout $R_{\mathrm{blend}}$, below frozen Noise2Noise (about $0.9750$) and well above Dual Cosine (about $0.541$).
     On twenty multi-family boards, Ours edges Noise2Noise on mean score.
     Both beat Dual Cosine.
     On hard wrap cliffs, classical fades collapse while searched operators hold.
-    The contribution is searchable repair operators that remain competitive when classical fades fail and require no paired clean targets at search time.
+    We do not claim wrap-closure proofs, search-convergence theorems, or speech/music SOTA.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; unsupervised repair; DenoiseOpt; seam restoration; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}

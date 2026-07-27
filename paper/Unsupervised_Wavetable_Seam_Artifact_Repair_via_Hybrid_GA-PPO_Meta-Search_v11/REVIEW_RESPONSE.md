@@ -1,46 +1,56 @@
-# Review response map — paper v8
+# Review response map — paper v11 (peer-review paste 2026-07-27)
 
-Point-by-point map from peer review (24 Jul 2026) → DenoiseOpt paper v8.
-Fill **v8 location** as W1–W5 land (section / figure / table / appendix).
+Point-by-point map from the external peer-style review → DenoiseOpt v11 manuscript.
+Locked T0: transfer **keep reframed**; cheap \(R_{\mathrm{blend}}\) only (full 5k = D1); DAFx/AES bar.
+Source SDD: `docs/sdd/specs/paper-v11-peer-review-response/`.
 
-Source plans: SDD `docs/sdd/specs/paper-v8-review-response/`; locked paper plan W0–W5 (1A + 2B).
+Columns: **Verdict** = agree / partial / disagree+why. **Action** = what we changed. **Location** = TeX / artifact path.
+
+## Synopsis fact-check (reviewer numbers)
+
+| Review claim | Verdict | Action | Location |
+|--------------|---------|--------|----------|
+| Champion \(R_{\mathrm{blend}}{\approx}0.99093\) vs DualCosine \(0.81658\) on primary holdout | **Disagree (wrong metric).** Those are historical **whole-curve prolonged \(R\)** from the superseded \(5\)k-gate freeze, not locked \(R_{\mathrm{blend}}\). | Primary story is Table~\ref{tab:n2n-vs-ours}: holdout Ours \({\approx}0.9697\), N2N \({\approx}0.9750\), Dual Cosine \({\approx}0.5409\). Prolonged \(0.99093\) appears only as superseded freeze / appendix. | `REVIEW_RESPONSE.md` (this row); Intro Key findings; Results §\ref{sec:n2n-vs-ours-boards}; Limitations Metric lock; `METRIC_REGEN.md` |
+| “bake-cell” operators \(\Theta\) | **Partial.** Legacy code name. Manuscript term is **repair operator** \(\Theta\) (bake operator). | Terminology primer + Methods Notation already use repair operator. Sweep remaining bake-cell reader-facing prose. | Intro Terminology; Methods §\ref{sec:notation}; NOMENCLATURE.md |
+| Hybrid “surpasses” DualCosine on primary holdout under \(R_{\mathrm{blend}}\) | **Agree directionally** on Dual Cosine. **Must not erase:** N2N still beats / gates Ours on holdout \(R_{\mathrm{blend}}\). | Keep honesty in Abstract / Key findings / Discussion. | `main.tex` abstract; Intro; Results; Discussion |
+
+## Strengths (preserve)
+
+| ID | Review item | Verdict | Action | Location |
+|----|-------------|---------|--------|----------|
+| S1 | Novel problem framing + unsupervised \(R_{\mathrm{blend}}\) / ideal sibling protocol | Agree | Keep framing as primary novelty. | Intro; Methods §\ref{sec:ideal-tile}–\ref{sec:residual-score} |
+| S2 | Comprehensive hybrid GA+PPO+PBT meta-search + Algorithms 1–9 | Agree (engineering integration) | Keep; modestly frame as application of hybrid search, not a new learning algorithm. | Methods §\ref{sec:hybrid}; Appendix~\ref{app:algorithms} |
+| S3 | Strong empirical results on primary task (reviewer’s \(0.99093\)) | **Partial** — numbers wrong metric; qualitative “hybrid clears Dual Cosine; competitive with N2N” stands under \(R_{\mathrm{blend}}\) | Point readers to `tab:n2n-vs-ours`; keep Dual Cosine gap honesty. | Results §\ref{sec:n2n-vs-ours-boards} |
+| S4 | Clear scope / DAFx–AES venue / classical VA baselines | Agree | Preserve Limitations + VA section. | Intro Scope; §\ref{sec:va-seam-baselines}; Limitations |
 
 ## Weaknesses
 
-| ID | Review item | Planned workstream | v8 location |
-|----|-------------|--------------------|-------------|
-| W-clarity | Poor Methods clarity / organization (algorithms drowning the pipeline) | W1 | §Methods slim body (`subsections/methods.tex`); overview Fig.~\ref{fig:denoiseopt-arch}; Algorithms 1–9 → Appendix~\ref{app:algorithms} (`appendix_algorithms.tex`) |
-| W-eval | Narrow synthetic eval (static sine+cliff tiles) | W2 | §\ref{sec:vibrato-eval} Fig.~\ref{fig:vibrato-spectrogram}; §\ref{sec:hear-samples} Fig.~\ref{fig:hear-samples-panel}; §\ref{sec:wt-gallery} Fig.~\ref{fig:wt-diversity-gallery}; App.~\ref{app:transfer-pilot}; existing 5k/bars/heals folded (no re-run) |
-| W-math | Sloppy math / ideal-sibling definition | W3 | §Methods Notation + Ideal sibling: $\Theta$, $r^{\star}=G(\mathrm{seed},\mathrm{cliff=off})$, $x=G(\mathrm{seed},\mathrm{cliff=on})$, outer $\max R$; Rem.~\ref{rem:dualcosine-centering} |
-| W-hp | Unjustified HP meta-search claims | W4 | §Results para.~\ref{para:hp-sensitivity}; Table~\ref{tab:hp-sensitivity}; Fig.~\ref{fig:hp-sensitivity}; artifacts `reelsynth/brand/artifacts/meta_hp_sensitivity/` (500-iter OAT ±50% probe, seed `1902771841`; **not** full 5k re-search) |
-
-## Author questions
-
-| ID | Question | Planned workstream | v8 location |
-|----|----------|--------------------|-------------|
-| Q1 | Ideal sibling — how generated for arbitrary cracked period? | W3 (+ appendix alg) | §Methods Ideal sibling (eq.~\ref{eq:G-siblings}); cite `make_batch` in `overnight_gpu_rl_arch.py`; same seed, cliff withheld |
-| Q2 | DualCosine centering — objective vs advantage baseline? | W3 | §Methods Rem.~\ref{rem:dualcosine-centering} + eq.~\ref{eq:dualcosine-centering}; outer obj eq.~\ref{eq:outer-obj}; DualCosine centering = PPO advantage only |
-| Q3 | Hyperparameter sensitivity of meta-search? | W4 | §Results para.~\ref{para:hp-sensitivity} + Table~\ref{tab:hp-sensitivity} / Fig.~\ref{fig:hp-sensitivity}; `subsections/results_hp_sensitivity.tex`; script `reelsynth/scripts/bench_meta_hp_sensitivity.py`. **Answer:** 11/11 OAT ±50% arms @500 iters (seed `1902771841`) complete; default champ $R\approx 0.9888$; largest $|\Delta R|\approx 0.012$ (`lr_m50`). Local robustness vs DualCosine gap $\approx 0.17$ — sensitivity evidence, **not** a second 5k ranking. |
+| ID | Review item | Verdict | Action | Location |
+|----|-------------|---------|--------|----------|
+| W1 | Severe clarity / undefined acronyms (MoE, PBT, FitCell, \(J\), …); DualCosine centering obfuscated | Agree | Acronym pass on first use; DualCosine centering stays Remark~\ref{rem:dualcosine-centering} separate from outer \(J\). | Intro Terminology + first-use expansions; Methods Rem.~\ref{rem:dualcosine-centering}; Related Work polish |
+| W2 | Weak justification for non-audio transfer | Agree | **Keep reframed** (T0): one wrap-protocol stress-test paragraph + short seam analogy per domain family. Not diagnosis SOTA. | §\ref{sec:transfer-protocol}; §\ref{sec:transfer-main}; Intro Transfer datasets |
+| W3 | Insufficient statistical rigor (param fairness, variance, \(\Delta R{=}{+}0.174\) significance) | Partial | Param counts: favorite \(\Theta\) vs SeamN2N \(\sim 53\)k side-by-side. Error bars where multi-seed exists. \(\Delta R{+}0.174\) labeled superseded prolonged \(R\). Single-run boards stated honestly. | Results param table; `tab:canonical-methods` / `tab:sota-main` ±; Limitations |
+| W4 | Overselling integrative novelty as foundational ML | Agree | Soften Abstract / Contributions / Conclusion: hybrid GA–PPO(+PBT) **applied to** cycle-local seam repair. Explicit non-claims. | `main.tex` abstract; §\ref{sec:contributions}; Conclusion |
+| W5 | No learning-curve / search-efficiency analysis | Agree | Add champion score vs evaluations (hybrid + Random). Caption states metric honesty (\(R_{\mathrm{blend}}\) vs superseded prolonged \(R\)). | Fig.~\ref{fig:search-learning-curve}; Results paragraph; `scripts/plot_search_learning_curve.py` |
 
 ## Suggestions
 
-| ID | Suggestion | Planned workstream | v8 location |
-|----|------------|--------------------|-------------|
-| S-imrad | IMRaD-style Methods restructure | W1 | §Methods: problem → ideal sibling → $R$ → $\Theta$ → overview TikZ → search/FitCell → hybrid → meta → HPs |
-| S-appendix | Move Algorithms 1–9 to appendix | W1 | Appendix~\ref{app:algorithms} (`subsections/appendix_algorithms.tex`); `\appendix` in `main.tex` |
-| S-overview | Overview figure before component deep-dives | W1 | Fig.~\ref{fig:denoiseopt-arch} (`arch_diagram.tex`) before search-space deep-dives |
-| S-real-wt | Real wavetable diversity beyond sine+cliff | W2 | §\ref{sec:wt-gallery} Fig.~\ref{fig:wt-diversity-gallery}; Table~\ref{tab:real-wt} / `real_wt_matrix.json` (existing exports only; no new NAS) |
-| S-vibrato | Vibrato / dynamic-pitch playback + spectrogram | W2 | §\ref{sec:vibrato-eval} Fig.~\ref{fig:vibrato-spectrogram}; script `reelsynth/scripts/bench_vibrato_spectrogram.py`; artifacts `brand/artifacts/vibrato_spectrogram/` |
-| S-ab | Listening / A/B perceptual evidence | W2 | §\ref{sec:hear-samples} Fig.~\ref{fig:hear-samples-panel}; WAVs `brand/artifacts/meta_approach_compare/hear_samples/` — **no formal A/B / MOS** (constitution) |
-| S-theta | Formal bake operator $\Theta$ | W3 | eq.~\ref{eq:Theta}; Notation table; bake § |
-| S-hp50 | HP ±50% sensitivity study | W4 | Same as Q3 / W-hp: OAT ±50% on $n$, $\epsilon$, fit lr, GA mut2, entropy; out `meta_hp_sensitivity/`; paper figures + `results_hp_sensitivity.tex` |
+| ID | Suggestion | Verdict | Action | Location |
+|----|------------|---------|--------|----------|
+| Sug1 | Major restructuring / acronyms / IMRaD flow; Related Work as motivation not laundry list | Partial (full rewrite out of scope for this cycle) | Clarity pass + acronyms; Related Work already Used vs Screened — polish. Algorithms stay appendix. | Methods; Related Work; Intro |
+| Sug2 | Collapse or remove non-audio transfer **or** reframe with per-domain analogy | Agree → **reframe** (T0) | Mechanistic wrap paragraphs; honesty footnotes unchanged. | §\ref{sec:transfer-protocol} |
+| Sug3 | Strengthen experimental validation: error bars, branch ablations, learning curves, define \(\Theta\) | Agree within artifact budget | Learning curve fig; branch ablation table from `ablate-*` (prolonged \(R\), labeled); param fairness; \(\Theta\) already formalized. | Fig.~\ref{fig:search-learning-curve}; Table~\ref{tab:ablation}; Results |
+| Sug4 | Reframe contributions with modesty | Agree | Same as W4. | Contributions; Abstract; Conclusion |
+| Sug5 | Search convergence figure: champion vs outer-loop evals for hybrid + Random | Agree | Same as W5 / Sug3. Random under locked \(R_{\mathrm{blend}}\) not in logs → prolonged-\(R\) matched \(5\)k curve labeled superseded; v10 hybrid \(R_{\mathrm{blend}}\) curve included. | Fig.~\ref{fig:search-learning-curve}; `METRIC_REGEN.md` |
 
-## Notes (scope honesty)
+## Deferred (explicit)
 
-- **Formal human listening study / formal A/B scores:** out of scope for v8 (constitution / requirements). S-ab is answered with spectrogram + hear WAVs + paper panel, not claimed formal A/B scores.
-- **Deep SOTA CWRU/ECG:** out of scope; transfer pilot stays classical-board appendix (`appendix_transfer_pilot.tex`).
-- **Do not wipe** publishable `meta_approach_compare/` (fold existing 5k / bars / heals).
-- **Q1–Q2 answered in Methods (W3/T2).** **Q3 / W4 (T5):** HP ±50% OAT sensitivity probe landed (script + artifacts + Results snippet); honesty label = sensitivity not full 5k re-search; never touches `meta_approach_compare/`.
-- **AC-1 / W1 (T3):** slim Methods + appendix algs + overview TikZ + display names + constitution-scoped Abstract/Intro.
-- **AC-3 / W2 (T4):** vibrato spectrogram + hear panel + WT gallery + transfer appendix landed; no new NAS; no formal A/B.
-- **AC-5 / W5 (T6):** `main.tex` inputs listening + HP Results; Discussion/Limitations review narrative; CHANGELOG/pointer/TITLES/reelsynth README → v8; `main.pdf` rebuilt; dual-repo commit+push.
+| ID | Item | Why |
+|----|------|-----|
+| D1 | Full matched-\(5\)k outer-loop re-search under \(R_{\mathrm{blend}}\) | T0 / open Q2 |
+| D2 | MOS / MUSHRA | Constitution / out of scope |
+| D3 | Deep CWRU / ECG diagnosis SOTA | Constitution |
+
+## Regen inventory
+
+See `METRIC_REGEN.md` in this paper folder for boards still prolonged-\(R\)-only and exact commands.

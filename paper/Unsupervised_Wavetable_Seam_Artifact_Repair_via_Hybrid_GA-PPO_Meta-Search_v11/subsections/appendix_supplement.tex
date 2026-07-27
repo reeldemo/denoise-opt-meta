@@ -10,9 +10,11 @@ Primary claims remain in Sections~\ref{sec:results}--\ref{sec:transfer-main}.
 
 Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to Ours (hybrid GA+PPO)?
 Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs Dual Cosine, wall hours, and whether the champion graph used an LSTM or xLSTM block.
-This is an outer-loop bake-off under historical whole-curve prolonged $R$.
+This matched multi-approach $5{,}000$-evaluation bake-off still needs $R_{\mathrm{blend}}$ regeneration
+(command: \texttt{.venv\_gpu/Scripts/python.exe scripts/bench\_meta\_approaches\_5k.py --iters 5000 --device cuda}).
+Only the $1{,}200$-iteration hybrid freeze under $R_{\mathrm{blend}}$ is locked (Section~\ref{sec:v10-freeze}).
 Noise2Noise is not an outer-loop method here (see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main}).
-At the completed gate, Ours leads on absolute champion $R$ ($R{\approx}0.99146$, $\Delta R{\approx}{+}0.17488$ vs Dual Cosine ${\approx}0.81658$, ${\approx}8.46$\,h). Aging evolution is second ($R{\approx}0.99079$).
+At the completed superseded prolonged-$R$ gate, Ours led on absolute champion $R$ ($R{\approx}0.99146$, $\Delta R{\approx}{+}0.17488$ vs Dual Cosine ${\approx}0.81658$, ${\approx}8.46$\,h). Aging evolution is second ($R{\approx}0.99079$).
 Neither Ours nor Aging evolution selected an LSTM block in the champion graph.
 Source: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/meta_approach_compare.json}{matched-budget results} (search seed \texttt{1902771841}).
 
@@ -21,14 +23,16 @@ Source: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Uns
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/meta_approach_bars.png}
-  \caption{Matched 5,000-evaluation search methods (seed \texttt{1902771841}). Champion prolonged $R$. Dashed line is Dual Cosine.}
+  \caption{Matched 5,000-evaluation search methods (seed \texttt{1902771841}).
+  Needs $R_{\mathrm{blend}}$ regeneration (still superseded prolonged $R$). Dashed line is Dual Cosine.}
   \label{fig:meta-approach-bars}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
-  \caption{Champion residual $R$ over a matched 5,000-evaluation budget. Dashed line: Dual Cosine.}
+  \caption{Champion residual over a matched 5,000-evaluation budget.
+  Needs $R_{\mathrm{blend}}$ regeneration (still prolonged $R$). Dashed line: Dual Cosine.}
   \label{fig:meta-approach-compare}
 \end{figure}
 
@@ -40,7 +44,10 @@ Table~\ref{tab:compute} summarizes campaign compute.
 
 \begin{table}[t]
   \centering
-  \caption{Ablations. Left: best score by branch in the recorded search run (final iteration ${\approx}6{,}922$). Right: isolated 150-iteration re-runs (seed \texttt{1902771841}). Prolonged $R$.}
+  \caption{Ablations under \textbf{superseded} prolonged $R$ (not $R_{\mathrm{blend}}$).
+    Left: best score by branch in the recorded search run (final iteration ${\approx}6{,}922$).
+    Right: isolated 150-iteration re-runs (seed \texttt{1902771841}) from \texttt{ablate-*} artifacts.
+    $R_{\mathrm{blend}}$ branch ablations remain pending (\texttt{METRIC\_REGEN.md}).}
   \label{tab:ablation}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}

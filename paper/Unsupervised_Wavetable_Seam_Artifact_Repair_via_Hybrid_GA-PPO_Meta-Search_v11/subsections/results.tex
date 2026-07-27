@@ -41,6 +41,58 @@ Latency: holdout Ours ${\approx}4.57$\,ms vs N2N ${\approx}0.65$\,ms ($J$ still 
 
 \begin{table}[t]
   \centering
+  \caption{Parameter-count fairness under the locked holdout story.
+    Favorite $\Theta$ is the v10.1 hybrid champion cell (search seed \texttt{1902771841}).
+    SeamN2N is the frozen corrupt$\to$corrupt gate (train seed \texttt{424242}).}
+  \label{tab:param-fairness}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lrr@{}}
+    \toprule
+    Method & Params & Holdout $R_{\mathrm{blend}}$ \\
+    \midrule
+    Favorite $\Theta$ (v10.1 hybrid) & ${\approx}121$k & $0.9697$ \\
+    SeamN2N (corrupt$\to$corrupt) & ${\approx}53.5$k & $0.9750$ \\
+    Dual Cosine & $0$ & $0.5409$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent
+Table~\ref{tab:param-fairness} states the size comparison the review requested.
+The hybrid favorite is larger than SeamN2N on this freeze.
+N2N still leads holdout $R_{\mathrm{blend}}$.
+Search seed \texttt{1902771841}, N2N train seed \texttt{424242}, and holdout seed \texttt{20260719} stay disjoint.
+
+\paragraph{Variance honesty.}
+Where multi-seed boards already exist, we report mean$\pm$std
+(Table~\ref{tab:canonical-methods} five-seed prolonged-$R$ snapshot; Table~\ref{tab:sota-main} twenty-waveform $\pm$).
+The primary four-board Table~\ref{tab:n2n-vs-ours} is a single locked freeze per board under DAFx/AES reporting norms.
+We do not invent error bars for single-run boards.
+
+\subsection{Search efficiency (learning curves)}
+\label{sec:search-learning-curve}
+Figure~\ref{fig:search-learning-curve} plots champion score versus outer-loop evaluation index.
+Left: matched $5{,}000$-evaluation hybrid vs Random NAS under \emph{superseded} whole-curve prolonged $R$
+(seed \texttt{1902771841}, Dual Cosine ${\approx}0.817$).
+Hybrid and Random both clear Dual Cosine within the first few evaluations on that older metric.
+Right: v10.1 hybrid under locked $R_{\mathrm{blend}}$ / $J$ ($1{,}200$ evaluations).
+Raw champion $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.975$).
+A Random NAS curve under $R_{\mathrm{blend}}$ is not in the released logs (Deferred D1 / \texttt{METRIC\_REGEN.md}).
+Plateau boredom in the hybrid loop retunes branch mix when champions stall (Section~\ref{sec:hybrid}). One factual note: under near-ceiling residuals the absolute climb after the first few hundred evaluations is small.
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig_search_learning_curve.png}
+  \caption{Search learning curves (seed \texttt{1902771841}).
+    Left: champion prolonged $R$ for hybrid GA--PPO vs Random NAS on the matched $5$k bake-off
+    (\textbf{superseded} whole-curve metric; Dual Cosine dashed).
+    Right: v10.1 hybrid champion $J$ and raw $R_{\mathrm{blend}}$ over $1{,}200$ evaluations
+    (Dual Cosine and Noise2Noise gate marked; Random under $R_{\mathrm{blend}}$ deferred).}
+  \label{fig:search-learning-curve}
+\end{figure*}
+
+\begin{table}[t]
+  \centering
   \caption{Ours vs Noise2Noise and Dual Cosine under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
     $\Delta$ columns are Ours minus that baseline. Gate: Ours exceeds N2N.}
   \label{tab:n2n-vs-ours}
@@ -91,7 +143,9 @@ and skipping near-duplicate copies of the same topology signature.
 
 \begin{table}[t]
   \centering
-  \caption{Top-5 distinct fitted architectures on the CUDA inference bench (batch 64, prolonged $R$, seed geometry matching the search campaign). Favorite is latency-best inside the near-max-$R$ band ($R\ge R_{\max}-5\cdot10^{-4}$).}
+  \caption{Top-5 distinct fitted architectures on the CUDA inference bench (batch 64).
+  Needs $R_{\mathrm{blend}}$ regeneration (still ranked under superseded prolonged $R$; not a current result).
+  Favorite historically latency-best inside the near-max-$R$ band ($R\ge R_{\max}-5\cdot10^{-4}$).}
   \label{tab:top5}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrrrr@{}}
@@ -110,38 +164,34 @@ and skipping near-duplicate copies of the same topology signature.
 
 \subsection{Classical methods vs neural favorite}
 \label{sec:classical-vs-favorite}
-Table~\ref{tab:canonical-methods} scores the classical (non-AI) bake set (no-bake, DualCosine, and \texttt{seam\_fir3}) plus the neural favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}).
-Every row uses the same ideal sibling $r^{\star}$. Higher $R$ means closer to that sibling.
-DualCosine reaches $R\approx 0.825$ ($\approx 1.35$\,ms/batch), near the search-monitor DualCosine $\approx 0.817$ on live draws from the same generator.
-The best \emph{active} classical repair is seam-local 3-tap FIR (\texttt{seam\_fir3}) at $R\approx 0.961$ / $\approx 0.67$\,ms/batch ($0.962\pm0.002$ over five seeds).
-No-bake (passthrough, unrepaired engine vs $r^{\star}$) scores $R\approx 0.972$.
-It scores unrepaired passthrough, not the ideal sibling.
-The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) at $\approx 2.56$\,ms/batch ($\approx 37$k params):
-$\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{seam\_fir3}, and $\Delta R \approx {+}0.166$ vs DualCosine.
-This table is a classical-board snapshot under prolonged $R$. Noise2Noise appears on the multi-family matrix
-(Table~\ref{tab:sota-main}: favorite $0.977$ vs N2N corrupt$\to$corrupt $0.970$ vs DualCosine $0.814$)
-and on the $R_{\mathrm{blend}}$ four-board (Table~\ref{tab:n2n-vs-ours}).
+Table~\ref{tab:canonical-methods} scores the classical (non-AI) bake set (no-bake, DualCosine, and \texttt{seam\_fir3}) plus the locked v10.1 hybrid favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}) under $R_{\mathrm{blend}}$.
+DualCosine reaches $R_{\mathrm{blend}}\approx 0.541$ ($\approx 1.66$\,ms/batch).
+Active classical \texttt{seam\_fir3} reaches $0.884$ / $\approx 1.11$\,ms/batch ($0.888\pm0.009$ over five seeds).
+No-bake (passthrough) scores $0.914$ ($0.917\pm0.009$).
+The hybrid favorite reaches $0.970$ ($0.971\pm0.001$ over five seeds) at $\approx 5.99$\,ms/batch:
+$\Delta R_{\mathrm{blend}} \approx {+}0.056$ vs no-bake and $\approx {+}0.429$ vs DualCosine.
+Noise2Noise on the multi-family matrix is Table~\ref{tab:sota-main}. The four-board gate is Table~\ref{tab:n2n-vs-ours}.
 
 \begin{table}[t]
   \centering
-  \caption{Canonical holdout under historical prolonged $R$ (seed \texttt{20260719}). Mean$\pm$std over five seeds vs the same $r^{\star}$. No-bake $=$ unrepaired engine.}
+  \caption{Canonical holdout under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{20260719}). Mean$\pm$std over five seeds. No-bake $=$ unrepaired engine. Favorite $=$ locked v10.1 hybrid champ.}
   \label{tab:canonical-methods}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrrr@{}}
     \toprule
-    Method & $R$ & $R$ (5-seed) & ms/batch \\
+    Method & $R_{\mathrm{blend}}$ & $R_{\mathrm{blend}}$ (5-seed) & ms/batch \\
     \midrule
-    neural favorite & 0.9911 & $0.9912\pm0.0002$ & 2.56 \\
-    no-bake (passthrough) & 0.9718 & $0.9726\pm0.0021$ & 0.31 \\
-    \texttt{seam\_fir3} & 0.9610 & $0.9616\pm0.0019$ & 0.67 \\
-    classic quadratic & 0.8449 & $0.8453\pm0.0117$ & 1.59 \\
-    DualCosine & 0.8249 & $0.8258\pm0.0137$ & 1.35 \\
-    cosine fade & 0.8249 & $0.8258\pm0.0137$ & 1.59 \\
-    crossfade & 0.8116 & $0.8130\pm0.0145$ & 1.50 \\
-    hann blend & 0.8048 & $0.8060\pm0.0156$ & 0.54 \\
-    soft wide fade & 0.7432 & $0.7378\pm0.0171$ & 2.64 \\
-    detrend & 0.4079 & $0.4091\pm0.0386$ & 0.36 \\
-    ensemble detrend{+}DC{+}FIR & 0.4024 & $0.4027\pm0.0387$ & 1.56 \\
+    neural favorite & 0.9697 & $0.9708\pm0.0012$ & 5.99 \\
+    no-bake (passthrough) & 0.9142 & $0.9166\pm0.0090$ & 1.06 \\
+    \texttt{seam\_fir3} & 0.8842 & $0.8879\pm0.0087$ & 1.11 \\
+    classic quadratic & 0.5742 & $0.5727\pm0.0318$ & 2.07 \\
+    DualCosine & 0.5409 & $0.5420\pm0.0342$ & 1.66 \\
+    cosine fade & 0.5409 & $0.5420\pm0.0342$ & 1.87 \\
+    crossfade & 0.5310 & $0.5273\pm0.0311$ & 1.86 \\
+    hann blend & 0.5197 & $0.5214\pm0.0337$ & 1.05 \\
+    soft wide fade & 0.4828 & $0.4803\pm0.0258$ & 2.85 \\
+    detrend & 0.3437 & $0.3453\pm0.0399$ & 0.96 \\
+    ensemble detrend{+}DC{+}FIR & 0.3126 & $0.3100\pm0.0421$ & 2.00 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -149,47 +199,46 @@ and on the $R_{\mathrm{blend}}$ four-board (Table~\ref{tab:n2n-vs-ours}).
 \subsection{Multi-family comparison}
 \label{sec:sota-main}
 
-Does the meta favorite beat the classical non-AI board (no-bake, DualCosine, FIR, poly, fades),
-fixed MLP/CNN baselines, \emph{and} Noise2Noise across twenty generative families?
-Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}), with canonical-holdout SNR/SDR/wrap-jump for the same method set from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/sota_matrix.json}{SOTA matrix}.
+Does the locked hybrid favorite beat the classical non-AI board (no-bake, DualCosine, FIR, fades),
+fixed MLP/CNN baselines, \emph{and} Noise2Noise across twenty generative families under $R_{\mathrm{blend}}$?
+Table~\ref{tab:sota-main} reports mean$\pm$std over the 20-waveform multi-family set (Section~\ref{sec:dataset}) from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/sota_matrix.json}{SOTA matrix}.
 Figures~\ref{fig:sota-heatmap}--\ref{fig:sota-method-bars} plot the same ranking.
-Primary reading is absolute prolonged-$R$ rank (historical board, see Limitations):
-neural favorite $0.977$, corrupt$\to$corrupt N2N $0.970$, no-bake $0.965$, poly $0.966$,
-\texttt{seam\_fir3} $0.955$, DualCosine $0.814$
-(historical whole-curve board, not the v10.1 $R_{\mathrm{blend}}$ four-board in Table~\ref{tab:n2n-vs-ours}).
-Fixed MLP-on-$R$ and CNN/U-Net-lite-on-$R$ (no outer NAS) sit between DualCosine and the meta favorite.
-Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20 waveforms: $W{=}0$, $p{\approx}8.9{\times}10^{-5}$, mean $\Delta R{=}{+}0.162$ (bootstrap 95\% CI $[0.155,0.170]$).
-Vs no-bake the multifamily mean gap is smaller ($\approx{+}0.012$) but still favors the searched bake on this generator.
-Vs corrupt$\to$corrupt N2N the mean gap is smaller still ($\approx{+}0.007$ on this prolonged-$R$ board).
+Primary reading is absolute $R_{\mathrm{blend}}$ rank:
+Ours $0.931$, corrupt$\to$corrupt N2N $0.925$, seq CNN $0.920$, no-bake $0.893$,
+\texttt{seam\_fir3} $0.868$, DualCosine $0.514$
+(aligned with Table~\ref{tab:n2n-vs-ours} multifamily).
+Fixed MLP-on-$R$ and CNN/U-Net-lite-on-$R$ (no outer NAS) sit between DualCosine and the neural rows.
+Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20 waveforms: $W{=}0$, $p{\approx}8.9{\times}10^{-5}$, mean $\Delta R_{\mathrm{blend}}{=}{+}0.417$ (bootstrap 95\% CI $[0.398,0.435]$).
+Vs no-bake the multifamily mean gap is $\approx{+}0.038$.
+Vs corrupt$\to$corrupt N2N the mean gap is $\approx{+}0.006$ (Ours leads $13/20$ boards).
 
 \begin{table*}[t]
   \centering
-  \caption{Multi-family board (20 waveforms, historical prolonged $R$).
+  \caption{Multi-family board (20 waveforms) under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
   $\Delta R$* and ms* vs Dual Cosine only. N2N/seq use train seeds \texttt{424242}/\texttt{424243}.}
   \label{tab:sota-main}
   \setlength{\tabcolsep}{2.2pt}
   \begin{tabular}{@{}lrrrrrrr@{}}
     \toprule
-    Method & $R$ (20-wave) & SNR (dB) & SDR (dB) & wrap-jump & ms* & params & $\Delta R$* \\
+    Method & $R_{\mathrm{blend}}$ (20-wave) & SNR (dB) & SDR (dB) & wrap-jump & ms* & params & $\Delta R$* \\
     \midrule
-    neural favorite & $0.977\pm0.010$ & $35.0\pm3.2$ & $35.1\pm3.2$ & $0.90\pm0.14$ & 2.44 & 37\,489 & ${+}0.166$ \\
-    N2N corrupt$\to$corrupt & $0.970\pm0.021$ & $33.9\pm4.1$ & $34.0\pm4.1$ & $0.90\pm0.15$ & -- & 53\,506 & ${+}0.167$ \\
-    seq CNN1D & $0.969\pm0.016$ & $32.2\pm3.5$ & $32.4\pm3.5$ & $0.92\pm0.15$ & -- & 3\,242 & ${+}0.162$ \\
-    N2N sibling-sup. & $0.969\pm0.022$ & $33.7\pm4.3$ & $33.8\pm4.3$ & $0.91\pm0.15$ & -- & 53\,506 & ${+}0.168$ \\
-    poly seam ($d{=}3$) & $0.966\pm0.008$ & $31.2\pm2.1$ & $31.3\pm2.1$ & $0.91\pm0.15$ & 1.47 & 0 & ${+}0.148$ \\
-    no-bake & $0.965\pm0.008$ & $30.9\pm1.9$ & $31.0\pm1.9$ & $0.91\pm0.15$ & 0.00 & 0 & ${+}0.147$ \\
-    seq LSTM & $0.956\pm0.037$ & $32.2\pm5.8$ & $32.3\pm5.8$ & $0.86\pm0.15$ & -- & 75\,746 & ${+}0.170$ \\
-    \texttt{seam\_fir3} & $0.955\pm0.005$ & $28.1\pm1.2$ & $28.1\pm1.2$ & $0.46\pm0.08$ & 0.59 & 0 & ${+}0.136$ \\
-    MLP-on-$R$ & $0.932\pm0.006$ & $24.6\pm0.9$ & $24.6\pm0.9$ & $0.64\pm0.07$ & 2.76 & 8\,604 & ${+}0.113$ \\
-    CNN/U-Net-on-$R$ & $0.886\pm0.012$ & $19.5\pm0.9$ & $19.5\pm0.9$ & $0.48\pm0.06$ & 5.01 & 11\,752 & ${+}0.069$ \\
-    classic quadratic & $0.835\pm0.012$ & $17.9\pm1.1$ & $17.7\pm1.2$ & $0.32\pm0.05$ & 1.78 & 0 & ${+}0.020$ \\
-    DualCosine & $0.814\pm0.013$ & $16.9\pm1.2$ & $16.8\pm1.2$ & $0.32\pm0.05$ & 1.48 & 0 & $0$ \\
-    cosine fade & $0.814\pm0.013$ & $16.9\pm1.2$ & $16.8\pm1.2$ & $0.32\pm0.05$ & 2.64 & 0 & $0$ \\
-    crossfade & $0.802\pm0.013$ & $16.7\pm1.2$ & $16.4\pm1.2$ & $0.91\pm0.15$ & 1.70 & 0 & ${-}0.013$ \\
-    hann blend & $0.793\pm0.015$ & $16.1\pm1.2$ & $15.8\pm1.2$ & $0.32\pm0.05$ & 0.57 & 0 & ${-}0.020$ \\
-    soft wide fade & $0.729\pm0.016$ & $14.0\pm1.1$ & $13.6\pm1.1$ & $0.63\pm0.08$ & 3.69 & 0 & ${-}0.082$ \\
-    detrend & $0.375\pm0.040$ & $5.5\pm1.0$ & $5.4\pm1.0$ & $0.00\pm0.00$ & 0.12 & 0 & ${-}0.417$ \\
-    ensemble DC+FIR & $0.368\pm0.040$ & $5.1\pm1.0$ & $5.0\pm1.0$ & $0.12\pm0.02$ & 1.99 & 0 & ${-}0.422$ \\
+    neural favorite & $0.931\pm0.026$ & $34.6\pm3.2$ & $34.7\pm3.2$ & $0.89\pm0.14$ & 4.50 & 121\,451 & ${+}0.417$ \\
+    N2N corrupt$\to$corrupt & $0.925\pm0.038$ & $33.8\pm4.0$ & $33.9\pm4.0$ & $0.89\pm0.15$ & 0.74 & 53\,506 & ${+}0.410$ \\
+    N2N sibling-sup. & $0.924\pm0.035$ & $33.9\pm4.1$ & $34.0\pm4.1$ & $0.91\pm0.15$ & 0.74 & 53\,506 & ${+}0.410$ \\
+    seq CNN1D & $0.920\pm0.026$ & $32.2\pm3.5$ & $32.4\pm3.5$ & $0.92\pm0.15$ & 0.53 & 3\,242 & ${+}0.405$ \\
+    no-bake & $0.893\pm0.028$ & $30.9\pm1.9$ & $31.0\pm1.9$ & $0.91\pm0.15$ & 0.00 & 0 & ${+}0.379$ \\
+    seq LSTM & $0.891\pm0.075$ & $32.2\pm5.8$ & $32.4\pm5.8$ & $0.86\pm0.15$ & 1.53 & 75\,746 & ${+}0.376$ \\
+    \texttt{seam\_fir3} & $0.868\pm0.019$ & $28.1\pm1.2$ & $28.1\pm1.2$ & $0.46\pm0.08$ & 0.17 & 0 & ${+}0.353$ \\
+    MLP-on-$R$ & $0.807\pm0.018$ & $24.7\pm0.9$ & $24.8\pm0.9$ & $0.59\pm0.07$ & 1.76 & 8\,604 & ${+}0.292$ \\
+    CNN/U-Net-on-$R$ & $0.690\pm0.027$ & $19.5\pm0.9$ & $19.5\pm0.9$ & $0.47\pm0.06$ & 3.08 & 11\,752 & ${+}0.175$ \\
+    classic quadratic & $0.547\pm0.031$ & $17.9\pm1.1$ & $17.7\pm1.2$ & $0.32\pm0.05$ & 1.02 & 0 & ${+}0.032$ \\
+    DualCosine & $0.514\pm0.032$ & $16.9\pm1.2$ & $16.8\pm1.2$ & $0.32\pm0.05$ & 0.98 & 0 & $0$ \\
+    cosine fade & $0.514\pm0.032$ & $16.9\pm1.2$ & $16.8\pm1.2$ & $0.32\pm0.05$ & 1.07 & 0 & $0$ \\
+    crossfade & $0.505\pm0.032$ & $16.7\pm1.2$ & $16.4\pm1.2$ & $0.91\pm0.15$ & 0.95 & 0 & ${-}0.010$ \\
+    hann blend & $0.495\pm0.032$ & $16.1\pm1.2$ & $15.8\pm1.2$ & $0.32\pm0.05$ & 0.19 & 0 & ${-}0.020$ \\
+    soft wide fade & $0.462\pm0.021$ & $14.0\pm1.1$ & $13.6\pm1.1$ & $0.63\pm0.08$ & 1.87 & 0 & ${-}0.053$ \\
+    detrend & $0.311\pm0.040$ & $5.5\pm1.0$ & $5.4\pm1.0$ & $0.00\pm0.00$ & 0.06 & 0 & ${-}0.203$ \\
+    ensemble DC+FIR & $0.275\pm0.043$ & $5.1\pm1.0$ & $5.0\pm1.0$ & $0.12\pm0.02$ & 1.05 & 0 & ${-}0.239$ \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -197,51 +246,50 @@ Vs corrupt$\to$corrupt N2N the mean gap is smaller still ($\approx{+}0.007$ on t
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_sota_heatmap.png}
-  \caption{Colorblind-safe (\texttt{cividis}) heatmap of mean prolonged $R$ for selected methods $\times$ generative families (2 seeds each). Higher is better.}
+  \caption{Colorblind-safe (\texttt{cividis}) heatmap of mean $R_{\mathrm{blend}}$ for selected methods $\times$ generative families (2 seeds each). Higher is better.}
   \label{fig:sota-heatmap}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_sota_method_bars.png}
-  \caption{Multi-family mean prolonged $R$ by method (same $20$-waveform board as Table~\ref{tab:sota-main}).}
+  \caption{Multi-family mean $R_{\mathrm{blend}}$ by method (same $20$-waveform board as Table~\ref{tab:sota-main}).}
   \label{fig:sota-method-bars}
 \end{figure}
 
 \subsection{Hard cliffs expose classical fade failure}
 \label{sec:cliff-strata}
 
-Does high no-bake $R$ hide DualCosine failure on large wrap jumps?
-Table~\ref{tab:cliff-strata} stratifies a $4{,}096$-tile holdout draw (seed \texttt{20260719}) by engine wrap-jump percentiles (p75$\approx 1.387$, p90$\approx 1.832$), frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/cliff_strata.json}{cliff-strata data}.
-This board uses whole-curve prolonged $R$ (historical, not $R_{\mathrm{blend}}$).
-No-bake $R$ can stay high on mild cliffs because residual mass remains small relative to ideal RMS.
-DualCosine collapses on hard cliffs ($0.819$ $\to$ $0.657$), while the meta favorite holds ($R\approx 0.9915$)
-and corrupt$\to$corrupt N2N stays slightly ahead ($R\approx 0.9922$ on all / top-10\%).
-Favorite wrap-jump on the top-10\% subset stays $\approx 1.83$ (vs no-bake $2.09$).
+Does high no-bake $R_{\mathrm{blend}}$ hide DualCosine failure on large wrap jumps?
+Table~\ref{tab:cliff-strata} stratifies a $4{,}096$-tile holdout draw (seed \texttt{20260719}) by engine wrap-jump percentiles (p75$\approx 1.387$, p90$\approx 1.832$), frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/cliff_strata.json}{cliff-strata data} under $R_{\mathrm{blend}}$.
+No-bake $R_{\mathrm{blend}}$ can stay high on mild cliffs because residual mass remains small relative to ideal RMS.
+DualCosine collapses on hard cliffs ($0.525$ $\to$ $0.305$), while the hybrid favorite holds ($0.971$ $\to$ $0.978$)
+and corrupt$\to$corrupt N2N stays slightly ahead ($0.976$ / $0.983$ on all / top-10\%).
+Favorite wrap-jump on the top-10\% subset stays $\approx 1.82$ (vs no-bake $2.09$).
 The claim is tiled residual repair, not endpoint-zeroing.
-\textbf{Edge RMSE} is the locked required seam-local secondary (EVAL\_PROTOCOL): on the top-10\% subset it drops from no-bake $0.095$ to favorite $0.021$ (N2N corrupt$\to$corrupt also $0.021$, DualCosine $0.990$).
+\textbf{Edge RMSE} is the locked required seam-local secondary (EVAL\_PROTOCOL): on the top-10\% subset it drops from no-bake $0.095$ to favorite $0.027$ (N2N corrupt$\to$corrupt $0.020$, DualCosine $0.990$).
 Click energy remains an optional diagnostic.
 
 \begin{table*}[t]
   \centering
-  \caption{Cliff strata on $4{,}096$ holdout tiles (historical prolonged $R$). Strata by engine wrap-jump.}
+  \caption{Cliff strata on $4{,}096$ holdout tiles under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Strata by engine wrap-jump.}
   \label{tab:cliff-strata}
   \setlength{\tabcolsep}{2.5pt}
   \begin{tabular}{@{}lrrrrrr@{}}
     \toprule
-    Method & all $R$ & all jump & top25 $R$ & top25 jump & top10 $R$ & top10 jump \\
+    Method & all $R_{\mathrm{blend}}$ & all jump & top25 $R_{\mathrm{blend}}$ & top25 jump & top10 $R_{\mathrm{blend}}$ & top10 jump \\
     \midrule
-    seq LSTM (ceiling) & 0.9953 & 0.865 & 0.9955 & 1.637 & 0.9955 & 1.810 \\
-    N2N sibling-sup. & 0.9936 & 0.879 & 0.9936 & 1.668 & 0.9934 & 1.842 \\
-    N2N corrupt$\to$corrupt & 0.9922 & 0.870 & 0.9924 & 1.647 & 0.9922 & 1.821 \\
-    neural favorite & 0.9911 & 0.869 & 0.9915 & 1.645 & 0.9915 & 1.825 \\
-    seq CNN1D & 0.9863 & 0.881 & 0.9869 & 1.684 & 0.9867 & 1.871 \\
-    no-bake & 0.9715 & 0.913 & 0.9713 & 1.797 & 0.9667 & 2.094 \\
-    \texttt{seam\_fir3} & 0.9611 & 0.456 & 0.9461 & 0.893 & 0.9429 & 1.034 \\
-    DualCosine & 0.8193 & 0.335 & 0.6864 & 0.290 & 0.6574 & 0.335 \\
+    seq LSTM (ceiling) & $0.986\pm0.009$ & 0.865 & 0.989 & 1.637 & 0.990 & 1.810 \\
+    N2N sibling-sup. & $0.981\pm0.013$ & 0.874 & 0.985 & 1.656 & 0.985 & 1.827 \\
+    N2N corrupt$\to$corrupt & $0.976\pm0.015$ & 0.861 & 0.981 & 1.631 & 0.983 & 1.804 \\
+    neural favorite & $0.971\pm0.020$ & 0.863 & 0.978 & 1.634 & 0.978 & 1.817 \\
+    seq CNN1D & $0.960\pm0.028$ & 0.881 & 0.969 & 1.684 & 0.970 & 1.871 \\
+    no-bake & $0.913\pm0.077$ & 0.913 & 0.929 & 1.797 & 0.922 & 2.094 \\
+    \texttt{seam\_fir3} & $0.886\pm0.067$ & 0.456 & 0.870 & 0.893 & 0.869 & 1.034 \\
+    DualCosine & $0.525\pm0.239$ & 0.335 & 0.318 & 0.290 & 0.305 & 0.335 \\
     \bottomrule
   \end{tabular}\\[0.3em]
-  {\footnotesize $n$: all $4096$, top25 $1024$, top10 $410$.}
+  {\footnotesize $n$: all $4096$, top25 $1024$, top10 $410$. $\pm$ is tile std on the all stratum.}
 \end{table*}
 
 \begin{table}[t]
@@ -254,9 +302,9 @@ Click energy remains an optional diagnostic.
     Method & top10 edge RMSE \\
     \midrule
     seq LSTM & 0.011 \\
-    N2N sibling-sup. & 0.018 \\
-    neural favorite & 0.021 \\
-    N2N corrupt$\to$corrupt & 0.021 \\
+    N2N sibling-sup. & 0.017 \\
+    N2N corrupt$\to$corrupt & 0.020 \\
+    neural favorite & 0.027 \\
     seq CNN1D & 0.035 \\
     no-bake & 0.095 \\
     \texttt{seam\_fir3} & 0.164 \\
@@ -268,19 +316,17 @@ Click energy remains an optional diagnostic.
 \subsection{Noise2Noise and sequence baselines}
 \label{sec:n2n-baselines}
 
-How does DenoiseOpt compare to true Noise2Noise-style and lightweight seq restorers on the same generator?
-Primary corrupt$\to$corrupt N2N (20k Adam steps, 53k params, train seed \texttt{424242}) reaches canonical $R\approx 0.9917$, matching the meta favorite within $\approx 0.001$.
-Secondary sibling-supervised N2N reaches $R\approx 0.9933$.
-A bidirectional LSTM (76k params, 15k steps, train seed \texttt{424243}) is the supervised ceiling at $R\approx 0.9952$.
-A tiny depthwise 1D CNN (3.2k params) reaches $R\approx 0.9864$.
+How does DenoiseOpt compare to true Noise2Noise-style and lightweight seq restorers on the same generator under $R_{\mathrm{blend}}$?
+Primary corrupt$\to$corrupt N2N (train seed \texttt{424242}) reaches holdout $R_{\mathrm{blend}}\approx 0.975$ (Table~\ref{tab:n2n-vs-ours}), above the hybrid favorite ($0.970$).
+On the $4{,}096$-tile cliff draw, sibling-supervised N2N reaches $0.981$ and seq LSTM $0.986$ (Table~\ref{tab:cliff-strata}).
 Holdout tiles never enter training.
 Classical DualCosine / \texttt{seam\_fir3} remain in Table~\ref{tab:cliff-strata}.
-Figure~\ref{fig:n2n-vs-ours} plots these canonical holdout scores beside no-bake, DualCosine, and the neural favorite.
+Figure~\ref{fig:n2n-vs-ours} plots the four-board $R_{\mathrm{blend}}$ comparison.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_n2n_vs_ours_bars.png}
-  \caption{Canonical holdout prolonged $R$: N2N and seq baselines vs Ours (neural favorite).
+  \caption{Canonical holdout $R_{\mathrm{blend}}$: N2N and seq baselines vs Ours (locked hybrid).
     Train seeds \texttt{424242}/\texttt{424243} are disjoint from holdout \texttt{20260719}.}
   \label{fig:n2n-vs-ours}
 \end{figure}
@@ -289,30 +335,30 @@ Figure~\ref{fig:n2n-vs-ours} plots these canonical holdout scores beside no-bake
 \label{sec:real-wt}
 
 Does the wrap protocol transfer beyond synthetic sine cliffs onto true exports and third-party OA cycles?
-Table~\ref{tab:real-wt} scores ReelSynth-exported factory periods (primary realism, $n{=}25$, byte-true factory frames resampled to $L{=}256$) and Adventure Kid Waveforms (AKWF) CC0 single-cycle WAVs (secondary, $n{=}24$) after close-seam idealization and the same open-wrap cliff.
+Table~\ref{tab:real-wt} scores ReelSynth-exported factory periods (primary realism) and Adventure Kid Waveforms (AKWF) CC0 single-cycle WAVs (secondary) after close-seam idealization and the same open-wrap cliff, under $R_{\mathrm{blend}}$.
 Procedural stand-ins are demoted to tertiary smoke and no longer carry the primary realism claim.
-On exported factory periods the favorite ($R{\approx}0.911$) trails no-bake / \texttt{seam\_fir3} / poly while still beating Dual Cosine ($0.883$).
-On AKWF OA cycles the favorite ($R{\approx}0.970$) matches no-bake and beats Dual Cosine ($0.936$).
+On exported factory periods the favorite ($R_{\mathrm{blend}}{\approx}0.699$) trails no-bake / FIR / poly / N2N while still beating Dual Cosine ($0.589$).
+On AKWF OA cycles the favorite ($0.679$) trails no-bake / N2N and beats Dual Cosine ($0.424$).
 Export gaps are listed in Section~\ref{sec:limitations}.
 
 \begin{table}[t]
   \centering
-  \caption{Wavetable-native wrap protocol. Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Mean prolonged $R$. Primary = ReelSynth export. Secondary = AKWF CC0 files.}
+  \caption{Wavetable-native wrap protocol under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Primary = ReelSynth export. Secondary = AKWF CC0 files.}
   \label{tab:real-wt}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
     \toprule
-    Method & Export ($n{=}25$) & AKWF OA ($n{=}24$) \\
+    Method & Export & AKWF OA \\
     \midrule
-    endpoint-pin (mean) & 0.939 & 0.978 \\
-    \texttt{seam\_fir3} & 0.971 & 0.975 \\
-    poly seam ($d{=}3$) & 0.967 & 0.970 \\
-    no-bake & 0.967 & 0.969 \\
-    neural favorite & 0.911 & 0.970 \\
-    DualCosine & 0.883 & 0.936 \\
-    N2N corrupt$\to$corrupt & 0.869 & 0.974 \\
-    seq CNN1D & 0.839 & 0.962 \\
-    seq LSTM & 0.769 & 0.948 \\
+    \texttt{seam\_fir3} & 0.863 & 0.725 \\
+    poly seam ($d{=}3$) & 0.846 & 0.696 \\
+    no-bake & 0.845 & 0.702 \\
+    endpoint-pin (mean) & 0.792 & 0.745 \\
+    N2N corrupt$\to$corrupt & 0.771 & 0.731 \\
+    seq CNN1D & 0.706 & 0.677 \\
+    neural favorite & 0.699 & 0.679 \\
+    DualCosine & 0.589 & 0.424 \\
+    seq LSTM & 0.628 & 0.579 \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -320,16 +366,16 @@ Export gaps are listed in Section~\ref{sec:limitations}.
 \subsection{Polynomial baseline and endpoint pinning}
 \label{sec:poly-jump}
 
-Does a cheap classical poly fitter close the residual, and does endpoint pinning show the wrap-jump vs $R$ tradeoff?
-A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R\approx 0.972$ ($\approx$ no-bake) with wrap-jump essentially unchanged (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/poly_baseline.json}{polynomial results}).
+Does a cheap classical poly fitter close the residual, and does endpoint pinning show the wrap-jump vs $R_{\mathrm{blend}}$ tradeoff?
+A seam-local degree-3 polynomial fitter (no learning) reaches canonical $R_{\mathrm{blend}}\approx 0.917$ (slightly above no-bake $0.914$) with wrap-jump essentially unchanged (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/poly_baseline.json}{polynomial results}).
 SSM seq models are deferred. The LSTM remains the supervised seq ceiling.
-An endpoint-pin control (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/jump_control.json}{pinning results}) drives wrap-jump to $0$ on all / hard subsets while dropping $R$ (all $0.906$, hard $0.822$).
-Methods that zero wrap-jump are not the same objective as prolonged $R$ (Limitations).
+An endpoint-pin control (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/jump_control.json}{pinning results}) drives wrap-jump to $0$ on all / hard subsets while dropping $R_{\mathrm{blend}}$ (all $0.733$, hard $0.597$).
+Methods that zero wrap-jump are not the same objective as $R_{\mathrm{blend}}$ (Limitations).
 
 \subsection{Classical virtual-analog seam repairs}
 \label{sec:va-seam-baselines}
 
-Do the cited VA antialias tools~\cite{stilson1996,nam2009polyblep,esqueda2016blamp} beat DualCosine on prolonged $R$ when applied as cycle-local seam residuals?
+Do the cited VA antialias tools~\cite{stilson1996,nam2009polyblep,esqueda2016blamp} beat DualCosine on $R_{\mathrm{blend}}$ when applied as cycle-local seam residuals?
 
 \paragraph{What each operator changes.}
 Figure~\ref{fig:va-seam-techniques} shows the family on one high-wrap sine{+}cliff tile (same seed and tile as Figure~\ref{fig:intro-sine}).
@@ -341,47 +387,47 @@ It edits only a few samples on each side of the discontinuity.
 On a pure value cliff the slope jump is small, so BLAMP is nearly a no-bake passthrough.
 \textbf{DualCosine} (our classical bake baseline) fades both ends of the stored period with raised-cosine windows.
 It does not insert a BLEP-style residual.
-It trades wrap energy for a wide end-fade distortion that prolonged $R$ penalizes on hard cliffs.
+It trades wrap energy for a wide end-fade distortion that $R_{\mathrm{blend}}$ penalizes on hard cliffs.
 
 \paragraph{Scores.}
-Table~\ref{tab:va-seam-blep} reports batch means from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/va_seam_blep.json}{VA results} (seed \texttt{20260719}, batch 64).
+Table~\ref{tab:va-seam-blep} reports batch means from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/va_seam_blep.json}{VA results} (seed \texttt{20260719}, batch 64) under $R_{\mathrm{blend}}$.
 Implementation is released in the \href{https://github.com/reeldemo/reelsynth}{ReelSynth repository}. PolyBLEP matches \texttt{osc::va::poly\_blep}. BLIT/BLEP uses a raised-cosine step residual. BLAMP applies a polyBLAMP lobe to the wrap slope jump.
-PolyBLEP reaches mean $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine) but trails no-bake / \texttt{seam\_fir3} / the meta favorite.
-BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping mean $R$ to $0.868$ and collapsing on hard cliffs ($R\approx 0.712$).
-BLAMP is near-no-bake on this value-cliff geometry (mean $R\approx 0.972$).
-On the annotated severe tile in Figure~\ref{fig:va-seam-techniques}, tile $R$ is lower still (PolyBLEP $\approx 0.869$, BLIT/BLEP $\approx 0.703$, DualCosine $\approx 0.603$, BLAMP $\approx$ engine), which matches the hard-cliff strata.
+PolyBLEP reaches mean $R_{\mathrm{blend}}\approx 0.795$ ($\Delta\approx{+}0.254$ vs DualCosine) but trails no-bake / \texttt{seam\_fir3}.
+BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping mean $R_{\mathrm{blend}}$ to $0.632$ and collapsing on hard cliffs ($0.351$).
+BLAMP is near-no-bake on this value-cliff geometry (mean $0.914$).
+On the annotated severe tile in Figure~\ref{fig:va-seam-techniques}, tile $R_{\mathrm{blend}}$ is lower still (PolyBLEP $\approx 0.726$, BLIT/BLEP $\approx 0.385$, Dual Cosine $0.300$, BLAMP $\approx$ engine).
 These classical tools are scored here, not only cited.
-They beat DualCosine on mean $R$ in places.
-None matches the favorite on prolonged $R$.
+They beat DualCosine on mean $R_{\mathrm{blend}}$ in places.
+None matches the locked hybrid favorite on holdout $R_{\mathrm{blend}}$.
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/fig_va_seam_techniques.png}
-  \caption{Classical VA seam techniques on one cracked sine{+}cliff tile (seed~\texttt{20260719}, tile~46, $|wrap|{=}2.283$, $L{=}256$, three tiled periods). Yellow band marks the first seam neighborhood. Panel tile $R$ (1~=~best): (a)~ideal (unscored sibling). (b)~cracked engine $R{=}0.9503$. (c)~BLIT/BLEP step residual $R{=}0.7026$. (d)~PolyBLEP fractional-delay residual $R{=}0.8685$. (e)~BLAMP slope/corner residual $R{=}0.9504$ (near no-bake on value cliffs). (f)~DualCosine end fade $R{=}0.6029$. Colorblind-safe hues with distinct linestyles for B\&W print. Batch means appear in Table~\ref{tab:va-seam-blep}. Accessibility: six-panel comparison of ideal, cracked, BLIT/BLEP, PolyBLEP, BLAMP, and DualCosine.}
+  \caption{Classical VA seam techniques on one cracked sine{+}cliff tile (seed~\texttt{20260719}, tile~46, $|wrap|{=}2.283$, $L{=}256$, three tiled periods). Yellow band marks the first seam neighborhood. Panel tile $R_{\mathrm{blend}}$ (1~=~best): (a)~ideal (unscored sibling). (b)~cracked engine $0.897$. (c)~BLIT/BLEP $0.385$. (d)~PolyBLEP $0.726$. (e)~BLAMP $0.897$ (near no-bake on value cliffs). (f)~DualCosine $0.300$. Colorblind-safe hues with distinct linestyles for B\&W print. Batch means appear in Table~\ref{tab:va-seam-blep}. Accessibility: six-panel comparison of ideal, cracked, BLIT/BLEP, PolyBLEP, BLAMP, and DualCosine.}
   \label{fig:va-seam-techniques}
 \end{figure*}
 
 \begin{table*}[t]
   \centering
-  \caption{Classical VA seam repairs on the residual protocol (seed \texttt{20260719}).
-  Canonical holdout: $R$, SNR/SDR, wrap-jump, edge RMSE.
-  Cliff top-10\%: $R$ ($n{=}410$).
-  Multi: mean $R$ over 20 generative waveforms.}
+  \caption{Classical VA seam repairs under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{20260719}).
+  Canonical holdout: $R_{\mathrm{blend}}$, SNR/SDR, wrap-jump, edge RMSE.
+  Cliff top-10\%: $R_{\mathrm{blend}}$ ($n{=}410$).
+  Multi: mean $R_{\mathrm{blend}}$ over 20 generative waveforms.}
   \label{tab:va-seam-blep}
   \setlength{\tabcolsep}{2.5pt}
   \begin{tabular}{@{}lrrrrrrr@{}}
     \toprule
-    Method & $R$ & SNR & SDR & jump & edge & top10 $R$ & multi $R$ \\
+    Method & $R_{\mathrm{blend}}$ & SNR & SDR & jump & edge & top10 $R_{\mathrm{blend}}$ & multi $R_{\mathrm{blend}}$ \\
     \midrule
-    BLAMP & 0.9718 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9667 & 0.965 \\
-    no-bake & 0.9718 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9667 & 0.965 \\
-    \texttt{seam\_fir3} & 0.9610 & 29.6 & 29.6 & 0.438 & 0.112 & 0.9429 & 0.955 \\
-    PolyBLEP & 0.9288 & 25.9 & 25.8 & 0.102 & 0.205 & 0.8641 & 0.924 \\
-    BLIT/BLEP & 0.8680 & 20.4 & 20.3 & 0.004 & 0.365 & 0.7116 & 0.860 \\
-    DualCosine & 0.8249 & 18.0 & 17.8 & 0.292 & 0.506 & 0.6574 & 0.814 \\
+    BLAMP & 0.9142 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9219 & 0.893 \\
+    no-bake & 0.9142 & 32.6 & 32.7 & 0.873 & 0.080 & 0.9220 & 0.893 \\
+    \texttt{seam\_fir3} & 0.8842 & 29.6 & 29.6 & 0.438 & 0.112 & 0.8693 & 0.868 \\
+    PolyBLEP & 0.7949 & 25.9 & 25.8 & 0.102 & 0.205 & 0.6895 & 0.784 \\
+    BLIT/BLEP & 0.6324 & 20.4 & 20.3 & 0.004 & 0.365 & 0.3510 & 0.612 \\
+    DualCosine & 0.5409 & 18.0 & 17.8 & 0.292 & 0.506 & 0.3049 & 0.514 \\
     \bottomrule
   \end{tabular}\\[0.3em]
-  {\footnotesize Latency (canonical, CUDA): PolyBLEP $\approx 1.43$\,ms/batch, DualCosine $\approx 1.06$, BLIT/BLEP $\approx 123$, BLAMP $\approx 54$. Frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/va_seam_blep.json}{VA results}.}
+  {\footnotesize Latency (canonical, CUDA): PolyBLEP $\approx 0.87$\,ms/batch, DualCosine $\approx 1.46$, BLIT/BLEP $\approx 71$, BLAMP $\approx 20$. Frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/va_seam_blep.json}{VA results}.}
 \end{table*}
 
 \subsection{When search helps vs classical methods}
@@ -403,7 +449,9 @@ The primary SOTA claim remains the Python multi-family matrix.
 
 \begin{table}[t]
   \centering
-  \caption{Rust \texttt{sound\_bench} transfer ($n{=}20$). Prolonged $R$. $\Delta R$ vs Dual Cosine.}
+  \caption{Rust \texttt{sound\_bench} transfer ($n{=}20$).
+  Needs $R_{\mathrm{blend}}$ regeneration (table still shows superseded prolonged $R$).
+  $\Delta R$ vs Dual Cosine.}
   \label{tab:rust-bench}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
@@ -443,6 +491,6 @@ The primary SOTA claim remains the Python multi-family matrix.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_classical_vs_ai_bars.png}
-  \caption{Canonical holdout ranking on prolonged $R$ (left) and latency (right).}
+  \caption{Canonical holdout ranking on $R_{\mathrm{blend}}$ (left) and latency (right).}
   \label{fig:classical-vs-ai-bars}
 \end{figure}
