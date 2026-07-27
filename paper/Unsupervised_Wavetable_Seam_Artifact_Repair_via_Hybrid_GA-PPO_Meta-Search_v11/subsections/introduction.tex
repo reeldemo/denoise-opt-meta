@@ -6,7 +6,7 @@ When those endpoints disagree, each wrap injects a discontinuity that listeners 
 
 \paragraph{Wavetable synthesis in brief.}
 A wavetable synthesizer stores a single cycle of a waveform (the wavetable) and produces continuous tone by looping a read pointer through that table.
-Pitch is set by how fast the pointer advances; timbre comes from the stored shape (and, in multi-table banks, from morphing across tables).
+Pitch is set by how fast the pointer advances. Timbre comes from the stored shape (and, in multi-table banks, from morphing across tables).
 Tiling the stored period yields a sustained note under playback.
 If the endpoints disagree ($x[0]\neq x[L-1]$), every wrap is a discontinuity at the wrap join (the seam), heard as a click locked to the fundamental.
 Figure~\ref{fig:wavetable-primer} shows one stored period, tiled playback with wrap marks, and a zoomed mismatched wrap.
@@ -17,7 +17,7 @@ The same geometry appears whenever a short loop is tiled for listening or scorin
   \includegraphics[width=\linewidth]{figures/fig_wavetable_primer.png}
   \caption{Wavetable synthesis primer.
   (a)~One stored period $x[0..L{-}1]$ ($L{=}256$).
-  (b)~The same period tiled for continuous playback; dashed lines mark read-pointer wraps.
+  (b)~The same period tiled for continuous playback. Dashed lines mark read-pointer wraps.
   (c)~Zoom at a mismatched wrap join (seam), where the endpoint cliff produces an audible click.}
   \label{fig:wavetable-primer}
 \end{figure}
@@ -25,9 +25,9 @@ The same geometry appears whenever a short loop is tiled for listening or scorin
 \paragraph{Terminology.}
 \begin{itemize}
   \item \textbf{Seam} (wrap join / loop join): the join between the end and start of one looped period, where a click appears if the endpoints mismatch. The seam is local. The signal is the whole waveform.
-  \item \textbf{Repair operator} (bake operator $\Theta$; short: operator): the searchable local edit applied at the seam (formerly called a ``cell'' in code notes).
+  \item \textbf{Repair operator} (bake operator $\Theta$, short: operator): the searchable local edit applied at the seam (formerly called a ``cell'' in code notes).
   \item \textbf{Residual operator}: optional tiny learned network inside a repair operator.
-  \item \textbf{$R$} / \textbf{$R_{\mathrm{blend}}$}: unsupervised seam-quality scores (whole-curve prolonged $R$ for debug; $R_{\mathrm{blend}}$ for primary selection). Details in Section~\ref{sec:residual-score}.
+  \item \textbf{$R$} / \textbf{$R_{\mathrm{blend}}$}: unsupervised seam-quality scores. Whole-curve prolonged $R$ is for debug. $R_{\mathrm{blend}}$ is for primary selection. Details in Section~\ref{sec:residual-score}.
   \item \textbf{Outer loop} / \textbf{meta-search}: GA--PPO search over repair-operator graphs (not end-to-end training of one large network).
   \item \textbf{Holdout}: frozen eval set / seed used for reported scores.
 \end{itemize}
@@ -36,7 +36,7 @@ We treat the task as \emph{cycle-local seam restoration}: edit a neighborhood of
 Agreement uses a discontinuity-weighted blend $R_{\mathrm{blend}}$ (seam fidelity vs the ideal, plus mid-cycle identity vs the cracked engine) under a latency-aware objective $J$ (Section~\ref{sec:residual-score}).
 
 \paragraph{Four roles.}
-Keep these distinct (Figure~\ref{fig:intro-sine}; Section~\ref{sec:four-roles}):
+Keep these distinct (Figure~\ref{fig:intro-sine} and Section~\ref{sec:four-roles}):
 \begin{enumerate}
   \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld. Scoring target only. Not a method.
   \item \textbf{No-bake}: unrepaired cracked engine $x$, scored vs $r^{\star}$. A do-nothing reference.
@@ -55,7 +55,7 @@ It is not shown in Figure~\ref{fig:intro-sine}, which illustrates roles on one h
   (c)~Dual Cosine fade.
   (d)~Ours (searched bake).
   (e)--(f)~Residual and seam zoom.
-  Printed scores use whole-curve prolonged $R$ for this figure; primary selection uses $R_{\mathrm{blend}}$ (Table~\ref{tab:n2n-vs-ours}).}
+  Printed scores use whole-curve prolonged $R$ for this figure. Primary selection uses $R_{\mathrm{blend}}$ (Table~\ref{tab:n2n-vs-ours}).}
   \label{fig:intro-sine}
 \end{figure*}
 
@@ -70,9 +70,9 @@ Under the locked v10.1 $R_{\mathrm{blend}}$ protocol:
 \begin{itemize}
   \item The hybrid champion does \emph{not} clear the frozen Noise2Noise holdout gate
     ($R_{\mathrm{blend}}{\approx}0.9697$ vs $0.9750$). Dual Cosine on that holdout sits near $0.541$.
-  \item On twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$; $13/20$ wins). Both beat Dual Cosine.
+  \item On twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$, with $13/20$ wins). Both beat Dual Cosine.
   \item On hard wrap cliffs, classical fades collapse while searched operators and Noise2Noise hold (Section~\ref{sec:cliff-strata}).
-  \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours; both still beat Dual Cosine.
+  \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours. Both still beat Dual Cosine.
 \end{itemize}
 In summary, compact searchable repair operators remain competitive when classical fades fail and need no paired clean targets at search time.
 All main-text claims, tables, and figures use the locked v10.1 $R_{\mathrm{blend}}$ protocol (Section~\ref{sec:residual-score}).
@@ -82,10 +82,10 @@ It is not a current result.
 \paragraph{Transfer datasets.}
 As a cross-domain stress test (not a diagnosis claim), we reuse the same wrap protocol on seven boards
 (Section~\ref{sec:transfer-protocol}):
-\textbf{CWRU}, \textbf{MFPT}, and \textbf{Paderborn} K001 bearing vibration (one shaft revolution as a period);
-\textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz ECG subset (one heartbeat as a period);
+\textbf{CWRU}, \textbf{MFPT}, and \textbf{Paderborn} K001 bearing vibration (one shaft revolution as a period),
+\textbf{MIT-BIH} and a \textbf{PTB-XL} 500\,Hz ECG subset (one heartbeat as a period),
 plus \textbf{synthetic CNC} and \textbf{synthetic PMU/AC} pilots when real downloads are walled.
-Domain-trained Noise2Noise quality is scored on those boards (Table~\ref{tab:transfer-main}); deep diagnosis baselines remain out of scope.
+Domain-trained Noise2Noise quality is scored on those boards (Table~\ref{tab:transfer-main}). Deep diagnosis baselines remain out of scope.
 
 \paragraph{Scope.}
 Cycle-local wavetable seam repair for DSP / synthesis venues.

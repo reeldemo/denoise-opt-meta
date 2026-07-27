@@ -6,7 +6,7 @@ Evaluation follows the \href{https://github.com/reeldemo/denoise-opt-meta/blob/m
 Primary metric: $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
 Search objective: $J$ as in~\eqref{eq:outer-obj} ($\lambda{=}0.02$).
 Champ gate: strictly beat frozen Noise2Noise corrupt$\to$corrupt holdout $R_{\mathrm{blend}}$.
-Secondary: SNR, SDR, wrap-jump, seam-local edge RMSE; debug keys include pure $R_{\mathrm{seam}}$ and whole-curve $R$.
+Secondary: SNR, SDR, wrap-jump, and seam-local edge RMSE. Debug keys include pure $R_{\mathrm{seam}}$ and whole-curve $R$.
 Holdout seed \texttt{20260719}. Search seed \texttt{1902771841}. N2N train seed \texttt{424242}.
 We report the hybrid\_lstm freeze plus holdout / multi-family / Factory+FX / AKWF / transfer benches.
 PESQ/STOI stay out of scope on non-speech cycles. LibriSpeech and MUSDB are not used.
@@ -29,11 +29,11 @@ The search campaign draws fresh i.i.d.\ batches from this generator and does not
 There is no supervised clean/noisy training split of studio audio.
 
 \paragraph{Multi-family diversity ($\ge 20$ waveforms).}
-Beyond the single sine{+}cliff holdout, Phase~3a scores methods on \textbf{20} generative draws: ten family variants (\texttt{sine\_cliff}, \texttt{harmonic\_fft}, \texttt{am\_fm}, \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, \texttt{extreme\_overlay}, \texttt{open\_wrap\_bias}, \texttt{soft\_noise}, \texttt{wide\_seam}) $\times$ two seeds (\texttt{20260719} and \texttt{20260720}), batch 64 each ($128$ cycles per family; $1{,}280$ total).
+Beyond the single sine{+}cliff holdout, Phase~3a scores methods on \textbf{20} generative draws: ten family variants (\texttt{sine\_cliff}, \texttt{harmonic\_fft}, \texttt{am\_fm}, \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, \texttt{extreme\_overlay}, \texttt{open\_wrap\_bias}, \texttt{soft\_noise}, \texttt{wide\_seam}) $\times$ two seeds (\texttt{20260719} and \texttt{20260720}), batch 64 each ($128$ cycles per family, $1{,}280$ total).
 These Python generative variants stress harmonic / AM--FM / nonlinear / overlay / open-wrap behavior of \texttt{make\_batch} and remain the primary SOTA matrix.
 Separately, \texttt{export\_sound\_bench\_tiles} exports \textbf{20} Rust \texttt{sound\_bench} engine/ideal pairs (10 families $\times$ 2 seeds, $L{=}256$, byte-aligned with \texttt{generate\_sound} / \texttt{generate\_sound\_ideal}) scored under the same residual geometry as a secondary transfer block (Table~\ref{tab:rust-bench}).
 Every method sees the same tensors per waveform.
-\textbf{Primary classical comparison} is absolute prolonged $R$ against the non-AI board (no-bake, DualCosine, \texttt{seam\_fir3}, poly, fades, VA residuals; Section~\ref{sec:classical-board}).
+\textbf{Primary classical comparison} is absolute prolonged $R$ against the non-AI board (no-bake, DualCosine, \texttt{seam\_fir3}, poly, fades, VA residuals, Section~\ref{sec:classical-board}).
 The search objective is maximize $R$ toward the ideal sibling (best $R{=}1$).
 DualCosine is one classical comparator and a PPO centering constant.
 It is not the reward target.
@@ -41,10 +41,10 @@ It is not the reward target.
 \paragraph{Dataset statistics.}
 Table~\ref{tab:dataset-stats} and Figures~\ref{fig:dataset-size}--\ref{fig:dataset-transfer-sizes} inventory every evaluation board used in this paper.
 The primary procedural holdout is a frozen $4{,}096$-cycle metrics draw ($L{=}256$, $N{=}16$ tiles, seed \texttt{20260719}) plus a matched score batch of $64$ cycles (five consecutive seeds for classical mean$\pm$std).
-Multi-family SOTA scores $20$ waveforms ($10$ families $\times$ $2$ seeds, batch $64$; $1{,}280$ cycles).
+Multi-family SOTA scores $20$ waveforms ($10$ families $\times$ $2$ seeds, batch $64$, $1{,}280$ cycles).
 Wavetable-native boards use ReelSynth Factory+FX exports ($n{=}1{,}280$: $640$ dry + $640$ FX) and AKWF CC0 cycles ($n{=}1{,}280$) so Plot~4 corpus bars are comparable to multi-family ($1{,}280$).
 Sci/eng transfer tiles $1{,}536$ periods across CWRU, MFPT ($n{=}256$), MIT-BIH, PTB-XL subset, and synthetic CNC/PMU.
-Search never trains on the frozen holdout; N2N/seq baselines use disjoint train seeds \texttt{424242}/\texttt{424243}.
+Search never trains on the frozen holdout. N2N/seq baselines use disjoint train seeds \texttt{424242}/\texttt{424243}.
 Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/tree/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures}{dataset artifacts}.
 
 \begin{table}[t]
@@ -58,13 +58,13 @@ Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/tree/master/paper/
     \toprule
     Board & Size & Notes \\
     \midrule
-    Holdout metrics & $4{,}096$ cycles & seed \texttt{20260719}; $N{=}16$ tiles \\
+    Holdout metrics & $4{,}096$ cycles & seed \texttt{20260719}, $N{=}16$ tiles \\
     Score batch & $64$ cycles & classical / favorite tables \\
     Multi-family SOTA & $1{,}280$ cycles & $10$ families $\times$ $2$ seeds $\times$ $64$ \\
     Factory+FX export & $1{,}280$ periods & $640$ dry + $640$ FX mid-tile extracts \\
     AKWF OA & $1{,}280$ periods & CC0 single-cycle WAVs \\
-    Meta hybrid\_lstm & $1{,}200$ iters & $R_{\mathrm{blend}}{+}J$; seed \texttt{1902771841} \\
-    CWRU & $256$ periods & $4$ MAT files; DE @12\,kHz \\
+    Meta hybrid\_lstm & $1{,}200$ iters & $R_{\mathrm{blend}}{+}J$, seed \texttt{1902771841} \\
+    CWRU & $256$ periods & $4$ MAT files, DE @12\,kHz \\
     MFPT & $256$ periods & shaft-rate windows \\
     MIT-BIH & $256$ periods & $10$ records @360\,Hz \\
     PTB-XL subset & $256$ periods & $94$ \texttt{*\_hr} @500\,Hz \\
@@ -99,7 +99,7 @@ Figure~\ref{fig:intro-sine} is the documented sine-wrap edge case: a high-$|wrap
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_dataset_distributions.png}
   \caption{Holdout distribution statistics (seed \texttt{20260719}, $n{=}4{,}096$ cycles).
-    Distinguish: ideal sibling $r^{\star}$ (cliff withheld); no-bake $=$ unrepaired cracked engine (not $r^{\star}$); DualCosine $=$ one classical bake.
+    Distinguish: ideal sibling $r^{\star}$ (cliff withheld), no-bake $=$ unrepaired cracked engine (not $r^{\star}$), and DualCosine $=$ one classical bake.
     Top left: ideal RMS per cycle.
     Top right: engine residual RMS before any bake.
     Bottom left: wrap jump magnitude $|x_0-x_{L-1}|$ (cliff hardness proxy).
@@ -119,16 +119,16 @@ Figures in Section~\ref{sec:results} regenerate from the archived \href{https://
 \paragraph{Inference, classical, and learned baselines.}
 High-$R$ fitted operators ($R\ge 0.98$) are timed on CUDA (batch 64, prolonged residual).
 Ten non-learnable bake denoisers share the frozen canonical holdout against the neural favorite (Table~\ref{tab:canonical-methods}).
-Cycle-local BLIT/BLEP, PolyBLEP, and BLAMP seam repairs are scored on the same holdout / cliff / multi-family protocol (Table~\ref{tab:va-seam-blep}; \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/va_seam_blep.json}{VA results}) and illustrated on the intro high-wrap tile (Figure~\ref{fig:va-seam-techniques}).
+Cycle-local BLIT/BLEP, PolyBLEP, and BLAMP seam repairs are scored on the same holdout / cliff / multi-family protocol (Table~\ref{tab:va-seam-blep} and the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/va_seam_blep.json}{VA results}) and illustrated on the intro high-wrap tile (Figure~\ref{fig:va-seam-techniques}).
 Fixed-arch MLP-on-$R$ and CNN/U-Net-lite-on-$R$ baselines (no outer NAS) are trained on $1{-}R$ with the same generator and scored in the SOTA matrix.
 Phase~B adds a primary corrupt$\to$corrupt Noise2Noise seam CNN (train seed \texttt{424242}, disjoint from holdout), a secondary sibling-supervised ceiling on the same architecture, and lightweight LSTM / depthwise 1D-CNN seq restorers (train seed \texttt{424243}).
 No search-champion weights initialize those baselines.
 Family-conditional hardness uses the separate Rust procedural $100{,}000$-cycle bench reported in Results.
 
 \paragraph{Cliff strata and wavetable-native realism.}
-A $4{,}096$-tile holdout draw (seed \texttt{20260719}) is stratified by engine wrap-jump percentiles (top 25\% / top 10\%; cutoffs in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/cliff_strata.json}{cliff-strata data}).
+A $4{,}096$-tile holdout draw (seed \texttt{20260719}) is stratified by engine wrap-jump percentiles (top 25\% / top 10\%), with cutoffs in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/cliff_strata.json}{cliff-strata data}.
 Hard-cliff is the operative regime for claims about DualCosine collapse vs favorite retention.
-Edge RMSE is the locked required seam-local secondary; click energy is optional.
+Edge RMSE is the locked required seam-local secondary. Click energy is optional.
 Wavetable-native transfer (Phase~F1) scores true ReelSynth-exported factory periods (primary) and external AKWF CC0 WAVs (secondary) under the same close-seam$\to$open-wrap protocol.
 Procedural stand-ins are tertiary smoke only.
 Speech/music LibriSpeech/MUSDB corpora remain off.

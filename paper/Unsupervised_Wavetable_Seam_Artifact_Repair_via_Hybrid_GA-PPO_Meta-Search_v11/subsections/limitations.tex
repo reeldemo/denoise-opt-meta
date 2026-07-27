@@ -12,7 +12,7 @@ We collect honesty notes here rather than repeating them through Results and Dis
     PESQ and STOI are excluded: primary cycles are non-speech wavetable tiles.
   \item \textbf{Metric lock.}
     All main-text claims, tables, and figures should report the locked v10.1 $R_{\mathrm{blend}}$ protocol
-    (Table~\ref{tab:n2n-vs-ours}; Section~\ref{sec:residual-score}).
+    (Table~\ref{tab:n2n-vs-ours} and Section~\ref{sec:residual-score}).
     Whole-curve prolonged $R$ near $0.991$ is a superseded debug score from earlier freezes.
     It is not a current result and must not overwrite the holdout gate reading
     ($R_{\mathrm{blend}}{\approx}0.9697$ for Ours vs $0.9750$ for Noise2Noise).
@@ -21,21 +21,21 @@ We collect honesty notes here rather than repeating them through Results and Dis
     regenerated under $R_{\mathrm{blend}}$.
   \item \textbf{Domain Noise2Noise vs transfer depth.}
     Domain-trained Noise2Noise quality \emph{was} run on the seven sci/eng transfer boards
-    (Table~\ref{tab:transfer-main}); it trails Ours on every column under prolonged $R$.
+    (Table~\ref{tab:transfer-main}). It trails Ours on every column under prolonged $R$.
     Latency timings in Appendix~\ref{app:supplement} still use the wavetable checkpoint zero-shot.
     Cycle-GAN / BeatDiff / real KIT--PMU / MOS remain incomplete where noted
     (Table~\ref{tab:transfer-sota-status}): Cycle-GAN and BeatDiff have OOD wrap-$R$
-    probes only (clinical $\neq$ wrap-$R$); Paderborn Al~Firdausi CNN is trained from scratch as a
+    probes only (clinical $\neq$ wrap-$R$). Paderborn Al~Firdausi CNN is trained from scratch as a
     native 4-class fault classifier (plus an optional arch-reuse wrap bake, labeled
-    separately); PTB-XL is expanded lead-I (not multi-lead).
+    separately). PTB-XL is expanded lead-I (not multi-lead).
     Rust \texttt{sound\_bench} scores classical rows and the favorite only.
   \item \textbf{Domain shift on exports.}
     On Factory+FX / Rust tiles the meta favorite can trail no-bake or FIR while still beating Dual Cosine.
     We do not claim universal factory superiority.
   \item \textbf{Search geometry.}
     Search scores Python generator draws.
-    The Python multi-family matrix is primary; Rust export is secondary.
-    Per-trial width is capped; Demucs-/diffusion-scale stacks were screened out.
+    The Python multi-family matrix is primary. Rust export is secondary.
+    Per-trial width is capped. Demucs-/diffusion-scale stacks were screened out.
   \item \textbf{No wrap-closure theorems.}
     Endpoint-pin can zero wrap-jump while residual falls.
     We claim tiled residual repair toward $r^{\star}$, not endpoint closure or search convergence.

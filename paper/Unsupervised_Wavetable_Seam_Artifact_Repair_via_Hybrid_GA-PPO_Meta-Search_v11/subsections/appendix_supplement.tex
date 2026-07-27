@@ -12,7 +12,7 @@ Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchabl
 Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs Dual Cosine, wall hours, and whether the champion graph used an LSTM or xLSTM block.
 This is an outer-loop bake-off under historical whole-curve prolonged $R$.
 Noise2Noise is not an outer-loop method here (see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main}).
-At the completed gate, Ours leads on absolute champion $R$ ($R{\approx}0.99146$, $\Delta R{\approx}{+}0.17488$ vs Dual Cosine ${\approx}0.81658$; ${\approx}8.46$\,h), with Aging evolution second ($R{\approx}0.99079$).
+At the completed gate, Ours leads on absolute champion $R$ ($R{\approx}0.99146$, $\Delta R{\approx}{+}0.17488$ vs Dual Cosine ${\approx}0.81658$, ${\approx}8.46$\,h). Aging evolution is second ($R{\approx}0.99079$).
 Neither Ours nor Aging evolution selected an LSTM block in the champion graph.
 Source: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/meta_approach_compare.json}{matched-budget results} (search seed \texttt{1902771841}).
 
@@ -21,7 +21,7 @@ Source: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Uns
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/meta_approach_bars.png}
-  \caption{Matched 5,000-evaluation search methods (seed \texttt{1902771841}). Champion prolonged $R$; dashed line is Dual Cosine.}
+  \caption{Matched 5,000-evaluation search methods (seed \texttt{1902771841}). Champion prolonged $R$. Dashed line is Dual Cosine.}
   \label{fig:meta-approach-bars}
 \end{figure}
 
@@ -83,7 +83,7 @@ Table~\ref{tab:compute} summarizes campaign compute.
 \label{para:hp-sensitivity}
 One-at-a-time $\pm 50\%$ probe of Table~\ref{tab:hyperparams} knobs at $500$ outer iterations (seed \texttt{1902771841}).
 Not a full $5$k re-search.
-Default champion $R{\approx}0.9888$; largest $|\Delta R|$ among completed arms ${\approx}0.0123$ (50\% lower learning rate).
+Default champion $R{\approx}0.9888$. The largest $|\Delta R|$ among completed arms is ${\approx}0.0123$ (50\% lower learning rate).
 All $11/11$ arms completed.
 
 \input{figures/tab_meta_hp_sensitivity}
@@ -98,11 +98,11 @@ All $11/11$ arms completed.
 \subsection{Transfer inference latency}
 \label{sec:transfer-latency-app}
 Table~\ref{tab:transfer-latency} and Figure~\ref{fig:signal-heal-transfer-latency} pair with the prolonged-$R$ transfer board (Table~\ref{tab:transfer-main}).
-N2N latency uses the wavetable checkpoint zero-shot; domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
+N2N latency uses the wavetable checkpoint zero-shot. Domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
 
 \begin{table*}[t]
   \centering
-  \caption{Transfer-domain inference latency (ms/batch). Batch=64; CUDA.}
+  \caption{Transfer-domain inference latency (ms/batch). Batch=64, CUDA.}
   \label{tab:transfer-latency}
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{@{}lrrrrrr@{}}

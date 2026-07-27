@@ -33,7 +33,7 @@ These symbols follow a different convention from Noise2Noise clean/noisy pairs.
     $y=\Theta(x;h)$ & Baked cycle after seam ops / residual operator \\
     $\Theta$ & Repair operator (bake operator) $\mathbb{R}^{L}\times\mathcal{H}\to\mathbb{R}^{L}$ \\
     $h\in\mathcal{H}$ & Repair-operator configuration (ops + continuous $\theta$) \\
-    $r^{\star}$ & Ideal sibling (same seed; cliff withheld) \\
+    $r^{\star}$ & Ideal sibling (same seed, cliff withheld) \\
     $G$ & Procedural period generator (cliff on/off) \\
     $N$ & Prolong tiling count \\
     $W$ & Seam neighborhood width \\
@@ -93,39 +93,39 @@ J&=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm},\\
 \quad \lambda=0.02.
 \end{aligned}
 \end{equation}
-FitCell minimizes $1-R_{\mathrm{blend}}$; selection and champion updates use $J$.
+FitCell minimizes $1-R_{\mathrm{blend}}$. Selection and champion updates use $J$.
 A champion must also strictly beat the frozen corrupt$\to$corrupt Noise2Noise holdout $R_{\mathrm{blend}}$ (primary baseline).
 
 \textbf{Every} scored row applies some $\Theta$ to $x$ and is evaluated under~\eqref{eq:R-blend}.
-The ideal sibling is the seam scoring target; body identity uses the engine.
+The ideal sibling is the seam scoring target. Body identity uses the engine.
 We do not claim convergence guarantees for the hybrid outer loop, nor a general wrap-closure theorem for arbitrary repair operators.
 
 \begin{remark}[Noise2Noise primary baseline]
 \label{rem:n2n}
 \texttt{SeamN2N} (${\approx}53.5$k) is the primary neural comparator and champ gate.
-Search may discover \texttt{n2n\_unet} operators at the same scale; TinyUNet1D \texttt{unet} is a different, smaller block~\cite{lehtinen2018,kashyap2021n2n}.
+Search may discover \texttt{n2n\_unet} operators at the same scale. TinyUNet1D \texttt{unet} is a different, smaller block~\cite{lehtinen2018,kashyap2021n2n}.
 \end{remark}
 
 \subsection{Seam bake operator and classical baselines}
 \label{sec:bake}
 
 A \textbf{repair operator} $\Theta(\cdot;h)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual operators (MLP/FIR/U-Net-lite/attention-lite/LSTM-lite) and optional MoE soft gates over experts (Appendix~\ref{app:algorithms}, Algorithms~\ref{alg:dualcosine}--\ref{alg:moe}).
-Bake parameters live in a bounded box; architecture strings are discrete graphs over those ops.
-Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile (same interface as DualCosine / FIR; not a full oscillator rewrite).
-Plain-language roles: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap; BLAMP corrects a \emph{slope}/corner jump; DualCosine fades endpoints without a BLEP residual.
+Bake parameters live in a bounded box. Architecture strings are discrete graphs over those ops.
+Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile. They share the DualCosine / FIR interface and are not a full oscillator rewrite.
+Plain-language roles: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap. BLAMP corrects a \emph{slope}/corner jump. DualCosine fades endpoints without a BLEP residual.
 They are scored in Section~\ref{sec:va-seam-baselines}.
 
 \paragraph{Four roles (keep separate).}
 \label{sec:four-roles}
 \begin{itemize}
-  \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld; scoring target only (panel~(a) in Figure~\ref{fig:intro-sine}).
-  \item \textbf{No-bake} (passthrough): $\Theta_{\mathrm{no\text{-}bake}}(x)=x$; unrepaired cracked engine scored vs $r^{\star}$ (panel~(b)). Scores the cracked engine unchanged. Distinct from $r^{\star}$, residual-net skips, and learned identity maps.
-  \item \textbf{DualCosine}: classical raised-cosine end fade on $x$ (panel~(c)); one classical board row and, separately, a PPO advantage baseline (Remark~\ref{rem:dualcosine-centering}).
+  \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld. Scoring target only (panel~(a) in Figure~\ref{fig:intro-sine}).
+  \item \textbf{No-bake} (passthrough): $\Theta_{\mathrm{no\text{-}bake}}(x)=x$. Unrepaired cracked engine scored vs $r^{\star}$ (panel~(b)). Scores the cracked engine unchanged. Distinct from $r^{\star}$, residual-net skips, and learned identity maps.
+  \item \textbf{DualCosine}: classical raised-cosine end fade on $x$ (panel~(c)). One classical board row and, separately, a PPO advantage baseline (Remark~\ref{rem:dualcosine-centering}).
   \item \textbf{Ours}: searched bake $y=\Theta(x;h^{\star})$ from the hybrid outer loop (panel~(d)).
 \end{itemize}
 On mild cliffs residual mass $\ll$ ideal RMS under the unit clamp form of~\eqref{eq:R-blend}, so no-bake $R_{\mathrm{blend}}$ can sit high while the wrap click remains audible.
 It is a do-nothing passthrough reference, not a perceptual wrap-quality score.
-Released JSON may still use the legacy key \texttt{identity} for no-bake; manuscript prose uses \emph{no-bake}.
+Released JSON may still use the legacy key \texttt{identity} for no-bake. Manuscript prose uses \emph{no-bake}.
 
 \paragraph{Classical (non-AI) comparison board.}
 \label{sec:classical-board}
@@ -169,7 +169,7 @@ FitCell draws sibling batches via $G$, applies $\Theta(\cdot;h)$, and steps Adam
 \label{sec:hybrid}
 
 Each iteration rotates among branches: PPO, GA, PBT, NAS, and combo.
-Selection and FitCell are always by absolute residual $R$ (maximize toward the ideal sibling; loss $1-R$).
+Selection and FitCell are always by absolute residual $R$ (maximize toward the ideal sibling, loss $1-R$).
 
 \paragraph{Near-ceiling scores need reward shaping.}
 \label{sec:reward-shaping}
@@ -178,24 +178,24 @@ Absolute gaps of order $10^{-3}$--$10^{-2}$ are real but tiny as raw PPO/GA sign
 Without shaping, advantages collapse.
 Hyperparameters (clip, entropy, mutation rate, population size, fit steps, learning rate) then decide whether the outer loop can climb the last percent.
 We therefore treat reward shaping and search hyperparameters as first-class tunables alongside bake architecture.
-In the present hybrid, PPO uses a searchable shaping mode among $\{\texttt{abs\_r},\,\texttt{vs\_dualcosine},\,\texttt{vs\_nobake},\,\texttt{neglog\_gap}\}$ (PBT-mutated; default $\rho = R - R_{\mathrm{DualCosine}}$ per Remark~\ref{rem:dualcosine-centering}).
-PBT mutates fit / PPO hyperparameters and reward mode in-population; plateau adaptation retunes branch mix and depth/MoE bias when champions stall.
+In the present hybrid, PPO uses a searchable shaping mode among $\{\texttt{abs\_r},\,\texttt{vs\_dualcosine},\,\texttt{vs\_nobake},\,\texttt{neglog\_gap}\}$ (PBT-mutated, default $\rho = R - R_{\mathrm{DualCosine}}$ per Remark~\ref{rem:dualcosine-centering}).
+PBT mutates fit / PPO hyperparameters and reward mode in-population. Plateau adaptation retunes branch mix and depth/MoE bias when champions stall.
 The matched $5$k meta-approach comparison (Section~\ref{sec:meta-compare}) is the sole GPU experimentation vehicle for outer-loop family, HP, and reward-shaping sweeps under a shared FitCell budget.
 
 \subsection{Meta-learning approach comparison}
 \label{sec:meta-compare}
 
 Beyond the hybrid outer loop, we compare five additional outer-loop families under a matched $5{,}000$-evaluation budget, shared search seed \texttt{1902771841}, and the same FitCell / prolonged-$R$ protocol (LSTM and xLSTM included in the searchable bake vocabulary).
-Table and figure legends use the short display names below (artifact folders keep stable code keys; see the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/NOMENCLATURE.md}{nomenclature}):
+Table and figure legends use the short display names below. Artifact folders keep stable code keys (see the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/NOMENCLATURE.md}{nomenclature}):
 \begin{itemize}
   \item \textbf{Random NAS} (\texttt{random}): independent uniform draws over bake graphs and fit hyperparameters (control).
   \item \textbf{Cont.\ CMA-ES} (\texttt{cmaes}): diagonal covariance-matrix adaptation over a continuous encoding of depth, width, operator kind, block logits, and fit hyperparameters~\cite{hansen2016cmaes}.
-  \item \textbf{Arch REINFORCE} (\texttt{reinforce}): vanilla policy gradient over discrete architecture-edit actions (no clipped surrogate; contrast to PPO~\cite{schulman2017,zoph2017nas}).
+  \item \textbf{Arch REINFORCE} (\texttt{reinforce}): vanilla policy gradient over discrete architecture-edit actions (no clipped surrogate). Contrast to PPO~\cite{schulman2017,zoph2017nas}.
   \item \textbf{Aging evolution} (\texttt{aging\_evo}): regularized evolution with oldest-member replacement after tournament parent selection~\cite{real2017large,real2019}, distinct from the hybrid's non-aging tournament GA branch.
   \item \textbf{TPE Bayes NAS} (\texttt{tpe}): lightweight tree-structured Parzen estimator over discrete bake categoricals in the spirit of practical Bayesian optimization~\cite{snoek2012}.
 \end{itemize}
 We also run \textbf{Ours (hybrid GA--PPO)} (\texttt{hybrid\_lstm}): the multi-branch hybrid loop for $5{,}000$ evaluations with LSTM/xLSTM in the block vocabulary and online reward-mode / fit--PPO hyperparameter co-tuning, as the proposed matched-budget arm.
-Results appear in Appendix~\ref{app:supplement} (Table~\ref{tab:meta-approaches}, Figures~\ref{fig:meta-approach-bars}--\ref{fig:meta-approach-compare}); healed-sample overlays in Figure~\ref{fig:meta-heal-samples}.
+Results appear in Appendix~\ref{app:supplement} (Table~\ref{tab:meta-approaches}, Figures~\ref{fig:meta-approach-bars}--\ref{fig:meta-approach-compare}). Healed-sample overlays appear in Figure~\ref{fig:meta-heal-samples}.
 
 \begin{remark}[Trial complexity]
 \label{rem:complexity}
@@ -207,7 +207,7 @@ Bake-width caps (tiny residual operators) keep $C_{\mathrm{fwd}}$ far below full
 \label{sec:hyperparams}
 
 Table~\ref{tab:hyperparams} lists the CUDA search defaults used for the $5$k-gate freeze reported in Results.
-Under the near-ceiling residual regime (Section~\ref{sec:reward-shaping}), these outer-loop and fit hyperparameters are co-tuned with architecture; PBT and plateau adaptation continue to mutate several of them online.
+Under the near-ceiling residual regime (Section~\ref{sec:reward-shaping}), these outer-loop and fit hyperparameters are co-tuned with architecture. PBT and plateau adaptation continue to mutate several of them online.
 Companion listings: Algorithms~\ref{alg:residual}--\ref{alg:hybrid} (Appendix~\ref{app:algorithms}) and the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/docs/PSEUDOCODE.md}{pseudocode notes}.
 
 \begin{table}[t]
@@ -224,11 +224,11 @@ Companion listings: Algorithms~\ref{alg:residual}--\ref{alg:hybrid} (Appendix~\r
     GA tournament $k$ & 3 \\
     GA crossover fraction $p_c$ & $0.5$ (else clone elite parent) \\
     GA mutation & $\ge 1$ mutate after inherit ($+50\%$ second mutate) \\
-    PPO clip $\epsilon$ & $0.2$ (default; searchable $\{0.1,0.2,0.25,0.3\}$) \\
-    Adam learning rate (fit) & $3{\times}10^{-3}$ (default; PBT-searchable) \\
+    PPO clip $\epsilon$ & $0.2$ (default, searchable $\{0.1,0.2,0.25,0.3\}$) \\
+    Adam learning rate (fit) & $3{\times}10^{-3}$ (default, PBT-searchable) \\
     Adam learning rate (policy) & $3{\times}10^{-4}$ \\
-    Entropy coefficient (PPO) & $0.02$ (default; searchable $\approx 0.005$--$0.06$) \\
-    PBT exploit / mutate & elite fraction $0.25$; multi-step arch+hp mutate \\
+    Entropy coefficient (PPO) & $0.02$ (default, searchable $\approx 0.005$--$0.06$) \\
+    PBT exploit / mutate & elite fraction $0.25$, multi-step arch+hp mutate \\
     MoE routing & \texttt{sequential} or \texttt{moe\_parallel} when enabled \\
     Plateau boredom threshold & $1000$ iters without champ improve \\
     Cycle length $L$ / tiles $N$ / seam $W$ & $256$ / $16$ / $8$ \\

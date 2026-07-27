@@ -3,14 +3,14 @@
 % (v10.1 CUDA microbench).
 \paragraph{Transfer inference latency.}
 Table~\ref{tab:transfer-latency} reports wall-clock inference on transfer holdout batches
-(device=\texttt{cuda}, batch=64, warmup=20, timed=100; includes residual scoring).
+(device=\texttt{cuda}, batch=64, warmup=20, timed=100, includes residual scoring).
 These timings pair with the prolonged-$R$ transfer board (Table~\ref{tab:transfer-main}).
-N2N latency uses the wavetable \texttt{n2n\_corrupt\_corrupt} checkpoint zero-shot;
-domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
+N2N latency uses the wavetable \texttt{n2n\_corrupt\_corrupt} checkpoint zero-shot.
+Domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
 
 \begin{table*}[t]
   \centering
-  \caption{Transfer-domain inference latency (ms/batch; higher is slower). Batch=64; CUDA.}
+  \caption{Transfer-domain inference latency (ms/batch, higher is slower). Batch=64, CUDA.}
   \label{tab:transfer-latency}
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{@{}lrrrrrr@{}}

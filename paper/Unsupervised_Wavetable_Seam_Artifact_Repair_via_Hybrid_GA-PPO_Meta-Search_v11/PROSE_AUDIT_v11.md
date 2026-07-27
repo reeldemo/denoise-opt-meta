@@ -145,3 +145,13 @@
 ## Build
 
 Rebuild with `build.ps1` after edits.
+
+---
+
+## Semicolon pass (27 July 2026)
+
+Full grill of prose `;` stacks: see [`PROSE_SEMICOLON_AUDIT_v11.md`](PROSE_SEMICOLON_AUDIT_v11.md).
+
+- **62** prose semicolon sites rewritten (periods / commas / two sentences).
+- Keywords, math `\Theta(x;h)`, algorithm `\State`, TikZ, and table `---` missing cells kept.
+- Priority body + experiments + transfer/listening captions cleaned. Science and nomenclature unchanged.
