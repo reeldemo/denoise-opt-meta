@@ -1,0 +1,19 @@
+{
+  "panel_a_metric": "superseded_prolonged_R",
+  "panel_a_seed": 1902771841,
+  "panel_a_budget": 5000,
+  "panel_a_hybrid_final_champ": 0.9931316391626994,
+  "panel_a_random_final_champ": 0.9812390058835347,
+  "panel_a_dual_cosine": 0.8165849447250366,
+  "panel_a_hybrid_first_surpass_dc_iter": 3,
+  "panel_a_random_first_surpass_dc_iter": 1,
+  "panel_b_metric": "r_blend_and_J",
+  "panel_b_seed": 1902771841,
+  "panel_b_budget": 1200,
+  "panel_b_hybrid_final_champ_j": 0.962084067594961,
+  "panel_b_hybrid_final_champ_raw_r_blend": 0.969511866569519,
+  "panel_b_dual_cosine_r_blend": 0.5039944648742676,
+  "panel_b_n2n_gate_r_blend": 0.9750486612319946,
+  "panel_b_hybrid_first_surpass_dc_iter": 1,
+  "random_under_r_blend": "deferred"
+}

@@ -2,7 +2,8 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v12** | 2026-07-27 | SEO wrap-discontinuity title + folder slug; Klaut science+English merge shipped (paper id `…a2139527`) |
+| **v13** | 2026-07-27 | Full review response: multi-seed re-search (D1), multi-run statistics, assertive narrative rewrite, math clarity |
+| v12 | 2026-07-27 | SEO wrap-discontinuity title + folder slug; Klaut science+English merge shipped (paper id `…a2139527`) |
 | v11 | 2026-07-27 | Peer-review response: metric lock honesty, modest claims, transfer reframed, learning curves, param fairness |
 | v10 / v10.1 | 2026-07-26 | $R_{\mathrm{blend}}$ lock + N2N gate story |
 | v9 | 2026-07-25 | Paragraph language/slop cleanup; transfer-pilot honesty front-and-center |
