@@ -21,7 +21,8 @@
 ### Multi-seed holdout + narrative (27 July 2026)
 - Five holdout seeds (`20260719`--`20260723`): Ours $0.9708\pm0.0014$, N2N $0.9767\pm0.0015$, Dual Cosine $0.542\pm0.038$ (Ours beats N2N on $0/5$ seeds).
 - Multi-family mean-of-means: Ours $0.9337\pm0.0028$ vs N2N $0.9308\pm0.0045$ (mean win frac $0.47$; sign test $p{=}1.0$).
-- Artifacts: `reelsynth/brand/artifacts/holdout_multiseed_v13/`, `figures/multiseed_summary.json`.
+- Inference latency (CUDA, $B{=}64$): Ours ${\approx}7\times$ slower than N2N on holdout / multi-family / Factory+FX / AKWF; holdout batch sweep $B\in\{1,8,64,256\}$ stays ${\approx}5$--$7\times$ (Table `tab:ours-n2n-latency`).
+- Artifacts: `reelsynth/brand/artifacts/holdout_multiseed_v13/`, `v13_ours_vs_n2n_latency/`, `figures/multiseed_summary.json`.
 - Assertive abstract/intro/conclusion; expanded $R_{\mathrm{seam}}$/$R_{\mathrm{body}}$ RMS definitions; role-summary table; disclaimers consolidated into Limitations.
 - Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}$ launched into `meta_approach_compare_v13_rblend/` (3 search seeds; hybrid first).
 

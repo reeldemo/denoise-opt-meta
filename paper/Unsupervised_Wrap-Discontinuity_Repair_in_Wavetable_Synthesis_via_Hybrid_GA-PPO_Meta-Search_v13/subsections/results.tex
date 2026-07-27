@@ -39,26 +39,27 @@ On balanced wavetable-native corpora ($n{=}1{,}280$ each), N2N leads Factory+FX
 
 \begin{table}[t]
   \centering
-  \caption{Parameter-count fairness under the locked holdout story.
+  \caption{Parameter-count and inference-latency fairness under the locked holdout story.
     Favorite $\Theta$ is the v10.1 hybrid champion cell (search seed \texttt{1902771841}).
     SeamN2N is the frozen corrupt$\to$corrupt gate (train seed \texttt{424242}).
-    Holdout scores are mean$\pm$std over five evaluation seeds.}
+    Holdout $R_{\mathrm{blend}}$ is mean$\pm$std over five evaluation seeds.
+    Latency is CUDA ms/batch at $B{=}64$ (warmup 8, timed 30; Table~\ref{tab:ours-n2n-latency}).}
   \label{tab:param-fairness}
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{@{}lrr@{}}
+  \begin{tabular}{@{}lrrr@{}}
     \toprule
-    Method & Params & Holdout $R_{\mathrm{blend}}$ \\
+    Method & Params & Holdout $R_{\mathrm{blend}}$ & ms/$B{=}64$ \\
     \midrule
-    Favorite $\Theta$ (v10.1 hybrid) & ${\approx}121$k & $0.9708{\pm}0.0014$ \\
-    SeamN2N (corrupt$\to$corrupt) & ${\approx}53.5$k & $0.9767{\pm}0.0015$ \\
-    Dual Cosine & $0$ & $0.542{\pm}0.038$ \\
+    Favorite $\Theta$ (v10.1 hybrid) & ${\approx}121$k & $0.9708{\pm}0.0014$ & $8.20$ \\
+    SeamN2N (corrupt$\to$corrupt) & ${\approx}53.5$k & $0.9767{\pm}0.0015$ & $1.12$ \\
+    Dual Cosine & $0$ & $0.542{\pm}0.038$ & --- \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \noindent
-Table~\ref{tab:param-fairness} states the size comparison the review requested.
-The hybrid favorite is larger than SeamN2N on this freeze.
+Table~\ref{tab:param-fairness} states the size and latency comparison the review requested.
+The hybrid favorite is larger and slower than SeamN2N on this freeze (${\approx}7.4\times$ holdout ms/batch).
 N2N still leads holdout $R_{\mathrm{blend}}$ on all five seeds.
 Search seeds, N2N train seed \texttt{424242}, and holdout seeds stay disjoint.
 
@@ -66,6 +67,41 @@ Search seeds, N2N train seed \texttt{424242}, and holdout seeds stay disjoint.
 Primary holdout and multi-family rows in Table~\ref{tab:n2n-vs-ours} report mean$\pm$std over five evaluation seeds.
 Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}$ across three search seeds is running into
 \texttt{meta\_approach\_compare\_v13\_rblend/} (Section~\ref{sec:search-learning-curve}).
+
+\subsection{Ours vs Noise2Noise inference latency}
+\label{sec:ours-n2n-latency}
+Table~\ref{tab:ours-n2n-latency} compares forward-pass wall time on CUDA across boards and batch sizes.
+At the paper-default batch $B{=}64$, Ours is ${\approx}7\times$ slower than N2N on every board
+(holdout $8.20$ vs $1.12$\,ms; multi-family mean $7.50{\pm}0.56$ vs $1.06{\pm}0.07$\,ms;
+Factory+FX $7.31$ vs $1.06$\,ms; AKWF $7.50$ vs $1.11$\,ms).
+The holdout batch sweep ($B\in\{1,8,64,256\}$) keeps the ratio in ${\approx}5$--$7\times$:
+larger batches amortize per-sample cost for both methods, but N2N remains faster.
+This matches the parameter gap (${\approx}121$k vs ${\approx}53.5$k) and the $J$ latency penalty in~\eqref{eq:outer-obj}.
+Artifacts: \texttt{v13\_ours\_vs\_n2n\_latency/latency\_compare.json}.
+
+\begin{table}[t]
+  \centering
+  \caption{Inference latency: Ours (hybrid favorite) vs Noise2Noise on CUDA
+    (warmup 8, timed 30 synchronized forwards).
+    Ratio $=$ Ours/N2N ms per batch.}
+  \label{tab:ours-n2n-latency}
+  \footnotesize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    Board / batch & Ours ms & N2N ms & Ratio & Ours ms/samp \\
+    \midrule
+    Holdout ($B64$) & 8.20 & 1.12 & $7.36\times$ & 0.128 \\
+    Multi-family mean ($B64$) & $7.50{\pm}0.56$ & $1.06{\pm}0.07$ & $7.12\times$ & 0.117 \\
+    Factory+FX ($B64$) & 7.31 & 1.06 & $6.91\times$ & 0.114 \\
+    AKWF ($B64$) & 7.50 & 1.11 & $6.74\times$ & 0.117 \\
+    \midrule
+    Holdout ($B1$) & 8.52 & 1.30 & $6.56\times$ & 8.52 \\
+    Holdout ($B8$) & 7.71 & 1.07 & $7.21\times$ & 0.964 \\
+    Holdout ($B256$) & 7.62 & 1.52 & $5.03\times$ & 0.030 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \subsection{Search efficiency (learning curves)}
 \label{sec:search-learning-curve}
