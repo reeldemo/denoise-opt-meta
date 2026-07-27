@@ -9,14 +9,20 @@ Primary claims remain in Sections~\ref{sec:results}--\ref{sec:transfer-main}.
 \label{sec:meta-approaches-results}
 
 Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to Ours (hybrid GA+PPO)?
-Table~\ref{tab:meta-approaches} reports champion prolonged $R$, $\Delta R$ vs Dual Cosine, wall hours, and whether the champion graph used an LSTM or xLSTM block.
-This matched multi-approach $5{,}000$-evaluation bake-off still needs $R_{\mathrm{blend}}$ regeneration
-(command: \texttt{.venv\_gpu/Scripts/python.exe scripts/bench\_meta\_approaches\_5k.py --iters 5000 --device cuda}).
-Only the $1{,}200$-iteration hybrid freeze under $R_{\mathrm{blend}}$ is locked (Section~\ref{sec:v10-freeze}).
+Table~\ref{tab:meta-approaches} reports a \textbf{cheap} $R_{\mathrm{blend}}$ re-fit of each frozen champion architecture/HP from that historical search
+(not a full overnight re-search; outer loops still maximized prolonged $R$).
+Wall hours are the original 5k-search walls.
+Full matched re-search under $R_{\mathrm{blend}}{+}J$ remains Deferred D1
+(\texttt{.venv\_gpu/Scripts/python.exe scripts/bench\_meta\_approaches\_5k.py --iters 5000 --device cuda}, write to a new \texttt{meta\_approach\_compare\_v11\_rblend/} tree).
+Only the $1{,}200$-iteration hybrid freeze under $R_{\mathrm{blend}}$ is locked as a searched result (Section~\ref{sec:v10-freeze}).
 Noise2Noise is not an outer-loop method here (see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main}).
-At the completed superseded prolonged-$R$ gate, Ours led on absolute champion $R$ ($R{\approx}0.99146$, $\Delta R{\approx}{+}0.17488$ vs Dual Cosine ${\approx}0.81658$, ${\approx}8.46$\,h). Aging evolution is second ($R{\approx}0.99079$).
+On the one-shot re-fit board, Ours still leads ($R_{\mathrm{blend}}{\approx}0.97484$, $\Delta R{\approx}{+}0.436$ vs Dual Cosine ${\approx}0.539$, original wall ${\approx}8.46$\,h). Aging evolution is second ($R_{\mathrm{blend}}{\approx}0.96519$).
 Neither Ours nor Aging evolution selected an LSTM block in the champion graph.
-Source: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/meta_approach_compare.json}{matched-budget results} (search seed \texttt{1902771841}).
+Sources: historical
+\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/meta_approach_compare.json}{matched-budget prolonged-$R$ results}
+and
+\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/meta_approach_compare_rblend_rescore.json}{$R_{\mathrm{blend}}$ re-fit}
+(search seed \texttt{1902771841}).
 
 \input{figures/meta_approaches_table}
 
@@ -24,51 +30,54 @@ Source: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Uns
   \centering
   \includegraphics[width=\columnwidth]{figures/meta_approach_bars.png}
   \caption{Matched 5,000-evaluation search methods (seed \texttt{1902771841}).
-  Needs $R_{\mathrm{blend}}$ regeneration (still superseded prolonged $R$). Dashed line is Dual Cosine.}
+  Bars still show historical prolonged-$R$ champions; Table~\ref{tab:meta-approaches} reports the $R_{\mathrm{blend}}$ one-shot re-fit.
+  Dashed line is Dual Cosine under the historical prolonged geometry.}
   \label{fig:meta-approach-bars}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
-  \caption{Champion residual over a matched 5,000-evaluation budget.
-  Needs $R_{\mathrm{blend}}$ regeneration (still prolonged $R$). Dashed line: Dual Cosine.}
+  \caption{Champion residual over a matched 5,000-evaluation budget (historical prolonged $R$ trajectories).
+  Locked $R_{\mathrm{blend}}$ outer-loop curves remain Deferred D1. Dashed line: Dual Cosine.}
   \label{fig:meta-approach-compare}
 \end{figure}
 
 \subsection{Ablations and compute}
 \label{sec:ablation-compute}
 
-Table~\ref{tab:ablation} reports branch-best freezes at the $5$k gate from one hybrid history, plus isolated 150-iteration re-runs on the same search seed.
-Table~\ref{tab:compute} summarizes campaign compute.
+Table~\ref{tab:ablation} reports branch-best freezes at the $5$k gate from one hybrid history (prolonged $R$; no separate fitted weights),
+plus isolated 150-iteration \texttt{ablate-*} final champions re-scored under $R_{\mathrm{blend}}$.
+Table~\ref{tab:compute} summarizes campaign compute (historical prolonged-$R$ overnight).
 
 \begin{table}[t]
   \centering
-  \caption{Ablations under \textbf{superseded} prolonged $R$ (not $R_{\mathrm{blend}}$).
-    Left: best score by branch in the recorded search run (final iteration ${\approx}6{,}922$).
-    Right: isolated 150-iteration re-runs (seed \texttt{1902771841}) from \texttt{ablate-*} artifacts.
-    $R_{\mathrm{blend}}$ branch ablations remain pending (\texttt{METRIC\_REGEN.md}).}
+  \caption{Ablations.
+    Left: best prolonged $R$ by branch in the recorded search run (final iteration ${\approx}6{,}922$; superseded search metric).
+    Right: isolated 150-iteration \texttt{ablate-*} final champions re-scored under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{1902771841}).
+    Full $R_{\mathrm{blend}}$ branch re-search remains deferred.}
   \label{tab:ablation}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
     \toprule
-    Config & Search freeze $R$ & Isolated 150-it $R$ \\
+    Config & Search freeze prolonged $R$ & Isolated 150-it $R_{\mathrm{blend}}$ \\
     \midrule
-    Full hybrid & 0.99093 & 0.98113 \\
-    GA-only & 0.99016 & 0.98062 \\
+    Full hybrid & 0.99093 & 0.92710 \\
+    GA-only & 0.99016 & 0.94168 \\
     PBT (search branch) & 0.99012 & n/a \\
-    PPO-only & 0.98924 & 0.97932 \\
-    GA+PPO & n/a & 0.98007 \\
+    PPO-only & 0.98924 & 0.94405 \\
+    GA+PPO & n/a & 0.94478 \\
     Combined branch & 0.98854 & n/a \\
     NAS branch & 0.98677 & n/a \\
-    Dual Cosine (runner) & 0.81658 & 0.81658 \\
+    Dual Cosine (runner) & 0.81658 & ${\approx}0.539$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{table}[t]
   \centering
-  \caption{Compute budget for the reported 5,000-evaluation search run (RTX~3090, search seed \texttt{1902771841}).}
+  \caption{Compute budget for the reported 5,000-evaluation search run (RTX~3090, search seed \texttt{1902771841}; prolonged-$R$ objective).
+    Final champion $R$ below is the historical prolonged freeze, not $R_{\mathrm{blend}}$.}
   \label{tab:compute}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lr@{}}
@@ -79,8 +88,8 @@ Table~\ref{tab:compute} summarizes campaign compute.
     Elapsed wall time & ${\approx}7.92$\,h \\
     Clean iterations / arch evals & ${\approx}6{,}922$ \\
     Population size & 12 \\
-    Final champion $R$ & 0.99093 \\
-    Dual Cosine baseline (runner) & 0.81658 \\
+    Final champion prolonged $R$ & 0.99093 \\
+    Dual Cosine baseline (runner, prolonged) & 0.81658 \\
     Peak VRAM (replay) & ${\approx}3.29$\,GiB \\
     \bottomrule
   \end{tabular}

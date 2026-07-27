@@ -2,7 +2,7 @@
 
 Do **not** retag prolonged-$R$ numbers as $R_{\mathrm{blend}}$.
 
-## Done (this pass)
+## Done (this pass + follow-up)
 
 | Board | Artifact | Script |
 |-------|----------|--------|
@@ -14,37 +14,31 @@ Do **not** retag prolonged-$R$ numbers as $R_{\mathrm{blend}}$.
 | Poly / jump | `poly_baseline.json`, `jump_control.json` | `bench_poly_seam_baseline.py`, `bench_jump_control.py` |
 | Real WT | `real_wt_matrix.json` | `real_wt_wrap_protocol.py` |
 | Transfer Table | `signal_heal_transfer_results_table.json` | `bench_signal_heal_transfer.py --skip-search --merge-existing` (domain champs already v10.1) |
-| Intro tile JSON | `fig_intro_sine_problem.json` | rescore under blend |
+| Intro tile JSON + PNG | `fig_intro_sine_problem.json` / `.png` | `plot_intro_sine_problem.py` (burned-in labels now $R_{\mathrm{blend}}$) |
+| Top-5 inference (`tab:top5`) | `inference_bench.json` | `bench_inference_same_score.py --from-json …` (live $R_{\mathrm{blend}}$) |
+| Rust sound_bench (`tab:rust-bench`) | `rust_sound_bench_matrix.json` | `bench_rust_sound_bench_tiles.py` |
+| Matched 5k appendix (cheap) | `meta_approach_compare_rblend_rescore.json` + `meta_approaches_table.tex` | `rescore_meta_champs_rblend.py` (one-shot re-fit of frozen champs; **not** full D1 re-search) |
+| Ablation isolated 150-it | `ablate_rblend_rescore.json` | `rescore_ablate_rblend.py` |
+| Compute caption | `tab:compute` | labeled historical prolonged-$R$ overnight |
 
-## Still pending
+## Still deferred
 
-### Matched multi-approach 5k outer loops
+### D1 — Full matched multi-approach 5k outer loops under $R_{\mathrm{blend}}{+}J$
+
+Multi-hour GPU overnight. Do **not** wipe `meta_approach_compare/`; write a new tree:
 
 ```powershell
 cd C:\Users\Julian\Documents\Programming\github\reeldemo\reelsynth
 .\.venv_gpu\Scripts\python.exe scripts\bench_meta_approaches_5k.py --iters 5000 --device cuda
+# then publish into meta_approach_compare_v11_rblend/ (or equivalent) + refresh bars/compare figs
 ```
 
-Copy resulting `meta_approach_compare.json` (+ bars/compare figs) into v11 `figures/`.
+Until D1 completes, Table `tab:meta-approaches` uses the cheap frozen-champ re-fit; learning-curve bars/plots remain historical prolonged-$R$ trajectories.
 
-### Top-5 inference-bench ranking (`tab:top5`)
+### Branch-best freezes under $R_{\mathrm{blend}}$
 
-```powershell
-.\.venv_gpu\Scripts\python.exe scripts\bench_inference_same_score.py --device cuda
-```
+Left column of `tab:ablation` (PBT / Combined / NAS search freezes) has no separate fitted weights — prolonged-$R$ only unless a new hybrid history is recorded under $R_{\mathrm{blend}}$.
 
-Requires scoring fitted overnight champs under `residual_score_blend` (script still has prolonged-$R$ timing path in places — extend before claiming).
+### HP ±50% probe under $R_{\mathrm{blend}}$
 
-### Rust sound_bench table (`tab:rust-bench`)
-
-```powershell
-.\.venv_gpu\Scripts\python.exe scripts\bench_rust_sound_bench_tiles.py --device cuda
-```
-
-### Ablation / compute appendix tables
-
-Isolated 150-it re-runs and branch freezes under $R_{\mathrm{blend}}$ (not overnight 5k, but still a search budget).
-
-### Intro PNG panel annotations
-
-JSON scores updated; if `fig_intro_sine_problem.png` burns in prolonged-$R$ labels, re-render the figure script under blend.
+Optional: `python scripts/bench_meta_hp_sensitivity.py` under blend (still prolonged in appendix).

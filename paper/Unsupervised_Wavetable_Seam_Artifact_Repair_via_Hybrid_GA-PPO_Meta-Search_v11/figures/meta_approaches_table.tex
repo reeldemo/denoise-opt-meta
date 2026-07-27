@@ -1,21 +1,19 @@
 \begin{table}[t]
   \centering
-  \caption{Search methods at a matched 5,000-evaluation budget (search seed \texttt{1902771841}, historical prolonged $R$).
-    Champion $R$ is measured against the ideal sibling. $\Delta R$ is reported relative to DualCosine (classical fade), not Noise2Noise.
-    Wall time is per-method CUDA time. LSTM and xLSTM indicate whether the champion graph included that block.}
+  \caption{Frozen matched-5k champion architectures re-fit once under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; search seed \texttt{1902771841}). Outer-loop search still maximized prolonged $R$; wall hours are the original 5k-search walls. Full $R_{\mathrm{blend}}$ re-search remains Deferred D1.}
   \label{tab:meta-approaches}
   \setlength{\tabcolsep}{2pt}
   \scriptsize
   \begin{tabular}{@{}lrrrcc@{}}
     \toprule
-    Method & $R$ @ 5k & $\Delta R$ vs DC & h & LSTM & xLSTM \\
+    Method & $R_{\mathrm{blend}}$ & $\Delta R$ vs DC & h & LSTM & xLSTM \\
     \midrule
-    Random NAS & 0.97816 & $+0.16157$ & 5.72 & no & no \\
-    Cont.\ CMA-ES & 0.98468 & $+0.16810$ & 2.28 & no & no \\
-    Arch REINFORCE & 0.98247 & $+0.16588$ & 25.93 & no & yes \\
-    Aging evolution & 0.99079 & $+0.17421$ & 15.02 & no & yes \\
-    TPE Bayes NAS & 0.98106 & $+0.16448$ & 11.18 & yes & no \\
-    Ours (hybrid GA--PPO) & 0.99146 & $+0.17488$ & 8.46 & no & no \\
+    Random NAS & 0.93291 & $+0.39427$ & 5.72 & no & no \\
+    Cont.\ CMA-ES & 0.94929 & $+0.41065$ & 2.28 & no & no \\
+    Arch REINFORCE & 0.93758 & $+0.39893$ & 25.93 & no & yes \\
+    Aging evolution & 0.96519 & $+0.42655$ & 15.02 & no & yes \\
+    TPE Bayes NAS & 0.92710 & $+0.38846$ & 11.18 & yes & no \\
+    Ours (hybrid GA--PPO) & 0.97484 & $+0.43619$ & 8.46 & no & no \\
     \bottomrule
   \end{tabular}
 \end{table}

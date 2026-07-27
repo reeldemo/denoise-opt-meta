@@ -129,37 +129,38 @@ Monitoring plots below come from that older freeze and should be read as search-
 
 \subsection{Inference latency at matched score}
 \label{sec:inference-latency}
-Across diverse high-$R$ fitted operators ($R\ge 0.98$), we timed CUDA forward passes (batch 64, prolonged residual).
-Within a tight band of the best residual ($R \ge R_{\max}-5\cdot10^{-4}$), the \textbf{favorite} is the lowest-latency model:
-\texttt{champion\_iter\_000235} with $R\approx 0.9910$, $\approx 3.15$\,ms/batch, $\approx 37$k parameters
-(versus a higher-capacity max-$R$ operator at $R\approx 0.9914$ but $\approx 7.18$\,ms/batch / $\approx 104$k params).
-Selection rule: maximize $R$, then minimize latency inside the band.
+Across the prior high-prolonged-$R$ fitted operators, we re-timed CUDA forward passes under locked $R_{\mathrm{blend}}$ (batch 64).
+Live $R_{\mathrm{blend}}$ spreads more than the old prolonged band: the max-$R_{\mathrm{blend}}$ model is
+\texttt{champion\_iter\_000265} ($R_{\mathrm{blend}}{\approx}0.9769$, $\approx 6.53$\,ms/batch, $\approx 94$k params).
+The compact historically favorite \texttt{iter\_000235} remains lowest-latency among the top-5 distinct topologies
+($R_{\mathrm{blend}}{\approx}0.9749$, $\approx 3.42$\,ms/batch, $\approx 37$k params).
+Selection rule: maximize live $R_{\mathrm{blend}}$, then minimize latency inside $R\ge R_{\max}-5\cdot10^{-4}$.
 
 \subsection{Top-5 architectures}
 \label{sec:top5-arch}
 Table~\ref{tab:top5} ranks five distinct fitted bake graphs from the CUDA inference bench
-(\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/inference_bench.json}{inference data}, batch 64), preferring residual $R$ first and latency on ties,
+(\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/inference_bench.json}{inference data}, batch 64), preferring live $R_{\mathrm{blend}}$ first and latency on ties,
 and skipping near-duplicate copies of the same topology signature.
 
 \begin{table}[t]
   \centering
-  \caption{Top-5 distinct fitted architectures on the CUDA inference bench (batch 64).
-  Needs $R_{\mathrm{blend}}$ regeneration (still ranked under superseded prolonged $R$; not a current result).
-  Favorite historically latency-best inside the near-max-$R$ band ($R\ge R_{\max}-5\cdot10^{-4}$).}
+  \caption{Top-5 distinct fitted architectures on the CUDA inference bench (batch 64) under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
+  $R_{\mathrm{saved}}$ is the checkpoint hint (often prolonged $R$); $R_{\mathrm{live}}$ is measured $R_{\mathrm{blend}}$.
+  *Max-$R_{\mathrm{blend}}$ (also sole member of the $R\ge R_{\max}-5\cdot10^{-4}$ band here).}
   \label{tab:top5}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrrrr@{}}
     \toprule
     Tag & $R_{\mathrm{saved}}$ & $R_{\mathrm{live}}$ & ms/batch & params \\
     \midrule
-    \texttt{iter\_000157} & 0.9914 & 0.9913 & 7.18 & 104\,484 \\
-    \texttt{iter\_000205} & 0.9911 & 0.9907 & 7.29 & 70\,562 \\
-    \texttt{iter\_000235}* & 0.9910 & 0.9915 & 3.15 & 37\,489 \\
-    \texttt{iter\_000397} & 0.9910 & 0.9907 & 6.80 & 97\,262 \\
-    \texttt{iter\_000229} & 0.9909 & 0.9902 & 6.67 & 100\,500 \\
+    \texttt{iter\_000265}* & 0.9906 & 0.9769 & 6.53 & 93\,566 \\
+    \texttt{iter\_000140} & 0.9906 & 0.9762 & 7.16 & 104\,484 \\
+    \texttt{iter\_000133} & 0.9908 & 0.9752 & 7.16 & 104\,484 \\
+    \texttt{iter\_000229} & 0.9909 & 0.9751 & 7.56 & 100\,500 \\
+    \texttt{iter\_000235} & 0.9910 & 0.9749 & 3.42 & 37\,489 \\
     \bottomrule
   \end{tabular}\\[0.4em]
-  {\footnotesize *Favorite (fastest in $R\ge R_{\max}-5\cdot10^{-4}$ band).}
+  {\footnotesize *Favorite under maximize-$R_{\mathrm{blend}}$ then latency. Compact \texttt{iter\_000235} is still the latency floor in this top-5.}
 \end{table}
 
 \subsection{Classical methods vs neural favorite}
@@ -443,26 +444,26 @@ Export / Rust gaps vs no-bake are listed in Section~\ref{sec:limitations}.
 \subsection{Transfer to Rust engine tiles}
 \label{sec:rust-bench}
 
-Table~\ref{tab:rust-bench} scores the Python-trained favorite on 20 Rust-exported tiles.
-The favorite beats Dual Cosine (mean $\Delta R{+}0.063$, Wilcoxon $p{\approx}0.009$) but trails no-bake and \texttt{seam\_fir3} on absolute $R$.
+Table~\ref{tab:rust-bench} scores the Python-trained favorite on 20 Rust-exported tiles under $R_{\mathrm{blend}}$.
+The favorite beats Dual Cosine on mean $\Delta R_{\mathrm{blend}}{+}0.082$, but the signed-rank test is not significant at $\alpha{=}0.05$ ($p{\approx}0.30$),
+and absolute score trails no-bake and \texttt{seam\_fir3}.
 The primary SOTA claim remains the Python multi-family matrix.
 
 \begin{table}[t]
   \centering
-  \caption{Rust \texttt{sound\_bench} transfer ($n{=}20$).
-  Needs $R_{\mathrm{blend}}$ regeneration (table still shows superseded prolonged $R$).
-  $\Delta R$ vs Dual Cosine.}
+  \caption{Rust \texttt{sound\_bench} transfer ($n{=}20$) under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
+  $\Delta R_{\mathrm{blend}}$ vs Dual Cosine.}
   \label{tab:rust-bench}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}
     \toprule
-    Method & $R$ (20 Rust tiles) & $\Delta R$ vs Dual Cosine \\
+    Method & $R_{\mathrm{blend}}$ (20 Rust tiles) & $\Delta R_{\mathrm{blend}}$ vs Dual Cosine \\
     \midrule
-    no-bake & $0.928\pm0.084$ & ${+}0.166$ \\
-    \texttt{seam\_fir3} & $0.896\pm0.077$ & ${+}0.134$ \\
-    neural favorite & $0.825\pm0.121$ & ${+}0.063$ \\
-    classic quadratic & $0.788\pm0.110$ & ${+}0.026$ \\
-    Dual Cosine / cosine fade & $0.762\pm0.118$ & $0$ \\
+    no-bake & $0.846\pm0.171$ & ${+}0.422$ \\
+    \texttt{seam\_fir3} & $0.751\pm0.157$ & ${+}0.327$ \\
+    neural favorite & $0.506\pm0.236$ & ${+}0.082$ \\
+    classic quadratic & $0.474\pm0.186$ & ${+}0.050$ \\
+    Dual Cosine / cosine fade & $0.424\pm0.187$ & $0$ \\
     \bottomrule
   \end{tabular}
 \end{table}

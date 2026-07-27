@@ -17,9 +17,11 @@ We collect honesty notes here rather than repeating them through Results and Dis
     is a superseded debug score.
     It is not a current holdout result and must not overwrite the gate reading
     ($R_{\mathrm{blend}}{\approx}0.9697$ for Ours vs $0.9750$ for Noise2Noise).
-    Boards regenerated under $R_{\mathrm{blend}}$ this cycle include cliff strata and the seven-board transfer table.
-    Still incomplete until regen (see \texttt{METRIC\_REGEN.md}): matched $5$k outer-loop bake-off,
-    canonical classical snapshot, multi-family prolonged matrix, branch ablations, HP probe, and Random under $R_{\mathrm{blend}}$.
+    Boards regenerated under $R_{\mathrm{blend}}$ this cycle include cliff strata, transfer, top-5 inference,
+    Rust sound\_bench, intro panel, isolated ablate-* re-scores, and a cheap frozen-champ 5k re-fit.
+    Still incomplete until full regen (see \texttt{METRIC\_REGEN.md} / \texttt{PENDING\_RBLEND.md}):
+    Deferred D1 matched $5$k outer-loop \emph{re-search}, branch-best freezes without weights, and HP probe under $R_{\mathrm{blend}}$.
+    Learning-curve bars remain historical prolonged-$R$ trajectories until D1.
   \item \textbf{Single-run primary freeze.}
     Table~\ref{tab:n2n-vs-ours} is one locked freeze per board.
     Multi-seed $\pm$ appears where already collected (cliff tile std; canonical five-seed prolonged snapshot; multi-family waveform $\pm$).

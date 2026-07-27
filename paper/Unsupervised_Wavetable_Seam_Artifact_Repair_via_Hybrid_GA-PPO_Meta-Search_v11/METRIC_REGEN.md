@@ -24,11 +24,11 @@ T0 budget: cheap re-scores only. Full matched-\(5\)k outer-loop re-search under 
 
 | Board | Why incomplete | Exact regen command (when budgeted) |
 |-------|----------------|-------------------------------------|
-| Matched \(5\)k outer-loop bake-off (Random, CMA-ES, REINFORCE, aging, TPE, hybrid) | Historical FitCell maximized prolonged \(R\); histories in `meta_approach_compare/` | **D1:** re-run suite under \(R_{\mathrm{blend}}{+}J\) (do **not** wipe existing publishable folder; write to a new `meta_approach_compare_v11_rblend/` tree). Approx wall: multi-hour GPU overnight. |
+| Matched \(5\)k outer-loop bake-off (Random, CMA-ES, REINFORCE, aging, TPE, hybrid) | Historical FitCell maximized prolonged \(R\); histories in `meta_approach_compare/` | **Cheap done:** `rescore_meta_champs_rblend.py` → `meta_approach_compare_rblend_rescore.json` (one-shot re-fit). **D1 full re-search still deferred:** `bench_meta_approaches_5k.py --iters 5000` into a new `meta_approach_compare_v11_rblend/` tree (multi-hour). |
 | Canonical classical holdout Table `tab:canonical-methods` | Snapshot under prolonged \(R\) | `python scripts/bench_canonical_eval_dataset.py` (confirm emits \(R_{\mathrm{blend}}\); refresh paper JSON) |
 | Multi-family SOTA matrix Table `tab:sota-main` | Historical prolonged \(R\) means | `python scripts/bench_sota_matrix.py` then copy JSON → paper `figures/sota_matrix.json` |
 | Real WT / export / AKWF Table `tab:real-wt` | Prolonged \(R\) means in TeX | Re-score with locked metric script used for Factory+FX / AKWF \(R_{\mathrm{blend}}\) four-board (already in `tab:n2n-vs-ours` for balanced corpora) |
-| Branch ablations `ablate-*` (\(150\)-it) | Champions store prolonged `residual` only | Bounded re-bench under \(R_{\mathrm{blend}}\) or keep appendix labeled prolonged \(R\) (current) |
+| Branch ablations `ablate-*` (\(150\)-it) | Champions store prolonged `residual` only | **Isolated done:** `rescore_ablate_rblend.py`. Branch-best freezes (no weights) remain prolonged-labeled. |
 | HP ±50% probe | Prolonged \(R\) | Optional: `python scripts/bench_meta_hp_sensitivity.py` under \(R_{\mathrm{blend}}\) |
 | Random NAS learning curve under \(R_{\mathrm{blend}}\) | Only hybrid v10 history has `r_blend` keys | Part of D1 or a short Random-only \(1{,}200\)-iter run mirroring v10 |
 
