@@ -2,7 +2,9 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v9** | 2026-07-25 | Current: paragraph language/slop cleanup; transfer-pilot honesty front-and-center (classical board only) |
+| **v11** | 2026-07-27 | Peer-review response: metric lock honesty, modest claims, transfer reframed, learning curves, param fairness |
+| v10 / v10.1 | 2026-07-26 | $R_{\mathrm{blend}}$ lock + N2N gate story |
+| v9 | 2026-07-25 | Paragraph language/slop cleanup; transfer-pilot honesty front-and-center |
 | v8 | 2026-07-24 | Archived: review-response rewrite complete (W0–W5); HP ±50% OAT sensitivity; vibrato/hear/WT gallery; IMRaD Methods + math formalization |
 | v7 | 2026-07-19 | Archived: weakness elimination F1–F5 (true export+AKWF, edge RMSE lock, poly, transfer honesty, SOTA unify) |
 | v6 | 2026-07-19 | Archived peer-review A–E complete snapshot (restored from `83f4b48`, pre–weakness-elim) |
@@ -12,7 +14,18 @@
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
-## v9 notes (current)
+## v11 notes (current)
+
+### Peer-review response (27 July 2026)
+- SDD: `docs/sdd/specs/paper-v11-peer-review-response/` (T0 locked: transfer keep-reframed; cheap $R_{\mathrm{blend}}$; DAFx/AES bar).
+- `REVIEW_RESPONSE.md` maps every Strength / Weakness / Suggestion + synopsis fact-check (0.99093 is prolonged $R$, not $R_{\mathrm{blend}}$; bake-cell → repair operator; N2N beats Ours on holdout $R_{\mathrm{blend}}$).
+- Modest Abstract / Contributions / Conclusion: hybrid GA–PPO(+PBT) *applied to* cycle-local seam repair.
+- Transfer reframed as wrap-protocol stress tests with per-domain seam analogies; table updated from `signal_heal_transfer/results_table.json` under $R_{\mathrm{blend}}$.
+- Param fairness table (favorite $\Theta$ ${\approx}121$k vs SeamN2N ${\approx}53.5$k); cliff strata $\pm$ tile std; learning-curve figure (prolonged $5$k hybrid vs Random + v10.1 $R_{\mathrm{blend}}$ hybrid).
+- `METRIC_REGEN.md` inventories remaining prolonged-$R$ boards; full matched-$5$k under $R_{\mathrm{blend}}$ stays Deferred D1.
+- Script: `reelsynth/scripts/plot_search_learning_curve.py`.
+
+## v9 notes (archived)
 
 ### Language cleanup + main-text transfer elevation (25 July 2026)
 - Copied `paper/..._v8/` → `..._v9/` (v8 kept as archive); paragraph language/slop cleanup.
