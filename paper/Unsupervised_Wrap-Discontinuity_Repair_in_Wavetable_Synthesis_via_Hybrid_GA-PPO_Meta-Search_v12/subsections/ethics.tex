@@ -10,22 +10,22 @@ The main resource cost is GPU time on a consumer RTX~3090 (order of hours for th
 Authors should not over-claim speech enhancement or production mastering quality from these metrics.
 
 \paragraph{Reproducibility.}
-Holdout seed~\texttt{20260719}. Hybrid search seed~\texttt{1902771841}.
-Primary code: \url{https://github.com/reeldemo/reelsynth}
+Seeds: holdout~\texttt{20260719}, hybrid search~\texttt{1902771841}.
+Primary code lives at \url{https://github.com/reeldemo/reelsynth}
 (search runner:
 \href{https://github.com/reeldemo/reelsynth/blob/main/scripts/overnight_gpu_rl_arch.py}{\texttt{overnight\_gpu\_rl\_arch.py}},
 SOTA bench:
 \href{https://github.com/reeldemo/reelsynth/blob/main/scripts/bench_sota_matrix.py}{\texttt{bench\_sota\_matrix.py}},
 VA seam:
-\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/baselines/va_seam_blep.py}{\texttt{va\_seam\_blep.py}}).
-Paper companion: \url{https://github.com/reeldemo/denoise-opt-meta}.
-Dependencies for the CUDA benches: Python~3.12, PyTorch~$2.6$+CUDA~12.4, NumPy/matplotlib. Rust/\texttt{cargo} builds the separate engine hardness probe.
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/baselines/va_seam_blep.py}{\texttt{va\_seam\_blep.py}}),
+with paper companion at \url{https://github.com/reeldemo/denoise-opt-meta}.
+CUDA benches need Python~3.12, PyTorch~$2.6$+CUDA~12.4, and NumPy/matplotlib; Rust/\texttt{cargo} builds the separate engine hardness probe.
 Frozen numbers live under
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts}{brand/artifacts}
 (e.g.\
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/sota_matrix.json}{\texttt{sota\_matrix.json}},
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/va_seam_blep.json}{\texttt{va\_seam\_blep.json}}).
-PESQ/STOI are omitted for non-speech cycles (domain mismatch). MUSHRA was not run.
+PESQ/STOI are omitted for non-speech cycles (domain mismatch), and MUSHRA was not run.
 
 \subsection{Funding}
 \label{sec:funding}

@@ -53,16 +53,14 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    Looping a wavetable with mismatched endpoints leaves a wrap-join click at the seam on every period.
-    We study unsupervised repair of that local discontinuity: search never sees paired studio-clean targets.
-    Scoring uses a procedural cliff-withheld ideal sibling (self-supervised geometry) plus mid-cycle identity to the cracked engine.
+    Mismatched wavetable endpoints leave a wrap-join click at the seam on every period.
+    We study unsupervised repair of that local discontinuity: search never sees paired studio-clean targets, and scoring uses a procedural cliff-withheld ideal sibling (self-supervised geometry) plus mid-cycle identity to the cracked engine.
     Classical raised-cosine fades, virtual-analog seam operators, and corrupt-to-corrupt Noise2Noise are strong baselines on some boards.
     Transfer benches reuse the same wrap-discontinuity protocol on other periodic signals as stress tests, not domain diagnosis claims.
     Because no single operator fits every engine family, \textbf{DenoiseOpt} applies a hybrid genetic-algorithm (GA), proximal policy optimization (PPO), and population-based training (PBT) meta-loop to search compact repair operators, ranking candidates by the blended residual $R_{\mathrm{blend}}$.
     This is an application of known search tools to a crisp DSP problem, not a new learning algorithm.
     A $1{,}200$-iteration hybrid champion reaches about $0.9697$ on holdout $R_{\mathrm{blend}}$, below frozen Noise2Noise (about $0.9750$) and well above Dual Cosine (about $0.541$).
-    On twenty multi-family boards, Ours edges Noise2Noise on mean score.
-    Both beat Dual Cosine.
+    On twenty multi-family boards, Ours edges Noise2Noise on mean score, and both beat Dual Cosine.
     On hard wrap cliffs, classical fades collapse while searched operators hold.
     We do not claim wrap-closure proofs, search-convergence theorems, or speech/music SOTA.
   \end{abstract}

@@ -113,23 +113,25 @@ Search may discover \texttt{n2n\_unet} operators at the same scale. TinyUNet1D \
 \label{sec:bake}
 
 A \textbf{repair operator} $\Theta(\cdot;h)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual operators (MLP/FIR/U-Net-lite/attention-lite/LSTM-lite) and optional mixture-of-experts (MoE) soft gates over experts (Appendix~\ref{app:algorithms}, Algorithms~\ref{alg:dualcosine}--\ref{alg:moe}).
-Bake parameters live in a bounded box. Architecture strings are discrete graphs over those ops.
-Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile. They share the DualCosine / FIR interface and are not a full oscillator rewrite.
-Plain-language roles: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap. BLAMP corrects a \emph{slope}/corner jump. DualCosine fades endpoints without a BLEP residual.
-They are scored in Section~\ref{sec:va-seam-baselines}.
+Bake parameters sit in a bounded box; architecture strings are discrete graphs over those ops.
+Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile: they share the DualCosine / FIR interface and are not a full oscillator rewrite.
+Roles in plain language: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap, BLAMP corrects a \emph{slope}/corner jump, and DualCosine fades endpoints without a BLEP residual.
+Section~\ref{sec:va-seam-baselines} scores them.
 
 \paragraph{Four roles (keep separate).}
 \label{sec:four-roles}
-\begin{itemize}
-  \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld. Scoring target only (panel~(a) in Figure~\ref{fig:intro-sine}).
-  \item \textbf{No-bake} (passthrough): $\Theta_{\mathrm{no\text{-}bake}}(x)=x$. Unrepaired cracked engine scored vs $r^{\star}$ (panel~(b)). Scores the cracked engine unchanged. Distinct from $r^{\star}$, residual-net skips, and learned identity maps.
-  \item \textbf{DualCosine}: classical raised-cosine end fade on $x$ (panel~(c)). One classical board row and, separately, a PPO advantage baseline (Remark~\ref{rem:dualcosine-centering}).
-  \item \textbf{Ours}: searched bake $y=\Theta(x;h^{\star})$ from the hybrid outer loop (panel~(d)).
-\end{itemize}
-On mild cliffs, residual mass $\ll$ ideal RMS under the unit clamp form of~\eqref{eq:R-blend}.
-Thus no-bake $R_{\mathrm{blend}}$ can sit high while the wrap click remains audible.
-It is a do-nothing passthrough reference, not a perceptual wrap-quality score.
-Released JSON may still use the legacy key \texttt{identity} for no-bake. Manuscript prose uses \emph{no-bake}.
+Four objects must stay distinct (Figure~\ref{fig:intro-sine}).
+The \textbf{ideal sibling} $r^{\star}$ withholds the cliff and is a scoring target only (panel~(a)).
+\textbf{No-bake} is the unrepaired passthrough $\Theta_{\mathrm{no\text{-}bake}}(x)=x$: the cracked engine scored against $r^{\star}$ (panel~(b)).
+It leaves the engine unchanged and must not be confused with $r^{\star}$, residual-net skips, or learned identity maps.
+\textbf{DualCosine} is the classical raised-cosine end fade on $x$ (panel~(c)).
+It appears both as a classical board row and, separately, as a PPO advantage baseline (Remark~\ref{rem:dualcosine-centering}).
+\textbf{Ours} is the searched bake $y=\Theta(x;h^{\star})$ from the hybrid outer loop (panel~(d)).
+
+On mild cliffs, residual mass sits far below ideal RMS under the unit clamp of~\eqref{eq:R-blend}, so no-bake $R_{\mathrm{blend}}$ can look high even when the wrap click remains audible.
+Treat that number as a do-nothing passthrough reference rather than a perceptual wrap-quality score.
+Released JSON may still use the legacy key \texttt{identity} for no-bake.
+Manuscript prose uses \emph{no-bake}.
 
 \paragraph{Classical (non-AI) comparison board.}
 \label{sec:classical-board}

@@ -23,18 +23,14 @@ The same geometry appears whenever a short loop is tiled for listening or scorin
 \end{figure}
 
 \paragraph{Terminology.}
-\begin{itemize}
-  \item \textbf{Seam} (wrap join / loop join): the junction between a period's end and start, where a click signals endpoint mismatch. The seam is local. The signal is the whole waveform.
-  \item \textbf{Repair operator} ($\Theta$, short: operator): a searchable local edit applied at the seam (legacy name: bake cell).
-  \item \textbf{Residual operator}: an optional tiny learned network inside a repair operator.
-  \item \textbf{FitCell}: continuous-parameter fit of one candidate $\Theta$ under residual loss (Appendix~\ref{app:algorithms}).
-  \item \textbf{$R$} / \textbf{$R_{\mathrm{blend}}$}: unsupervised seam-quality scores. Whole-curve prolonged $R$ is for debug. $R_{\mathrm{blend}}$ drives primary selection (Section~\ref{sec:residual-score}).
-  \item \textbf{$J$}: latency-aware search objective $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ (Section~\ref{sec:residual-score}).
-  \item \textbf{MoE}: mixture-of-experts soft gating over small bake experts inside a repair operator.
-  \item \textbf{PBT}: population-based training (exploit--mutate on elites in the outer loop).
-  \item \textbf{Outer loop} / \textbf{meta-search}: genetic algorithm (GA) plus proximal policy optimization (PPO) search over repair-operator graphs, not end-to-end training of one large network.
-  \item \textbf{Holdout}: frozen evaluation set or seed used for reported scores.
-\end{itemize}
+Key names used below.
+A \textbf{seam} (wrap join) is the local end/start junction where endpoint mismatch produces the period-locked click: the seam is local, while the signal is the whole waveform.
+\textbf{Repair operator} $\Theta$ means a searchable local edit at that seam (legacy: bake cell), and a tiny network inside $\Theta$ is a \textbf{residual operator}.
+\textbf{FitCell} continuously fits one candidate $\Theta$ under residual loss (Appendix~\ref{app:algorithms}).
+Scores $R$ and $R_{\mathrm{blend}}$ are unsupervised: prolonged $R$ is debug-only, and $R_{\mathrm{blend}}$ drives primary selection together with the latency-aware objective $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$ (Section~\ref{sec:residual-score}).
+\textbf{MoE} soft-gates bake experts, and \textbf{PBT} mutates elites in the outer loop.
+The \textbf{outer loop} (meta-search) runs GA plus PPO over repair-operator graphs rather than end-to-end training of one large network.
+A \textbf{holdout} freezes the evaluation set or seed for reported scores.
 
 \paragraph{Unsupervised, as used here.}
 Search never trains on paired studio-clean audio.

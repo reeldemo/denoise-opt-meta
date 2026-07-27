@@ -12,13 +12,10 @@ They are \emph{not} claims that an audio-trained bake transfers as bearing-fault
 and they are not claims that fatigue cracks or grid phase events ``are'' wavetable seams.
 
 \paragraph{Shared transfer recipe.}
-For each domain we cut fixed-length periods ($L{=}256$), build an ideal sibling (smooth / template / cubic path)
-and a cracked engine (same content with an open-wrap cliff, sometimes with a deliberately worse interpolant),
-then score classical baselines and a domain-trained DenoiseOpt / Noise2Noise stack under locked $R_{\mathrm{blend}}$
-(\texttt{hybrid\_lstm} FitCell, $150$--$250$ outer iterations where searched, \texttt{fit\_steps}${}={}40$).
+For each domain we cut fixed-length periods ($L{=}256$) and build an ideal sibling (smooth / template / cubic path) plus a cracked engine (same content with an open-wrap cliff, sometimes with a deliberately worse interpolant).
+We then score classical baselines and a domain-trained DenoiseOpt / Noise2Noise stack under locked $R_{\mathrm{blend}}$ (\texttt{hybrid\_lstm} FitCell, $150$--$250$ outer iterations where searched, \texttt{fit\_steps}${}={}40$).
 Classical baselines (no-bake, DualCosine, FIR, endpoint pin, \ldots) share that board.
-Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps) is scored on the same seven boards
-and reported beside classical rows in Table~\ref{tab:transfer-main}.
+Domain-trained Noise2Noise (corrupt$\to$corrupt, $4000$ Adam steps) is scored on the same seven boards and reported beside classical rows in Table~\ref{tab:transfer-main}.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
@@ -48,8 +45,6 @@ Synthetic CNC G01 and synthetic PMU/AC: procedural, $n{=}256$.
 
 \paragraph{Scope note.}
 Transfer tables compare classical rows, domain-trained Noise2Noise, and Ours under this residual protocol.
-Author ECG Cycle-GAN and BeatDiff have OOD wrap probes.
-Paderborn Al~Firdausi is a trained fault classifier (plus labeled arch-reuse wrap bake).
-Formal listening remains out of scope
-(Section~\ref{sec:limitations} and Table~\ref{tab:transfer-sota-status}).
+Author ECG Cycle-GAN and BeatDiff carry OOD wrap probes, while Paderborn Al~Firdausi is a trained fault classifier (plus labeled arch-reuse wrap bake).
+Formal listening remains out of scope (Section~\ref{sec:limitations} and Table~\ref{tab:transfer-sota-status}).
 Results appear in Section~\ref{sec:transfer-main}.

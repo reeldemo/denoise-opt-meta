@@ -71,15 +71,12 @@ We do not invent error bars for single-run boards.
 
 \subsection{Search efficiency (learning curves)}
 \label{sec:search-learning-curve}
-Figure~\ref{fig:search-learning-curve} plots champion score versus outer-loop evaluation index.
-Left: matched $5{,}000$-evaluation hybrid vs Random NAS under \emph{superseded} whole-curve prolonged $R$
-(seed \texttt{1902771841}, Dual Cosine ${\approx}0.817$).
-Hybrid and Random both clear Dual Cosine within the first few evaluations on that older metric.
-Right: v10.1 hybrid under locked $R_{\mathrm{blend}}$ / $J$ ($1{,}200$ evaluations).
-Raw champion $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.975$).
-A Random NAS curve under $R_{\mathrm{blend}}$ is not in the released logs (Deferred D1 / \texttt{METRIC\_REGEN.md}).
-Plateau boredom in the hybrid loop retunes branch mix when champions stall (Section~\ref{sec:hybrid}).
-Near-ceiling residuals yield only a small absolute climb after the first few hundred evaluations.
+Champion score versus outer-loop evaluation index is plotted in Figure~\ref{fig:search-learning-curve}.
+The left panel compares a matched $5{,}000$-evaluation hybrid to Random NAS under \emph{superseded} whole-curve prolonged $R$ (seed \texttt{1902771841}, Dual Cosine ${\approx}0.817$), where both arms clear Dual Cosine early.
+The right panel is different.
+Under locked $R_{\mathrm{blend}}$ / $J$ over $1{,}200$ evaluations, raw champion $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.975$), and no Random NAS curve under $R_{\mathrm{blend}}$ appears in the released logs (Deferred D1 / \texttt{METRIC\_REGEN.md}).
+Plateau boredom retunes branch mix (Section~\ref{sec:hybrid}).
+Near-ceiling residuals climb only a little after the first few hundred evaluations.
 
 \begin{figure*}[t]
   \centering
@@ -393,14 +390,12 @@ It trades wrap energy for a wide end-fade distortion that $R_{\mathrm{blend}}$ p
 
 \paragraph{Scores.}
 Table~\ref{tab:va-seam-blep} reports batch means from the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/va_seam_blep.json}{VA results} (seed \texttt{20260719}, batch 64) under $R_{\mathrm{blend}}$.
-Implementation is released in the \href{https://github.com/reeldemo/reelsynth}{ReelSynth repository}. PolyBLEP matches \texttt{osc::va::poly\_blep}. BLIT/BLEP uses a raised-cosine step residual. BLAMP applies a polyBLAMP lobe to the wrap slope jump.
+Code is in the \href{https://github.com/reeldemo/reelsynth}{ReelSynth repository}: PolyBLEP matches \texttt{osc::va::poly\_blep}, BLIT/BLEP uses a raised-cosine step residual, and BLAMP applies a polyBLAMP lobe to the wrap slope jump.
 PolyBLEP reaches mean $R_{\mathrm{blend}}\approx 0.795$ ($\Delta\approx{+}0.254$ vs DualCosine) but trails no-bake / \texttt{seam\_fir3}.
-BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping mean $R_{\mathrm{blend}}$ to $0.632$ and collapsing on hard cliffs ($0.351$).
-BLAMP is near-no-bake on this value-cliff geometry (mean $0.914$).
+BLIT/BLEP nearly zeros wrap-jump ($0.004$), yet mean $R_{\mathrm{blend}}$ falls to $0.632$ and hard cliffs collapse to $0.351$.
+BLAMP stays near no-bake on this value-cliff geometry (mean $0.914$).
 On the annotated severe tile in Figure~\ref{fig:va-seam-techniques}, tile $R_{\mathrm{blend}}$ is lower still (PolyBLEP $\approx 0.726$, BLIT/BLEP $\approx 0.385$, Dual Cosine $0.300$, BLAMP $\approx$ engine).
-These classical tools are scored here, not only cited.
-They beat DualCosine on mean $R_{\mathrm{blend}}$ in places.
-None matches the locked hybrid favorite on holdout $R_{\mathrm{blend}}$.
+We score these classical tools, not only cite them: they beat DualCosine on mean $R_{\mathrm{blend}}$ in places, and none matches the locked hybrid favorite on holdout $R_{\mathrm{blend}}$.
 
 \begin{figure*}[t]
   \centering
