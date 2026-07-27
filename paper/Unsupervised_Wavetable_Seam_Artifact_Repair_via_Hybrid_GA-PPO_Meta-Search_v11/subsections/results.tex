@@ -58,9 +58,10 @@ Latency: holdout Ours ${\approx}4.57$\,ms vs N2N ${\approx}0.65$\,ms ($J$ still 
   \end{tabular}
 \end{table}
 
-\paragraph{Earlier whole-curve scores (context only).}
-Earlier whole-curve prolonged-$R$ freezes ($R{\approx}0.991$ vs DualCosine ${\approx}0.825$) are historical context only;
-v10.1 selection uses $R_{\mathrm{blend}}{+}J$ and Noise2Noise as the primary neural baseline.
+\paragraph{Superseded whole-curve freezes.}
+Whole-curve prolonged-$R$ freezes ($R{\approx}0.991$ vs DualCosine ${\approx}0.825$) are not current results.
+Selection and published comparison under v10.1 use $R_{\mathrm{blend}}{+}J$ with Noise2Noise as the primary neural baseline.
+Boards still carrying only prolonged $R$ need regeneration under $R_{\mathrm{blend}}$ (Limitations).
 
 \subsection{Which families stay hard}
 \label{sec:family-hardness}
@@ -68,10 +69,11 @@ On the fitted DenoiseOpt $100{,}000$-cycle bench, denoise score $D$ is lowest fo
 Lit-combo champion family stress (prolonged residual) similarly ranks \texttt{open\_wrap\_bias} ($R\approx 0.83$) and \texttt{extreme\_overlay} / \texttt{combo} ($R\approx 0.88$--$0.89$) below \texttt{harmonic\_fft} ($R\approx 0.95$).
 Hard sounds recur.
 
-\paragraph{Earlier whole-curve search freeze.}
+\paragraph{Superseded $5$k-gate freeze.}
 At the reported $5$k-gate search freeze ($\approx 6{,}922$ clean iterations, $\approx 7.9$\,h on RTX~3090) the champion residual was $R\approx 0.99093$ with DualCosine $\approx 0.81658$ on the CUDA search runner ($\Delta R\approx{+}0.174$).
-That freeze used whole-curve prolonged $R$ (superseded by $R_{\mathrm{blend}}$ for v10.1 selection).
-Monitoring plots below are regenerated from that freeze.
+That freeze optimized whole-curve prolonged $R$.
+It is superseded by $R_{\mathrm{blend}}$ for v10.1 selection.
+Monitoring plots below come from that older freeze and should be read as search-trace artifacts, not as locked-protocol scores.
 
 \subsection{Inference latency at matched score}
 \label{sec:inference-latency}
