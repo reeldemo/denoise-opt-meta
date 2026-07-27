@@ -1,0 +1,31 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{Main story under $R_{\mathrm{blend}}$.}
+The locked protocol does not crown the hybrid champion over Noise2Noise on the holdout
+($0.9697$ vs $0.9750$).
+Dual Cosine on that board sits near $0.541$.
+The operative claim is narrower.
+Compact searchable repair operators outperform classical fades, stay competitive with Noise2Noise on multi-family means ($13/20$ wins), and hold on hard cliffs where Dual Cosine collapses
+(Table~\ref{tab:n2n-vs-ours}, Section~\ref{sec:cliff-strata}).
+Favorite $\Theta$ on the v10.1 freeze is larger than SeamN2N (${\approx}121$k vs ${\approx}53.5$k) and still trails N2N on holdout $R_{\mathrm{blend}}$
+(Table~\ref{tab:param-fairness}).
+Whole-curve numbers near $R{\approx}0.991$ come from superseded freezes.
+They are not current results under the locked protocol (Limitations).
+
+\paragraph{Which families stay hard.}
+Across large procedural benches, wrap error is uneven.
+Families such as \texttt{nonlinear}, \texttt{combo}, \texttt{triple\_mix}, and \texttt{extreme\_overlay} dominate the residual budget.
+\texttt{harmonic\_fft} and \texttt{am\_fm} are easier.
+Mean scores hide that structure.
+
+\paragraph{Search near the ceiling.}
+Under near-ceiling residuals, further gains are small in absolute units and sensitive to reward shaping and branch weights.
+Learning curves (Figure~\ref{fig:search-learning-curve}) show Dual Cosine cleared early under both the superseded prolonged-$R$ $5$k bake-off and the v10.1 $R_{\mathrm{blend}}$ hybrid run, with a later plateau below the Noise2Noise gate.
+Plateau adaptation (deeper operators, denser mixture-of-experts graphs, higher GA/PBT weight) is the operational response inside one campaign.
+Matched outer-loop bake-offs and HP probes sit in Appendix~\ref{app:supplement} (still prolonged $R$ until D1).
+
+\paragraph{Evidence beyond static tiles.}
+Vibrato spectrograms and downloadable hear WAVs support informal inspection (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}).
+Sci/eng wrap transfer is a wrap-protocol stress test with per-domain seam analogies (Section~\ref{sec:transfer-main}).
+Perceptual and scope limits are collected in Section~\ref{sec:limitations}.

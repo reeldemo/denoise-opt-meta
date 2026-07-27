@@ -2,7 +2,8 @@
 
 | Version | Date | Headline |
 |---------|------|----------|
-| **v11** | 2026-07-27 | Peer-review response: metric lock honesty, modest claims, transfer reframed, learning curves, param fairness |
+| **v12** | 2026-07-27 | SEO wrap-discontinuity title + folder slug; Klaut science+English merge shipped (paper id `…a2139527`) |
+| v11 | 2026-07-27 | Peer-review response: metric lock honesty, modest claims, transfer reframed, learning curves, param fairness |
 | v10 / v10.1 | 2026-07-26 | $R_{\mathrm{blend}}$ lock + N2N gate story |
 | v9 | 2026-07-25 | Paragraph language/slop cleanup; transfer-pilot honesty front-and-center |
 | v8 | 2026-07-24 | Archived: review-response rewrite complete (W0–W5); HP ±50% OAT sensitivity; vibrato/hear/WT gallery; IMRaD Methods + math formalization |
@@ -14,7 +15,20 @@
 | v2 | 2026-07-18 | Residual score ∈ [0,1] as outer objective; nested unsupervised loss opt; Meta Top 1 `evo_explore_515` residual ≈0.824 vs DualCosine ≈0.698 |
 | v1 | 2026-07-18 | D/S quality $Q$ objective; champion `racing_mid_1043` Q≈0.790 vs DualCosine ≈0.789 |
 
-## v11 notes (current)
+## v12 notes (current)
+
+### Klaut Pro review + English polish merge (27 July 2026)
+- Klaut paper id: `unsupervised-wrap-discontinuity-repair-in-waveta-a2139527` (`KLAUT_PAPER_ID.txt`).
+- Science pass `pass_20260727T045538Z` (revise): unsupervised definition, transfer-as-stress-test sentence, VA foundation Related Work line, tooling/acks resource wording, no formal-verification overclaim, reject invented THD+N/MOS.
+- English: selective polish from Klaut `v01/subsections` (score 1.0→3.2, audit `pass_20260727T045828Z`); rejected semicolon walls and v11 path rewrites. Detail: `KLAUT_V12_REVIEW.md`.
+- Abstract numbers kept (Ours≈0.9697 < N2N≈0.9750; DualCosine≈0.541). PDF via `build.ps1`.
+
+### Scaffold + SEO folder (27 July 2026)
+- Copied `paper/..._v11/` → `paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/` (title-aligned slug).
+- Primary title locked: *Unsupervised Wrap-Discontinuity Repair in Wavetable Synthesis via Hybrid GA–PPO Meta-Search* (`TITLES.md`, `main.tex`).
+- Pointers / README / EVAL_PROTOCOL header / GitHub figure hrefs retargeted to the v12 slug; science content carried from v11.
+
+## v11 notes (archived)
 
 ### Peer-review response (27 July 2026)
 - SDD: `docs/sdd/specs/paper-v11-peer-review-response/` (T0 locked: transfer keep-reframed; cheap $R_{\mathrm{blend}}$; DAFx/AES bar).
