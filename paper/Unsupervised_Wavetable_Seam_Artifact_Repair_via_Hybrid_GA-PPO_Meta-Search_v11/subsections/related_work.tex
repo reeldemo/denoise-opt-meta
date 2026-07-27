@@ -2,8 +2,10 @@
 \label{sec:related_work}
 
 We group prior work by mechanism.
-\textbf{Used} citations are anchors for residual-scored RL+GA meta-search.
-\textbf{Screened} citations were checked as contrast and are not dependencies.
+\textbf{Used} citations ground methods we build on or compare against under our protocol.
+\textbf{Screened} citations mark prior work we reviewed and ruled out (wrong domain, cost, or objective).
+We cite those papers for positioning only.
+They are not building blocks of DenoiseOpt.
 
 \paragraph{Discontinuity control and modular DSP.}
 BLIT/BLEP~\cite{stilson1996}, PolyBLEP~\cite{nam2009polyblep}, and BLAMP~\cite{esqueda2016blamp} state the wrap and corner problem for trivial oscillators.
@@ -27,6 +29,6 @@ MoE soft gates motivate routing among small heterogeneous operators under one re
 Matched outer-loop bake-offs (Random, CMA-ES, REINFORCE, aging evolution, TPE vs hybrid) sit in Appendix~\ref{app:supplement}.
 
 \paragraph{Used vs screened (short).}
-Used: VA discontinuity~\cite{stilson1996,esqueda2016blamp,nam2009polyblep}; unsupervised restoration~\cite{lehtinen2018,kashyap2021n2n,wisdom2020}; DDSP~\cite{engel2020}; compact waveform operators as above; NAS/RL/PPO/PBT/CMA-ES/ERL/MoE as above.
-Screened as contrast only: MAML~\cite{finn2017}, DARTS~\cite{liu2019}, Demucs-scale enhancers~\cite{dfossez2019,dfossez2021}, DiffWave~\cite{kong2021}, SEGAN-style full GAN loops~\cite{pascual2017}.
+Used anchors include VA discontinuity control~\cite{stilson1996,esqueda2016blamp,nam2009polyblep}, unsupervised restoration~\cite{lehtinen2018,kashyap2021n2n,wisdom2020}, DDSP~\cite{engel2020}, compact waveform operators as above, and NAS/RL/PPO/PBT/CMA-ES/ERL/MoE as above.
+Screened as contrast only: MAML~\cite{finn2017}, DARTS~\cite{liu2019}, Demucs-scale enhancers~\cite{dfossez2019,dfossez2021}, DiffWave~\cite{kong2021}, and SEGAN-style full GAN loops~\cite{pascual2017}.
 Claims stay inside cycle-local seam restoration under a declared compute budget.
