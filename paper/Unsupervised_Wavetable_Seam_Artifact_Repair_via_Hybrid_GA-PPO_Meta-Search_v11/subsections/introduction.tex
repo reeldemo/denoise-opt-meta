@@ -6,7 +6,17 @@ If the endpoints disagree ($x[0]\neq x[L-1]$), that wrap is a hard discontinuity
 Under cyclic playback it becomes a click locked to the fundamental.
 The same geometry appears whenever a short loop is tiled for listening or scoring.
 
-We treat the task as \emph{cycle-local seam restoration}: edit a neighborhood of the wrap, and optionally a small residual cell over the period, so multi-period playback matches an ideal reference that never opens the wrap cliff.
+\paragraph{Terminology.}
+\begin{itemize}
+  \item \textbf{Seam} (wrap join / loop join): the join between the end and start of one looped period, where a click appears if the endpoints mismatch. The seam is local; the signal is the whole waveform.
+  \item \textbf{Repair operator} (bake operator $\Theta$; short: operator): the searchable local edit applied at the seam (formerly called a ``cell'' in code notes).
+  \item \textbf{Residual operator}: optional tiny learned network inside a repair operator.
+  \item \textbf{$R$} / \textbf{$R_{\mathrm{blend}}$}: unsupervised seam-quality scores (whole-curve prolonged $R$ for debug; $R_{\mathrm{blend}}$ for primary selection). Details in Section~\ref{sec:residual-score}.
+  \item \textbf{Outer loop} / \textbf{meta-search}: GA--PPO searching over repair operators, not training one giant net end-to-end.
+  \item \textbf{Holdout}: frozen eval set / seed used for reported scores.
+\end{itemize}
+
+We treat the task as \emph{cycle-local seam restoration}: edit a neighborhood of the wrap join (the seam), and optionally a small residual operator over the period, so multi-period playback matches an ideal reference that never opens the wrap cliff.
 Agreement uses a discontinuity-weighted blend $R_{\mathrm{blend}}$ (seam fidelity vs the ideal, plus mid-cycle identity vs the cracked engine) under a latency-aware objective $J$ (Section~\ref{sec:residual-score}).
 
 \paragraph{Four roles.}
@@ -15,7 +25,7 @@ Keep these distinct (Figure~\ref{fig:intro-sine}; Section~\ref{sec:four-roles}):
   \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld. Scoring target only. Not a method.
   \item \textbf{No-bake}: unrepaired cracked engine $x$, scored vs $r^{\star}$. A do-nothing reference.
   \item \textbf{Dual Cosine}: classical raised-cosine end fade. Classical baseline.
-  \item \textbf{Ours (DenoiseOpt)}: searched bake cell from the hybrid outer loop.
+  \item \textbf{Ours (DenoiseOpt)}: searched repair operator from the hybrid outer loop.
 \end{enumerate}
 Corrupt-to-corrupt \textbf{Noise2Noise} is a fifth comparator: the primary neural gate under the locked $R_{\mathrm{blend}}$ protocol (Section~\ref{sec:n2n-vs-ours-boards}).
 It is not shown in Figure~\ref{fig:intro-sine}, which illustrates roles on one hard sine-wrap tile.
@@ -44,11 +54,11 @@ Under the locked v10.1 $R_{\mathrm{blend}}$ protocol:
 \begin{itemize}
   \item The hybrid champion does \emph{not} clear the frozen Noise2Noise holdout gate
     ($R_{\mathrm{blend}}{\approx}0.9697$ vs $0.9750$). Dual Cosine on that holdout sits near $0.541$.
-  \item On twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$; $13/20$ wins). Both crush Dual Cosine.
-  \item On hard wrap cliffs, classical fades collapse while searched cells and Noise2Noise hold (Section~\ref{sec:cliff-strata}).
+  \item On twenty multi-family boards, Ours edges Noise2Noise on mean score ($0.931$ vs $0.925$; $13/20$ wins). Both beat Dual Cosine.
+  \item On hard wrap cliffs, classical fades collapse while searched operators and Noise2Noise hold (Section~\ref{sec:cliff-strata}).
   \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours; both still beat Dual Cosine.
 \end{itemize}
-Contribution in one line: compact searchable bake cells that remain robust when classical fades fail, and that need no paired clean targets at search time.
+Contribution in one line: compact searchable repair operators that remain robust when classical fades fail, and that need no paired clean targets at search time.
 Older whole-curve scores near $R{\approx}0.991$ are historical context only; they must not dominate the mental model of the locked protocol.
 
 \paragraph{Transfer datasets.}

@@ -117,7 +117,7 @@ Isolated short-budget re-runs (GA-only, PPO-only, GA{+}PPO, full, 150 iters, sam
 Figures in Section~\ref{sec:results} regenerate from the archived \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/meta_approach_compare_v10.json}{search results}.
 
 \paragraph{Inference, classical, and learned baselines.}
-High-$R$ fitted cells ($R\ge 0.98$) are timed on CUDA (batch 64, prolonged residual).
+High-$R$ fitted operators ($R\ge 0.98$) are timed on CUDA (batch 64, prolonged residual).
 Ten non-learnable bake denoisers share the frozen canonical holdout against the neural favorite (Table~\ref{tab:canonical-methods}).
 Cycle-local BLIT/BLEP, PolyBLEP, and BLAMP seam repairs are scored on the same holdout / cliff / multi-family protocol (Table~\ref{tab:va-seam-blep}; \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/figures/va_seam_blep.json}{VA results}) and illustrated on the intro high-wrap tile (Figure~\ref{fig:va-seam-techniques}).
 Fixed-arch MLP-on-$R$ and CNN/U-Net-lite-on-$R$ baselines (no outer NAS) are trained on $1{-}R$ with the same generator and scored in the SOTA matrix.

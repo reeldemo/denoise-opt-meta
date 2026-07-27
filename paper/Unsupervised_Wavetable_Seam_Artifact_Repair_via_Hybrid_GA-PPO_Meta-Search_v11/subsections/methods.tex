@@ -5,8 +5,8 @@
 \label{sec:notation}
 
 Throughout, $x\in\mathbb{R}^{L}$ is the cracked single-period wavetable (engine input with open-wrap cliff).
-Let $\mathcal{H}$ be the space of bake-cell configurations (discrete operator graph plus continuous bake parameters).
-The bake operator is
+Let $\mathcal{H}$ be the space of repair-operator configurations (discrete operator graph plus continuous bake parameters).
+The repair operator (bake operator $\Theta$) is
 \begin{equation}
 \label{eq:Theta}
 \Theta:\mathbb{R}^{L}\times\mathcal{H}\to\mathbb{R}^{L},\qquad
@@ -30,9 +30,9 @@ These symbols follow a different convention from Noise2Noise clean/noisy pairs.
     \midrule
     $L$ & Cycle length (samples per period) \\
     $x$ & Cracked engine wavetable period (cliff on) \\
-    $y=\Theta(x;h)$ & Baked cycle after seam ops / residual cell \\
-    $\Theta$ & Bake operator $\mathbb{R}^{L}\times\mathcal{H}\to\mathbb{R}^{L}$ \\
-    $h\in\mathcal{H}$ & Bake-cell configuration (ops + continuous $\theta$) \\
+    $y=\Theta(x;h)$ & Baked cycle after seam ops / residual operator \\
+    $\Theta$ & Repair operator (bake operator) $\mathbb{R}^{L}\times\mathcal{H}\to\mathbb{R}^{L}$ \\
+    $h\in\mathcal{H}$ & Repair-operator configuration (ops + continuous $\theta$) \\
     $r^{\star}$ & Ideal sibling (same seed; cliff withheld) \\
     $G$ & Procedural period generator (cliff on/off) \\
     $N$ & Prolong tiling count \\
@@ -98,18 +98,18 @@ A champion must also strictly beat the frozen corrupt$\to$corrupt Noise2Noise ho
 
 \textbf{Every} scored row applies some $\Theta$ to $x$ and is evaluated under~\eqref{eq:R-blend}.
 The ideal sibling is the seam scoring target; body identity uses the engine.
-We do not claim convergence guarantees for the hybrid outer loop, nor a general wrap-closure theorem for arbitrary bake cells.
+We do not claim convergence guarantees for the hybrid outer loop, nor a general wrap-closure theorem for arbitrary repair operators.
 
 \begin{remark}[Noise2Noise primary baseline]
 \label{rem:n2n}
 \texttt{SeamN2N} (${\approx}53.5$k) is the primary neural comparator and champ gate.
-Search may discover \texttt{n2n\_unet} cells at the same scale; TinyUNet1D \texttt{unet} is a different, smaller block~\cite{lehtinen2018,kashyap2021n2n}.
+Search may discover \texttt{n2n\_unet} operators at the same scale; TinyUNet1D \texttt{unet} is a different, smaller block~\cite{lehtinen2018,kashyap2021n2n}.
 \end{remark}
 
 \subsection{Seam bake operator and classical baselines}
 \label{sec:bake}
 
-A \textbf{bake cell} $\Theta(\cdot;h)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual cells (MLP/FIR/U-Net-lite/attention-lite/LSTM-lite) and optional MoE soft gates over experts (Appendix~\ref{app:algorithms}, Algorithms~\ref{alg:dualcosine}--\ref{alg:moe}).
+A \textbf{repair operator} $\Theta(\cdot;h)$ composes classical seam ops (DualCosine, polish, soft seam, FIR blends) with optional tiny residual operators (MLP/FIR/U-Net-lite/attention-lite/LSTM-lite) and optional MoE soft gates over experts (Appendix~\ref{app:algorithms}, Algorithms~\ref{alg:dualcosine}--\ref{alg:moe}).
 Bake parameters live in a bounded box; architecture strings are discrete graphs over those ops.
 Separate classical controls apply cycle-local BLIT/BLEP, PolyBLEP, and BLAMP residual corrections at the wrap on the cracked engine tile (same interface as DualCosine / FIR; not a full oscillator rewrite).
 Plain-language roles: BLIT/BLEP and PolyBLEP correct a \emph{value} step at wrap; BLAMP corrects a \emph{slope}/corner jump; DualCosine fades endpoints without a BLEP residual.
@@ -159,7 +159,7 @@ Pseudocode for GA, PPO, PBT, and the full hybrid rotation is in Algorithms~\ref{
 \subsection{Search space and inner fit}
 \label{sec:search-space}
 
-Each genome encodes: ordered op list (fade, polish, FIR, pin, residual write), depth, residual cell type (none, MLP, FIR, U-Net-lite, attn-lite, LSTM-lite), optional MoE expert count $K\in\{2,3,4\}$, and continuous $\theta$ in the CUDA runner box bounds.
+Each genome encodes: ordered op list (fade, polish, FIR, pin, residual write), depth, residual operator type (none, MLP, FIR, U-Net-lite, attn-lite, LSTM-lite), optional MoE expert count $K\in\{2,3,4\}$, and continuous $\theta$ in the CUDA runner box bounds.
 The searchable bake vocabulary includes a width-capped 1--2 layer LSTM block over the seam window or full cycle (distinct from the fixed supervised seq-LSTM SOTA baseline).
 The live hybrid tag is \texttt{PPO+GA+PBT+NAS+depth+MoE} with LSTM enabled in the block graph.
 
@@ -189,7 +189,7 @@ Beyond the hybrid outer loop, we compare five additional outer-loop families und
 Table and figure legends use the short display names below (artifact folders keep stable code keys; see the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wavetable_Seam_Artifact_Repair_via_Hybrid_GA-PPO_Meta-Search_v11/NOMENCLATURE.md}{nomenclature}):
 \begin{itemize}
   \item \textbf{Random NAS} (\texttt{random}): independent uniform draws over bake graphs and fit hyperparameters (control).
-  \item \textbf{Cont.\ CMA-ES} (\texttt{cmaes}): diagonal covariance-matrix adaptation over a continuous encoding of depth, width, cell kind, block logits, and fit hyperparameters~\cite{hansen2016cmaes}.
+  \item \textbf{Cont.\ CMA-ES} (\texttt{cmaes}): diagonal covariance-matrix adaptation over a continuous encoding of depth, width, operator kind, block logits, and fit hyperparameters~\cite{hansen2016cmaes}.
   \item \textbf{Arch REINFORCE} (\texttt{reinforce}): vanilla policy gradient over discrete architecture-edit actions (no clipped surrogate; contrast to PPO~\cite{schulman2017,zoph2017nas}).
   \item \textbf{Aging evolution} (\texttt{aging\_evo}): regularized evolution with oldest-member replacement after tournament parent selection~\cite{real2017large,real2019}, distinct from the hybrid's non-aging tournament GA branch.
   \item \textbf{TPE Bayes NAS} (\texttt{tpe}): lightweight tree-structured Parzen estimator over discrete bake categoricals in the spirit of practical Bayesian optimization~\cite{snoek2012}.
@@ -200,7 +200,7 @@ Results appear in Appendix~\ref{app:supplement} (Table~\ref{tab:meta-approaches}
 \begin{remark}[Trial complexity]
 \label{rem:complexity}
 Per outer iteration the dominant cost is $O(T_{\mathrm{fit}}\cdot C_{\mathrm{fwd}})$ for fit steps times one forward bake.
-Bake-width caps (tiny residual cells) keep $C_{\mathrm{fwd}}$ far below full-band Demucs/DiffWave forwards screened in Related Work.
+Bake-width caps (tiny residual operators) keep $C_{\mathrm{fwd}}$ far below full-band Demucs/DiffWave forwards screened in Related Work.
 \end{remark}
 
 \subsection{Hyperparameters}

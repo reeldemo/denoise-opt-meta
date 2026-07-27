@@ -19,7 +19,7 @@
 
     % Middle: bake path
     \node[classical, right=0.85cm of Gon] (dc) {classical ops\\DualCosine / FIR};
-    \node[neural, right=of dc] (cell) {bake cell $\Theta(x;h)$\\(+ residual / MoE)};
+    \node[neural, right=of dc] (cell) {repair operator $\Theta(x;h)$\\(+ residual / MoE)};
     \node[io, right=of cell] (y) {baked $y$};
 
     % Bottom: score + outer loop
@@ -46,10 +46,10 @@
   }
   \caption{DenoiseOpt overview (before component deep-dives).
   Same-seed generator $G$ yields ideal sibling $r^{\star}$ (cliff off) and cracked engine $x$ (cliff on).
-  Bake cell $\Theta(x;h)$ may include DualCosine/FIR and optional residual/MoE experts.
+  Repair operator $\Theta(x;h)$ may include DualCosine/FIR and optional residual/MoE experts.
   No-bake is the identity control $x\mapsto x$.
   Outer objective is maximize absolute prolonged $R(y,r^{\star})$.
   DualCosine centering (not shown) is PPO advantage shaping only.
-  Dashed feedback: architecture proposals update the cell. Pseudocode in Appendix~\protect\ref{app:algorithms}.}
+  Dashed feedback: architecture proposals update the operator. Pseudocode in Appendix~\protect\ref{app:algorithms}.}
   \label{fig:denoiseopt-arch}
 \end{figure}

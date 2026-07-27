@@ -75,10 +75,10 @@ Monitoring plots below are regenerated from that freeze.
 
 \subsection{Inference latency at matched score}
 \label{sec:inference-latency}
-Across diverse high-$R$ fitted cells ($R\ge 0.98$), we timed CUDA forward passes (batch 64, prolonged residual).
+Across diverse high-$R$ fitted operators ($R\ge 0.98$), we timed CUDA forward passes (batch 64, prolonged residual).
 Within a tight band of the best residual ($R \ge R_{\max}-5\cdot10^{-4}$), the \textbf{favorite} is the lowest-latency model:
 \texttt{champion\_iter\_000235} with $R\approx 0.9910$, $\approx 3.15$\,ms/batch, $\approx 37$k parameters
-(versus a higher-capacity max-$R$ cell at $R\approx 0.9914$ but $\approx 7.18$\,ms/batch / $\approx 104$k params).
+(versus a higher-capacity max-$R$ operator at $R\approx 0.9914$ but $\approx 7.18$\,ms/batch / $\approx 104$k params).
 Selection rule: maximize $R$, then minimize latency inside the band.
 
 \subsection{Top-5 architectures}
@@ -419,7 +419,7 @@ The primary SOTA claim remains the Python multi-family matrix.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_inference_vs_residual.png}
-  \caption{High-$R$ fitted cells: residual vs CUDA latency. Star: favorite.}
+  \caption{High-$R$ fitted operators: residual vs CUDA latency. Star: favorite.}
   \label{fig:inference-pareto}
 \end{figure}
 

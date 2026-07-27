@@ -8,7 +8,7 @@ We group prior work by mechanism.
 \paragraph{Discontinuity control and modular DSP.}
 BLIT/BLEP~\cite{stilson1996}, PolyBLEP~\cite{nam2009polyblep}, and BLAMP~\cite{esqueda2016blamp} state the wrap and corner problem for trivial oscillators.
 We score cycle-local approximations beside Dual Cosine (Section~\ref{sec:va-seam-baselines}).
-DDSP frames DSP modules as composable blocks~\cite{engel2020}; we use that framing for small bake/FIR/MLP seam cells, not end-to-end vocoders.
+DDSP frames DSP modules as composable blocks~\cite{engel2020}; we use that framing for small bake/FIR/MLP seam operators, not end-to-end vocoders.
 
 \paragraph{Label-free restoration.}
 Noise2Noise learns restorers from corrupted observations alone~\cite{lehtinen2018,kashyap2021n2n}.
@@ -16,16 +16,16 @@ Mixture-invariant training ranks unsupervised systems without stem labels~\cite{
 We train a corrupt-to-corrupt seam CNN on the same generator as the primary neural baseline (Section~\ref{sec:results}).
 Full Demucs / DiffWave stacks are screened: domain and bake-budget mismatch~\cite{dfossez2019,kong2021}.
 
-\paragraph{Compact waveform cells.}
+\paragraph{Compact waveform operators.}
 Wave-U-Net, Conv-TasNet, dual-path, and attention audio models supply block priors we shrink to bake width~\cite{stoller2018,luo2019,luo2020dprnn,subakan2021,ronneberger2015,he2016resnet,vaswani2017}.
 They are design priors, not frozen full-scale separators inside every meta trial.
 
 \paragraph{Search and hybrids.}
 NAS taxonomies, RL controllers, progressive and latency-aware NAS, aging evolution, PBT, CMA-ES, and evolution-guided policy gradients motivate the hybrid outer loop~\cite{elsken2019,zoph2017nas,pham2018,liu2018pnas,tan2019mnasnet,real2019,jaderberg2017,hansen2016cmaes,khadka2018,schulman2017}.
-MoE soft gates motivate routing among small heterogeneous cells under one residual score~\cite{shazeer2017}.
+MoE soft gates motivate routing among small heterogeneous operators under one residual score~\cite{shazeer2017}.
 Matched outer-loop bake-offs (Random, CMA-ES, REINFORCE, aging evolution, TPE vs hybrid) sit in Appendix~\ref{app:supplement}.
 
 \paragraph{Used vs screened (short).}
-Used: VA discontinuity~\cite{stilson1996,esqueda2016blamp,nam2009polyblep}; unsupervised restoration~\cite{lehtinen2018,kashyap2021n2n,wisdom2020}; DDSP~\cite{engel2020}; compact waveform cells as above; NAS/RL/PPO/PBT/CMA-ES/ERL/MoE as above.
+Used: VA discontinuity~\cite{stilson1996,esqueda2016blamp,nam2009polyblep}; unsupervised restoration~\cite{lehtinen2018,kashyap2021n2n,wisdom2020}; DDSP~\cite{engel2020}; compact waveform operators as above; NAS/RL/PPO/PBT/CMA-ES/ERL/MoE as above.
 Screened as contrast only: MAML~\cite{finn2017}, DARTS~\cite{liu2019}, Demucs-scale enhancers~\cite{dfossez2019,dfossez2021}, DiffWave~\cite{kong2021}, SEGAN-style full GAN loops~\cite{pascual2017}.
 Claims stay inside cycle-local seam restoration under a declared compute budget.

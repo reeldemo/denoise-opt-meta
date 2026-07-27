@@ -41,7 +41,7 @@ the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/docs/PSEUDOCO
 \caption{MoE soft gating over bake experts}
 \label{alg:moe}
 \begin{algorithmic}[1]
-\Require Cycle $x$, expert cells $\{E_k\}_{k=1}^{K}$, gate logits $g\in\mathbb{R}^{K}$
+\Require Cycle $x$, expert operators $\{E_k\}_{k=1}^{K}$, gate logits $g\in\mathbb{R}^{K}$
 \State $w \gets \mathrm{softmax}(g)$
 \State $y \gets \sum_{k=1}^{K} w_k\, E_k(x)$
 \State \Return $y$
@@ -80,7 +80,7 @@ the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/docs/PSEUDOCO
 \Require Population $P$, tournament size $k$, crossover rate $p_c$, mutation rate $p_m$
 \State Sample $k$ genomes; parents $\gets$ top-2 by $R$
 \State child $\gets$ Crossover(parents) with prob.\ $p_c$, else clone elite
-\State Mutate(child) with rate $p_m$ (ops, depth, cell type, $\theta$)
+\State Mutate(child) with rate $p_m$ (ops, depth, operator type, $\theta$)
 \State Fit and evaluate child; insert into $P$ (replace worst if full)
 \State \Return updated $P$
 \end{algorithmic}
