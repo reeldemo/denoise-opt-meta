@@ -2,9 +2,25 @@
 \label{sec:introduction}
 
 Wavetable oscillators store one period and wrap the read pointer at the end of the table.
-If the endpoints disagree ($x[0]\neq x[L-1]$), that wrap is a hard discontinuity.
-Under cyclic playback it becomes a click locked to the fundamental.
+When those endpoints disagree, each wrap injects a discontinuity that listeners hear as a period-locked click.
+
+\paragraph{Wavetable synthesis in brief.}
+A wavetable synthesizer stores a single cycle of a waveform (the wavetable) and produces continuous tone by looping a read pointer through that table.
+Pitch is set by how fast the pointer advances; timbre comes from the stored shape (and, in multi-table banks, from morphing across tables).
+Tiling the stored period yields a sustained note under playback.
+If the endpoints disagree ($x[0]\neq x[L-1]$), every wrap is a discontinuity at the wrap join (the seam), heard as a click locked to the fundamental.
+Figure~\ref{fig:wavetable-primer} shows one stored period, tiled playback with wrap marks, and a zoomed mismatched wrap.
 The same geometry appears whenever a short loop is tiled for listening or scoring.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig_wavetable_primer.png}
+  \caption{Wavetable synthesis primer.
+  (a)~One stored period $x[0..L{-}1]$ ($L{=}256$).
+  (b)~The same period tiled for continuous playback; dashed lines mark read-pointer wraps.
+  (c)~Zoom at a mismatched wrap join (seam), where the endpoint cliff produces an audible click.}
+  \label{fig:wavetable-primer}
+\end{figure}
 
 \paragraph{Terminology.}
 \begin{itemize}
