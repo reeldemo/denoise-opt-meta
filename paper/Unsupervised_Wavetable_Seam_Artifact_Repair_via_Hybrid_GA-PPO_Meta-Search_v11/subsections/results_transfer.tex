@@ -96,11 +96,12 @@ SeamN2N beats Dual Cosine everywhere and sits near no-bake on CWRU/MFPT/Paderbor
 on ECG and synth CNC ($R{\approx}0.56$--$0.65$ and $0.48$ vs Ours ${>}0.93$).
 On MIT-BIH and PTB-XL, endpoint-pin remains a strong classical ECG row above SeamN2N; Ours still leads both.
 Author Operational Cycle-GAN on the same ECG wrap boards collapses under OOD wrap-$R$
-($R{\approx}0.07$--$0.16$)---clinical ECG restore is not the wrap residual objective, but the author stack
+($R{\approx}0.07$--$0.16$).
+Clinical ECG restore differs from the wrap residual objective, yet the author stack
 is now a Table~\ref{tab:transfer-main} row rather than a deferred claim.
 Author BeatDiff (Drive Orbax prior, step $9360$) as a one-step OOD wrap probe reaches
-$R{\approx}0.33$--$0.37$---above Cycle-GAN but still far below Ours/SeamN2N/no-bake on ECG;
-we do not treat Bedin native morph metrics as wrap-$R$.
+$R{\approx}0.33$--$0.37$, above Cycle-GAN but still far below Ours/SeamN2N/no-bake on ECG.
+We do not treat Bedin native morph metrics as wrap-$R$.
 Synthetic CNC shows the largest classical collapse with Ours near $0.992$; SeamN2N only recovers to $0.4833$.
 Synth PMU is the strongest SeamN2N row ($R{=}0.9789$) but still below Ours ($0.9915$).
 Paderborn wrap board shows Ours $R{=}0.9270$ vs SeamN2N $0.8387$ and DualCosine $0.4710$;

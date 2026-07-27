@@ -4,7 +4,9 @@
 DenoiseOpt casts wavetable wrap discontinuity as cycle-local seam repair under blended residual $R_{\mathrm{blend}}$ and latency-aware objective $J$.
 A hybrid GA+PPO(+PBT) outer loop searches compact repair operators without paired clean targets at search time.
 Under the locked protocol, Noise2Noise is the neural gate and Dual Cosine is the classical fade baseline.
-The hybrid freeze reaches $R_{\mathrm{blend}}{\approx}0.970$ on holdout but does not clear Noise2Noise (${\approx}0.975$); Dual Cosine sits near $0.541$.
-On multi-family boards Ours edges Noise2Noise on mean score; on hard cliffs classical fades collapse while searched operators hold.
-The contribution is robust searchable repair operators for DSP / synthesis, not speech-enhancement or diagnosis SOTA.
+The hybrid freeze reaches $R_{\mathrm{blend}}{\approx}0.970$ on holdout but does not clear Noise2Noise (${\approx}0.975$).
+Dual Cosine sits near $0.541$.
+On multi-family boards Ours edges Noise2Noise on mean score.
+On hard cliffs classical fades collapse while searched operators hold.
+The contribution is searchable repair operators for cycle-local DSP and synthesis seam restoration.
 Code: \url{https://github.com/reeldemo/reelsynth}, \url{https://github.com/reeldemo/denoise-opt-meta}.

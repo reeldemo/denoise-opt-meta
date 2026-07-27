@@ -53,26 +53,17 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    Looping a wavetable with mismatched endpoints produces a wrap-join click (the seam)
-    locked to every period.
-    We investigate unsupervised deep learning algorithms to heal the signal.
-    The aim is to preserve the sound of the wave while removing the click noise artifact.
-    We repair that wrap join without paired clean recordings.
-    The edit is local and can be scored by seam fidelity to a no-cliff ideal sibling plus
-    mid-cycle identity to the cracked engine, so a learned bake is a reasonable alternative to
-    hand-tuning one fade.
-    Typical fixes are classical raised-cosine fades, virtual-analog seam operators, and
-    unsupervised domain denoisers such as corrupt-to-corrupt Noise2Noise; transfer boards further
-    probe cross-domain travel.
-    Because no single method fits every engine family, \textbf{DenoiseOpt} searches over repair
-    policies (classical fades plus tiny residual operators) with a hybrid genetic-algorithm and PPO
-    meta-loop, ranking candidates by $R_{\mathrm{blend}}$.
-    A $1{,}200$-iteration hybrid champion reaches about $0.9697$ on holdout $R_{\mathrm{blend}}$
-    but does not beat frozen Noise2Noise (about $0.9750$); Dual Cosine sits near $0.541$.
-    On twenty multi-family boards, Ours edges Noise2Noise on mean score and both outperform Dual Cosine.
+    Looping a wavetable with mismatched endpoints leaves a wrap-join click at the seam on every period.
+    We study unsupervised repair of that local discontinuity without paired clean recordings.
+    Scoring combines seam fidelity to a no-cliff ideal sibling with mid-cycle identity to the cracked engine.
+    Classical raised-cosine fades, virtual-analog seam operators, and corrupt-to-corrupt Noise2Noise are strong baselines on some boards.
+    Transfer benches apply the same wrap protocol to vibration, ECG, and synthetic cycles.
+    Because no single operator fits every engine family, \textbf{DenoiseOpt} searches compact repair policies (classical fades plus tiny residual operators) with a hybrid genetic-algorithm and PPO meta-loop, ranking candidates by $R_{\mathrm{blend}}$.
+    A $1{,}200$-iteration hybrid champion reaches about $0.9697$ on holdout $R_{\mathrm{blend}}$, below frozen Noise2Noise (about $0.9750$) and well above Dual Cosine (about $0.541$).
+    On twenty multi-family boards, Ours edges Noise2Noise on mean score.
+    Both beat Dual Cosine.
     On hard wrap cliffs, classical fades collapse while searched operators hold.
-    The contribution is compact searchable repair operators that stay robust when classical fades fail
-    and that need no paired clean targets at search time.
+    The contribution is searchable repair operators that remain competitive when classical fades fail and require no paired clean targets at search time.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; seam restoration; unsupervised learning; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}

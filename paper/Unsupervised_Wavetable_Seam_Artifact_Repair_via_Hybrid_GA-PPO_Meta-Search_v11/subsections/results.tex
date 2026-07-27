@@ -113,7 +113,7 @@ Every row uses the same ideal sibling $r^{\star}$; higher $R$ means closer to th
 DualCosine reaches $R\approx 0.825$ ($\approx 1.35$\,ms/batch), near the search-monitor DualCosine $\approx 0.817$ on live draws from the same generator.
 The best \emph{active} classical repair is seam-local 3-tap FIR (\texttt{seam\_fir3}) at $R\approx 0.961$ / $\approx 0.67$\,ms/batch ($0.962\pm0.002$ over five seeds).
 No-bake (passthrough; unrepaired engine vs $r^{\star}$) scores $R\approx 0.972$.
-It is a do-nothing reference, not the ideal.
+It scores unrepaired passthrough, not the ideal sibling.
 The neural favorite reaches $R\approx 0.991$ ($0.991\pm0.0002$ over five seeds) at $\approx 2.56$\,ms/batch ($\approx 37$k params):
 $\Delta R \approx {+}0.019$ vs no-bake, $\Delta R \approx {+}0.030$ vs \texttt{seam\_fir3}, and $\Delta R \approx {+}0.166$ vs DualCosine.
 This table is a classical-board snapshot under prolonged $R$; Noise2Noise appears on the multi-family matrix
@@ -347,7 +347,7 @@ PolyBLEP reaches mean $R\approx 0.929$ ($\Delta R\approx{+}0.104$ vs DualCosine)
 BLIT/BLEP nearly zeros wrap-jump ($0.004$) while dropping mean $R$ to $0.868$ and collapsing on hard cliffs ($R\approx 0.712$).
 BLAMP is near-no-bake on this value-cliff geometry (mean $R\approx 0.972$).
 On the annotated severe tile in Figure~\ref{fig:va-seam-techniques}, tile $R$ is lower still (PolyBLEP $\approx 0.869$, BLIT/BLEP $\approx 0.703$, DualCosine $\approx 0.603$, BLAMP $\approx$ engine), which matches the hard-cliff strata.
-Honest reading: these classical tools are scored here, not only cited.
+These classical tools are scored here, not only cited.
 They beat DualCosine on mean $R$ in places.
 None matches the favorite on prolonged $R$.
 

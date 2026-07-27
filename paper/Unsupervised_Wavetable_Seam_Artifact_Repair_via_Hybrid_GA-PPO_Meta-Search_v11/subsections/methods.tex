@@ -119,12 +119,12 @@ They are scored in Section~\ref{sec:va-seam-baselines}.
 \label{sec:four-roles}
 \begin{itemize}
   \item \textbf{Ideal sibling} $r^{\star}$: cliff withheld; scoring target only (panel~(a) in Figure~\ref{fig:intro-sine}).
-  \item \textbf{No-bake} (passthrough): $\Theta_{\mathrm{no\text{-}bake}}(x)=x$; unrepaired cracked engine scored vs $r^{\star}$ (panel~(b)). Not $r^{\star}$, not a residual-net skip, not a learned identity map.
+  \item \textbf{No-bake} (passthrough): $\Theta_{\mathrm{no\text{-}bake}}(x)=x$; unrepaired cracked engine scored vs $r^{\star}$ (panel~(b)). Scores the cracked engine unchanged. Distinct from $r^{\star}$, residual-net skips, and learned identity maps.
   \item \textbf{DualCosine}: classical raised-cosine end fade on $x$ (panel~(c)); one classical board row and, separately, a PPO advantage baseline (Remark~\ref{rem:dualcosine-centering}).
   \item \textbf{Ours}: searched bake $y=\Theta(x;h^{\star})$ from the hybrid outer loop (panel~(d)).
 \end{itemize}
 On mild cliffs residual mass $\ll$ ideal RMS under the unit clamp form of~\eqref{eq:R-blend}, so no-bake $R_{\mathrm{blend}}$ can sit high while the wrap click remains audible.
-That is a ``do nothing'' reference, not a perceptual wrap score.
+It is a do-nothing passthrough reference, not a perceptual wrap-quality score.
 Released JSON may still use the legacy key \texttt{identity} for no-bake; manuscript prose uses \emph{no-bake}.
 
 \paragraph{Classical (non-AI) comparison board.}

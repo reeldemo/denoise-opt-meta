@@ -8,11 +8,11 @@ The same geometry appears whenever a short loop is tiled for listening or scorin
 
 \paragraph{Terminology.}
 \begin{itemize}
-  \item \textbf{Seam} (wrap join / loop join): the join between the end and start of one looped period, where a click appears if the endpoints mismatch. The seam is local; the signal is the whole waveform.
+  \item \textbf{Seam} (wrap join / loop join): the join between the end and start of one looped period, where a click appears if the endpoints mismatch. The seam is local. The signal is the whole waveform.
   \item \textbf{Repair operator} (bake operator $\Theta$; short: operator): the searchable local edit applied at the seam (formerly called a ``cell'' in code notes).
   \item \textbf{Residual operator}: optional tiny learned network inside a repair operator.
   \item \textbf{$R$} / \textbf{$R_{\mathrm{blend}}$}: unsupervised seam-quality scores (whole-curve prolonged $R$ for debug; $R_{\mathrm{blend}}$ for primary selection). Details in Section~\ref{sec:residual-score}.
-  \item \textbf{Outer loop} / \textbf{meta-search}: GA--PPO searching over repair operators, not training one giant net end-to-end.
+  \item \textbf{Outer loop} / \textbf{meta-search}: GA--PPO search over repair-operator graphs (not end-to-end training of one large network).
   \item \textbf{Holdout}: frozen eval set / seed used for reported scores.
 \end{itemize}
 
@@ -58,8 +58,9 @@ Under the locked v10.1 $R_{\mathrm{blend}}$ protocol:
   \item On hard wrap cliffs, classical fades collapse while searched operators and Noise2Noise hold (Section~\ref{sec:cliff-strata}).
   \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours; both still beat Dual Cosine.
 \end{itemize}
-Contribution in one line: compact searchable repair operators that remain robust when classical fades fail, and that need no paired clean targets at search time.
-Older whole-curve scores near $R{\approx}0.991$ are historical context only; they must not dominate the mental model of the locked protocol.
+In summary, compact searchable repair operators remain competitive when classical fades fail and need no paired clean targets at search time.
+Older whole-curve scores near $R{\approx}0.991$ are historical context only.
+They must not dominate the mental model of the locked protocol.
 
 \paragraph{Transfer datasets.}
 As a cross-domain stress test (not a diagnosis claim), we reuse the same wrap protocol on seven boards
