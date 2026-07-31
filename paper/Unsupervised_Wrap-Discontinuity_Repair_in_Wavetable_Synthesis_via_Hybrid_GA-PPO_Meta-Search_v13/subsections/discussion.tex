@@ -2,11 +2,11 @@
 \label{sec:discussion}
 
 \paragraph{Main story under $R_{\mathrm{blend}}$.}
-The locked protocol does not crown the hybrid champion over Noise2Noise on the holdout
-($0.9697$ vs $0.9750$).
-Dual Cosine on that board sits near $0.541$.
+The locked protocol does not crown the hybrid champion over Noise2Noise on holdout
+($0.9708{\pm}0.0014$ vs $0.9767{\pm}0.0015$ over five seeds).
+Dual Cosine on that board sits near $0.542{\pm}0.038$.
 The operative claim is narrower.
-Compact searchable repair operators outperform classical fades, stay competitive with Noise2Noise on multi-family means ($13/20$ wins), and hold on hard cliffs where Dual Cosine collapses
+Compact searchable repair operators outperform classical fades, stay competitive with Noise2Noise on multi-family means (mean win fraction $0.47$), and hold on hard cliffs where Dual Cosine collapses
 (Table~\ref{tab:n2n-vs-ours}, Section~\ref{sec:cliff-strata}).
 Favorite $\Theta$ on the v10.1 freeze is larger than SeamN2N (${\approx}121$k vs ${\approx}53.5$k) and still trails N2N on holdout $R_{\mathrm{blend}}$
 (Table~\ref{tab:param-fairness}).
@@ -23,7 +23,7 @@ Mean scores hide that structure.
 Under near-ceiling residuals, further gains are small in absolute units and sensitive to reward shaping and branch weights.
 Learning curves (Figure~\ref{fig:search-learning-curve}) show Dual Cosine cleared early under both the superseded prolonged-$R$ $5$k bake-off and the v10.1 $R_{\mathrm{blend}}$ hybrid run, with a later plateau below the Noise2Noise gate.
 Plateau adaptation (deeper operators, denser mixture-of-experts graphs, higher GA/PBT weight) is the operational response inside one campaign.
-Matched outer-loop bake-offs and HP probes sit in Appendix~\ref{app:supplement} (still prolonged $R$ until D1).
+Matched-$5$k outer-loop bake-offs under locked $R_{\mathrm{blend}}{+}J$ are complete across three search seeds (Appendix~\ref{app:supplement}, Table~\ref{tab:meta-approaches}).
 
 \paragraph{Evidence beyond static tiles.}
 Vibrato spectrograms and downloadable hear WAVs support informal inspection (Sections~\ref{sec:vibrato-eval}--\ref{sec:hear-samples}).

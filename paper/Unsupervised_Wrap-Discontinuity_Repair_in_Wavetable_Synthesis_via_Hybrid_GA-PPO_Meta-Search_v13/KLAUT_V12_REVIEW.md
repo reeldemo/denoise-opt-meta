@@ -39,7 +39,7 @@ Canonical v12 keeps:
 
 ## Deferred (honest)
 
-- Full matched-$5$k outer-loop **re-search** under $R_{\mathrm{blend}}$ (Deferred D1).
+- ~~Full matched-$5$k outer-loop **re-search** under $R_{\mathrm{blend}}$ (Deferred D1).~~ **Done in v13** (3 seeds; Table `tab:meta-approaches`).
 - Invented THD+N / MOS / perceptual dB-click tables.
 - Extra OA wavetable textbooks beyond stilson/nam/esqueda (constitution: OA-only bib).
 

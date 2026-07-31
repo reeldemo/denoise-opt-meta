@@ -40,7 +40,7 @@ Hybrid GA--PPO Meta-Search}
   Email:
   \href{mailto:julian.m.kleber@gmail.com}{\texttt{julian.m.kleber@gmail.com}}
 }
-\date{27 July 2026}
+\date{31 July 2026}
 \newcommand{\papershorttitle}{Wavetable Wrap-Discontinuity Repair}
 
 \begin{document}
@@ -58,7 +58,10 @@ Hybrid GA--PPO Meta-Search}
     Classical raised-cosine fades, virtual-analog seam operators, and corrupt-to-corrupt Noise2Noise are strong baselines on some boards.
     Because no single operator fits every engine family, \textbf{DenoiseOpt} applies a hybrid genetic-algorithm (GA), proximal policy optimization (PPO), and population-based training (PBT) meta-loop to search compact repair operators under the blended residual $R_{\mathrm{blend}}$ and latency-aware objective $J$.
     This is an application of known search tools to a crisp DSP problem.
-    Across multiple holdout seeds, the hybrid freeze sits just below frozen Noise2Noise and well above Dual Cosine; on twenty multi-family boards Ours edges Noise2Noise on mean score; on hard wrap cliffs classical fades collapse while searched operators hold.
+    Across five holdout seeds, Ours sits below frozen Noise2Noise ($0.9708{\pm}0.0014$ vs $0.9767{\pm}0.0015$) and well above Dual Cosine ($0.542{\pm}0.038$).
+    On twenty multi-family boards the mean-of-means edges Noise2Noise ($0.9337{\pm}0.0028$ vs $0.9308{\pm}0.0045$; mean win fraction $0.47$).
+    Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}{+}J$ across three seeds keeps hybrid ahead of Random/CMA-ES/TPE/Aging/REINFORCE ($0.9748{\pm}0.0018$).
+    On hard wrap cliffs classical fades collapse while searched operators hold.
     Transfer benches reuse the same wrap-discontinuity protocol on other periodic signals as stress tests, not domain diagnosis claims.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; unsupervised repair; DenoiseOpt; seam restoration; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
