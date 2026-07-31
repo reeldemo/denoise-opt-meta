@@ -8,7 +8,7 @@ Extends v11/v12 responses. Canonical PDF: this folder via `build.ps1`.
 |---------|--------|----------|
 | Multi-run holdout mean±std | **Done** (5 seeds) | Table `tab:n2n-vs-ours`; `figures/multiseed_summary.json` |
 | Multi-family win-rate / sign test | **Done** | Results §n2n-vs-ours; mean win frac 0.47, sign $p{=}1.0$ |
-| Matched-5k re-search under $R_{\mathrm{blend}}$ (D1) | **Running** | `reelsynth/brand/artifacts/meta_approach_compare_v13_rblend/` (3 seeds) |
+| Matched-5k re-search under $R_{\mathrm{blend}}$ (D1) | **Done** | Table `tab:meta-approaches`: hybrid $0.9748{\pm}0.0018$; artifacts `meta_approach_compare_v13_rblend/` |
 
 ## Narrative / clarity
 

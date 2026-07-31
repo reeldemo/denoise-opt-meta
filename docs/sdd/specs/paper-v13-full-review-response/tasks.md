@@ -20,13 +20,14 @@ Rewrite abstract (AC-3.1), contributions list (AC-3.2), and expand R_blend/J def
 
 **ACs:** AC-3.1, AC-3.2, AC-3.4, AC-4.1, AC-4.2, AC-5.1, AC-5.2.
 
-## T4 — Run multi-seed outer-loop search (D1) [IN PROGRESS]
+## T4 — Run multi-seed outer-loop search (D1) [DONE]
 
 Execute `bench_meta_approaches_5k.py` with seeds 1902771841, 2026072701, 2026072702 (5k iters each, all 6 approaches).
 Launcher: `reelsynth/scripts/launch_v13_multiseed_search.ps1` → `brand/artifacts/meta_approach_compare_v13_rblend/`.
+Finish: `finish_v13_d1_when_ready.py` → `multiseed_summary.json` search block.
 
-**ACs:** AC-1.1–AC-1.4 (partial until all seeds finish).
-**Gate:** GPU compute (~days wall for full 3×6×5k).
+**ACs:** AC-1.1–AC-1.4.
+Hybrid mean $R_{\mathrm{blend}}=0.9748{\pm}0.0018$; Aging $0.9635{\pm}0.0049$.
 
 ## T5 — Run multi-seed holdout evaluation [DONE]
 
@@ -40,15 +41,16 @@ Five holdout seeds evaluated. Summary in `holdout_multiseed_v13/multiseed_summar
 
 **ACs:** AC-2.3.
 
-## T7 — Update tables and results narrative [DONE pending D1 curves]
+## T7 — Update tables and results narrative [DONE]
 
-Multi-seed holdout numbers in Results / Intro / Conclusion. Learning-curve figure refresh waits on D1 seed completion.
+Multi-seed holdout numbers in Results / Intro / Conclusion.
+D1 matched-5k table + learning-curve / bar figures refreshed from `meta_approach_compare_v13_rblend/`.
 
-**ACs:** AC-2.2, AC-2.3, AC-3.3 (holdout side).
+**ACs:** AC-2.2, AC-2.3, AC-3.3.
 
 ## T8 — Build, audit, push [IN PROGRESS]
 
-PDF built via `build.ps1`. Commit/push both repos. Klaut English audit optional follow-up.
+Rebuild PDF via `build.ps1`. Commit/push both repos. Klaut English audit optional follow-up.
 
 ## Parallel plan
 

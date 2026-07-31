@@ -9,37 +9,31 @@ Primary claims remain in Sections~\ref{sec:results}--\ref{sec:transfer-main}.
 \label{sec:meta-approaches-results}
 
 Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to Ours (hybrid GA+PPO)?
-Table~\ref{tab:meta-approaches} reports a \textbf{cheap} $R_{\mathrm{blend}}$ re-fit of each frozen champion architecture/HP from that historical search
-(not a full overnight re-search; outer loops still maximized prolonged $R$).
-Wall hours are the original 5k-search walls.
-Full matched re-search under $R_{\mathrm{blend}}{+}J$ remains Deferred D1
-(\texttt{.venv\_gpu/Scripts/python.exe scripts/bench\_meta\_approaches\_5k.py --iters 5000 --device cuda}, write to a new \texttt{meta\_approach\_compare\_v11\_rblend/} tree).
-Only the $1{,}200$-iteration hybrid freeze under $R_{\mathrm{blend}}$ is locked as a searched result (Section~\ref{sec:v10-freeze}).
+Table~\ref{tab:meta-approaches} reports the completed Deferred~D1 matched re-search under locked $R_{\mathrm{blend}}{+}J$
+(mean$\pm$std over three search seeds; artifacts \texttt{meta\_approach\_compare\_v13\_rblend/}).
+Ours leads ($R_{\mathrm{blend}}{=}0.9748{\pm}0.0018$; mean wall ${\approx}8.4$\,h).
+Aging evolution is second ($0.9635{\pm}0.0049$); Arch REINFORCE is highest-variance ($0.9599{\pm}0.0116$).
+Only seed~\texttt{1902771841} hybrid clears the frozen Noise2Noise gate ($R_{\mathrm{blend}}{\approx}0.9766$ vs gate ${\approx}0.9750$).
+Hybrid live champions stay compact (${\approx}24$k$\pm$2k params across seeds) despite mid-search graphs that swing from ${\approx}15$k to ${\approx}370$k.
 Noise2Noise is not an outer-loop method here (see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main}).
-On the one-shot re-fit board, Ours still leads ($R_{\mathrm{blend}}{\approx}0.97484$, $\Delta R{\approx}{+}0.436$ vs Dual Cosine ${\approx}0.539$, original wall ${\approx}8.46$\,h). Aging evolution is second ($R_{\mathrm{blend}}{\approx}0.96519$).
-Neither Ours nor Aging evolution selected an LSTM block in the champion graph.
-Sources: historical
-\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/meta_approach_compare.json}{matched-budget prolonged-$R$ results}
-and
-\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/meta_approach_compare_rblend_rescore.json}{$R_{\mathrm{blend}}$ re-fit}
-(search seed \texttt{1902771841}).
+Learning-curve and bar figures use seed~\texttt{1902771841} trajectories under the same locked objective.
 
 \input{figures/meta_approaches_table}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/meta_approach_bars.png}
-  \caption{Matched 5,000-evaluation search methods (seed \texttt{1902771841}).
-  Bars still show historical prolonged-$R$ champions; Table~\ref{tab:meta-approaches} reports the $R_{\mathrm{blend}}$ one-shot re-fit.
-  Dashed line is Dual Cosine under the historical prolonged geometry.}
+  \caption{Matched 5,000-evaluation search methods under locked $R_{\mathrm{blend}}{+}J$ (seed \texttt{1902771841}).
+  Table~\ref{tab:meta-approaches} reports mean$\pm$std across three search seeds.
+  Dashed line: Dual Cosine on the same runner.}
   \label{fig:meta-approach-bars}
 \end{figure}
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
-  \caption{Champion residual over a matched 5,000-evaluation budget (historical prolonged $R$ trajectories).
-  Locked $R_{\mathrm{blend}}$ outer-loop curves remain Deferred D1. Dashed line: Dual Cosine.}
+  \caption{Champion $R_{\mathrm{blend}}$ over a matched 5,000-evaluation budget (Deferred D1; seed \texttt{1902771841}).
+  Dashed line: Dual Cosine.}
   \label{fig:meta-approach-compare}
 \end{figure}
 

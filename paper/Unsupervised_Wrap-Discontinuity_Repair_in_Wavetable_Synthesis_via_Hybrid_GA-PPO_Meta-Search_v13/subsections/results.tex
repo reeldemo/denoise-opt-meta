@@ -65,8 +65,9 @@ Search seeds, N2N train seed \texttt{424242}, and holdout seeds stay disjoint.
 
 \paragraph{Multi-seed protocol.}
 Primary holdout and multi-family rows in Table~\ref{tab:n2n-vs-ours} report mean$\pm$std over five evaluation seeds.
-Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}$ across three search seeds is running into
-\texttt{meta\_approach\_compare\_v13\_rblend/} (Section~\ref{sec:search-learning-curve}).
+Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}{+}J$ across three search seeds is complete
+(\texttt{meta\_approach\_compare\_v13\_rblend/}; Table~\ref{tab:meta-approaches}:
+Ours $0.9748{\pm}0.0018$, Aging $0.9635{\pm}0.0049$).
 
 \subsection{Ours vs Noise2Noise inference latency}
 \label{sec:ours-n2n-latency}
@@ -109,10 +110,12 @@ Champion score versus outer-loop evaluation index is plotted in Figure~\ref{fig:
 The left panel compares a matched $5{,}000$-evaluation hybrid to Random NAS under \emph{superseded} whole-curve prolonged $R$ (seed \texttt{1902771841}, Dual Cosine ${\approx}0.817$), where both arms clear Dual Cosine early.
 The right panel is the locked $R_{\mathrm{blend}}$ / $J$ hybrid run over $1{,}200$ evaluations (seed \texttt{1902771841}):
 raw champion $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.977$).
-Matched-$5$k multi-seed re-search under $R_{\mathrm{blend}}$ (hybrid first, then Random and other arms) populates
-\texttt{meta\_approach\_compare\_v13\_rblend/} for updated learning curves as seeds finish.
+Matched-$5$k multi-seed re-search under $R_{\mathrm{blend}}$ is complete
+(Figure~\ref{fig:meta-approach-compare}; Table~\ref{tab:meta-approaches}).
 Plateau boredom retunes branch mix (Section~\ref{sec:hybrid}).
 Near-ceiling residuals climb only a little after the first few hundred evaluations.
+Champion parameter count is not fixed: hybrid live champs are ${\approx}24$k$\pm$2k params across seeds,
+while mid-search updates swing from ${\approx}15$k to ${\approx}370$k.
 
 \begin{figure*}[t]
   \centering
@@ -121,7 +124,7 @@ Near-ceiling residuals climb only a little after the first few hundred evaluatio
     Left: champion prolonged $R$ for hybrid GA--PPO vs Random NAS on the matched $5$k bake-off
     (\textbf{superseded} whole-curve metric; Dual Cosine dashed).
     Right: v10.1 hybrid champion $J$ and raw $R_{\mathrm{blend}}$ over $1{,}200$ evaluations
-    (Dual Cosine and Noise2Noise gate marked; multi-seed $R_{\mathrm{blend}}$ re-search in progress).}
+    (Dual Cosine and Noise2Noise gate marked; matched-$5$k multi-seed $R_{\mathrm{blend}}$ bake-off in Appendix~\ref{app:supplement}).}
   \label{fig:search-learning-curve}
 \end{figure*}
 

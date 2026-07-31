@@ -212,7 +212,8 @@ The matched $5$k meta-approach comparison (Section~\ref{sec:meta-compare}) is th
 \subsection{Meta-learning approach comparison}
 \label{sec:meta-compare}
 
-Beyond the hybrid outer loop, we compare five additional outer-loop families under a matched $5{,}000$-evaluation budget, shared search seed \texttt{1902771841}, and the same FitCell / prolonged-$R$ protocol (LSTM and xLSTM included in the searchable bake vocabulary).
+Beyond the hybrid outer loop, we compare five additional outer-loop families under a matched $5{,}000$-evaluation budget,
+three search seeds (\texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}), and the same FitCell / $R_{\mathrm{blend}}{+}J$ protocol (LSTM and xLSTM included in the searchable bake vocabulary).
 Table and figure legends use the short display names below. Artifact folders keep stable code keys (see the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/NOMENCLATURE.md}{nomenclature}):
 \begin{itemize}
   \item \textbf{Random NAS} (\texttt{random}): independent uniform draws over bake graphs and fit hyperparameters (control).
