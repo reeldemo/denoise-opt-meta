@@ -8,16 +8,7 @@ Primary claims remain in Sections~\ref{sec:results}--\ref{sec:transfer-main}.
 \subsection{Matched-budget outer-loop comparison}
 \label{sec:meta-approaches-results}
 
-Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to Ours (hybrid GA+PPO)?
-Table~\ref{tab:meta-approaches} reports the completed Deferred~D1 matched re-search under locked $R_{\mathrm{blend}}{+}J$
-(mean$\pm$std over three search seeds; artifacts \texttt{meta\_approach\_compare\_v13\_rblend/}).
-Ours leads ($R_{\mathrm{blend}}{=}0.9748{\pm}0.0018$; mean wall ${\approx}8.4$\,h).
-Aging evolution is second ($0.9635{\pm}0.0049$); Arch REINFORCE is highest-variance ($0.9599{\pm}0.0116$).
-Only seed~\texttt{1902771841} hybrid clears the frozen Noise2Noise gate under the short-FitCell D1 protocol ($R_{\mathrm{blend}}{\approx}0.9766$ vs gate ${\approx}0.9750$).
-Hybrid live champions stay compact (${\approx}24$k$\pm$2k params across seeds) despite mid-search graphs that swing from ${\approx}15$k to ${\approx}370$k.
-Because hybrid already dominated this matched bake-off, the next campaign drops the five losing families and runs hybrid-only FitCell-to-convergence (Section~\ref{sec:v14-converge}, Table~\ref{tab:v14-hybrid-converge}).
-Noise2Noise is not an outer-loop method here (see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main}).
-Learning-curve and bar figures use seed~\texttt{1902771841} trajectories under the same locked objective.
+Under a $5{,}000$ evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, Table~\ref{tab:meta-approaches} compares Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, TPE Bayes NAS, and our hybrid GA+PPO approach (Ours). The table reports results from a matched Deferred D1 re-search under locked $R_{\mathrm{blend}}{+}J$ (mean $\pm$ std over three search seeds; artifacts \texttt{meta\_approach\_compare\_v13\_rblend/}). Our hybrid GA+PPO leads with an $R_{\mathrm{blend}}$ of $0.9748{\pm}0.0018$, taking approximately 8.4 hours on average. Aging evolution ranks second at $0.9635{\pm}0.0049$, while Arch REINFORCE shows the highest variance with $0.9599{\pm}0.0116$. Only seed \texttt{1902771841} of our hybrid approach clears the frozen Noise2Noise gate under the short-FitCell D1 protocol, achieving an $R_{\mathrm{blend}}$ of approximately 0.9766 compared to the gate's approximate value of 0.9750. Despite mid-search graphs ranging from about 15k to 370k parameters, our hybrid approach maintains compact models (${\approx}24$k$\pm$2k params across seeds). Since our hybrid method dominated this matched bake-off, the subsequent campaign focuses solely on running hybrid-only FitCell-to-convergence (Section~\ref{sec:v14-converge}, Table~\ref{tab:v14-hybrid-converge}). Note that Noise2Noise is not an outer-loop method in this context (see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main}). Learning-curve and bar figures use trajectories from seed \texttt{1902771841} under the same locked objective.
 
 \input{figures/meta_approaches_table}
 
