@@ -18,17 +18,22 @@ Primary code lives at \url{https://github.com/reeldemo/reelsynth}
 \href{https://github.com/reeldemo/reelsynth/blob/main/scripts/overnight_gpu_rl_arch.py}{\texttt{overnight\_gpu\_rl\_arch.py}},
 matched-$5$k bake-off:
 \href{https://github.com/reeldemo/reelsynth/blob/main/scripts/bench_meta_approaches_5k.py}{\texttt{bench\_meta\_approaches\_5k.py}},
+hybrid-only FitCell-to-convergence launcher:
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/launch_v14_converge_search.ps1}{\texttt{launch\_v14\_converge\_search.ps1}},
 SOTA bench:
 \href{https://github.com/reeldemo/reelsynth/blob/main/scripts/bench_sota_matrix.py}{\texttt{bench\_sota\_matrix.py}},
 VA seam:
 \href{https://github.com/reeldemo/reelsynth/blob/main/scripts/baselines/va_seam_blep.py}{\texttt{va\_seam\_blep.py}}),
 with paper companion at \url{https://github.com/reeldemo/denoise-opt-meta}.
 CUDA benches need Python~3.12, PyTorch~$2.6$+CUDA~12.4, and NumPy/matplotlib; Rust/\texttt{cargo} builds the separate engine hardness probe.
+Exact command templates live in this paper folder's \texttt{REPRO.md} and in
+\href{https://github.com/reeldemo/reelsynth/blob/main/docs/superpowers/specs/2026-07-31-fitcell-converge-meta-search-design.md}{the v14 converge design note}.
 Frozen numbers live under
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts}{brand/artifacts}
 (e.g.\
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/sota_matrix.json}{\texttt{sota\_matrix.json}},
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/meta_approach_compare_v13_rblend}{\texttt{meta\_approach\_compare\_v13\_rblend/}},
+\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/meta_approach_compare_v14_converge}{\texttt{meta\_approach\_compare\_v14\_converge/}},
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/holdout_multiseed_v13/multiseed_summary.json}{\texttt{multiseed\_summary.json}}).
 PESQ/STOI are omitted for non-speech cycles (domain mismatch), and MUSHRA was not run.
 

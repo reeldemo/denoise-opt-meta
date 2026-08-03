@@ -41,16 +41,19 @@ Learning-curve and bar figures use seed~\texttt{1902771841} trajectories under t
 \subsection{Ablations and compute}
 \label{sec:ablation-compute}
 
-Table~\ref{tab:ablation} reports branch-best freezes at the $5$k gate from one hybrid history (prolonged $R$; no separate fitted weights),
-plus isolated 150-iteration \texttt{ablate-*} final champions re-scored under $R_{\mathrm{blend}}$.
+Table~\ref{tab:ablation} answers two narrow questions, not a full factorial re-search of Table~\ref{tab:meta-approaches}.
+\textbf{Left column:} within one recorded hybrid history under the superseded prolonged-$R$ search metric, what was the best freeze tagged by outer-loop branch (PPO/GA/PBT/\ldots) at the $5$k gate?
+These are branch labels in a single run, not separately fitted champions, so they mainly show that no single branch monopolizes the trajectory.
+\textbf{Right column:} isolated $150$-iteration \texttt{ablate-*} restarts (seed \texttt{1902771841}) whose final cells are re-scored under locked $R_{\mathrm{blend}}$.
+They probe whether dropping GA or PPO collapses residual under a short budget; they are \emph{not} matched-$5$k competitors and must not overwrite Table~\ref{tab:meta-approaches}.
 Table~\ref{tab:compute} summarizes campaign compute (historical prolonged-$R$ overnight).
 
 \begin{table}[t]
   \centering
-  \caption{Ablations.
-    Left: best prolonged $R$ by branch in the recorded search run (final iteration ${\approx}6{,}922$; superseded search metric).
+  \caption{Ablations (interpret narrowly).
+    Left: best prolonged $R$ by branch label in one hybrid history (final iteration ${\approx}6{,}922$; superseded search metric; not separate fits).
     Right: isolated 150-iteration \texttt{ablate-*} final champions re-scored under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{1902771841}).
-    Full $R_{\mathrm{blend}}$ branch re-search remains deferred.}
+    Full $R_{\mathrm{blend}}$ branch re-search remains deferred; use Table~\ref{tab:meta-approaches} for matched outer-loop comparison.}
   \label{tab:ablation}
   \setlength{\tabcolsep}{3pt}
   \begin{tabular}{@{}lrr@{}}

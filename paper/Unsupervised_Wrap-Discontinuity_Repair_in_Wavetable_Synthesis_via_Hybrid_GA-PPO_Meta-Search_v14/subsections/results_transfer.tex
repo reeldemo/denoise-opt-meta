@@ -2,17 +2,19 @@
 \label{sec:transfer-main}
 
 \paragraph{Setup reminder.}
-Table~\ref{tab:transfer-main} reports locked $R_{\mathrm{blend}}$ after training/searching DenoiseOpt
+Table~\ref{tab:transfer-main} reports the primary metric \textbf{locked $R_{\mathrm{blend}}$} (higher better; $\alpha{=}0.7$ seam/body blend from Section~\ref{sec:residual-score}) after training/searching DenoiseOpt
 (\texttt{hybrid\_lstm}, seed \texttt{1902771841}) on each transfer board
 from Section~\ref{sec:transfer-protocol} ($n{=}256$ periods, $L{=}256$).
+No PESQ/STOI/MOS appears on these boards: periods are non-speech wrap tiles, and the claim is wrap-protocol residual repair only.
 Columns are: CWRU/MFPT/Paderborn bearing revolutions, MIT-BIH/PTB-XL ECG beats, and synthetic CNC/PMU pilots.
 Numbers come from the released
 \href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/signal_heal_transfer/results_table.json}{results\_table.json}
 (\texttt{primary\_metric=r\_blend}).
 Domain-trained Noise2Noise-style SeamN2N (corrupt$\to$corrupt, $4000$ Adam steps, train seed \texttt{424242}, holdout seed \texttt{20260719})
-is scored on the same seven boards.
+is scored on the same seven boards under the \emph{same} $R_{\mathrm{blend}}$.
 Author ECG Cycle-GAN and BeatDiff remain OOD wrap probes on ECG only
 (clinical restore $\neq$ wrap residual, Table~\ref{tab:transfer-sota-status}).
+These rows do \emph{not} transfer an audio-trained bake as fault/ECG diagnosis SOTA; they only stress the wrap geometry.
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
