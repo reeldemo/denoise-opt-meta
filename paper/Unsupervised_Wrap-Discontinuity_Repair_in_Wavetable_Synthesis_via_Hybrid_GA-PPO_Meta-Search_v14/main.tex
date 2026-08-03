@@ -53,18 +53,17 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    \textbf{Metrics first.}
+    \textbf{Objective metrics only (no MOS/MUSHRA; $N_{\mathrm{listeners}}{=}0$).}
     Holdout (5 seeds): short-FitCell Ours $R_{\mathrm{blend}}{=}0.9708{\pm}0.0014$ vs Noise2Noise $0.9767{\pm}0.0015$ vs Dual Cosine $0.542{\pm}0.038$.
-    Matched $5$k outer-loop (3 seeds): hybrid $0.9748{\pm}0.0018$ (best of six families).
-    FitCell-to-plateau (1 completed seed \texttt{1902771841}): $R_{\mathrm{blend}}{\approx}0.9912$ clears the N2N gate (${\approx}0.9750$).
+    Matched $5$k outer-loop (3 seeds): hybrid $0.9748{\pm}0.0018$ (best of six families under locked $R_{\mathrm{blend}}{+}J$).
+    FitCell-to-plateau (1 completed seed \texttt{1902771841}): $R_{\mathrm{blend}}{\approx}0.9912$ clears the N2N residual gate (${\approx}0.9750$)---not a listening claim.
     Multi-family board means: Ours vs N2N statistically indistinguishable (sign-test $p{=}1.0$).
-    No MOS/MUSHRA ($N_{\mathrm{listeners}}{=}0$).
 
     Mismatched wavetable endpoints leave a wrap-join click at the seam on every period.
-    We frame unsupervised repair with a procedural cliff-withheld ideal sibling plus mid-cycle engine identity; search never sees paired studio-clean targets.
-    \textbf{DenoiseOpt} names applying hybrid GA+PPO+PBT to compact cycle-local repair operators under locked $R_{\mathrm{blend}}$ ($\alpha{=}0.7$) and latency-aware $J$---known search tools on a DSP problem, not a new NAS algorithm.
-    On hard wrap cliffs classical fades collapse while searched operators hold.
-    Transfer benches reuse the same wrap protocol as residual stress tests, not domain diagnosis claims.
+    We frame unsupervised \emph{residual} repair with a procedural cliff-withheld ideal sibling plus mid-cycle engine identity; search never sees paired studio-clean targets.
+    \textbf{DenoiseOpt} is an engineering name for applying existing GA+PPO+PBT tools to compact cycle-local repair operators under locked $R_{\mathrm{blend}}$ ($\alpha{=}0.7$) and latency-aware $J$; we do not propose a new NAS/RL algorithm.
+    On hard wrap cliffs classical fades collapse while searched operators hold under $R_{\mathrm{blend}}$.
+    Transfer benches reuse the same wrap protocol as residual stress tests, not domain diagnosis or perceptual claims.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; unsupervised repair; DenoiseOpt; seam restoration; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}

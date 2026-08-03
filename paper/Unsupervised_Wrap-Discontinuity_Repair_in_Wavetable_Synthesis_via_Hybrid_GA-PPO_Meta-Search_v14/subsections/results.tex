@@ -8,10 +8,17 @@
   \item FitCell-to-convergence (Table~\ref{tab:v14-hybrid-converge}, \texttt{meta\_approach\_compare\_v14\_converge/}): single completed seed clears N2N gate ($R_{\mathrm{blend}}{\approx}0.9912$).
   \item Hard cliffs / multi-family / Factory+AKWF: classical collapse vs residual hold; N2N still wins some native boards.
   \item Transfer (Table~\ref{tab:transfer-main}, \texttt{signal\_heal\_transfer/}): wrap-protocol stress test only.
+  \item Ablations / HP (Appendix~\ref{app:supplement}, Tables~\ref{tab:ablation},~\ref{tab:hp-sensitivity}): short-budget GA/PPO drop checks and $\pm 50\%$ one-at-a-time HP probe---not matched-$5$k competitors.
 \end{itemize}
 Primary numbers use locked $R_{\mathrm{blend}}$ (Sections~\ref{sec:v10-freeze}--\ref{sec:n2n-vs-ours-boards}).
 Matched bake-offs, HP probes, branch freezes, and transfer latency sit in Appendix~\ref{app:supplement}.
 Honesty notes are collected in Section~\ref{sec:limitations}.
+
+\subsection{Ablations and hyperparameter sensitivity (pointer)}
+\label{sec:ablation-hp-main}
+Branch ablations and HP sensitivity are reported in Appendix~\ref{app:supplement} so the main results stay on holdout / D1 / converge.
+\textbf{Finding (ablation).} Under a $150$-iteration restart (seed \texttt{1902771841}), dropping GA or PPO does not collapse short-budget $R_{\mathrm{blend}}$ relative to full hybrid on that probe (Table~\ref{tab:ablation}, right); those runs are far below the matched-$5$k hybrid mean and must not overwrite Table~\ref{tab:meta-approaches}.
+\textbf{Finding (HP).} One-at-a-time $\pm 50\%$ shifts of population / clip / LR / mutate / entropy at $500$ iterations change champion $R$ by at most ${\approx}0.012$ (Table~\ref{tab:hp-sensitivity}, Figure~\ref{fig:hp-sensitivity}); defaults are not claimed globally optimal.
 
 \begin{figure}[t]
   \centering

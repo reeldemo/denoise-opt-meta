@@ -28,6 +28,15 @@ Paired multi-family comparisons use a two-sided sign test on per-seed board-mean
 We do \emph{not} run ANOVA across outer-loop families beyond mean$\pm$std in Table~\ref{tab:meta-approaches}, and we do not invent MOS confidence intervals.
 Listening: $N_{\mathrm{listeners}}{=}0$ (Table~\ref{tab:listening-stats}); no preference rates.
 
+\paragraph{Experimental setup (compact checklist).}
+\begin{itemize}
+  \item Generator $G$: $L{=}256$ sine{+}cliff; seam width $W{=}8$; train/search draws i.i.d.; holdout seeds disjoint.
+  \item FitCell: Adam on $1-R_{\mathrm{blend}}$; D1 short cap ${\approx}16$--$48$ steps; converge campaign patience/$\varepsilon$/$T_{\max}$ searchable (Section~\ref{sec:pipeline-overview}).
+  \item Outer loops compared at matched $5$k evals (Random, CMA-ES, REINFORCE, Aging, TPE, hybrid); then hybrid-only $750$ evals with two proposals/iter on one GPU.
+  \item Baselines: no-bake, DualCosine, FIR/endpoint classical board, SeamN2N (${\approx}53.5$k, $4000$ Adam steps, seed \texttt{424242}), VA residuals where scored.
+  \item Hardware: RTX~3090; Python~3.12 + PyTorch CUDA; commands in \texttt{REPRO.md}.
+\end{itemize}
+
 \subsection{Dataset}
 \label{sec:dataset}
 

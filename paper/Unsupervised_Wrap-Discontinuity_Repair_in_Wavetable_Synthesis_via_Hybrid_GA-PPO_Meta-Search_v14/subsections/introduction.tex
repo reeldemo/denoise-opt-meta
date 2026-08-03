@@ -68,7 +68,8 @@ Classical virtual-analog tools already address wrap energy locally
 (BLIT/BLEP~\cite{stilson1996}, PolyBLEP~\cite{nam2009polyblep}, BLAMP~\cite{esqueda2016blamp}).
 We score cycle-local bake versions of those operators beside Dual Cosine (Section~\ref{sec:va-seam-baselines}).
 Label-free restoration such as Noise2Noise shows that useful reconstructors can be ranked without paired clean targets when the evaluation geometry is explicit~\cite{lehtinen2018,kashyap2021n2n}.
-On the search side, neural architecture search (NAS), aging evolution, PBT, covariance matrix adaptation evolution strategy (CMA-ES), and evolution-guided policy gradients motivate a hybrid outer loop: GA for diversity, PPO for discrete architecture edits, and PBT-style exploit--mutate on elites~\cite{elsken2019,real2019,jaderberg2017,schulman2017,khadka2018}.
+On the search side, we \emph{reuse} known NAS, aging evolution, PBT, CMA-ES, and PPO tools~\cite{elsken2019,real2019,jaderberg2017,schulman2017,khadka2018}: GA for diversity, PPO for discrete architecture edits, PBT-style exploit--mutate on elites.
+The engineering choice is to combine them as an outer loop over compact seam-repair graphs; that combination is not claimed as an algorithmic contribution.
 
 \paragraph{Key findings.}
 Under the locked v10.1 $R_{\mathrm{blend}}$ protocol with multi-seed evaluation (primary story: Table~\ref{tab:n2n-vs-ours}):
