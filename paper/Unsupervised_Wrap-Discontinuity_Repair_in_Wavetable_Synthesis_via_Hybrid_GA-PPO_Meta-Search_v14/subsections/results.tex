@@ -1,10 +1,16 @@
 \section{Results}
 \label{sec:results}
 
-\paragraph{Reading guide.}
+\paragraph{Reading guide (artifact $\to$ finding).}
+\begin{itemize}
+  \item Holdout / N2N gate (Table~\ref{tab:n2n-vs-ours}, artifacts under \texttt{brand/artifacts/holdout\_*}): short-FitCell hybrid trails N2N, beats Dual Cosine (five eval seeds).
+  \item Matched outer-loop bake-off (Table~\ref{tab:meta-approaches}, \texttt{meta\_approach\_compare\_v13\_rblend/}): hybrid leads six families (three search seeds) $\Rightarrow$ drop losers.
+  \item FitCell-to-convergence (Table~\ref{tab:v14-hybrid-converge}, \texttt{meta\_approach\_compare\_v14\_converge/}): single completed seed clears N2N gate ($R_{\mathrm{blend}}{\approx}0.9912$).
+  \item Hard cliffs / multi-family / Factory+AKWF: classical collapse vs residual hold; N2N still wins some native boards.
+  \item Transfer (Table~\ref{tab:transfer-main}, \texttt{signal\_heal\_transfer/}): wrap-protocol stress test only.
+\end{itemize}
 Primary numbers use locked $R_{\mathrm{blend}}$ (Sections~\ref{sec:v10-freeze}--\ref{sec:n2n-vs-ours-boards}).
-Hard-cliff classical collapse and multi-family ranking follow.
-Matched outer-loop bake-offs, HP probes, branch freezes, and transfer latency sit in Appendix~\ref{app:supplement}.
+Matched bake-offs, HP probes, branch freezes, and transfer latency sit in Appendix~\ref{app:supplement}.
 Honesty notes are collected in Section~\ref{sec:limitations}.
 
 \begin{figure}[t]

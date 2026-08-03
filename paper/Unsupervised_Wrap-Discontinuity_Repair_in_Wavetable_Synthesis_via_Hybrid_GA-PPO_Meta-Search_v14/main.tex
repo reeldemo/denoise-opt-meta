@@ -54,16 +54,16 @@ Hybrid GA--PPO Meta-Search}
   \end{center}
   \begin{abstract}
     Mismatched wavetable endpoints leave a wrap-join click at the seam on every period.
-    We frame unsupervised repair of that local discontinuity around a procedural cliff-withheld ideal sibling for self-supervised seam scoring plus mid-cycle identity to the cracked engine: search never sees paired studio-clean targets.
+    We frame unsupervised repair of that local discontinuity with a procedural cliff-withheld ideal sibling (seam target) plus mid-cycle identity to the cracked engine; search never sees paired studio-clean targets.
     Classical raised-cosine fades, virtual-analog seam operators, and corrupt-to-corrupt Noise2Noise are strong baselines on some boards.
-    Because no single operator fits every engine family, \textbf{DenoiseOpt} applies a hybrid genetic-algorithm (GA), proximal policy optimization (PPO), and population-based training (PBT) meta-loop to search compact repair operators under the blended residual $R_{\mathrm{blend}}$ and latency-aware objective $J$.
-    This is an application of known search tools to a crisp DSP problem.
-    Across five holdout seeds, the short-FitCell v10.1 freeze sits below frozen Noise2Noise ($0.9708{\pm}0.0014$ vs $0.9767{\pm}0.0015$) and well above Dual Cosine ($0.542{\pm}0.038$).
-    On twenty multi-family boards the mean-of-means edges Noise2Noise ($0.9337{\pm}0.0028$ vs $0.9308{\pm}0.0045$; mean win fraction $0.47$).
-    Matched-$5$k outer-loop re-search under $R_{\mathrm{blend}}{+}J$ across three seeds ranked hybrid ahead of Random/CMA-ES/TPE/Aging/REINFORCE ($0.9748{\pm}0.0018$), so we concentrate compute on hybrid alone under a FitCell-to-plateau protocol.
-    That follow-up clears the Noise2Noise gate on the completed search seed ($R_{\mathrm{blend}}{\approx}0.9912$ vs gate ${\approx}0.9750$; seed \texttt{1902771841}, $750$ outer iters).
+    \textbf{DenoiseOpt} is our name for applying a hybrid genetic-algorithm (GA), proximal policy optimization (PPO), and population-based training (PBT) outer loop to \emph{compact cycle-local repair operators} under blended residual $R_{\mathrm{blend}}$ ($\alpha{=}0.7$) and latency-aware $J$---known search tools on a crisp DSP problem, not a new NAS algorithm.
+    \textbf{Results.} Across five holdout seeds, the short-FitCell freeze trails frozen Noise2Noise ($0.9708{\pm}0.0014$ vs $0.9767{\pm}0.0015$) and beats Dual Cosine ($0.542{\pm}0.038$).
+    On twenty multi-family boards, Ours and Noise2Noise are statistically indistinguishable on board means ($0.9337{\pm}0.0028$ vs $0.9308{\pm}0.0045$; sign-test $p{=}1.0$).
+    Matched-$5$k outer-loop re-search across three seeds ranks hybrid first among six families ($0.9748{\pm}0.0018$).
+    A hybrid-only FitCell-to-plateau follow-up then clears the Noise2Noise gate on the completed search seed ($R_{\mathrm{blend}}{\approx}0.9912$ vs gate ${\approx}0.9750$; seed \texttt{1902771841}).
     On hard wrap cliffs classical fades collapse while searched operators hold.
-    Transfer benches reuse the same wrap-discontinuity protocol on other periodic signals as stress tests, not domain diagnosis claims.
+    Transfer benches reuse the same wrap protocol on other periodic signals as residual stress tests, not domain diagnosis claims.
+    No formal listening study was run; primary evidence is locked $R_{\mathrm{blend}}$.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; unsupervised repair; DenoiseOpt; seam restoration; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}

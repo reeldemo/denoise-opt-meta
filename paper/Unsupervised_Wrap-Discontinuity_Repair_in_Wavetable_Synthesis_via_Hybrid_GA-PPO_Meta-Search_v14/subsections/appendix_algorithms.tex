@@ -2,8 +2,18 @@
 \label{app:algorithms}
 
 Companion pseudocode for the residual score, classical controls, FitCell, and hybrid outer-loop branches.
-Canonical narrative lives in Section~\ref{sec:methods}. These listings mirror
-the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/docs/PSEUDOCODE.md}{pseudocode notes} and the CUDA search runner.
+Canonical narrative lives in Section~\ref{sec:methods}.
+These listings mirror the
+\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/docs/PSEUDOCODE.md}{pseudocode notes}
+and the CUDA search runner (\texttt{overnight\_gpu\_rl\_arch.py}).
+
+\paragraph{How the pieces connect.}
+Algorithm~\ref{alg:residual} is the debug whole-curve score; primary selection uses the blended form in Section~\ref{sec:residual-score} (seam vs $r^{\star}$, body vs engine).
+Algorithms~\ref{alg:dualcosine}--\ref{alg:no-bake} are classical / passthrough controls scored under the same residual.
+Algorithm~\ref{alg:moe} is an optional soft gate inside a candidate repair graph.
+Algorithm~\ref{alg:fit} (\textbf{FitCell}) is the inner trainer: Adam on $1-R_{\mathrm{blend}}$ until plateau or hard cap $T_{\max}$ (converge campaign) or a short step budget (D1).
+Algorithms~\ref{alg:ga}--\ref{alg:pbt} are the outer-loop branches that propose new graphs / hyperparameters; the hybrid runner interleaves them each iteration and keeps elites by $J$.
+Ablations that drop GA or PPO (Table~\ref{tab:ablation}, right column) still call Algorithm~\ref{alg:fit} but disable the corresponding outer branch.
 
 \begin{algorithm}[t]
 \caption{ResidualScore}
