@@ -29,7 +29,7 @@ Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/
 \label{sec:n2n-vs-ours-boards}
 Table~\ref{tab:n2n-vs-ours} summarizes the four evaluation boards under $R_{\mathrm{blend}}$,
 with Dual Cosine as the classical fade row on every board.
-Across five holdout seeds (\texttt{20260719}--\texttt{20260723}), Noise2Noise leads Ours on every seed
+Across five holdout seeds (\texttt{20260719}--\texttt{20260723}), frozen corrupt$\to$corrupt Noise2Noise---treated as the primary neural SOTA gate for this protocol, not a DenoiseOpt variant---leads the short-FitCell hybrid freeze on every seed
 ($0.9767{\pm}0.0015$ vs $0.9708{\pm}0.0014$; Dual Cosine $0.542{\pm}0.038$).
 On the $20$-waveform multi-family board, Ours mean-of-means $0.9337{\pm}0.0028$ edges N2N $0.9308{\pm}0.0045$
 (mean win fraction $0.47$ across seeds; sign test on board-mean deltas $p{=}1.0$), and both dominate Dual Cosine.
@@ -59,8 +59,9 @@ On balanced wavetable-native corpora ($n{=}1{,}280$ each), N2N leads Factory+FX
 
 \noindent
 Table~\ref{tab:param-fairness} states the size and latency comparison the review requested.
-The hybrid favorite is larger and slower than SeamN2N on this freeze (${\approx}7.4\times$ holdout ms/batch).
-N2N still leads holdout $R_{\mathrm{blend}}$ on all five seeds.
+The short-FitCell hybrid favorite is larger and slower than SeamN2N on this freeze (${\approx}7.4\times$ holdout ms/batch).
+That gap is partly by design: selection maximizes $J=R_{\mathrm{blend}}-\lambda\cdot\mathrm{latency\_norm}$, so search may accept a slower cell when residual gains outweigh the $\lambda$ penalty; it is not claimed as architectural superiority over N2N.
+N2N still leads holdout $R_{\mathrm{blend}}$ on all five seeds under the short FitCell freeze.
 Search seeds, N2N train seed \texttt{424242}, and holdout seeds stay disjoint.
 
 \paragraph{Multi-seed protocol.}
