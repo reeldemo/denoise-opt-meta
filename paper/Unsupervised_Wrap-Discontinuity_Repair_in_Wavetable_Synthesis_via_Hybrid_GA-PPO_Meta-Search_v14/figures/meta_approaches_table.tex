@@ -1,4 +1,4 @@
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Matched $5{,}000$-evaluation outer-loop comparison under locked $R_{\mathrm{blend}}{+}J$ (Deferred D1 complete).
     Mean$\pm$std over three search seeds (\texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}).
@@ -7,7 +7,8 @@
   \label{tab:meta-approaches}
   \setlength{\tabcolsep}{2pt}
   \scriptsize
-  \begin{tabular}{@{}lrrrcc@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lrrrcc@{}}
     \toprule
     Method & $R_{\mathrm{blend}}$ & $\Delta R$ vs DC & h & LSTM & xLSTM \\
     \midrule
@@ -19,4 +20,5 @@
     Ours (hybrid GA--PPO) & $0.9748{\pm}0.0018$ & $+0.4708$ & 8.4 & no & no \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}

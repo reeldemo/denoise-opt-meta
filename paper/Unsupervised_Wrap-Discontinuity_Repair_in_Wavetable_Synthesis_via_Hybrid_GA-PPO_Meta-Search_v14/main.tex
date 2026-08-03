@@ -14,8 +14,24 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{placeins}
+\usepackage{adjustbox}
+\usepackage{dblfloatfix}
+\usepackage[section]{placeins}
 \usepackage{amsmath,amssymb,amsthm}
+% Keep floats from stacking/bleeding across the column gutter.
+\setcounter{topnumber}{2}
+\setcounter{dbltopnumber}{2}
+\setcounter{totalnumber}{3}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.75}
+\renewcommand{\dblfloatpagefraction}{0.6}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+\setlength{\dblfloatsep}{14pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{16pt plus 2pt minus 2pt}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{tikz}

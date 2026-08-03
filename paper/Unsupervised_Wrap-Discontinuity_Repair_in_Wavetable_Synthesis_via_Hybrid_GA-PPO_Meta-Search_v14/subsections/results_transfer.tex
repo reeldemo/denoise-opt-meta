@@ -18,7 +18,7 @@ These rows do \emph{not} transfer an audio-trained bake as fault/ECG diagnosis S
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/signal_heal_transfer}{signal\_heal\_transfer}.
 
-\begin{table*}[t]
+\begin{table*}[htbp]
   \centering
   \caption{Wrap-heal transfer under locked $R_{\mathrm{blend}}$ (higher better; wrap-protocol stress test, not domain SOTA).
     DenoiseOpt: \texttt{hybrid\_lstm} per domain (seed \texttt{1902771841}).
@@ -27,7 +27,8 @@ Artifacts:
     Cycle-GAN / BeatDiff: author weights, OOD wrap probe on ECG only (--- elsewhere).}
   \label{tab:transfer-main}
   \setlength{\tabcolsep}{2.2pt}
-  \begin{tabular}{@{}lrrrrrrr@{}}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrrrrrrr@{}}
     \toprule
     Method & CWRU & MFPT & Paderborn & MIT-BIH & PTB-XL & synth CNC & synth PMU \\
     \midrule
@@ -41,7 +42,8 @@ Artifacts:
     Cycle-GAN (author, OOD) & --- & --- & --- & 0.1063 & 0.2105 & --- & --- \\
     Al~Firdausi backbone (wrap bake)$^\dagger$ & --- & --- & 0.8415 & --- & --- & --- & --- \\
     \bottomrule
-  \end{tabular}\\[0.35em]
+  \end{tabular}
+\end{adjustbox}\\[0.35em]
   {\footnotesize $^\dagger$Architecture-reuse residual bake on author CNN\_1D\_2L conv blocks (not the published fault classifier, Paderborn only).
     $^\ddagger$Drive Orbax prior (step $9360$), one-step denoise at $\sigma{=}0.5$ after mono$\to$9-lead tile. Not Bedin native metrics.}
 \end{table*}
@@ -58,13 +60,14 @@ Artifacts:
   \label{fig:signal-heal-transfer-main}
 \end{figure*}
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Author-method and data-cut status under this wrap-protocol stress test (no invented scores).}
   \label{tab:transfer-sota-status}
   \setlength{\tabcolsep}{3pt}
   \resizebox{\columnwidth}{!}{%
-  \begin{tabular}{@{}lp{0.52\columnwidth}@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lp{0.52\columnwidth}@{}}
     \toprule
     Scope & Note \\
     \midrule
@@ -86,7 +89,8 @@ Artifacts:
     Real KIT CNC / IEEE PMU & Synthetic pilots only (download walls) \\
     Formal MOS / MUSHRA & Not collected \\
     \bottomrule
-  \end{tabular}%
+  \end{tabular}
+\end{adjustbox}%
   }
 \end{table}
 

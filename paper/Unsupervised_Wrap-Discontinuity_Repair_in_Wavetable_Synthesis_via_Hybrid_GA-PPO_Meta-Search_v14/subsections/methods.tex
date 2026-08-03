@@ -19,12 +19,13 @@ Seam width $W$ (code: \texttt{SEAM\_W}, typically $8$) is the neighborhood edite
 $R\in[0,1]$ is the prolonged residual score ($1$~=~best).
 These symbols follow a different convention from Noise2Noise clean/noisy pairs.
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Core symbols used in Methods.}
   \label{tab:symbols}
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}cl@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}cl@{}}
     \toprule
     Symbol & Meaning \\
     \midrule
@@ -40,6 +41,7 @@ These symbols follow a different convention from Noise2Noise clean/noisy pairs.
     $R$ & Prolonged residual score in $[0,1]$ (1~=~best) \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
 \subsection{Problem setup: cracked period and ideal sibling}
@@ -101,6 +103,7 @@ Whole-curve prolonged $R$ remains a debug / superseded key only.
 \textbf{Roles of the three quantities.}
 \begin{center}
 \small
+\begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{@{}lll@{}}
 \toprule
 Quantity & Role & Used for \\
@@ -110,6 +113,7 @@ $J$ & Latency-aware search objective & Champion selection \\
 N2N gate & Frozen neural benchmark & Holdout pass/fail \\
 \bottomrule
 \end{tabular}
+\end{adjustbox}
 \end{center}
 
 \textbf{Search objective.}
@@ -253,13 +257,14 @@ Table~\ref{tab:hyperparams} lists the CUDA search defaults used for the $5$k-gat
 Under the near-ceiling residual regime (Section~\ref{sec:reward-shaping}), these outer-loop and fit hyperparameters are co-tuned with architecture. PBT and plateau adaptation continue to mutate several of them online.
 Companion listings: Algorithms~\ref{alg:residual}--\ref{alg:hybrid} (Appendix~\ref{app:algorithms}) and the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/docs/PSEUDOCODE.md}{pseudocode notes}.
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \small
   \caption{Hybrid search hyperparameters (RTX~3090 DenoiseOpt CUDA search-runner defaults). Co-tuned with reward shaping under near-ceiling $R$ (Section~\ref{sec:reward-shaping}).}
   \label{tab:hyperparams}
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lp{0.48\columnwidth}@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lp{0.48\columnwidth}@{}}
     \toprule
     Parameter & Value \\
     \midrule
@@ -279,4 +284,5 @@ Companion listings: Algorithms~\ref{alg:residual}--\ref{alg:hybrid} (Appendix~\r
     Algo tag & \texttt{PPO+GA+PBT+NAS+depth+MoE} \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}

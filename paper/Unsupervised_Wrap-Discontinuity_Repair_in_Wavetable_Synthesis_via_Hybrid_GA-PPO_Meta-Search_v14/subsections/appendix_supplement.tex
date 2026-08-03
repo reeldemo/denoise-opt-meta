@@ -43,7 +43,7 @@ Right-column short restarts under $R_{\mathrm{blend}}$ stay far below the matche
 The matched comparison that drives method choice remains Table~\ref{tab:meta-approaches}.
 Table~\ref{tab:compute} summarizes campaign compute (historical prolonged-$R$ overnight).
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Ablations (interpret narrowly).
     Left: best prolonged $R$ by branch label in one hybrid history (final iteration ${\approx}6{,}922$; superseded search metric; not separate fits).
@@ -51,9 +51,10 @@ Table~\ref{tab:compute} summarizes campaign compute (historical prolonged-$R$ ov
     Full $R_{\mathrm{blend}}$ branch re-search remains deferred; use Table~\ref{tab:meta-approaches} for matched outer-loop comparison.}
   \label{tab:ablation}
   \setlength{\tabcolsep}{3pt}
+  \begin{adjustbox}{max width=\columnwidth}
   \begin{tabular}{@{}lrr@{}}
     \toprule
-    Config & Search freeze prolonged $R$ & Isolated 150-it $R_{\mathrm{blend}}$ \\
+    Config & Prolonged $R$ freeze & 150-it $R_{\mathrm{blend}}$ \\
     \midrule
     Full hybrid & 0.99093 & 0.92710 \\
     GA-only & 0.99016 & 0.94168 \\
@@ -65,15 +66,17 @@ Table~\ref{tab:compute} summarizes campaign compute (historical prolonged-$R$ ov
     Dual Cosine (runner) & 0.81658 & ${\approx}0.539$ \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Compute budget for the reported 5,000-evaluation search run (RTX~3090, search seed \texttt{1902771841}; prolonged-$R$ objective).
     Final champion $R$ below is the historical prolonged freeze, not $R_{\mathrm{blend}}$.}
   \label{tab:compute}
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lr@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lr@{}}
     \toprule
     Item & Value \\
     \midrule
@@ -86,6 +89,7 @@ Table~\ref{tab:compute} summarizes campaign compute (historical prolonged-$R$ ov
     Peak VRAM (replay) & ${\approx}3.29$\,GiB \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
 \subsection{Hyperparameter sensitivity}
@@ -109,12 +113,13 @@ All $11/11$ arms completed.
 Table~\ref{tab:transfer-latency} and Figure~\ref{fig:signal-heal-transfer-latency} pair with the prolonged-$R$ transfer board (Table~\ref{tab:transfer-main}).
 N2N latency uses the wavetable checkpoint zero-shot. Domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
 
-\begin{table*}[t]
+\begin{table*}[htbp]
   \centering
   \caption{Transfer-domain inference latency (ms/batch). Batch=64, CUDA.}
   \label{tab:transfer-latency}
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{@{}lrrrrrr@{}}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrrrrrr@{}}
     \toprule
     Method & CWRU & MFPT & MIT-BIH & PTB-XL & CNC & PMU \\
     \midrule
@@ -124,6 +129,7 @@ N2N latency uses the wavetable checkpoint zero-shot. Domain-trained N2N quality 
     N2N (WT to domain) & 0.95 & 0.99 & 0.98 & 0.97 & 0.98 & 0.97 \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table*}
 
 \begin{figure*}[t]

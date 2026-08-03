@@ -64,7 +64,7 @@ On wavetable-native corpora ($n{=}1{,}280$ each), Noise2Noise leads both Factory
 and AKWF
 ($0.731$ vs Ours $0.679$; Dual Cosine $0.424$).
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Parameter count and inference latency under the locked holdout story.
     Favorite $\Theta$ is the v10.1 hybrid champion (search seed \texttt{1902771841}).
@@ -73,7 +73,8 @@ and AKWF
     Latency is CUDA ms/batch at $B{=}64$ (Table~\ref{tab:ours-n2n-latency}).}
   \label{tab:param-fairness}
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{@{}lrrr@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lrrr@{}}
     \toprule
     Method & Params & Holdout $R_{\mathrm{blend}}$ & ms/$B{=}64$ \\
     \midrule
@@ -82,6 +83,7 @@ and AKWF
     Dual Cosine & $0$ & $0.542{\pm}0.038$ & --- \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
 Table~\ref{tab:param-fairness} shows size and speed.
@@ -112,7 +114,7 @@ On search seed \texttt{1902771841}, the champion reaches $R_{\mathrm{blend}}{\ap
 and clears the frozen Noise2Noise gate (${\approx}0.9750$).
 Table~\ref{tab:v14-hybrid-converge} reports that completed run only.
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Hybrid-only FitCell-to-convergence after D1 (locked $R_{\mathrm{blend}}{+}J$).
     Gate: frozen Noise2Noise $R_{\mathrm{blend}}{\approx}0.9750$.
@@ -120,13 +122,15 @@ Table~\ref{tab:v14-hybrid-converge} reports that completed run only.
   \label{tab:v14-hybrid-converge}
   \setlength{\tabcolsep}{3pt}
   \footnotesize
-  \begin{tabular}{@{}lrrrc@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lrrrc@{}}
     \toprule
     Search seed & Iters & $R_{\mathrm{blend}}$ & $t$\,ms & vs N2N gate \\
     \midrule
     \texttt{1902771841} & $750/750$ & $0.9912$ & $8.70$ & clears \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
 \subsection{Ablations and hyperparameter checks}
@@ -158,7 +162,7 @@ Larger batches help both methods, but Noise2Noise stays faster.
 This matches the parameter gap (${\approx}121$k vs ${\approx}53.5$k) and the $J$ latency term in~\eqref{eq:outer-obj}.
 Artifacts: \texttt{v13\_ours\_vs\_n2n\_latency/latency\_compare.json}.
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Inference latency: Ours (hybrid favorite) vs Noise2Noise on CUDA
     (warmup 8, timed 30 synchronized forwards).
@@ -166,7 +170,8 @@ Artifacts: \texttt{v13\_ours\_vs\_n2n\_latency/latency\_compare.json}.
   \label{tab:ours-n2n-latency}
   \footnotesize
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lrrrr@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lrrrr@{}}
     \toprule
     Board / batch & Ours ms & N2N ms & Ratio & Ours ms/samp \\
     \midrule
@@ -180,6 +185,7 @@ Artifacts: \texttt{v13\_ours\_vs\_n2n\_latency/latency\_compare.json}.
     Holdout ($B256$) & 7.62 & 1.52 & $5.03\times$ & 0.030 \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
 \subsection{Search efficiency (learning curves)}
@@ -206,7 +212,7 @@ Live hybrid champions stay compact (${\approx}24$k$\pm$2k params across seeds), 
   \label{fig:search-learning-curve}
 \end{figure*}
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Ours vs Noise2Noise and Dual Cosine under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
     Holdout and multi-family rows: mean$\pm$std over five evaluation seeds (\texttt{20260719}--\texttt{20260723}).
@@ -214,7 +220,8 @@ Live hybrid champions stay compact (${\approx}24$k$\pm$2k params across seeds), 
   \label{tab:n2n-vs-ours}
   \footnotesize
   \setlength{\tabcolsep}{2pt}
-  \begin{tabular}{@{}lrrrrrc@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lrrrrrc@{}}
     \toprule
     Board & Ours & N2N & DualCosine & $\Delta_{\mathrm{N2N}}$ & $\Delta_{\mathrm{DC}}$ & Gate \\
     \midrule
@@ -224,6 +231,7 @@ Live hybrid champions stay compact (${\approx}24$k$\pm$2k params across seeds), 
     AKWF OA & 0.6794 & 0.7305 & 0.4244 & $-0.0511$ & $+0.2551$ & no \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
 \paragraph{Superseded whole-curve freezes.}
@@ -257,14 +265,15 @@ Table~\ref{tab:top5} ranks five distinct fitted bake graphs from the CUDA infere
 (\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/inference_bench.json}{inference data}, batch 64), preferring live $R_{\mathrm{blend}}$ first and latency on ties,
 and skipping near-duplicate copies of the same topology signature.
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Top-5 distinct fitted architectures on the CUDA inference bench (batch 64) under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
   $R_{\mathrm{saved}}$ is the checkpoint hint (often prolonged $R$); $R_{\mathrm{live}}$ is measured $R_{\mathrm{blend}}$.
   *Max-$R_{\mathrm{blend}}$ (also sole member of the $R\ge R_{\max}-5\cdot10^{-4}$ band here).}
   \label{tab:top5}
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lrrrr@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}lrrrr@{}}
     \toprule
     Tag & $R_{\mathrm{saved}}$ & $R_{\mathrm{live}}$ & ms/batch & params \\
     \midrule
@@ -274,9 +283,12 @@ and skipping near-duplicate copies of the same topology signature.
     \texttt{iter\_000229} & 0.9909 & 0.9751 & 7.56 & 100\,500 \\
     \texttt{iter\_000235} & 0.9910 & 0.9749 & 3.42 & 37\,489 \\
     \bottomrule
-  \end{tabular}\\[0.4em]
+  \end{tabular}
+\end{adjustbox}\\[0.4em]
   {\footnotesize *Favorite under maximize-$R_{\mathrm{blend}}$ then latency. Compact \texttt{iter\_000235} is still the latency floor in this top-5.}
 \end{table}
+
+\FloatBarrier
 
 \subsection{Classical methods vs neural favorite}
 \label{sec:classical-vs-favorite}
@@ -288,12 +300,13 @@ The hybrid favorite reaches $0.970$ ($0.971\pm0.001$ over five seeds) at $\appro
 $\Delta R_{\mathrm{blend}} \approx {+}0.056$ vs no-bake and $\approx {+}0.429$ vs DualCosine.
 Noise2Noise on the multi-family matrix is Table~\ref{tab:sota-main}. The four-board gate is Table~\ref{tab:n2n-vs-ours}.
 
-\begin{table}[t]
+\begin{table*}[htbp]
   \centering
   \caption{Canonical holdout under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{20260719}). Mean$\pm$std over five seeds. No-bake $=$ unrepaired engine. Favorite $=$ locked v10.1 hybrid champ.}
   \label{tab:canonical-methods}
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lrrr@{}}
+  \setlength{\tabcolsep}{6pt}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrrr@{}}
     \toprule
     Method & $R_{\mathrm{blend}}$ & $R_{\mathrm{blend}}$ (5-seed) & ms/batch \\
     \midrule
@@ -310,7 +323,10 @@ Noise2Noise on the multi-family matrix is Table~\ref{tab:sota-main}. The four-bo
     ensemble detrend{+}DC{+}FIR & 0.3126 & $0.3100\pm0.0421$ & 2.00 \\
     \bottomrule
   \end{tabular}
-\end{table}
+\end{adjustbox}
+\end{table*}
+
+\FloatBarrier
 
 \subsection{Multi-family comparison}
 \label{sec:sota-main}
@@ -328,13 +344,14 @@ Paired Wilcoxon signed-rank (normal approx.) of favorite vs DualCosine on the 20
 Vs no-bake the multifamily mean gap is $\approx{+}0.038$.
 Vs corrupt$\to$corrupt N2N the mean-of-means gap is $\approx{+}0.003$ (mean win fraction $0.47$ across five seeds).
 
-\begin{table*}[t]
+\begin{table*}[htbp]
   \centering
   \caption{Multi-family board (20 waveforms) under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
   $\Delta R$* and ms* vs Dual Cosine only. N2N/seq use train seeds \texttt{424242}/\texttt{424243}.}
   \label{tab:sota-main}
   \setlength{\tabcolsep}{2.2pt}
-  \begin{tabular}{@{}lrrrrrrr@{}}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrrrrrrr@{}}
     \toprule
     Method & $R_{\mathrm{blend}}$ (20-wave) & SNR (dB) & SDR (dB) & wrap-jump & ms* & params & $\Delta R$* \\
     \midrule
@@ -357,21 +374,24 @@ Vs corrupt$\to$corrupt N2N the mean-of-means gap is $\approx{+}0.003$ (mean win 
     ensemble DC+FIR & $0.275\pm0.043$ & $5.1\pm1.0$ & $5.0\pm1.0$ & $0.12\pm0.02$ & 1.05 & 0 & ${-}0.239$ \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table*}
 
-\begin{figure}[t]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_sota_heatmap.png}
+  \includegraphics[width=0.92\textwidth]{figures/fig_sota_heatmap.png}
   \caption{Colorblind-safe (\texttt{cividis}) heatmap of mean $R_{\mathrm{blend}}$ for selected methods $\times$ generative families (2 seeds each). Higher is better.}
   \label{fig:sota-heatmap}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[t]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_sota_method_bars.png}
+  \includegraphics[width=0.92\textwidth]{figures/fig_sota_method_bars.png}
   \caption{Multi-family mean $R_{\mathrm{blend}}$ by method (same $20$-waveform board as Table~\ref{tab:sota-main}).}
   \label{fig:sota-method-bars}
-\end{figure}
+\end{figure*}
+
+\FloatBarrier
 
 \subsection{Hard cliffs expose classical fade failure}
 \label{sec:cliff-strata}
@@ -385,12 +405,13 @@ The claim is tiled residual repair, not forcing wrap-jump to zero.
 Edge RMSE on the top-10\% subset drops from no-bake $0.095$ to favorite $0.027$
 (N2N $0.020$, Dual Cosine $0.990$; Table~\ref{tab:cliff-edge-rmse}).
 
-\begin{table*}[t]
+\begin{table*}[htbp]
   \centering
   \caption{Cliff strata on $4{,}096$ holdout tiles under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Strata by engine wrap-jump.}
   \label{tab:cliff-strata}
   \setlength{\tabcolsep}{2.5pt}
-  \begin{tabular}{@{}lrrrrrr@{}}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrrrrrr@{}}
     \toprule
     Method & all $R_{\mathrm{blend}}$ & all jump & top25 $R_{\mathrm{blend}}$ & top25 jump & top10 $R_{\mathrm{blend}}$ & top10 jump \\
     \midrule
@@ -403,16 +424,23 @@ Edge RMSE on the top-10\% subset drops from no-bake $0.095$ to favorite $0.027$
     \texttt{seam\_fir3} & $0.886\pm0.067$ & 0.456 & 0.870 & 0.893 & 0.869 & 1.034 \\
     DualCosine & $0.525\pm0.239$ & 0.335 & 0.318 & 0.290 & 0.305 & 0.335 \\
     \bottomrule
-  \end{tabular}\\[0.3em]
+  \end{tabular}
+\end{adjustbox}
+
+  \vspace{0.5em}
   {\footnotesize $n$: all $4096$, top25 $1024$, top10 $410$. $\pm$ is tile std on the all stratum.}
+  \vspace{1.2em}
 \end{table*}
 
-\begin{table}[t]
+\clearpage
+
+\begin{table*}[t]
   \centering
   \caption{Required seam-local secondary on top-10\% wrap-jump tiles ($n{=}410$): edge RMSE (lower better). Frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/cliff_strata.json}{cliff-strata data}.}
   \label{tab:cliff-edge-rmse}
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lr@{}}
+  \setlength{\tabcolsep}{6pt}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lr@{}}
     \toprule
     Method & top10 edge RMSE \\
     \midrule
@@ -426,7 +454,10 @@ Edge RMSE on the top-10\% subset drops from no-bake $0.095$ to favorite $0.027$
     DualCosine & 0.990 \\
     \bottomrule
   \end{tabular}
-\end{table}
+\end{adjustbox}
+\end{table*}
+
+\FloatBarrier
 
 \subsection{Noise2Noise and sequence baselines}
 \label{sec:n2n-baselines}
@@ -438,13 +469,15 @@ Holdout tiles never enter training.
 Classical DualCosine / \texttt{seam\_fir3} remain in Table~\ref{tab:cliff-strata}.
 Figure~\ref{fig:n2n-vs-ours} plots the four-board $R_{\mathrm{blend}}$ comparison.
 
-\begin{figure}[t]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_n2n_vs_ours_bars.png}
+  \includegraphics[width=0.85\textwidth]{figures/fig_n2n_vs_ours_bars.png}
   \caption{Canonical holdout $R_{\mathrm{blend}}$: N2N and seq baselines vs Ours (locked hybrid).
     Train seeds \texttt{424242}/\texttt{424243} are disjoint from holdout \texttt{20260719}.}
   \label{fig:n2n-vs-ours}
-\end{figure}
+\end{figure*}
+
+\FloatBarrier
 
 \subsection{Factory exports and AKWF cycles}
 \label{sec:real-wt}
@@ -456,12 +489,14 @@ On exported factory periods the favorite ($R_{\mathrm{blend}}{\approx}0.699$) tr
 On AKWF OA cycles the favorite ($0.679$) trails no-bake / N2N and beats Dual Cosine ($0.424$).
 Export gaps are listed in Section~\ref{sec:limitations}.
 
-\begin{table}[t]
+\clearpage
+\begin{table*}[t]
   \centering
   \caption{Wavetable-native wrap protocol under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Primary = ReelSynth export. Secondary = AKWF CC0 files.}
   \label{tab:real-wt}
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lrr@{}}
+  \setlength{\tabcolsep}{6pt}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrr@{}}
     \toprule
     Method & Export & AKWF OA \\
     \midrule
@@ -476,7 +511,9 @@ Export gaps are listed in Section~\ref{sec:limitations}.
     seq LSTM & 0.628 & 0.579 \\
     \bottomrule
   \end{tabular}
-\end{table}
+\end{adjustbox}
+\end{table*}
+\clearpage
 
 \subsection{Polynomial baseline and endpoint pinning}
 \label{sec:poly-jump}
@@ -520,7 +557,7 @@ We score these classical tools, not only cite them: they beat DualCosine on mean
   \label{fig:va-seam-techniques}
 \end{figure*}
 
-\begin{table*}[t]
+\begin{table*}[htbp]
   \centering
   \caption{Classical VA seam repairs under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{20260719}).
   Canonical holdout: $R_{\mathrm{blend}}$, SNR/SDR, wrap-jump, edge RMSE.
@@ -528,7 +565,8 @@ We score these classical tools, not only cite them: they beat DualCosine on mean
   Multi: mean $R_{\mathrm{blend}}$ over 20 generative waveforms.}
   \label{tab:va-seam-blep}
   \setlength{\tabcolsep}{2.5pt}
-  \begin{tabular}{@{}lrrrrrrr@{}}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrrrrrrr@{}}
     \toprule
     Method & $R_{\mathrm{blend}}$ & SNR & SDR & jump & edge & top10 $R_{\mathrm{blend}}$ & multi $R_{\mathrm{blend}}$ \\
     \midrule
@@ -539,8 +577,12 @@ We score these classical tools, not only cite them: they beat DualCosine on mean
     BLIT/BLEP & 0.6324 & 20.4 & 20.3 & 0.004 & 0.365 & 0.3510 & 0.612 \\
     DualCosine & 0.5409 & 18.0 & 17.8 & 0.292 & 0.506 & 0.3049 & 0.514 \\
     \bottomrule
-  \end{tabular}\\[0.3em]
+  \end{tabular}
+\end{adjustbox}
+
+  \vspace{0.5em}
   {\footnotesize Latency (canonical, CUDA): PolyBLEP $\approx 0.87$\,ms/batch, DualCosine $\approx 1.46$, BLIT/BLEP $\approx 71$, BLAMP $\approx 20$. Frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/va_seam_blep.json}{VA results}.}
+  \vspace{1.0em}
 \end{table*}
 
 \subsection{When search helps vs classical methods}
@@ -561,15 +603,16 @@ The favorite beats Dual Cosine on mean $\Delta R_{\mathrm{blend}}{+}0.082$, but 
 and absolute score trails no-bake and \texttt{seam\_fir3}.
 The primary SOTA claim remains the Python multi-family matrix.
 
-\begin{table}[t]
+\begin{table*}[t]
   \centering
   \caption{Rust \texttt{sound\_bench} transfer ($n{=}20$) under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
-  $\Delta R_{\mathrm{blend}}$ vs Dual Cosine.}
+  $\Delta$ is vs Dual Cosine.}
   \label{tab:rust-bench}
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}lrr@{}}
+  \setlength{\tabcolsep}{6pt}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrr@{}}
     \toprule
-    Method & $R_{\mathrm{blend}}$ (20 Rust tiles) & $\Delta R_{\mathrm{blend}}$ vs Dual Cosine \\
+    Method & $R_{\mathrm{blend}}$ & $\Delta$ vs DC \\
     \midrule
     no-bake & $0.846\pm0.171$ & ${+}0.422$ \\
     \texttt{seam\_fir3} & $0.751\pm0.157$ & ${+}0.327$ \\
@@ -578,32 +621,37 @@ The primary SOTA claim remains the Python multi-family matrix.
     Dual Cosine / cosine fade & $0.424\pm0.187$ & $0$ \\
     \bottomrule
   \end{tabular}
-\end{table}
+\end{adjustbox}
+\end{table*}
 
-\begin{figure}[t]
+\FloatBarrier
+
+\begin{figure}[htbp]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_inference_vs_residual.png}
+  \includegraphics[width=0.96\columnwidth]{figures/fig_inference_vs_residual.png}
   \caption{High-$R$ fitted operators: residual vs CUDA latency. Star: favorite.}
   \label{fig:inference-pareto}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_inference_latency_bars.png}
+  \includegraphics[width=0.96\columnwidth]{figures/fig_inference_latency_bars.png}
   \caption{Inference latency for high-$R$ fitted models (CUDA, batch 64).}
   \label{fig:inference-bars}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_classical_vs_ai_scatter.png}
+  \includegraphics[width=0.96\columnwidth]{figures/fig_classical_vs_ai_scatter.png}
   \caption{Canonical holdout: classical methods and favorite in the $R$ vs ms/batch plane.}
   \label{fig:classical-vs-ai-scatter}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[htbp]
   \centering
-  \includegraphics[width=\columnwidth]{figures/fig_classical_vs_ai_bars.png}
+  \includegraphics[width=0.96\columnwidth]{figures/fig_classical_vs_ai_bars.png}
   \caption{Canonical holdout ranking on $R_{\mathrm{blend}}$ (left) and latency (right).}
   \label{fig:classical-vs-ai-bars}
 \end{figure}
+
+\FloatBarrier

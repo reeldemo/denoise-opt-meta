@@ -8,12 +8,13 @@ These timings pair with the prolonged-$R$ transfer board (Table~\ref{tab:transfe
 N2N latency uses the wavetable \texttt{n2n\_corrupt\_corrupt} checkpoint zero-shot.
 Domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
 
-\begin{table*}[t]
+\begin{table*}[htbp]
   \centering
   \caption{Transfer-domain inference latency (ms/batch, higher is slower). Batch=64, CUDA.}
   \label{tab:transfer-latency}
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{@{}lrrrrrr@{}}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lrrrrrr@{}}
     \toprule
     Method & CWRU & MFPT & MIT-BIH & PTB-XL & CNC & PMU \\
     \midrule
@@ -23,6 +24,7 @@ Domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
     N2N (WT$\to$dom.) & 0.95 & 0.99 & 0.98 & 0.97 & 0.98 & 0.97 \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table*}
 
 \begin{figure*}[t]

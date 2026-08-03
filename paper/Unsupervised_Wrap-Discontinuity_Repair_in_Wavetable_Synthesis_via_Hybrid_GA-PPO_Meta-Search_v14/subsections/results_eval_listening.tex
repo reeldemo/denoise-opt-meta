@@ -1,6 +1,8 @@
 % W2 / AC-3.* vibrato spectrograms, hear panel, WT diversity gallery
 % Included from main.tex (separate file to reduce merge risk with T2/T3 Methods edits).
 
+\FloatBarrier
+
 \subsection{Vibrato spectrograms}
 \label{sec:vibrato-eval}
 
@@ -43,12 +45,13 @@ Assumptions: no IRB-recruited listeners; no forced-choice protocol executed; WAV
 Therefore preference mean, std, CI, and $p$-values are undefined (not omitted by accident).
 Subjective quality is \emph{out of scope}; objective residual is the claim.
 
-\begin{table}[t]
+\begin{table*}[t]
   \centering
   \caption{Listening / subjective evaluation statistics for this manuscript (honest null study).}
   \label{tab:listening-stats}
-  \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{@{}lr@{}}
+  \setlength{\tabcolsep}{6pt}
+  \begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lr@{}}
     \toprule
     Quantity & Value \\
     \midrule
@@ -61,10 +64,13 @@ Subjective quality is \emph{out of scope}; objective residual is the claim.
     Primary quality metric & locked $R_{\mathrm{blend}}$ \\
     \bottomrule
   \end{tabular}
-\end{table}
+\end{adjustbox}
+\end{table*}
+
+\FloatBarrier
 
 
-\begin{figure*}[t]
+\begin{figure*}[htbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig_hear_samples_panel.png}
   \caption{Hear-sample panel from the online WAV pack

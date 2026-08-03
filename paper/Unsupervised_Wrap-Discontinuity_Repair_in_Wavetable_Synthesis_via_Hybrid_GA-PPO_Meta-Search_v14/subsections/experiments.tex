@@ -75,14 +75,15 @@ Sci/eng transfer tiles $1{,}536$ periods across CWRU, MFPT ($n{=}256$), MIT-BIH,
 Search never trains on the frozen holdout. N2N/seq baselines use disjoint train seeds \texttt{424242}/\texttt{424243}.
 Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/tree/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v14/figures}{dataset artifacts}.
 
-\begin{table}[t]
+\begin{table}[htbp]
   \centering
   \caption{Dataset statistics (evaluation boards).
     $L{=}256$ unless noted. Hours are raw source duration on disk where measurable, not tiled period count.
     Plot~4 compares ${\approx}1{,}280$-height boards only (multi-family / Factory+FX / AKWF / transfer).}
   \label{tab:dataset-stats}
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}llp{0.42\columnwidth}@{}}
+  \begin{adjustbox}{max width=\columnwidth}
+\begin{tabular}{@{}llp{0.42\columnwidth}@{}}
     \toprule
     Board & Size & Notes \\
     \midrule
@@ -99,6 +100,7 @@ Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/tree/master/paper/
     synth CNC / PMU & $256{+}256$ & procedural pilots \\
     \bottomrule
   \end{tabular}
+\end{adjustbox}
 \end{table}
 
 \begin{figure}[t]
