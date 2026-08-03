@@ -1,6 +1,15 @@
 \section{Results}
 \label{sec:results}
 
+\paragraph{Abstract numbers $\mapsto$ tables.}
+Every numeric claim in the abstract maps to a table here or in the appendix:
+\begin{itemize}
+  \item Holdout $0.9708{\pm}0.0014$ / N2N $0.9767{\pm}0.0015$ / Dual Cosine $0.542{\pm}0.038$ $\to$ Table~\ref{tab:n2n-vs-ours} (also Table~\ref{tab:param-fairness}).
+  \item Matched-$5$k hybrid $0.9748{\pm}0.0018$ $\to$ Table~\ref{tab:meta-approaches}.
+  \item Converge $R_{\mathrm{blend}}{\approx}0.9912$ (seed \texttt{1902771841}) $\to$ Table~\ref{tab:v14-hybrid-converge}.
+  \item Multi-family sign-test $p{=}1.0$ $\to$ Section~\ref{sec:n2n-vs-ours-boards} (board-mean deltas).
+\end{itemize}
+
 \paragraph{Reading guide (artifact $\to$ finding).}
 \begin{itemize}
   \item Holdout / N2N gate (Table~\ref{tab:n2n-vs-ours}, artifacts under \texttt{brand/artifacts/holdout\_*}): short-FitCell hybrid trails N2N, beats Dual Cosine (five eval seeds).
@@ -13,12 +22,22 @@
 Primary numbers use locked $R_{\mathrm{blend}}$ (Sections~\ref{sec:v10-freeze}--\ref{sec:n2n-vs-ours-boards}).
 Matched bake-offs, HP probes, branch freezes, and transfer latency sit in Appendix~\ref{app:supplement}.
 Honesty notes are collected in Section~\ref{sec:limitations}.
+Reproduce with \texttt{REPRO.md} and \texttt{EVAL\_PROTOCOL.md} in this paper folder.
 
-\subsection{Ablations and hyperparameter sensitivity (pointer)}
+\subsection{Ablation definition}
+\label{sec:ablation-def}
+An \textbf{ablation} here means a controlled disable of one outer-loop ingredient while keeping FitCell and the operator vocabulary fixed.
+\begin{itemize}
+  \item \textbf{Type A (history tags).} Best prolonged-$R$ freeze labeled by branch (GA / PPO / PBT / \ldots) inside one recorded hybrid run (Table~\ref{tab:ablation}, left). Not a separate experiment.
+  \item \textbf{Type B (restart).} Fresh $150$-iteration search with GA-only, PPO-only, GA+PPO, or full hybrid enabled; final cell re-scored under locked $R_{\mathrm{blend}}$ (Table~\ref{tab:ablation}, right; seed \texttt{1902771841}).
+\end{itemize}
+Neither type replaces the matched-$5$k six-family bake-off (Table~\ref{tab:meta-approaches}).
+HP sensitivity is a separate one-at-a-time $\pm 50\%$ probe (Table~\ref{tab:hp-sensitivity}).
+
+\subsection{Ablations and hyperparameter sensitivity (findings)}
 \label{sec:ablation-hp-main}
-Branch ablations and HP sensitivity are reported in Appendix~\ref{app:supplement} so the main results stay on holdout / D1 / converge.
-\textbf{Finding (ablation).} Under a $150$-iteration restart (seed \texttt{1902771841}), dropping GA or PPO does not collapse short-budget $R_{\mathrm{blend}}$ relative to full hybrid on that probe (Table~\ref{tab:ablation}, right); those runs are far below the matched-$5$k hybrid mean and must not overwrite Table~\ref{tab:meta-approaches}.
-\textbf{Finding (HP).} One-at-a-time $\pm 50\%$ shifts of population / clip / LR / mutate / entropy at $500$ iterations change champion $R$ by at most ${\approx}0.012$ (Table~\ref{tab:hp-sensitivity}, Figure~\ref{fig:hp-sensitivity}); defaults are not claimed globally optimal.
+\textbf{Finding (Type B).} Dropping GA or PPO does not collapse short-budget $R_{\mathrm{blend}}$ on the $150$-iteration probe relative to full hybrid on that seed (Table~\ref{tab:ablation}, right), but those scores stay far below the matched-$5$k hybrid mean.
+\textbf{Finding (HP).} $\pm 50\%$ one-at-a-time shifts of population / clip / LR / mutate / entropy at $500$ iterations change champion $R$ by at most ${\approx}0.012$ (Table~\ref{tab:hp-sensitivity}); defaults are not claimed globally optimal.
 
 \begin{figure}[t]
   \centering

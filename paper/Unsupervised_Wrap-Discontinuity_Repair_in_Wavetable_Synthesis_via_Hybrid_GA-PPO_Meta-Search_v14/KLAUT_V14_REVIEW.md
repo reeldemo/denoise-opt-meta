@@ -1,25 +1,24 @@
 # Klaut v14 review progress
 
-**As of:** 2026-08-03 after `pass_20260803T072617Z`  
-**Paper:** v14 (seed-1 full converge only)
+**As of:** 2026-08-03 after `pass_20260803T075046Z`  
+**Paper:** v14
 
 ## Status
 
-| Pass | Overall | next_action |
-|------|---------|-------------|
-| `pass_20260803T070348Z` | 6 | stop |
-| `pass_20260803T072617Z` | **6** | `run_english_polish` |
+| Pass | Overall | Note |
+|------|---------|------|
+| `pass_20260803T072617Z` | 6 | |
+| `pass_20260803T075046Z` | **5** | dropped; English audit already 5.0 / no-op polish |
 
-Clarity dipped to 2.0; MOS/NAS must-fixes largely gone.
+Ollama overall is oscillating **5↔6**. Continuing honest fixes; ≥9 may need a different grader or a real listening study.
 
-## Applied after 072617
+## Applied after 075046
 
-- Methods: explicit ideal-sibling / mid-cycle engine identity bullets + $R_{\mathrm{blend}}$ roles
-- Abstract: Scope + Contributions + table-backed $R_{\mathrm{blend}}$ results
-- Experiments: datasets + compute checklist
-- Acknowledgments: single-author CRediT
-- Next: English polish then re-review
+- Abstract: shorter Scope/Method/Results sentences with table refs
+- Results: abstract↦table map; ablation Type A/B definition
+- Acknowledgments: named dataset boards (CWRU, MFPT, …)
+- Next: polish acknowledgments + re-review
 
 ## Target
 
-**≥ 9**. No invented MOS. No local CUDA without ask.
+Still **≥ 9** without inventing MOS.

@@ -2,13 +2,17 @@
 \label{sec:acknowledgments}
 
 \paragraph{Authors.}
-This preprint has a \textbf{single author}: Julian~M.~Kleber.
-There are no co-authors; every contribution below is that author's.
+This preprint has one author, Julian~M.~Kleber. There are no co-authors.
 
 \paragraph{Author contributions (CRediT).}
-Julian~M.~Kleber: Conceptualization; Methodology; Software (ReelSynth DenoiseOpt search, FitCell, benches); Investigation (D1 bake-off, FitCell-to-convergence seed \texttt{1902771841}, transfer boards); Formal analysis; Data curation (frozen JSON artifacts); Writing---original draft; Writing---review and editing; Visualization; Resources (local RTX~3090).
+Julian~M.~Kleber performed all roles: Conceptualization; Methodology; Software; Investigation; Formal analysis; Data curation; Writing---original draft; Writing---review and editing; Visualization; Resources (local RTX~3090 workstation).
 
-\paragraph{Thanks.}
-The author thanks the open-source communities behind ReelSynth dependencies (Rust/Cargo ecosystem, PyTorch, egui) and the maintainers of the public datasets used as wrap-protocol stress boards (CWRU, MFPT, Paderborn, MIT-BIH, PTB-XL, AKWF).
-Open literature was gathered with local OpenAlex / Crossref / arXiv providers and author PDF checks under open-access constraints (see Section~\ref{sec:tooling}).
+\paragraph{Datasets acknowledged by board.}
+We thank the maintainers of the wrap-protocol stress boards used in Table~\ref{tab:transfer-main} and Table~\ref{tab:dataset-stats}:
+CWRU bearing vibrations; MFPT bearing; Paderborn K001; MIT-BIH ECG; PTB-XL ECG subset; Adventure Kid Waveforms (AKWF) CC0 single-cycle files; plus ReelSynth Factory+FX export periods.
+Synthetic CNC and synthetic PMU rows are procedural pilots authored for this work when KIT / IEEE DataPort downloads were login-walled.
+
+\paragraph{Software and literature.}
+Thanks also to the Rust/Cargo, PyTorch, and egui communities used by ReelSynth.
+Open literature was gathered with local OpenAlex / Crossref / arXiv providers (Section~\ref{sec:tooling}).
 Any remaining errors are the author's.

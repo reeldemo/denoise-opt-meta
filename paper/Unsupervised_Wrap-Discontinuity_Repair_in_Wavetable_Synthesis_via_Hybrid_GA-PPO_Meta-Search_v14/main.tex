@@ -53,20 +53,20 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    \textbf{Scope.} Cycle-local wavetable wrap-seam residual repair for DSP/synthesis venues; not speech enhancement, not MOS/MUSHRA ($N_{\mathrm{listeners}}{=}0$), not a new NAS/RL algorithm.
-    \textbf{Contributions.} (i)~locked seam/body score $R_{\mathrm{blend}}$ with cliff-withheld ideal sibling $r^{\star}$ and mid-cycle identity to cracked engine $x$;
-    (ii)~compact searchable repair operators; (iii)~hybrid GA+PPO+PBT applied to that space with matched outer-loop selection then FitCell-to-plateau;
-    (iv)~open multi-seed residual benches (details: Sections~\ref{sec:residual-score},~\ref{sec:experiments},~\ref{sec:results}).
+    \textbf{Scope.}
+    We repair cycle-local wavetable wrap seams under an objective residual score.
+    We do not claim speech enhancement, MOS/MUSHRA ($N_{\mathrm{listeners}}{=}0$), or a new NAS/RL algorithm.
 
-    \textbf{Objective $R_{\mathrm{blend}}$ results (backed in Section~\ref{sec:results}).}
-    Holdout (5 seeds; Table~\ref{tab:n2n-vs-ours}): short-FitCell Ours $0.9708{\pm}0.0014$ vs Noise2Noise $0.9767{\pm}0.0015$ vs Dual Cosine $0.542{\pm}0.038$.
-    Matched $5$k outer-loop (3 seeds; Table~\ref{tab:meta-approaches}): hybrid $0.9748{\pm}0.0018$ (best of six).
-    FitCell-to-plateau (1 seed \texttt{1902771841}; Table~\ref{tab:v14-hybrid-converge}): $R_{\mathrm{blend}}{\approx}0.9912$ clears the N2N residual gate (${\approx}0.9750$).
-    Multi-family means: Ours vs N2N indistinguishable (sign-test $p{=}1.0$).
+    \textbf{Method.}
+    DenoiseOpt applies existing GA+PPO+PBT tools to compact repair operators.
+    Scoring uses locked $R_{\mathrm{blend}}$ ($\alpha{=}0.7$): seam fidelity to a cliff-withheld ideal sibling $r^{\star}$, plus mid-cycle identity to the cracked engine $x$ (Section~\ref{sec:residual-score}).
 
-    Mismatched wavetable endpoints leave a wrap-join click each period.
-    \textbf{DenoiseOpt} applies existing GA+PPO+PBT tools to compact cycle-local repair operators under locked $R_{\mathrm{blend}}$ ($\alpha{=}0.7$) and latency-aware $J$.
-    On hard cliffs classical fades collapse while searched operators hold under $R_{\mathrm{blend}}$.
+    \textbf{Results (tables in Section~\ref{sec:results}).}
+    Holdout, five seeds (Table~\ref{tab:n2n-vs-ours}): Ours $0.9708{\pm}0.0014$, Noise2Noise $0.9767{\pm}0.0015$, Dual Cosine $0.542{\pm}0.038$.
+    Matched $5$k search, three seeds (Table~\ref{tab:meta-approaches}): hybrid $0.9748{\pm}0.0018$ (best of six families).
+    FitCell-to-plateau, one seed \texttt{1902771841} (Table~\ref{tab:v14-hybrid-converge}): $R_{\mathrm{blend}}{\approx}0.9912$ clears the N2N residual gate (${\approx}0.9750$).
+    Multi-family board means: Ours vs N2N indistinguishable (sign-test $p{=}1.0$).
+    Hard cliffs: classical fades collapse; searched operators hold under $R_{\mathrm{blend}}$.
     Transfer boards are wrap-protocol residual stress tests only.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; unsupervised repair; DenoiseOpt; seam restoration; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
