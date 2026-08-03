@@ -178,8 +178,17 @@ DualCosine centering is soft relative shaping for the actor--critic, not a hard 
 \label{sec:pipeline-overview}
 
 Figure~\ref{fig:denoiseopt-arch} summarizes the residual-scored hybrid loop.
-Each outer iteration proposes a bake configuration $h$, runs FitCell (Appendix~\ref{app:algorithms}, Algorithm~\ref{alg:fit}) to fit continuous parameters under loss $1-R$, evaluates prolonged $R$ vs $r^{\star}$, and updates the population / PPO policy.
-Pseudocode for GA, PPO, PBT, and the full hybrid rotation is in Algorithms~\ref{alg:ga}--\ref{alg:hybrid}.
+Each outer iteration proposes a bake configuration $h$, runs FitCell (Appendix~\ref{app:algorithms}, Algorithm~\ref{alg:fit}) to fit continuous parameters under loss $1-R_{\mathrm{blend}}$, evaluates $R_{\mathrm{blend}}$ (and $J$) vs $r^{\star}$, and updates the population / PPO policy.
+
+\paragraph{Main-text algorithm summary (before appendix listings).}
+\begin{enumerate}
+  \item \textbf{FitCell (inner):} Adam on $1-R_{\mathrm{blend}}$ over i.i.d.\ $G$ batches until relative residual change $<\varepsilon$ for patience $P$ steps, or hard cap $T_{\max}$ (Algorithm~\ref{alg:fit}).
+  \item \textbf{GA branch:} tournament parents $\to$ crossover/mutate op graph $\to$ FitCell $\to$ insert by $J$ (Algorithm~\ref{alg:ga}).
+  \item \textbf{PPO branch:} actor proposes discrete architecture edits; advantage uses optional DualCosine centering; clipped surrogate update (Algorithm~\ref{alg:ppo}); selection still maximizes absolute $R_{\mathrm{blend}}$/$J$.
+  \item \textbf{PBT branch:} copy hyperparameters from elites into bottom quantile; multiplicative mutate; brief refit (Algorithm~\ref{alg:pbt}).
+  \item \textbf{Hybrid rotation:} each outer step runs one or more of the above; champion is the best $J$ cell that also clears Dual Cosine and, when required, the N2N gate (Algorithm~\ref{alg:hybrid}).
+\end{enumerate}
+Full line-by-line pseudocode is in Algorithms~\ref{alg:ga}--\ref{alg:hybrid} (Appendix~\ref{app:algorithms}).
 
 \input{subsections/arch_diagram}
 
