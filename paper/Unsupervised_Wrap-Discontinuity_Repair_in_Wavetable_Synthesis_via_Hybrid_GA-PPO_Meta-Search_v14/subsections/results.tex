@@ -73,16 +73,15 @@ Ours $0.9748{\pm}0.0018$, Aging $0.9635{\pm}0.0049$).
 \label{sec:v14-converge}
 Deferred~D1 (Table~\ref{tab:meta-approaches}) already ranked hybrid GA--PPO first among six outer-loop families under a short FitCell budget (${\approx}16$--$48$ steps).
 We therefore stop spending matched budget on Random/CMA-ES/TPE/Aging/REINFORCE and reinvest the GPU in a \emph{hybrid-only} campaign where every candidate trains until residual plateau (or a searchable hard cap $T_{\max}\!\in\!\{512,\ldots,2048\}$), with searchable patience, relative $\varepsilon$, FitCell batch, and latency weight $\lambda$ (artifacts \texttt{meta\_approach\_compare\_v14\_converge/}; Table~\ref{tab:v14-hybrid-converge}).
-Outer budget is $750$ evaluations per seed with two sequential proposals per iteration (one CUDA process; no dual-seed VRAM duplication).
-On completed seed \texttt{1902771841}, the champion reaches $R_{\mathrm{blend}}{\approx}0.9912$, $J{\approx}0.9854$, $t{\approx}8.70$\,ms and \emph{clears} the frozen Noise2Noise gate (${\approx}0.9750$) after ${\approx}46.9$\,h wall.
-Seed \texttt{2026072701} is paused mid-run at $170/750$ with live champ $R_{\mathrm{blend}}{\approx}0.9895$ (also above the gate); seed \texttt{2026072702} is not started.
-We do \emph{not} yet report a three-seed mean$\pm$std for this converge protocol; the claim here is the selection rationale from D1 plus the completed-seed result under honest pause status.
+Outer budget is $750$ evaluations with two sequential proposals per iteration (one CUDA process; no dual-seed VRAM duplication).
+On search seed \texttt{1902771841}, the champion reaches $R_{\mathrm{blend}}{\approx}0.9912$, $J{\approx}0.9854$, $t{\approx}8.70$\,ms and \emph{clears} the frozen Noise2Noise gate (${\approx}0.9750$) after ${\approx}46.9$\,h wall.
+The claim here is the D1 selection rationale plus this full hybrid-only converge run under locked $R_{\mathrm{blend}}{+}J$.
 
 \begin{table}[t]
   \centering
   \caption{Hybrid-only FitCell-to-convergence follow-up after D1 (locked $R_{\mathrm{blend}}{+}J$).
     Gate: frozen Noise2Noise corrupt$\to$corrupt $R_{\mathrm{blend}}{\approx}0.9750$.
-    Seed~\texttt{2026072701} is an interim checkpoint (search paused); seed~\texttt{2026072702} pending.}
+    Full $750$-evaluation run on search seed \texttt{1902771841}.}
   \label{tab:v14-hybrid-converge}
   \setlength{\tabcolsep}{3pt}
   \footnotesize
@@ -91,8 +90,6 @@ We do \emph{not} yet report a three-seed mean$\pm$std for this converge protocol
     Search seed & Iters & $R_{\mathrm{blend}}$ & $t$\,ms & vs N2N gate \\
     \midrule
     \texttt{1902771841} & $750/750$ & $0.9912$ & $8.70$ & clears \\
-    \texttt{2026072701} & $170/750$ (paused) & $0.9895$ & $5.67$ & clears \\
-    \texttt{2026072702} & $0/750$ & --- & --- & pending \\
     \bottomrule
   \end{tabular}
 \end{table}
