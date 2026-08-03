@@ -1,0 +1,174 @@
+\section{Supplementary tables and figures}
+\label{app:supplement}
+
+Material moved here for the conference-length reading path:
+matched outer-loop bake-off, branch/compute freezes, hyperparameter probe, transfer latency, and search-monitor plots.
+Primary claims remain in Sections~\ref{sec:results}--\ref{sec:transfer-main}.
+
+\subsection{Matched-budget outer-loop comparison}
+\label{sec:meta-approaches-results}
+
+Under a matched $5{,}000$-evaluation budget with LSTM and xLSTM in the searchable bake vocabulary, how do Random NAS, Cont.\ CMA-ES, Arch REINFORCE, Aging evolution, and TPE Bayes NAS compare to Ours (hybrid GA+PPO)?
+Table~\ref{tab:meta-approaches} reports the completed Deferred~D1 matched re-search under locked $R_{\mathrm{blend}}{+}J$
+(mean$\pm$std over three search seeds; artifacts \texttt{meta\_approach\_compare\_v13\_rblend/}).
+Ours leads ($R_{\mathrm{blend}}{=}0.9748{\pm}0.0018$; mean wall ${\approx}8.4$\,h).
+Aging evolution is second ($0.9635{\pm}0.0049$); Arch REINFORCE is highest-variance ($0.9599{\pm}0.0116$).
+Only seed~\texttt{1902771841} hybrid clears the frozen Noise2Noise gate under the short-FitCell D1 protocol ($R_{\mathrm{blend}}{\approx}0.9766$ vs gate ${\approx}0.9750$).
+Hybrid live champions stay compact (${\approx}24$k$\pm$2k params across seeds) despite mid-search graphs that swing from ${\approx}15$k to ${\approx}370$k.
+Because hybrid already dominated this matched bake-off, the next campaign drops the five losing families and runs hybrid-only FitCell-to-convergence (Section~\ref{sec:v14-converge}, Table~\ref{tab:v14-hybrid-converge}).
+Noise2Noise is not an outer-loop method here (see Tables~\ref{tab:n2n-vs-ours} and~\ref{tab:sota-main}).
+Learning-curve and bar figures use seed~\texttt{1902771841} trajectories under the same locked objective.
+
+\input{figures/meta_approaches_table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/meta_approach_bars.png}
+  \caption{Matched 5,000-evaluation search methods under locked $R_{\mathrm{blend}}{+}J$ (seed \texttt{1902771841}).
+  Table~\ref{tab:meta-approaches} reports mean$\pm$std across three search seeds.
+  Dashed line: Dual Cosine on the same runner.}
+  \label{fig:meta-approach-bars}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_meta_approach_compare.png}
+  \caption{Champion $R_{\mathrm{blend}}$ over a matched 5,000-evaluation budget (Deferred D1 complete; seed \texttt{1902771841}).
+  Dashed line: Dual Cosine.}
+  \label{fig:meta-approach-compare}
+\end{figure}
+
+\subsection{Ablations and compute}
+\label{sec:ablation-compute}
+
+Table~\ref{tab:ablation} reports branch-best freezes at the $5$k gate from one hybrid history (prolonged $R$; no separate fitted weights),
+plus isolated 150-iteration \texttt{ablate-*} final champions re-scored under $R_{\mathrm{blend}}$.
+Table~\ref{tab:compute} summarizes campaign compute (historical prolonged-$R$ overnight).
+
+\begin{table}[t]
+  \centering
+  \caption{Ablations.
+    Left: best prolonged $R$ by branch in the recorded search run (final iteration ${\approx}6{,}922$; superseded search metric).
+    Right: isolated 150-iteration \texttt{ablate-*} final champions re-scored under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{1902771841}).
+    Full $R_{\mathrm{blend}}$ branch re-search remains deferred.}
+  \label{tab:ablation}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lrr@{}}
+    \toprule
+    Config & Search freeze prolonged $R$ & Isolated 150-it $R_{\mathrm{blend}}$ \\
+    \midrule
+    Full hybrid & 0.99093 & 0.92710 \\
+    GA-only & 0.99016 & 0.94168 \\
+    PBT (search branch) & 0.99012 & n/a \\
+    PPO-only & 0.98924 & 0.94405 \\
+    GA+PPO & n/a & 0.94478 \\
+    Combined branch & 0.98854 & n/a \\
+    NAS branch & 0.98677 & n/a \\
+    Dual Cosine (runner) & 0.81658 & ${\approx}0.539$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Compute budget for the reported 5,000-evaluation search run (RTX~3090, search seed \texttt{1902771841}; prolonged-$R$ objective).
+    Final champion $R$ below is the historical prolonged freeze, not $R_{\mathrm{blend}}$.}
+  \label{tab:compute}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+    Item & Value \\
+    \midrule
+    GPU & NVIDIA GeForce RTX 3090 \\
+    Elapsed wall time & ${\approx}7.92$\,h \\
+    Clean iterations / arch evals & ${\approx}6{,}922$ \\
+    Population size & 12 \\
+    Final champion prolonged $R$ & 0.99093 \\
+    Dual Cosine baseline (runner, prolonged) & 0.81658 \\
+    Peak VRAM (replay) & ${\approx}3.29$\,GiB \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Hyperparameter sensitivity}
+\label{para:hp-sensitivity}
+One-at-a-time $\pm 50\%$ probe of Table~\ref{tab:hyperparams} knobs at $500$ outer iterations (seed \texttt{1902771841}).
+Not a full $5$k re-search.
+Default champion $R{\approx}0.9888$. The largest $|\Delta R|$ among completed arms is ${\approx}0.0123$ (50\% lower learning rate).
+All $11/11$ arms completed.
+
+\input{figures/tab_meta_hp_sensitivity}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig_meta_hp_sensitivity.png}
+  \caption{One-at-a-time $\pm 50\%$ HP sensitivity of hybrid champion $R$ at 500 iterations. Blue bar: Table~\ref{tab:hyperparams} default.}
+  \label{fig:hp-sensitivity}
+\end{figure}
+
+\subsection{Transfer inference latency}
+\label{sec:transfer-latency-app}
+Table~\ref{tab:transfer-latency} and Figure~\ref{fig:signal-heal-transfer-latency} pair with the prolonged-$R$ transfer board (Table~\ref{tab:transfer-main}).
+N2N latency uses the wavetable checkpoint zero-shot. Domain-trained N2N quality scores are in Table~\ref{tab:transfer-main}.
+
+\begin{table*}[t]
+  \centering
+  \caption{Transfer-domain inference latency (ms/batch). Batch=64, CUDA.}
+  \label{tab:transfer-latency}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lrrrrrr@{}}
+    \toprule
+    Method & CWRU & MFPT & MIT-BIH & PTB-XL & CNC & PMU \\
+    \midrule
+    no-bake & 0.26 & 0.26 & 0.27 & 0.27 & 0.28 & 0.26 \\
+    Dual Cosine & 1.10 & 1.11 & 1.12 & 1.14 & 1.15 & 1.14 \\
+    Ours (hybrid) & 3.92 & 6.61 & 2.87 & 1.67 & 1.69 & 1.67 \\
+    N2N (WT to domain) & 0.95 & 0.99 & 0.98 & 0.97 & 0.98 & 0.97 \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]{figures/fig_signal_heal_transfer_latency.png}
+  \caption{Transfer-domain inference latency (ms/batch). N2N is wavetable-trained zero-shot when available.}
+  \label{fig:signal-heal-transfer-latency}
+\end{figure*}
+
+\subsection{Search-monitor figures}
+\label{sec:search-monitor-figs}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/champ_residual_vs_iter.png}
+  \caption{Champion residual $R$ over the first 5,000 search iterations (Dual Cosine dashed).}
+  \label{fig:champ-residual}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/branch_bests_vs_iter.png}
+  \caption{Best residual by search branch over the first 5,000 iterations.}
+  \label{fig:branch-bests}
+\end{figure}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/search_panel.png}
+  \caption{Search progress: champion $R$ (top) and branch bests (bottom).}
+  \label{fig:search-panel}
+\end{figure*}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/residual_by_branch.png}
+  \caption{Per-trial residual by branch with champion trajectory overlaid.}
+  \label{fig:residual-branch}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/champion_timeline.png}
+  \caption{Champion updates over the first 5,000 iterations.}
+  \label{fig:champ-timeline}
+\end{figure}

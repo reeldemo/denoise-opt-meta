@@ -1,0 +1,659 @@
+{
+  "title": "DenoiseOpt RL+GA meta-learning curated literature",
+  "n": 36,
+  "used": [
+    {
+      "title": "Noise2Noise: Learning Image Restoration without Clean Data",
+      "year": 2018,
+      "authors": [
+        "Jaakko Lehtinen",
+        "Jacob Munkberg",
+        "Jon Hasselgren",
+        "Samuli Laine",
+        "Tero Karras",
+        "Miika Aittala",
+        "Timo Aila"
+      ],
+      "doi": "10.48550/arXiv.1803.04189",
+      "oa_url": "https://arxiv.org/pdf/1803.04189",
+      "role": "used",
+      "method_family": "n2n",
+      "source": "manual"
+    },
+    {
+      "title": "Population Based Training of Neural Networks",
+      "year": 2017,
+      "authors": [
+        "Max Jaderberg",
+        "Valentin Dalibard",
+        "Simon Osindero",
+        "Wojciech M. Czarnecki",
+        "Jeff Donahue",
+        "Ali Razavi",
+        "Oriol Vinyals",
+        "Tim Green",
+        "Iain Dunning",
+        "Karen Simonyan",
+        "Chrisantha Fernando",
+        "Koray Kavukcuoglu"
+      ],
+      "doi": "10.48550/arXiv.1711.09846",
+      "oa_url": "https://arxiv.org/pdf/1711.09846",
+      "role": "used",
+      "method_family": "pbt",
+      "source": "manual"
+    },
+    {
+      "title": "Evolution-Guided Policy Gradient in Reinforcement Learning",
+      "year": 2018,
+      "authors": [
+        "Shauharda Khadka",
+        "Kagan Tumer"
+      ],
+      "doi": "10.48550/arXiv.1805.07917",
+      "oa_url": "https://arxiv.org/pdf/1805.07917",
+      "role": "used",
+      "method_family": "erl",
+      "source": "manual"
+    },
+    {
+      "title": "Regularized Evolution for Image Classifier Architecture Search",
+      "year": 2019,
+      "authors": [
+        "Esteban Real",
+        "Alok Aggarwal",
+        "Yanping Huang",
+        "Quoc V. Le"
+      ],
+      "doi": "10.1609/aaai.v33i01.33014780",
+      "oa_url": "https://arxiv.org/pdf/1802.01548",
+      "role": "used",
+      "method_family": "aging",
+      "source": "manual"
+    },
+    {
+      "title": "DDSP: Differentiable Digital Signal Processing",
+      "year": 2020,
+      "authors": [
+        "Jesse Engel",
+        "Lamtharn Hantrakul",
+        "Chenjie Gu",
+        "Adam Roberts"
+      ],
+      "doi": "10.48550/arXiv.2001.04643",
+      "oa_url": "https://arxiv.org/pdf/2001.04643",
+      "role": "used",
+      "method_family": "ddsp",
+      "source": "manual"
+    },
+    {
+      "title": "Neural Architecture Search: A Survey",
+      "year": 2019,
+      "authors": [
+        "Thomas Elsken",
+        "Jan Hendrik Metzen",
+        "Frank Hutter"
+      ],
+      "doi": "10.48550/arXiv.1808.05377",
+      "oa_url": "https://arxiv.org/pdf/1808.05377",
+      "role": "used",
+      "method_family": "nas",
+      "source": "manual"
+    },
+    {
+      "title": "Efficient Neural Architecture Search via Parameter Sharing",
+      "year": 2018,
+      "authors": [
+        "Hieu Pham",
+        "Melody Y. Guan",
+        "Barret Zoph",
+        "Quoc V. Le",
+        "Jeff Dean"
+      ],
+      "doi": "10.48550/arXiv.1802.03268",
+      "oa_url": "https://arxiv.org/pdf/1802.03268",
+      "role": "used",
+      "method_family": "enas",
+      "source": "manual"
+    },
+    {
+      "title": "Proximal Policy Optimization Algorithms",
+      "year": 2017,
+      "authors": [
+        "John Schulman",
+        "Filip Wolski",
+        "Prafulla Dhariwal",
+        "Alec Radford",
+        "Oleg Klimov"
+      ],
+      "doi": "10.48550/arXiv.1707.06347",
+      "oa_url": "https://arxiv.org/pdf/1707.06347",
+      "role": "used",
+      "method_family": "ppo",
+      "source": "manual"
+    },
+    {
+      "title": "Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "year": 2017,
+      "authors": [
+        "Noam Shazeer",
+        "Azalia Mirhoseini",
+        "Krzysztof Maziarz",
+        "Andy Davis",
+        "Quoc Le",
+        "Geoffrey Hinton",
+        "Jeff Dean"
+      ],
+      "doi": "10.48550/arXiv.1701.06538",
+      "oa_url": "https://arxiv.org/pdf/1701.06538",
+      "role": "used",
+      "method_family": "moe",
+      "source": "manual"
+    },
+    {
+      "title": "Wave-U-Net: A Multi-Scale Neural Network for End-to-End Audio Source Separation",
+      "year": 2018,
+      "authors": [
+        "Daniel Stoller",
+        "Sebastian Ewert",
+        "Simon Dixon"
+      ],
+      "doi": "10.48550/arXiv.1806.03185",
+      "oa_url": "https://arxiv.org/pdf/1806.03185",
+      "role": "used",
+      "method_family": "unet",
+      "source": "manual"
+    },
+    {
+      "title": "Deep Learning for Audio Signal Processing",
+      "year": 2019,
+      "authors": [
+        "Hendrik Purwins",
+        "Bo Li",
+        "Tuomas Virtanen",
+        "Jan Schl\u00fcter",
+        "Shuo-Yiin Chang",
+        "Tara N. Sainath"
+      ],
+      "doi": "10.48550/arXiv.1905.00078",
+      "oa_url": "https://arxiv.org/pdf/1905.00078",
+      "role": "used",
+      "method_family": "audio_dl",
+      "source": "manual"
+    },
+    {
+      "title": "Practical Bayesian Optimization of Machine Learning Algorithms",
+      "year": 2012,
+      "authors": [
+        "Jasper Snoek",
+        "Hugo Larochelle",
+        "Ryan P. Adams"
+      ],
+      "doi": "10.48550/arXiv.1206.2944",
+      "oa_url": "https://arxiv.org/pdf/1206.2944",
+      "role": "used",
+      "method_family": "bo",
+      "source": "manual"
+    },
+    {
+      "title": "MOEA/D: A Multiobjective Evolutionary Algorithm Based on Decomposition",
+      "year": 2007,
+      "authors": [
+        "Qingfu Zhang",
+        "Hui Li"
+      ],
+      "doi": "10.1109/TEVC.2007.892759",
+      "role": "used",
+      "method_family": "moead",
+      "source": "manual"
+    },
+    {
+      "query": "evolutionary neural architecture search Real AmoebaNet",
+      "role": "used",
+      "method_family": "nas",
+      "id": "W3176739814",
+      "doi": "10.1109/access.2021.3090918",
+      "title": "Gradient Descent Effects on Differential Neural Architecture Search: A Survey",
+      "year": 2021,
+      "authors": [
+        "Santanu Santra",
+        "Jun-Wei Hsieh",
+        "Chi\u2010Fang Lin"
+      ],
+      "venue": "IEEE Access",
+      "citation_count": 45,
+      "url": "https://openalex.org/W3176739814",
+      "source": "openalex",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6287639/9312710/09461192.pdf"
+    },
+    {
+      "query": "multi-objective evolutionary NAS NSGA",
+      "role": "used",
+      "method_family": "moead",
+      "id": "10.1109/cec.2015.7257280",
+      "doi": "10.1109/cec.2015.7257280",
+      "title": "Solving multi-objective multi-stage weapon target assignment problem via adaptive NSGA-II and adaptive MOEA/D: A comparison study",
+      "year": 2015,
+      "authors": [
+        "Juan Li",
+        "Jie Chen",
+        "Bin Xin",
+        "LiHua Dou"
+      ],
+      "venue": "2015 IEEE Congress on Evolutionary Computation (CEC)",
+      "citation_count": 37,
+      "url": "https://doi.org/10.1109/cec.2015.7257280",
+      "source": "crossref",
+      "oa_url": null
+    },
+    {
+      "query": "Wave-U-Net audio source separation",
+      "role": "used",
+      "arch_family": "unet",
+      "id": "W2952218014",
+      "doi": "10.1109/taslp.2019.2915167",
+      "title": "Conv-TasNet: Surpassing Ideal Time\u2013Frequency Magnitude Masking for Speech Separation",
+      "year": 2019,
+      "authors": [
+        "Yi Luo",
+        "Nima Mesgarani"
+      ],
+      "venue": "IEEE/ACM Transactions on Audio Speech and Language Processing",
+      "citation_count": 2055,
+      "url": "https://openalex.org/W2952218014",
+      "source": "openalex",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6570655/8716764/08707065.pdf",
+      "method_family": "tasnet"
+    },
+    {
+      "query": "Wave-U-Net audio source separation",
+      "role": "used",
+      "arch_family": "unet",
+      "id": "W2774707525",
+      "doi": "10.5281/zenodo.1414933",
+      "title": "Singing Voice Separation With Deep U-Net Convolutional Networks.",
+      "year": 2017,
+      "authors": [
+        "Andreas Jansson",
+        "Eric J. Humphrey",
+        "Nicola Montecchio",
+        "Rachel Bittner",
+        "Aparna Kumar",
+        "Tillman Weyde"
+      ],
+      "venue": "City Research Online (City University London)",
+      "citation_count": 341,
+      "url": "https://openalex.org/W2774707525",
+      "source": "openalex",
+      "oa_url": "https://openaccess.city.ac.uk/id/eprint/19289/1/7bb8d1600fba70dd79408775cd0c37a4ff62.pdf",
+      "method_family": "unet"
+    },
+    {
+      "query": "Wave-U-Net audio source separation",
+      "role": "used",
+      "arch_family": "unet",
+      "id": "W2902132730",
+      "doi": "10.48550/arxiv.1811.11307",
+      "title": "Improved Speech Enhancement with the Wave-U-Net",
+      "year": 2018,
+      "authors": [
+        "Craig Macartney",
+        "Tillman Weyde"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "citation_count": 56,
+      "url": "https://openalex.org/W2902132730",
+      "source": "openalex",
+      "oa_url": "https://arxiv.org/pdf/1811.11307",
+      "method_family": "unet"
+    },
+    {
+      "query": "Wave-U-Net audio source separation",
+      "role": "used",
+      "arch_family": "unet",
+      "id": "W3015724290",
+      "doi": "10.1109/icassp40776.2020.9053934",
+      "title": "Time-Domain Audio Source Separation Based on Wave-U-Net Combined with Discrete Wavelet Transform",
+      "year": 2020,
+      "authors": [
+        "Tomohiko Nakamura",
+        "Hiroshi Saruwatari"
+      ],
+      "venue": "ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "citation_count": 23,
+      "url": "https://openalex.org/W3015724290",
+      "source": "openalex",
+      "oa_url": null,
+      "method_family": "unet"
+    },
+    {
+      "query": "Noise2Noise unsupervised denoising audio",
+      "role": "used",
+      "arch_family": "noise_cond",
+      "id": "10.21437/interspeech.2021-1130",
+      "doi": "10.21437/interspeech.2021-1130",
+      "title": "Speech Denoising Without Clean Training Data: A Noise2Noise Approach",
+      "year": 2021,
+      "authors": [
+        "Madhav Mahesh Kashyap",
+        "Anuj Tambwekar",
+        "Krishnamoorthy Manohara",
+        "S. Natarajan"
+      ],
+      "venue": "Interspeech 2021",
+      "citation_count": 38,
+      "url": "https://doi.org/10.21437/interspeech.2021-1130",
+      "source": "crossref",
+      "oa_url": null,
+      "method_family": "n2n"
+    },
+    {
+      "query": "Noise2Noise unsupervised denoising audio",
+      "role": "used",
+      "arch_family": "noise_cond",
+      "id": "10.1109/cvprw53098.2021.00089",
+      "doi": "10.1109/cvprw53098.2021.00089",
+      "title": "Improved Noise2Noise Denoising with Limited Data",
+      "year": 2021,
+      "authors": [
+        "Adria Font Calvarons"
+      ],
+      "venue": "2021 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+      "citation_count": 33,
+      "url": "https://doi.org/10.1109/cvprw53098.2021.00089",
+      "source": "crossref",
+      "oa_url": null,
+      "method_family": "n2n"
+    },
+    {
+      "query": "attention U-Net speech enhancement",
+      "role": "used",
+      "arch_family": "unet",
+      "id": "W2998678989",
+      "doi": "10.1109/waspaa.2019.8937186",
+      "title": "Attention Wave-U-Net for Speech Enhancement",
+      "year": 2019,
+      "authors": [
+        "Ritwik Giri",
+        "Umut Isik",
+        "Arvindh Krishnaswamy"
+      ],
+      "venue": "2019 IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA)",
+      "citation_count": 116,
+      "url": "https://openalex.org/W2998678989",
+      "source": "openalex",
+      "oa_url": null,
+      "method_family": "unet"
+    },
+    {
+      "query": "reinforcement learning neural architecture search ENAS",
+      "role": "used",
+      "id": "W3119381431",
+      "doi": "10.1007/s40747-020-00247-z",
+      "title": "From federated learning to federated neural architecture search: a survey",
+      "year": 2021,
+      "authors": [
+        "Hangyu Zhu",
+        "Haoyu Zhang",
+        "Yaochu Jin"
+      ],
+      "venue": "Complex & Intelligent Systems",
+      "citation_count": 178,
+      "url": "https://openalex.org/W3119381431",
+      "source": "openalex",
+      "oa_url": "https://link.springer.com/content/pdf/10.1007/s40747-020-00247-z.pdf",
+      "method_family": "nas"
+    },
+    {
+      "query": "Noise2Noise unsupervised denoising",
+      "id": "10.1109/cvpr52729.2023.01347",
+      "doi": "10.1109/cvpr52729.2023.01347",
+      "title": "Zero-Shot Noise2Noise: Efficient Image Denoising without any Data",
+      "year": 2023,
+      "authors": [
+        "Youssef Mansour",
+        "Reinhard Heckel"
+      ],
+      "venue": "2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "citation_count": 157,
+      "url": "https://doi.org/10.1109/cvpr52729.2023.01347",
+      "source": "crossref",
+      "oa_url": null,
+      "role": "used",
+      "method_family": "n2n"
+    },
+    {
+      "query": "Noise2Noise unsupervised denoising",
+      "id": "W3188436466",
+      "doi": "10.1002/jbio.202100151",
+      "title": "Comparative study of deep neural networks with unsupervised <scp>Noise2Noise</scp> strategy for noise reduction of optical coherence tomography images",
+      "year": 2021,
+      "authors": [
+        "Bin Qiu",
+        "Shuang Zeng",
+        "Xiangxi Meng",
+        "Zhe Jiang",
+        "Yunfei You",
+        "Mufeng Geng",
+        "Ziyuan Li",
+        "Yicheng Hu",
+        "Zhiyu Huang",
+        "Chuanqing Zhou",
+        "Qiushi Ren",
+        "Yanye Lu"
+      ],
+      "venue": "Journal of Biophotonics",
+      "citation_count": 31,
+      "url": "https://openalex.org/W3188436466",
+      "source": "openalex",
+      "oa_url": null,
+      "role": "used",
+      "method_family": "n2n"
+    }
+  ],
+  "screened_relevant": [
+    {
+      "title": "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks",
+      "year": 2017,
+      "authors": [
+        "Chelsea Finn",
+        "Pieter Abbeel",
+        "Sergey Levine"
+      ],
+      "doi": "10.48550/arXiv.1703.03400",
+      "oa_url": "https://arxiv.org/pdf/1703.03400",
+      "role": "screened_relevant",
+      "method_family": "maml",
+      "source": "manual"
+    },
+    {
+      "title": "DARTS: Differentiable Architecture Search",
+      "year": 2019,
+      "authors": [
+        "Hanxiao Liu",
+        "Karen Simonyan",
+        "Yiming Yang"
+      ],
+      "doi": "10.48550/arXiv.1806.09055",
+      "oa_url": "https://arxiv.org/pdf/1806.09055",
+      "role": "screened_relevant",
+      "method_family": "darts",
+      "source": "manual"
+    },
+    {
+      "title": "Hybrid Spectrogram and Waveform Source Separation",
+      "year": 2021,
+      "authors": [
+        "Alexandre D\u00e9fossez"
+      ],
+      "doi": "10.48550/arXiv.2111.03600",
+      "oa_url": "https://arxiv.org/pdf/2111.03600",
+      "role": "screened_relevant",
+      "method_family": "demucs",
+      "source": "manual"
+    },
+    {
+      "title": "DiffWave: A Versatile Diffusion Model for Audio Synthesis",
+      "year": 2021,
+      "authors": [
+        "Zhifeng Kong",
+        "Wei Ping",
+        "Jiaji Huang",
+        "Kexin Zhao",
+        "Bryan Catanzaro"
+      ],
+      "doi": "10.48550/arXiv.2009.00713",
+      "oa_url": "https://arxiv.org/pdf/2009.00713",
+      "role": "screened_relevant",
+      "method_family": "diffwave",
+      "source": "manual"
+    },
+    {
+      "query": "Demucs music source separation convolutional",
+      "role": "screened_relevant",
+      "arch_family": "conv_stack",
+      "id": "W2971458685",
+      "doi": "10.48550/arxiv.1909.01174",
+      "title": "Demucs: Deep Extractor for Music Sources with extra unlabeled data remixed",
+      "year": 2019,
+      "authors": [
+        "Alexandre D\u00e9fossez",
+        "Nicolas Usunier",
+        "L\u00e9on Bottou",
+        "Francis R. Bach"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "citation_count": 58,
+      "url": "https://openalex.org/W2971458685",
+      "source": "openalex",
+      "oa_url": "https://arxiv.org/pdf/1909.01174",
+      "method_family": "demucs"
+    },
+    {
+      "query": "SEGAN speech enhancement generative adversarial",
+      "role": "screened_relevant",
+      "arch_family": null,
+      "id": "W2600556233",
+      "doi": "10.21437/interspeech.2017-1428",
+      "title": "SEGAN: Speech Enhancement Generative Adversarial Network",
+      "year": 2017,
+      "authors": [
+        "Santiago Pascual",
+        "Antonio Bonafonte",
+        "Joan Serr\u00e0"
+      ],
+      "venue": "Interspeech 2017",
+      "citation_count": 838,
+      "url": "https://openalex.org/W2600556233",
+      "source": "openalex",
+      "oa_url": "https://arxiv.org/pdf/1703.09452",
+      "method_family": "segan"
+    },
+    {
+      "query": "MAML model-agnostic meta-learning",
+      "id": "W2946605054",
+      "doi": "10.48550/arxiv.1905.07435",
+      "title": "Alpha MAML: Adaptive Model-Agnostic Meta-Learning",
+      "year": 2019,
+      "authors": [
+        "Harkirat Singh Behl",
+        "At\u0131l\u0131m G\u00fcne\u015f Baydin",
+        "Philip H. S. Torr"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "citation_count": 54,
+      "url": "https://openalex.org/W2946605054",
+      "source": "openalex",
+      "oa_url": "https://arxiv.org/pdf/1905.07435",
+      "role": "screened_relevant",
+      "method_family": "maml"
+    },
+    {
+      "query": "MAML model-agnostic meta-learning",
+      "id": "W4399432515",
+      "doi": "10.3390/diagnostics14121213",
+      "title": "Few-Shot Learning for Medical Image Segmentation Using 3D U-Net and Model-Agnostic Meta-Learning (MAML)",
+      "year": 2024,
+      "authors": [
+        "A. Al-Saleh",
+        "Eid Albalawi",
+        "Abdulelah Algosaibi",
+        "Salman S. Albakheet",
+        "Surbhi Bhatia"
+      ],
+      "venue": "Diagnostics",
+      "citation_count": 35,
+      "url": "https://openalex.org/W4399432515",
+      "source": "openalex",
+      "oa_url": "https://www.mdpi.com/2075-4418/14/12/1213/pdf?version=1718618721",
+      "role": "screened_relevant",
+      "method_family": "maml"
+    },
+    {
+      "query": "MAML model-agnostic meta-learning",
+      "id": "W3137432794",
+      "doi": "10.1109/icassp39728.2021.9413446",
+      "title": "Robust Maml: Prioritization Task Buffer with Adaptive Learning Process for Model-Agnostic Meta-Learning",
+      "year": 2021,
+      "authors": [
+        "Thanh Nguyen",
+        "Tung M. Luu",
+        "Trung X. Pham",
+        "Sanzhar Rakhimkul",
+        "Chang D. Yoo"
+      ],
+      "venue": "ICASSP 2021 - 2021 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "citation_count": 22,
+      "url": "https://openalex.org/W3137432794",
+      "source": "openalex",
+      "oa_url": "https://arxiv.org/pdf/2103.08233",
+      "role": "screened_relevant",
+      "method_family": "maml"
+    },
+    {
+      "query": "MAML model-agnostic meta-learning",
+      "id": "W4407403550",
+      "doi": "10.1109/tsp.2025.3540018",
+      "title": "MAML-KalmanNet: A Neural Network-Assisted Kalman Filter Based on Model-Agnostic Meta-Learning",
+      "year": 2025,
+      "authors": [
+        "Shanli Chen",
+        "Yunfei Zheng",
+        "Dongyuan Lin",
+        "Peng Cai",
+        "Yingying Xiao",
+        "Shiyuan Wang"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "citation_count": 21,
+      "url": "https://openalex.org/W4407403550",
+      "source": "openalex",
+      "oa_url": null,
+      "role": "screened_relevant",
+      "method_family": "maml"
+    },
+    {
+      "query": "MAML model-agnostic meta-learning",
+      "id": "W4409455823",
+      "doi": "10.3390/s25082487",
+      "title": "An Adaptive Framework for Intrusion Detection in IoT Security Using MAML (Model-Agnostic Meta-Learning)",
+      "year": 2025,
+      "authors": [
+        "Fatma S. Alrayes",
+        "Syed Umar Amin",
+        "Nada Ali Hakami"
+      ],
+      "venue": "Sensors",
+      "citation_count": 14,
+      "url": "https://openalex.org/W4409455823",
+      "source": "openalex",
+      "oa_url": "https://www.mdpi.com/1424-8220/25/8/2487/pdf?version=1744782180",
+      "role": "screened_relevant",
+      "method_family": "maml"
+    }
+  ],
+  "design_notes": {
+    "primary": "Hybrid RL+GA meta-learning for audio denoising (periodic seam/cycle instance)",
+    "claim_hygiene": "No invented final overnight numbers; experiments ongoing"
+  }
+}

@@ -1,0 +1,61 @@
+\section{Broader impact and reproducibility}
+\label{sec:ethics}
+
+\paragraph{Broader impact.}
+This work targets cycle-local wavetable seam repair for virtual-analog / software-instrument workflows.
+Misuse potential is low.
+The method does not enhance speech for surveillance, does not remove watermarks from protected media, and operates only on short synthetic periods.
+Training and search use procedural sine{+}cliff generators. No private studio stems are required for the reported tables.
+The main resource cost is GPU time on a consumer RTX~3090 (order of hours for the $5$k-gate freeze, Table~\ref{tab:compute}).
+Authors should not over-claim speech enhancement or production mastering quality from these metrics.
+
+\paragraph{Reproducibility.}
+Holdout seeds: \texttt{20260719}--\texttt{20260723}.
+Search seeds: \texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}.
+Noise2Noise train seed: \texttt{424242}.
+Primary code lives at \url{https://github.com/reeldemo/reelsynth}
+(search runner:
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/overnight_gpu_rl_arch.py}{\texttt{overnight\_gpu\_rl\_arch.py}},
+matched-$5$k bake-off:
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/bench_meta_approaches_5k.py}{\texttt{bench\_meta\_approaches\_5k.py}},
+SOTA bench:
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/bench_sota_matrix.py}{\texttt{bench\_sota\_matrix.py}},
+VA seam:
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/baselines/va_seam_blep.py}{\texttt{va\_seam\_blep.py}}),
+with paper companion at \url{https://github.com/reeldemo/denoise-opt-meta}.
+CUDA benches need Python~3.12, PyTorch~$2.6$+CUDA~12.4, and NumPy/matplotlib; Rust/\texttt{cargo} builds the separate engine hardness probe.
+Frozen numbers live under
+\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts}{brand/artifacts}
+(e.g.\
+\href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/sota_matrix.json}{\texttt{sota\_matrix.json}},
+\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/meta_approach_compare_v13_rblend}{\texttt{meta\_approach\_compare\_v13\_rblend/}},
+\href{https://github.com/reeldemo/reelsynth/blob/main/brand/artifacts/holdout_multiseed_v13/multiseed_summary.json}{\texttt{multiseed\_summary.json}}).
+PESQ/STOI are omitted for non-speech cycles (domain mismatch), and MUSHRA was not run.
+
+\subsection{Funding}
+\label{sec:funding}
+This research received no external funding.
+
+\subsection{Author contributions (CRediT)}
+\label{sec:credit}
+Julian~M.~Kleber: Conceptualization, Methodology, Software, Investigation, Formal analysis, Data curation, Writing (original draft), Writing (review and editing), Visualization.
+
+\subsection{Data availability}
+\label{sec:data-availability}
+Frozen evaluation artifacts (JSON matrices, search histories, fitted champions) are published with the companion repositories:
+\url{https://github.com/reeldemo/reelsynth}
+(\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts}{brand/artifacts})
+and
+\url{https://github.com/reeldemo/denoise-opt-meta}
+(this paper folder's \texttt{figures/} plus aggregate JSONs).
+Tables regenerate from those files via the named bench scripts;
+figures regenerate with
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/bench_meta_approaches_5k.py}{\texttt{bench\_meta\_approaches\_5k.py --aggregate-only}}
+and
+\href{https://github.com/reeldemo/reelsynth/blob/main/scripts/plot_paper_dataset_and_comparison_figures.py}{\texttt{plot\_paper\_dataset\_and\_comparison\_figures.py}};
+the PDF rebuilds with \texttt{build.ps1} in this folder.
+No private studio recordings were used.
+
+\subsection{Competing interests}
+\label{sec:competing}
+None declared.
