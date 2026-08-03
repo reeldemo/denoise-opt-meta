@@ -2,11 +2,12 @@
 \label{sec:conclusion}
 
 DenoiseOpt casts wavetable wrap discontinuity as cycle-local seam repair under blended residual $R_{\mathrm{blend}}$ and latency-aware objective $J$.
-A hybrid GA+PPO(+PBT) outer loop is applied to compact repair operators for this DSP task.
+A hybrid GA+PPO(+PBT) outer loop searches compact repair operators for this DSP task; we do not introduce a new NAS algorithm.
 Noise2Noise is the neural gate. Dual Cosine is the classical fade baseline.
 Across five holdout seeds the short-FitCell hybrid freeze reaches $R_{\mathrm{blend}}{=}0.971{\pm}0.001$ but does not clear Noise2Noise ($0.977{\pm}0.001$), while Dual Cosine sits at $0.542{\pm}0.038$.
-On multi-family boards Ours edges Noise2Noise on mean-of-means. On hard cliffs classical fades collapse while searched operators hold.
-Matched-$5$k outer-loop comparison ranks hybrid first ($0.9748{\pm}0.0018$), so the follow-up spends GPU on hybrid-only FitCell-to-convergence; the completed search seed clears the Noise2Noise gate ($R_{\mathrm{blend}}{\approx}0.9912$).
-Transfer boards reuse the same wrap protocol as stress tests, not domain diagnosis SOTA.
-The contribution is searchable repair operators for cycle-local DSP and synthesis seam restoration.
+On multi-family boards, Ours and Noise2Noise are statistically indistinguishable on board means; on hard cliffs classical fades collapse while searched operators hold.
+Matched-$5$k outer-loop comparison ranks hybrid first ($0.9748{\pm}0.0018$ over three search seeds), so the follow-up spends GPU on hybrid-only FitCell-to-convergence.
+The single completed converge seed (\texttt{1902771841}) clears the Noise2Noise gate ($R_{\mathrm{blend}}{\approx}0.9912$).
+Transfer boards reuse the same wrap protocol as residual stress tests, not domain diagnosis SOTA.
+No formal listening study was run; objective residual is the reported claim.
 Code: \url{https://github.com/reeldemo/reelsynth}, \url{https://github.com/reeldemo/denoise-opt-meta}.

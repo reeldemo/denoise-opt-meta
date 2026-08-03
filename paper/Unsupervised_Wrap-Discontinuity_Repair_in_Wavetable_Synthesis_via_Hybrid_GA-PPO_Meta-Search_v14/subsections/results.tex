@@ -31,8 +31,9 @@ Table~\ref{tab:n2n-vs-ours} summarizes the four evaluation boards under $R_{\mat
 with Dual Cosine as the classical fade row on every board.
 Across five holdout seeds (\texttt{20260719}--\texttt{20260723}), frozen corrupt$\to$corrupt Noise2Noise---treated as the primary neural SOTA gate for this protocol, not a DenoiseOpt variant---leads the short-FitCell hybrid freeze on every seed
 ($0.9767{\pm}0.0015$ vs $0.9708{\pm}0.0014$; Dual Cosine $0.542{\pm}0.038$).
-On the $20$-waveform multi-family board, Ours mean-of-means $0.9337{\pm}0.0028$ edges N2N $0.9308{\pm}0.0045$
-(mean win fraction $0.47$ across seeds; sign test on board-mean deltas $p{=}1.0$), and both dominate Dual Cosine.
+On the $20$-waveform multi-family board, Ours mean-of-means $0.9337{\pm}0.0028$ is numerically close to N2N $0.9308{\pm}0.0045$
+(mean win fraction $0.47$ across seeds; sign test on board-mean deltas $p{=}1.0$, i.e.\ \emph{no} significant mean difference), and both dominate Dual Cosine.
+We do \emph{not} claim a statistically significant win over N2N on that board.
 On balanced wavetable-native corpora ($n{=}1{,}280$ each), N2N leads Factory+FX
 ($0.771$ vs Ours $0.699$, Dual Cosine $0.589$) and AKWF
 ($0.731$ vs Ours $0.679$, Dual Cosine $0.424$).

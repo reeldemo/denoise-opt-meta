@@ -2,11 +2,22 @@
 \label{sec:experiments}
 
 \paragraph{Locked evaluation protocol.}
-Evaluation follows the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v13/EVAL_PROTOCOL.md}{v10.1 evaluation protocol}.
-Primary metric is $R_{\mathrm{blend}}$ ($\alpha{=}0.7$); search objective is $J$ as in~\eqref{eq:outer-obj} ($\lambda{=}0.02$).
+Evaluation follows this paper folder's
+\href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v14/EVAL_PROTOCOL.md}{\texttt{EVAL\_PROTOCOL.md}}
+(companion code: \url{https://github.com/reeldemo/reelsynth}).
+\textbf{Locked $R_{\mathrm{blend}}$} means the frozen definition in Section~\ref{sec:residual-score}:
+tile each cycle $N{=}16$ times, compute seam/body relative-RMS components~\eqref{eq:R-component} with wrap mask width $W{=}8$, then
+$R_{\mathrm{blend}}=\alpha R_{\mathrm{seam}}+(1-\alpha)R_{\mathrm{body}}$ with $\alpha{=}0.7$~\eqref{eq:R-blend}.
+No per-table rescaling: reported values are that clamp in $[0,1]$.
+Search objective is $J$~\eqref{eq:outer-obj} ($\lambda{=}0.02$).
 The champ gate is to strictly beat frozen Noise2Noise corrupt$\to$corrupt holdout $R_{\mathrm{blend}}$.
-Secondary keys cover SNR, SDR, wrap-jump, and seam-local edge RMSE, with debug keys for pure $R_{\mathrm{seam}}$ and whole-curve $R$.
-Holdout evaluation uses five seeds (\texttt{20260719}--\texttt{20260723}); search uses three seeds (\texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}); N2N train seed is \texttt{424242}.
+Secondary keys cover SNR, SDR, wrap-jump, and seam-local edge RMSE; whole-curve prolonged $R$ is debug-only.
+\paragraph{Which numbers are multi-seed.}
+Holdout / multi-family means are mean$\pm$std over five evaluation seeds (\texttt{20260719}--\texttt{20260723}).
+Matched-$5$k outer-loop bake-off means are mean$\pm$std over three search seeds (\texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}).
+The FitCell-to-convergence follow-up (Section~\ref{sec:v14-converge}) is a \emph{single completed} search seed (\texttt{1902771841}), not a three-seed mean.
+N2N train seed is \texttt{424242}.
+Transfer Table~\ref{tab:transfer-main} is one domain-trained hybrid per board (search seed \texttt{1902771841}), not multi-seed averages.
 We report the hybrid\_lstm freeze plus holdout / multi-family / Factory+FX / AKWF / transfer benches.
 PESQ/STOI stay out of scope on non-speech cycles, and LibriSpeech / MUSDB are not used.
 Venue: DSP / synthesis artifact repair (DAFx / AES / arXiv cs.SD).
@@ -41,7 +52,7 @@ Multi-family SOTA scores $20$ waveforms ($10$ families $\times$ $2$ seeds, batch
 Wavetable-native boards use ReelSynth Factory+FX exports ($n{=}1{,}280$: $640$ dry + $640$ FX) and AKWF CC0 cycles ($n{=}1{,}280$) so Plot~4 corpus bars are comparable to multi-family ($1{,}280$).
 Sci/eng transfer tiles $1{,}536$ periods across CWRU, MFPT ($n{=}256$), MIT-BIH, PTB-XL subset, and synthetic CNC/PMU.
 Search never trains on the frozen holdout. N2N/seq baselines use disjoint train seeds \texttt{424242}/\texttt{424243}.
-Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/tree/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures}{dataset artifacts}.
+Artifacts: \href{https://github.com/reeldemo/denoise-opt-meta/tree/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v14/figures}{dataset artifacts}.
 
 \begin{table}[t]
   \centering

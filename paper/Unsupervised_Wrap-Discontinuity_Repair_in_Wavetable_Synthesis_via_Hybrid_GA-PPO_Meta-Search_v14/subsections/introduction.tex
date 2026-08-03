@@ -74,12 +74,14 @@ On the search side, neural architecture search (NAS), aging evolution, PBT, cova
 Under the locked v10.1 $R_{\mathrm{blend}}$ protocol with multi-seed evaluation (primary story: Table~\ref{tab:n2n-vs-ours}):
 \begin{itemize}
   \item On the primary holdout, the short-FitCell hybrid champion sits just below frozen Noise2Noise---the strongest neural baseline for this locked protocol---on every seed ($0.9708{\pm}0.0014$ vs $0.9767{\pm}0.0015$) and well above Dual Cosine ($0.542{\pm}0.038$).
-  \item On twenty multi-family boards, Ours mean-of-means edges Noise2Noise ($0.9337{\pm}0.0028$ vs $0.9308{\pm}0.0045$; mean win fraction $0.47$ across seeds).
-  \item Matched-$5$k outer-loop comparison ranks hybrid first among six search families ($0.9748{\pm}0.0018$); a hybrid-only FitCell-to-convergence follow-up then clears the Noise2Noise gate on seed \texttt{1902771841} ($R_{\mathrm{blend}}{\approx}0.9912$; Section~\ref{sec:v14-converge}).
+  \item On twenty multi-family boards, Ours and Noise2Noise are statistically indistinguishable on board-mean deltas ($0.9337{\pm}0.0028$ vs $0.9308{\pm}0.0045$; mean win fraction $0.47$; sign-test $p{=}1.0$).
+  \item Matched-$5$k outer-loop comparison ranks hybrid first among six search families ($0.9748{\pm}0.0018$, three search seeds); a hybrid-only FitCell-to-convergence follow-up then clears the Noise2Noise gate on the \emph{single completed} search seed \texttt{1902771841} ($R_{\mathrm{blend}}{\approx}0.9912$; Section~\ref{sec:v14-converge}).
   \item On hard wrap cliffs, classical fades collapse while searched operators and Noise2Noise hold (Section~\ref{sec:cliff-strata}).
   \item On Factory+FX and AKWF corpora under $R_{\mathrm{blend}}$, Noise2Noise leads Ours; both still beat Dual Cosine.
 \end{itemize}
-The novelty is not a new NAS primitive: it is applying a hybrid GA+PPO(+PBT) outer loop to \emph{compact cycle-local repair operators} for wavetable wrap discontinuity under an unsupervised sibling score, then selecting hybrid from a matched six-way bake-off before deepening FitCell.
+We do not claim a new NAS/RL algorithm.
+Existing NAS, aging evolution, PBT, CMA-ES, and PPO primitives are reused~\cite{elsken2019,real2019,jaderberg2017,schulman2017}.
+The contribution is applying a hybrid GA+PPO(+PBT) outer loop to \emph{compact cycle-local repair operators} for wavetable wrap discontinuity under an unsupervised sibling score, then selecting hybrid from a matched six-way bake-off before deepening FitCell.
 Compact searchable repair operators remain competitive when classical fades fail and need no paired clean targets at search time.
 Whole-curve prolonged $R$ near $0.991$ is a superseded debug score, not a current holdout result under $R_{\mathrm{blend}}$.
 
