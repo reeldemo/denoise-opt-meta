@@ -47,7 +47,7 @@ These symbols follow a different convention from Noise2Noise clean/noisy pairs.
 
 \textbf{Problem.} Given a cracked period $x$, choose a bake configuration $h$ so that the repaired cycle $y=\Theta(x;h)$ matches a no-cliff ideal under prolonged tiling.
 
-\textbf{Ideal sibling.}
+\textbf{Ideal sibling and mid-cycle engine identity (explicit).}
 Let $G(\mathrm{seed},\mathrm{cliff})$ denote the procedural generator used by the CUDA FitCell batch maker
 (FitCell $=$ inner continuous-parameter fit of one candidate $\Theta$; Algorithm~\ref{alg:fit}):
 one draw of frequency, phase, and mid-cycle content, with an optional open-wrap cliff of width $W$ at both ends.
@@ -57,13 +57,18 @@ For any seed,
 r^{\star}=G(\mathrm{seed},\,\mathrm{cliff{=}off}),\qquad
 x=G(\mathrm{seed},\,\mathrm{cliff{=}on}).
 \end{equation}
-Engine and ideal therefore share the mid-cycle content of one draw and differ by the seam cliff (plus any seam-boosted noise applied only on the engine path).
-The ideal is \emph{not} a latent studio ground truth and is \emph{not} a method output.
-For an arbitrary cracked period from this family, the sibling is obtained by replaying the same seed with the cliff withheld.
-That is exactly the pair returned by \texttt{make\_batch}.
-This sibling relationship makes unsupervised ranking possible without paired studio recordings~\cite{lehtinen2018,kashyap2021n2n}.
-In this paper, \emph{unsupervised} means: no human-labeled clean audio and no studio-clean targets in the search loop.
-The ideal sibling is a procedural self-supervised scoring twin (cliff withheld), not a perceptual ground truth.
+Thus $r^{\star}$ (ideal sibling) and $x$ (cracked engine) are \emph{paired twins of one procedural draw}:
+same mid-cycle waveform content; they differ only by whether the wrap cliff (and engine-only seam-boosted noise) is applied.
+\begin{itemize}
+  \item $r^{\star}$ is a \textbf{scoring target only}. It is never emitted as a method output and is not a human-labeled clean stem.
+  \item $x$ is the \textbf{operator input}. Repair $\Theta$ edits $x$ toward agreement with $r^{\star}$ at the seam and identity to $x$ in the mid-cycle body.
+  \item Locked $R_{\mathrm{blend}}$ (Section~\ref{sec:residual-score}) combines $R_{\mathrm{seam}}=R(r^{\star},y;\mathcal{S})$ with $R_{\mathrm{body}}=R(x,y;\mathcal{B})$ at $\alpha{=}0.7$:
+    seam fidelity to the cliff-withheld twin, plus mid-cycle identity to the cracked engine (so the bake cannot freely rewrite the period interior).
+\end{itemize}
+For an arbitrary cracked period from this family, the sibling is obtained by replaying the same seed with the cliff withheld
+(that is the pair returned by \texttt{make\_batch}).
+Here \emph{unsupervised} means: no human-labeled clean audio and no studio-clean targets in the search loop;
+$r^{\star}$ is a procedural self-supervised scoring twin, not a perceptual ground truth~\cite{lehtinen2018,kashyap2021n2n}.
 
 \subsection{Blended residual score and latency-aware objective}
 \label{sec:residual-score}

@@ -28,13 +28,19 @@ Paired multi-family comparisons use a two-sided sign test on per-seed board-mean
 We do \emph{not} run ANOVA across outer-loop families beyond mean$\pm$std in Table~\ref{tab:meta-approaches}, and we do not invent MOS confidence intervals.
 Listening: $N_{\mathrm{listeners}}{=}0$ (Table~\ref{tab:listening-stats}); no preference rates.
 
-\paragraph{Experimental setup (compact checklist).}
+\paragraph{Experimental setup (datasets, compute, reproducibility).}
 \begin{itemize}
-  \item Generator $G$: $L{=}256$ sine{+}cliff; seam width $W{=}8$; train/search draws i.i.d.; holdout seeds disjoint.
-  \item FitCell: Adam on $1-R_{\mathrm{blend}}$; D1 short cap ${\approx}16$--$48$ steps; converge campaign patience/$\varepsilon$/$T_{\max}$ searchable (Section~\ref{sec:pipeline-overview}).
-  \item Outer loops compared at matched $5$k evals (Random, CMA-ES, REINFORCE, Aging, TPE, hybrid); then hybrid-only $750$ evals with two proposals/iter on one GPU.
-  \item Baselines: no-bake, DualCosine, FIR/endpoint classical board, SeamN2N (${\approx}53.5$k, $4000$ Adam steps, seed \texttt{424242}), VA residuals where scored.
-  \item Hardware: RTX~3090; Python~3.12 + PyTorch CUDA; commands in \texttt{REPRO.md}.
+  \item \textbf{Primary procedural datasets.} Generator $G$: $L{=}256$ two-harmonic sine{+}cliff; seam width $W{=}8$; cliff amplitude $\pm\mathcal{U}(0.08,0.43)$; FitCell/search draws i.i.d.; frozen holdout metrics draw $n{=}4096$ (seed \texttt{20260719}) plus five-seed score batches (\texttt{20260719}--\texttt{20260723}).
+    Multi-family SOTA: $10$ families $\times$ $2$ seeds $\times$ batch $64$ ($n{=}1280$).
+    Factory+FX / AKWF wavetable-native boards: $n{=}1280$ each (ReelSynth exports; AKWF CC0).
+  \item \textbf{Transfer stress boards.} CWRU / MFPT / Paderborn K001 / MIT-BIH / PTB-XL subset / synth CNC / synth PMU: $n{=}256$ periods each under the same wrap protocol (Table~\ref{tab:dataset-stats}; public sources + procedural pilots).
+  \item \textbf{FitCell / outer loop.} Adam on $1-R_{\mathrm{blend}}$; D1 short cap ${\approx}16$--$48$ steps; converge campaign searchable patience/$\varepsilon$/$T_{\max}\!\in\!\{512,\ldots,2048\}$, batch ${\approx}96$, two sequential proposals/iter (Section~\ref{sec:pipeline-overview}).
+    Matched $5$k evals: Random, CMA-ES, REINFORCE, Aging, TPE, hybrid (3 search seeds).
+    Hybrid-only converge: $750$ outer iters, seed \texttt{1902771841} completed (${\approx}46.9$\,h wall).
+  \item \textbf{Baselines.} no-bake, DualCosine, FIR/endpoint classical board, SeamN2N (${\approx}53.5$k, $4000$ Adam steps, train seed \texttt{424242}), VA residuals where scored.
+  \item \textbf{Compute.} Single NVIDIA GeForce RTX~3090 ($24$\,GB); host desktop Windows; Python~$3.12$, PyTorch~$2.6$+CUDA~$12.4$; no multi-GPU.
+    Historical prolonged-$R$ $5$k-style freeze ${\approx}7.9$\,h (Table~\ref{tab:compute}); D1 hybrid mean wall ${\approx}8.4$\,h/seed.
+  \item \textbf{Commands / artifacts.} \texttt{REPRO.md}, \texttt{EVAL\_PROTOCOL.md}; frozen JSON under \texttt{brand/artifacts/} in \url{https://github.com/reeldemo/reelsynth}.
 \end{itemize}
 
 \subsection{Dataset}
