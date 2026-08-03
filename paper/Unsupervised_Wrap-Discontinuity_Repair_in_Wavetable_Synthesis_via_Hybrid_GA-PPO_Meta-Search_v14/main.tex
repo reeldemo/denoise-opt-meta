@@ -53,21 +53,21 @@ Hybrid GA--PPO Meta-Search}
     \url{https://github.com/reeldemo/denoise-opt-meta}
   \end{center}
   \begin{abstract}
-    \textbf{Scope.}
-    We repair cycle-local wavetable wrap seams under an objective residual score.
-    We do not claim speech enhancement, MOS/MUSHRA ($N_{\mathrm{listeners}}{=}0$), or a new NAS/RL algorithm.
+    Wavetable oscillators click when the stored period does not join cleanly at the wrap.
+    We treat that click as a local seam-repair problem and score repairs with a locked residual
+    $R_{\mathrm{blend}}$ (seam match to a cliff-withheld ideal sibling, plus mid-cycle identity to the cracked engine).
+    DenoiseOpt searches compact repair operators with a hybrid of genetic search, PPO, and population-based training.
+    We reuse those search tools; we do not propose a new NAS or RL algorithm.
+    Primary evidence is objective $R_{\mathrm{blend}}$, not listening scores (no MOS/MUSHRA; $N_{\mathrm{listeners}}{=}0$).
 
-    \textbf{Method.}
-    DenoiseOpt applies existing GA+PPO+PBT tools to compact repair operators.
-    Scoring uses locked $R_{\mathrm{blend}}$ ($\alpha{=}0.7$): seam fidelity to a cliff-withheld ideal sibling $r^{\star}$, plus mid-cycle identity to the cracked engine $x$ (Section~\ref{sec:residual-score}).
-
-    \textbf{Results (tables in Section~\ref{sec:results}).}
-    Holdout, five seeds (Table~\ref{tab:n2n-vs-ours}): Ours $0.9708{\pm}0.0014$, Noise2Noise $0.9767{\pm}0.0015$, Dual Cosine $0.542{\pm}0.038$.
-    Matched $5$k search, three seeds (Table~\ref{tab:meta-approaches}): hybrid $0.9748{\pm}0.0018$ (best of six families).
-    FitCell-to-plateau, one seed \texttt{1902771841} (Table~\ref{tab:v14-hybrid-converge}): $R_{\mathrm{blend}}{\approx}0.9912$ clears the N2N residual gate (${\approx}0.9750$).
-    Multi-family board means: Ours vs N2N indistinguishable (sign-test $p{=}1.0$).
-    Hard cliffs: classical fades collapse; searched operators hold under $R_{\mathrm{blend}}$.
-    Transfer boards are wrap-protocol residual stress tests only.
+    On a five-seed holdout, a short-FitCell hybrid freeze reaches $0.9708{\pm}0.0014$,
+    below frozen Noise2Noise ($0.9767{\pm}0.0015$) but far above Dual Cosine ($0.542{\pm}0.038$; Table~\ref{tab:n2n-vs-ours}).
+    A matched $5{,}000$-evaluation bake-off across three search seeds ranks the hybrid first among six outer-loop families
+    ($0.9748{\pm}0.0018$; Table~\ref{tab:meta-approaches}).
+    Training that hybrid to residual plateau then clears the Noise2Noise gate on the completed seed
+    ($R_{\mathrm{blend}}{\approx}0.9912$ vs gate ${\approx}0.9750$; Table~\ref{tab:v14-hybrid-converge}).
+    On hard wrap cliffs, classical fades collapse while searched operators hold.
+    Cross-domain boards reuse the same wrap protocol as residual stress tests only.
   \end{abstract}
   \keywords{wavetable synthesis; wrap discontinuity; unsupervised repair; DenoiseOpt; seam restoration; Noise2Noise; neural architecture search; reinforcement learning; genetic algorithms}
   \vspace{0.6em}
