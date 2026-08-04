@@ -17,9 +17,9 @@ Protocol:
 Artifacts:
 \href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/vibrato_spectrogram}{vibrato folder}.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/fig_vibrato_spectrogram.png}
+  \includegraphics[width=\columnwidth]{figures/fig_vibrato_spectrogram.png}
   \caption{Slow-vibrato spectrogram eval on a high-wrap holdout tile (seed~\texttt{20260719}).
     (a--c)~Magnitude spectrograms for no-bake, DualCosine, and Ours.
     (d--e)~Spectrogram differences vs no-bake.
@@ -28,7 +28,7 @@ Artifacts:
     Accessibility: Okabe--Ito hues. Difference maps use diverging coolwarm.
     Formal human A/B scores are out of scope.}
   \label{fig:vibrato-spectrogram}
-\end{figure*}
+\end{figure}
 
 \subsection{Downloadable audio samples}
 \label{sec:hear-samples}
@@ -70,16 +70,16 @@ Subjective quality is \emph{out of scope}; objective residual is the claim.
 \FloatBarrier
 
 
-\begin{figure*}[htbp]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/fig_hear_samples_panel.png}
+  \includegraphics[width=\columnwidth]{figures/fig_hear_samples_panel.png}
   \caption{Hear-sample panel from the online WAV pack
     (\href{https://github.com/reeldemo/reelsynth/tree/main/brand/artifacts/meta_approach_compare/hear_samples}{hear-sample WAVs},
     five holdout tiles, no-bake / DualCosine / Ours).
     Waveforms show the first $\approx 25$\,ms of each clip. $R$ annotations are cycle-local prolonged residuals vs the ideal sibling.
     Not a formal listening study.}
   \label{fig:hear-samples-panel}
-\end{figure*}
+\end{figure}
 
 \subsection{Factory and Adventure Kid waveform examples}
 \label{sec:wt-gallery}
@@ -88,11 +88,11 @@ Beyond the synthetic sine{+}cliff narrative, Figure~\ref{fig:wt-diversity-galler
 Scored means remain in Table~\ref{tab:real-wt} and the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/real_wt_matrix.json}{wavetable results}. This panel is diversity evidence only.
 No new NAS was run for the gallery.
 
-\begin{figure*}[t]
+\begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/fig_wt_diversity_gallery.png}
+  \includegraphics[width=\columnwidth]{figures/fig_wt_diversity_gallery.png}
   \caption{Compact wavetable diversity gallery from existing exports
     (one mid-morph dry frame per unique ReelSynth factory bank, top, and matched AKWF CC0 cycles, bottom).
     No new NAS for this panel. Quantitative wrap scores: Table~\ref{tab:real-wt}.}
   \label{fig:wt-diversity-gallery}
-\end{figure*}
+\end{figure}

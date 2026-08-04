@@ -1,3 +1,23 @@
+
+\subsection{Multi-family ranking plots}
+\label{sec:app-sota-plots}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/fig_sota_method_bars.png}
+  \caption{Multi-family mean $R_{\mathrm{blend}}$ by method
+  (same $20$-waveform board as Table~\ref{tab:sota-main}).}
+  \label{fig:sota-method-bars}
+\end{figure}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.92\textwidth]{figures/fig_sota_heatmap.png}
+  \caption{Colorblind-safe (\texttt{cividis}) heatmap of mean $R_{\mathrm{blend}}$
+  for selected methods $\times$ generative families (2 seeds each). Higher is better.}
+  \label{fig:sota-heatmap}
+\end{figure*}
+
 \section{Supplementary tables and figures}
 \label{app:supplement}
 
@@ -134,7 +154,7 @@ N2N latency uses the wavetable checkpoint zero-shot. Domain-trained N2N quality 
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]{figures/fig_signal_heal_transfer_latency.png}
+  \includegraphics[width=0.92\textwidth]{figures/fig_signal_heal_transfer_latency.png}
   \caption{Transfer-domain inference latency (ms/batch). N2N is wavetable-trained zero-shot when available.}
   \label{fig:signal-heal-transfer-latency}
 \end{figure*}
@@ -158,7 +178,7 @@ N2N latency uses the wavetable checkpoint zero-shot. Domain-trained N2N quality 
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/search_panel.png}
+  \includegraphics[width=0.92\textwidth]{figures/search_panel.png}
   \caption{Search progress: champion $R$ (top) and branch bests (bottom).}
   \label{fig:search-panel}
 \end{figure*}
