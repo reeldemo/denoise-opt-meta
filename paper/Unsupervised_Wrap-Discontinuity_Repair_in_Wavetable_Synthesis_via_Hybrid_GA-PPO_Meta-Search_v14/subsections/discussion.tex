@@ -18,11 +18,12 @@ Mean scores hide that structure.
 
 \paragraph{Search near the ceiling.}
 Under near-ceiling residuals, further gains are small in absolute units and sensitive to reward shaping and branch weights.
-Learning curves (Figure~\ref{fig:search-learning-curve}) show Dual Cosine cleared early, then a plateau below the Noise2Noise gate under short FitCell.
+Learning curves (Figure~\ref{fig:search-learning-curve}) show Dual Cosine cleared early under short FitCell,
+then FitCell-to-plateau clearing the Noise2Noise gate (Figure~\ref{fig:v14-converge-curve}).
 Matched-$5$k outer-loop bake-offs under locked $R_{\mathrm{blend}}{+}J$ rank hybrid first across three search seeds
 (Appendix~\ref{app:supplement}, Table~\ref{tab:meta-approaches}), which is why the follow-up spends GPU on hybrid alone
 (Section~\ref{sec:v14-converge}).
-Training candidates to residual plateau (rather than a $16$--$48$-step FitCell cap) is what lets the completed converge seed clear the Noise2Noise gate ($R_{\mathrm{blend}}{\approx}0.9912$).
+Training candidates to residual plateau (rather than a $16$--$48$-step FitCell cap) is what lets seed \texttt{1902771841} clear the Noise2Noise gate ($R_{\mathrm{blend}}{\approx}0.9912$).
 Future search work can target family-specialist graphs and cliff-conditioned FitCell schedules under the same outer loop.
 
 \paragraph{Evidence beyond static tiles.}

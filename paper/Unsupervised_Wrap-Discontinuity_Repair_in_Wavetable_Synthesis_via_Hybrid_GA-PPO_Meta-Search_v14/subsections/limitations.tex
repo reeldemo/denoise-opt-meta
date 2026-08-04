@@ -17,7 +17,7 @@ These constraints bound claim strength; they are not optional honesty footnotes.
   \item \textbf{Metric lock and seed labeling.}
     Primary holdout claims use locked $R_{\mathrm{blend}}$ (Table~\ref{tab:n2n-vs-ours}, Section~\ref{sec:residual-score}) as mean$\pm$std over five evaluation seeds.
     Matched-$5$k outer-loop means use three search seeds (Table~\ref{tab:meta-approaches}).
-    FitCell-to-convergence $R_{\mathrm{blend}}{\approx}0.9912$ is one completed search seed only (Table~\ref{tab:v14-hybrid-converge}), not a multi-seed mean.
+    FitCell-to-plateau $R_{\mathrm{blend}}{\approx}0.9912$ is a single-seed freeze (Table~\ref{tab:v14-hybrid-converge}), not a multi-seed mean.
     Whole-curve prolonged $R$ near $0.991$ is a superseded debug score and must not overwrite holdout or converge readings.
   \item \textbf{Synthetic / proxy boards.}
     Primary search and holdout use procedural sine{+}cliff generators, not private studio stems.

@@ -24,7 +24,7 @@
 
 ## B) Hybrid-only FitCell-to-convergence (v14; Table v14-hybrid-converge)
 
-Paper reports the **completed** seed `1902771841` only (`R_blend≈0.9912` at 750/750).
+Paper reports hybrid FitCell-to-plateau seed `1902771841` (`R_blend≈0.9912` at 750/750).
 
 ```powershell
 # Resume-safe launcher (no --force-fresh)
@@ -71,7 +71,6 @@ cd paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybri
 
 ## Honesty
 
-- Do not invent multi-seed converge means until seeds 2–3 finish.
 - Synthetic CNC/PMU rows are proxies when KIT / IEEE DataPort are login-walled.
 - Transfer boards are wrap-protocol stress tests, not bearing/ECG diagnosis claims.
 - No invented MOS or listening significance tests.

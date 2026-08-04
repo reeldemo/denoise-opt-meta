@@ -15,7 +15,7 @@ Secondary keys cover SNR, SDR, wrap-jump, and seam-local edge RMSE; whole-curve 
 \paragraph{Which numbers are multi-seed.}
 Holdout / multi-family means are mean$\pm$std over five evaluation seeds (\texttt{20260719}--\texttt{20260723}).
 Matched-$5$k outer-loop bake-off means are mean$\pm$std over three search seeds (\texttt{1902771841}, \texttt{2026072701}, \texttt{2026072702}).
-The FitCell-to-convergence follow-up (Section~\ref{sec:v14-converge}) is a \emph{single completed} search seed (\texttt{1902771841}), not a three-seed mean.
+The FitCell-to-plateau follow-up (Section~\ref{sec:v14-converge}) is a single-seed freeze (\texttt{1902771841}), not a three-seed mean.
 N2N train seed is \texttt{424242}.
 Transfer Table~\ref{tab:transfer-main} is one domain-trained hybrid per board (search seed \texttt{1902771841}), not multi-seed averages.
 We report the hybrid\_lstm freeze plus holdout / multi-family / Factory+FX / AKWF / transfer benches.
@@ -36,7 +36,7 @@ Listening: $N_{\mathrm{listeners}}{=}0$ (Table~\ref{tab:listening-stats}); no pr
   \item \textbf{Transfer stress boards.} CWRU / MFPT / Paderborn K001 / MIT-BIH / PTB-XL subset / synth CNC / synth PMU: $n{=}256$ periods each under the same wrap protocol (Table~\ref{tab:dataset-stats}; public sources + procedural pilots).
   \item \textbf{FitCell / outer loop.} Adam on $1-R_{\mathrm{blend}}$; D1 short cap ${\approx}16$--$48$ steps; converge campaign searchable patience/$\varepsilon$/$T_{\max}\!\in\!\{512,\ldots,2048\}$, batch ${\approx}96$, two sequential proposals/iter (Section~\ref{sec:pipeline-overview}).
     Matched $5$k evals: Random, CMA-ES, REINFORCE, Aging, TPE, hybrid (3 search seeds).
-    Hybrid-only converge: $750$ outer iters, seed \texttt{1902771841} completed (${\approx}46.9$\,h wall).
+    Hybrid-only FitCell-to-plateau: $750$ outer iters, seed \texttt{1902771841} (${\approx}46.9$\,h wall).
   \item \textbf{Baselines.} no-bake, DualCosine, FIR/endpoint classical board, SeamN2N (${\approx}53.5$k, $4000$ Adam steps, train seed \texttt{424242}), VA residuals where scored.
   \item \textbf{Compute.} Single NVIDIA GeForce RTX~3090 ($24$\,GB); host desktop Windows; Python~$3.12$, PyTorch~$2.6$+CUDA~$12.4$; no multi-GPU.
     Historical prolonged-$R$ $5$k-style freeze ${\approx}7.9$\,h (Table~\ref{tab:compute}); D1 hybrid mean wall ${\approx}8.4$\,h/seed.

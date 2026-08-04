@@ -1,4 +1,4 @@
-\section{Results}
+﻿\section{Results}
 \label{sec:results}
 
 This section reports objective wrap-repair scores under locked $R_{\mathrm{blend}}$
@@ -15,7 +15,7 @@ Commands live in \texttt{REPRO.md}.
   \item \textbf{Which outer loop to keep} (Table~\ref{tab:meta-approaches}):
     hybrid wins a matched $5$k bake-off, so later compute goes to hybrid alone.
   \item \textbf{Longer FitCell} (Table~\ref{tab:v14-hybrid-converge}):
-    one completed hybrid seed then clears the Noise2Noise residual gate.
+    FitCell-to-plateau hybrid training then clears the Noise2Noise residual gate.
   \item \textbf{Where classical fails} (Section~\ref{sec:cliff-strata}):
     hard wrap cliffs collapse Dual Cosine; searched operators and Noise2Noise hold.
 \end{enumerate}
@@ -23,7 +23,7 @@ Commands live in \texttt{REPRO.md}.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth]{figures/fig_meta_heal_samples.png}
-  \caption{Holdout wrap-seam heal for the hybrid champion vs no-bake, Dual Cosine, and ideal sibling $r^{\star}$ (seed \texttt{20260719}).}
+  \caption{Holdout wrap-seam heal for the FitCell-to-plateau hybrid champion ($R_{\mathrm{blend}}{\approx}0.9912$, seed \texttt{1902771841}) vs no-bake, Dual Cosine, and ideal sibling $r^{\star}$.}
   \label{fig:meta-heal-samples}
 \end{figure}
 
@@ -100,10 +100,11 @@ The matched $5$k outer-loop bake-off uses three search seeds
 
 \subsection{Hybrid-only FitCell-to-convergence}
 \label{sec:v14-converge}
+\label{sec:v14-hybrid-converge}
 
 The matched bake-off (Table~\ref{tab:meta-approaches}) already ranked hybrid first under a short FitCell budget (${\approx}16$--$48$ steps).
 We therefore stop spending matched budget on Random, CMA-ES, TPE, Aging, and REINFORCE.
-The follow-up is hybrid-only: every candidate trains until residual plateau
+The follow-up is hybrid-only FitCell-to-plateau: every candidate trains until residual plateau
 (or a searchable hard cap $T_{\max}\!\in\!\{512,\ldots,2048\}$),
 with searchable patience, relative $\varepsilon$, batch size, and $\lambda$
 (artifacts \texttt{meta\_approach\_compare\_v14\_converge/}).
@@ -112,25 +113,37 @@ The outer budget is $750$ evaluations with two sequential proposals per iteratio
 On search seed \texttt{1902771841}, the champion reaches $R_{\mathrm{blend}}{\approx}0.9912$
 ($J{\approx}0.9854$, $t{\approx}8.70$\,ms) after ${\approx}46.9$\,h wall
 and clears the frozen Noise2Noise gate (${\approx}0.9750$).
-Table~\ref{tab:v14-hybrid-converge} reports that completed run only.
+Figure~\ref{fig:v14-converge-curve} shows the learning curve; Table~\ref{tab:v14-hybrid-converge} summarizes the freeze.
 
-\begin{table}[htbp]
+\begin{figure}[t]
   \centering
-  \caption{Hybrid-only FitCell-to-convergence after D1 (locked $R_{\mathrm{blend}}{+}J$).
-    Gate: frozen Noise2Noise $R_{\mathrm{blend}}{\approx}0.9750$.
-    Full $750$-evaluation run on search seed \texttt{1902771841}.}
+  \includegraphics[width=\columnwidth]{figures/fig_v14_converge_learning_curve.png}
+  \caption{Hybrid FitCell-to-plateau learning curve (seed \texttt{1902771841}, $750$ evaluations).
+  Champion $R_{\mathrm{blend}}$ vs.\ outer-loop evaluation;
+  Dual Cosine and the frozen Noise2Noise gate are marked.
+  Final champion $R_{\mathrm{blend}}{\approx}0.9912$.}
+  \label{fig:v14-converge-curve}
+\end{figure}
+
+\begin{table}[t]
+  \centering
+  \caption{Hybrid FitCell-to-plateau under locked $R_{\mathrm{blend}}{+}J$
+  (seed \texttt{1902771841}, $750/750$ evaluations).
+  Gate: frozen Noise2Noise $R_{\mathrm{blend}}{\approx}0.9750$.}
   \label{tab:v14-hybrid-converge}
   \setlength{\tabcolsep}{3pt}
   \footnotesize
   \begin{adjustbox}{max width=\columnwidth}
-\begin{tabular}{@{}lrrrc@{}}
+  \begin{tabular}{@{}lrrrc@{}}
     \toprule
-    Search seed & Iters & $R_{\mathrm{blend}}$ & $t$\,ms & vs N2N gate \\
+    Setting & Iters & $R_{\mathrm{blend}}$ & $t$\,ms & vs N2N gate \\
     \midrule
-    \texttt{1902771841} & $750/750$ & $0.9912$ & $8.70$ & clears \\
+    FitCell-to-plateau & $750/750$ & $0.9912$ & $8.70$ & clears \\
+    Short FitCell (ref.) & $1{,}200$ & ${\approx}0.9695$ & ${\approx}5.08$ & below \\
+    Frozen N2N gate & --- & ${\approx}0.9750$ & --- & --- \\
     \bottomrule
   \end{tabular}
-\end{adjustbox}
+  \end{adjustbox}
 \end{table}
 
 \subsection{Ablations and hyperparameter checks}
@@ -191,24 +204,23 @@ Artifacts: \texttt{v13\_ours\_vs\_n2n\_latency/latency\_compare.json}.
 \subsection{Search efficiency (learning curves)}
 \label{sec:search-learning-curve}
 
-Figure~\ref{fig:search-learning-curve} plots champion score against outer-loop evaluations.
-The left panel is a matched $5{,}000$-evaluation hybrid vs Random NAS under the older whole-curve prolonged $R$ metric
-(seed \texttt{1902771841}; Dual Cosine ${\approx}0.817$).
-Both arms clear Dual Cosine early; treat this panel as a search-trace artifact, not a locked-protocol claim.
-The right panel is the locked $R_{\mathrm{blend}}$/$J$ hybrid over $1{,}200$ evaluations:
-raw $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.977$).
+Figure~\ref{fig:search-learning-curve} plots champion score against outer-loop evaluations
+on seed \texttt{1902771841}.
+The left panel is the short FitCell hybrid under locked $R_{\mathrm{blend}}{+}J$ ($1{,}200$ evaluations):
+raw $R_{\mathrm{blend}}$ clears Dual Cosine immediately and plateaus below the Noise2Noise gate (${\approx}0.975$).
+The right panel is the FitCell-to-plateau follow-up ($750$ evaluations):
+the same outer loop continues until residual plateau and clears the Noise2Noise gate
+(final $R_{\mathrm{blend}}{\approx}0.9912$; Section~\ref{sec:v14-converge}).
 The matched multi-seed $R_{\mathrm{blend}}$ bake-off is in Table~\ref{tab:meta-approaches}.
-Near the ceiling, scores climb only a little after the first few hundred evaluations.
-Live hybrid champions stay compact (${\approx}24$k$\pm$2k params across seeds), while mid-search graphs can swing from ${\approx}15$k to ${\approx}370$k.
+Live hybrid champions stay compact (${\approx}24$k$\pm$2k params across short-FitCell seeds), while mid-search graphs can swing from ${\approx}15$k to ${\approx}370$k.
 
 \begin{figure*}[t]
   \centering
   \includegraphics[width=\textwidth]{figures/fig_search_learning_curve.png}
-  \caption{Search learning curves (seed \texttt{1902771841}).
-    Left: champion prolonged $R$ for hybrid GA--PPO vs Random NAS on the matched $5$k bake-off
-    (\textbf{superseded} whole-curve metric; Dual Cosine dashed).
-    Right: v10.1 hybrid champion $J$ and raw $R_{\mathrm{blend}}$ over $1{,}200$ evaluations
-    (Dual Cosine and Noise2Noise gate marked; matched-$5$k multi-seed $R_{\mathrm{blend}}$ bake-off in Appendix~\ref{app:supplement}).}
+  \caption{Hybrid search learning curves under $R_{\mathrm{blend}}$ (seed \texttt{1902771841}).
+    Left: short FitCell ($1{,}200$ evaluations; champ.\ ${\approx}0.9695$).
+    Right: FitCell-to-plateau ($750$ evaluations; champ.\ ${\approx}0.9912$).
+    Dual Cosine and the frozen Noise2Noise gate are marked on both panels.}
   \label{fig:search-learning-curve}
 \end{figure*}
 
@@ -288,9 +300,6 @@ and skipping near-duplicate copies of the same topology signature.
   {\footnotesize *Favorite under maximize-$R_{\mathrm{blend}}$ then latency. Compact \texttt{iter\_000235} is still the latency floor in this top-5.}
 \end{table}
 
-\FloatBarrier
-
-\subsection{Classical methods vs neural favorite}
 \label{sec:classical-vs-favorite}
 Table~\ref{tab:canonical-methods} scores the classical (non-AI) bake set (no-bake, DualCosine, and \texttt{seam\_fir3}) plus the locked v10.1 hybrid favorite on the frozen corpus of Section~\ref{sec:dataset} (CUDA, batch 64, seed \texttt{20260719}) under $R_{\mathrm{blend}}$.
 DualCosine reaches $R_{\mathrm{blend}}\approx 0.541$ ($\approx 1.66$\,ms/batch).
@@ -300,12 +309,12 @@ The hybrid favorite reaches $0.970$ ($0.971\pm0.001$ over five seeds) at $\appro
 $\Delta R_{\mathrm{blend}} \approx {+}0.056$ vs no-bake and $\approx {+}0.429$ vs DualCosine.
 Noise2Noise on the multi-family matrix is Table~\ref{tab:sota-main}. The four-board gate is Table~\ref{tab:n2n-vs-ours}.
 
-\begin{table*}[htbp]
+\begin{table}[htbp]
   \centering
   \caption{Canonical holdout under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$; seed \texttt{20260719}). Mean$\pm$std over five seeds. No-bake $=$ unrepaired engine. Favorite $=$ locked v10.1 hybrid champ.}
   \label{tab:canonical-methods}
   \setlength{\tabcolsep}{6pt}
-  \begin{adjustbox}{max width=\textwidth}
+  \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{@{}lrrr@{}}
     \toprule
     Method & $R_{\mathrm{blend}}$ & $R_{\mathrm{blend}}$ (5-seed) & ms/batch \\
@@ -324,9 +333,9 @@ Noise2Noise on the multi-family matrix is Table~\ref{tab:sota-main}. The four-bo
     \bottomrule
   \end{tabular}
 \end{adjustbox}
-\end{table*}
+\end{table}
 
-\FloatBarrier
+
 
 \subsection{Multi-family comparison}
 \label{sec:sota-main}
@@ -391,7 +400,7 @@ Vs corrupt$\to$corrupt N2N the mean-of-means gap is $\approx{+}0.003$ (mean win 
   \label{fig:sota-method-bars}
 \end{figure*}
 
-\FloatBarrier
+
 
 \subsection{Hard cliffs expose classical fade failure}
 \label{sec:cliff-strata}
@@ -432,14 +441,13 @@ Edge RMSE on the top-10\% subset drops from no-bake $0.095$ to favorite $0.027$
   \vspace{1.2em}
 \end{table*}
 
-\clearpage
 
-\begin{table*}[t]
+\begin{table}[t]
   \centering
   \caption{Required seam-local secondary on top-10\% wrap-jump tiles ($n{=}410$): edge RMSE (lower better). Frozen in the \href{https://github.com/reeldemo/denoise-opt-meta/blob/master/paper/Unsupervised_Wrap-Discontinuity_Repair_in_Wavetable_Synthesis_via_Hybrid_GA-PPO_Meta-Search_v12/figures/cliff_strata.json}{cliff-strata data}.}
   \label{tab:cliff-edge-rmse}
   \setlength{\tabcolsep}{6pt}
-  \begin{adjustbox}{max width=\textwidth}
+  \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{@{}lr@{}}
     \toprule
     Method & top10 edge RMSE \\
@@ -455,9 +463,9 @@ Edge RMSE on the top-10\% subset drops from no-bake $0.095$ to favorite $0.027$
     \bottomrule
   \end{tabular}
 \end{adjustbox}
-\end{table*}
+\end{table}
 
-\FloatBarrier
+
 
 \subsection{Noise2Noise and sequence baselines}
 \label{sec:n2n-baselines}
@@ -477,7 +485,7 @@ Figure~\ref{fig:n2n-vs-ours} plots the four-board $R_{\mathrm{blend}}$ compariso
   \label{fig:n2n-vs-ours}
 \end{figure*}
 
-\FloatBarrier
+
 
 \subsection{Factory exports and AKWF cycles}
 \label{sec:real-wt}
@@ -489,13 +497,12 @@ On exported factory periods the favorite ($R_{\mathrm{blend}}{\approx}0.699$) tr
 On AKWF OA cycles the favorite ($0.679$) trails no-bake / N2N and beats Dual Cosine ($0.424$).
 Export gaps are listed in Section~\ref{sec:limitations}.
 
-\clearpage
-\begin{table*}[t]
+\begin{table}[t]
   \centering
   \caption{Wavetable-native wrap protocol under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$). Close-seam ideal $\to$ open-wrap cliff (seed \texttt{20260719}). Primary = ReelSynth export. Secondary = AKWF CC0 files.}
   \label{tab:real-wt}
   \setlength{\tabcolsep}{6pt}
-  \begin{adjustbox}{max width=\textwidth}
+  \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{@{}lrr@{}}
     \toprule
     Method & Export & AKWF OA \\
@@ -512,8 +519,7 @@ Export gaps are listed in Section~\ref{sec:limitations}.
     \bottomrule
   \end{tabular}
 \end{adjustbox}
-\end{table*}
-\clearpage
+\end{table}
 
 \subsection{Polynomial baseline and endpoint pinning}
 \label{sec:poly-jump}
@@ -603,13 +609,13 @@ The favorite beats Dual Cosine on mean $\Delta R_{\mathrm{blend}}{+}0.082$, but 
 and absolute score trails no-bake and \texttt{seam\_fir3}.
 The primary SOTA claim remains the Python multi-family matrix.
 
-\begin{table*}[t]
+\begin{table}[t]
   \centering
   \caption{Rust \texttt{sound\_bench} transfer ($n{=}20$) under $R_{\mathrm{blend}}$ ($\alpha{=}0.7$).
   $\Delta$ is vs Dual Cosine.}
   \label{tab:rust-bench}
   \setlength{\tabcolsep}{6pt}
-  \begin{adjustbox}{max width=\textwidth}
+  \begin{adjustbox}{max width=\columnwidth}
 \begin{tabular}{@{}lrr@{}}
     \toprule
     Method & $R_{\mathrm{blend}}$ & $\Delta$ vs DC \\
@@ -622,9 +628,9 @@ The primary SOTA claim remains the Python multi-family matrix.
     \bottomrule
   \end{tabular}
 \end{adjustbox}
-\end{table*}
+\end{table}
 
-\FloatBarrier
+
 
 \begin{figure}[htbp]
   \centering
@@ -654,4 +660,4 @@ The primary SOTA claim remains the Python multi-family matrix.
   \label{fig:classical-vs-ai-bars}
 \end{figure}
 
-\FloatBarrier
+
